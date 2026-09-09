@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.3.2 Lenguajes de computación gráfica | UPIICSA</title>
+  <link rel="stylesheet" href="../css/vista.css">
+</head>
+<body>
+
+  <div class="content-container">
+
+    <nav class="breadcrumb" aria-label="Migas de pan">
+      <a href="inicio.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>Unidad II</span>
+      <span class="breadcrumb-separator">/</span>
+      <span>2.3 Desarrollo en Multimedia</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">2.3.2 Computación Gráfica</span>
+    </nav>
+
+    <header class="topic-header">
+      <div class="topic-unit-badge">Unidad II · Tecnologías Emergentes</div>
+      <span class="topic-code">Tema 2.3.2</span>
+      <h1 class="topic-title">Lenguajes y Librerías de Computación Gráfica: OpenGL, OpenCV y Python</h1>
+      <p class="topic-summary">
+        APIs de renderizado de bajo nivel, visión artificial en tiempo real y el ecosistema de procesamiento científico con Python.
+      </p>
+    </header>
+
+    <section class="card">
+      <h2>🔺 OpenGL (Open Graphics Library)</h2>
+      <p>
+        Estándar multiplataforma de especificación para programar interfaces con hardware gráfico (GPU). Proporciona primitivas de bajo nivel para rasterizar puntos, líneas y triángulos tridimensionales:
+      </p>
+      <ul>
+        <li><strong>Pipeline Gráfico Programable:</strong> Uso del lenguaje <em>GLSL</em> (OpenGL Shading Language) para compilar Vertex Shaders (cálculo posicional de vértices) y Fragment/Pixel Shaders (color, texturizado e iluminación por píxel).</li>
+        <li><strong>Derivados Clave:</strong> <em>OpenGL ES</em> (para dispositivos embebidos y móviles) y <em>WebGL</em> (estándar nativo para navegadores web).</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>👁️ OpenCV (Open Source Computer Vision)</h2>
+      <p>
+        Librería de código abierto líder mundial con más de 2500 algoritmos optimizados para visión computacional y aprendizaje automático:
+      </p>
+      <div class="concept-grid">
+        <div class="concept-item">
+          <div class="concept-title">Detección y Reconocimiento</div>
+          <div class="concept-desc">Detección de rostros (clasificadores en cascada Haar / DNN), reconocimiento de gestos manuales y lectura de códigos QR y ArUco para realidad aumentada.</div>
+        </div>
+        <div class="concept-item">
+          <div class="concept-title">Filtrado y Transformación</div>
+          <div class="concept-desc">Umbralización adaptativa, transformadas de Hough para detección de rectas y círculos, corrección de distorsión de lente y calibración de cámara.</div>
+        </div>
+        <div class="concept-item">
+          <div class="concept-title">Seguimiento de Objetos</div>
+          <div class="concept-desc">Algoritmos de flujo óptico (Lucas-Kanade), substracción de fondo para videovigilancia y cálculo de trayectorias en tiempo real.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🐍 Python en la Multimedia Moderna</h2>
+      <div class="callout callout-green">
+        <div class="callout-title">El Pegamento Científico de la Informática</div>
+        Gracias a librerías como <strong>NumPy</strong> (cálculo matricial ultrarrápido con arrays multidimensionales), <strong>Pillow/PIL</strong> (procesamiento básico de imágenes) y <strong>Pygame / Arcade</strong> (diseño de prototipos de videojuegos), Python es el lenguaje predilecto para pipelines de producción multimedia, scripts de automatización en Blender y modelos de visión artificial.
+      </div>
+    </section>
+
+    <!-- Zona de Contribución Estudiantil -->
+    <div class="contribution-zone">
+      <div class="contribution-header">
+        <div class="contribution-title">
+          <span>📝</span> Zona de Contribución Estudiantil
+        </div>
+        <span class="contribution-badge">Subtema 2.3.2</span>
+      </div>
+      <p class="contribution-instructions">
+        Puedes añadir scripts de Python con <code>cv2.VideoCapture()</code> para captura de cámara en vivo y procesamiento de bordes con Canny.
+      </p>
+      
+      <div class="student-notes-area">
+        <p><em>Actualmente listo para recibir notas de clase y aportaciones de los estudiantes sobre computación gráfica con OpenCV, OpenGL y Python.</em></p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

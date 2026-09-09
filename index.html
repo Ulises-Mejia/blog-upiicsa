@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repositorio Web Multimedia | UPIICSA - IPN</title>
+  <meta name="description" content="Plataforma de conocimientos y repositorio académico para la materia de Multimedia de UPIICSA - IPN.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/svg+xml" href="assets/upiicsa_logo.svg">
+</head>
+<body>
+
+  <!-- =======================================================================
+       1. SPLASH SCREEN (MENSAJE DE BIENVENIDA CON VERDE UPIICSA)
+       ======================================================================= -->
+  <div id="splashOverlay" class="splash-overlay" role="dialog" aria-modal="true" aria-label="Pantalla de bienvenida">
+    <div class="splash-card">
+      <div class="splash-logos">
+        <img src="assets/ipn_logo.svg" alt="Escudo IPN" width="72" height="72">
+        <img src="assets/upiicsa_logo.svg" alt="Escudo UPIICSA" width="72" height="72">
+      </div>
+      <div class="splash-institution">Instituto Politécnico Nacional · UPIICSA</div>
+      <h1 class="splash-title">Repositorio Multimedia</h1>
+      <p class="splash-subtitle">
+        Plataforma académica interactiva para la consulta, aprendizaje y contribución estudiantil de las herramientas y procesos multimedia.
+      </p>
+      <div class="splash-divider"></div>
+      <button id="splashDismissBtn" class="splash-btn" type="button">
+        Ingresar al Repositorio &rarr;
+      </button>
+      <div class="splash-hint">Haz clic en cualquier parte para continuar</div>
+    </div>
+  </div>
+
+  <div class="app-container">
+
+    <!-- =====================================================================
+         2. HEADER DINÁMICO INSTITUCIONAL (STICKY)
+         ===================================================================== -->
+    <header class="main-header">
+      <a href="vistas/inicio.html" target="visor-temas" class="header-brand" title="Ir al Inicio">
+        <div class="header-logos">
+          <img src="assets/ipn_logo.svg" alt="Logo IPN" width="44" height="44">
+          <img src="assets/upiicsa_logo.svg" alt="Logo UPIICSA" width="44" height="44">
+        </div>
+        <div class="brand-text">
+          <div class="brand-title">
+            MULTIMEDIA
+            <span class="brand-badge">UPIICSA</span>
+          </div>
+          <span class="brand-subtitle">REPOSITORIO DIGITAL DE CONOCIMIENTOS</span>
+        </div>
+      </a>
+
+      <div class="header-actions">
+        <a href="vistas/inicio.html" target="visor-temas" class="header-link-btn" title="Página Principal">
+          <span>🏠</span> Inicio
+        </a>
+        <a href="vistas/autores.html" target="visor-temas" class="header-link-btn" title="Créditos del equipo">
+          <span>👥</span> Autores
+        </a>
+        <button id="menuToggle" class="menu-toggle" aria-label="Alternar menú lateral" title="Menú">
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         3. CONTENEDOR PRINCIPAL: SIDEBAR + VISOR IFRAME
+         ===================================================================== -->
+    <div class="main-content-wrapper">
+
+      <!-- BARRA LATERAL DESPLEGABLE CON <details> Y <summary> -->
+      <aside id="mainSidebar" class="sidebar" aria-label="Navegación del Temario">
+        <div class="sidebar-header-box">
+          <div class="sidebar-heading">
+            <span>📚</span> Temario Oficial
+          </div>
+          <div class="sidebar-subtext">Selecciona un subtema para visualizarlo</div>
+        </div>
+
+        <nav class="sidebar-nav">
+          <!-- Enlace de Bienvenida / Portada -->
+          <a href="vistas/inicio.html" target="visor-temas" class="nav-root-link active-link">
+            <span>🏠</span> 1. Inicio y Presentación
+          </a>
+
+          <!-- ===============================================================
+               UNIDAD TEMÁTICA I
+               =============================================================== -->
+          <details class="unit-details" open>
+            <summary class="unit-summary">
+              <span class="unit-title-text">
+                <span class="unit-badge-tag">U-I</span>
+                Contexto de la multimedia para aplicaciones informáticas
+              </span>
+              <span class="unit-icon-arrow">▶</span>
+            </summary>
+            <div class="unit-body">
+
+              <!-- 1.1 Antecedentes y fundamentos -->
+              <details class="section-details" open>
+                <summary class="section-summary">
+                  <span>1.1 Antecedentes y fundamentos</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/1-1-1-elementos.html" target="visor-temas">
+                      1.1.1 Elementos de la multimedia
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-1-2-evolucion.html" target="visor-temas">
+                      1.1.2 Computación gráfica en la multimedia
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-1-3-web.html" target="visor-temas">
+                      1.1.3 La Web en la multimedia
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-1-4-formatos.html" target="visor-temas">
+                      1.1.4 Formatos: imagen, audio, video y texto
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 1.2 Proceso de producción multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>1.2 Proceso de producción</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/1-2-1-etapas.html" target="visor-temas">
+                      1.2.1 Elementos y etapas de producción
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-2-2-camara.html" target="visor-temas">
+                      1.2.2 Manejo de cámara: tomas, movimientos y planos
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-2-3-imagen.html" target="visor-temas">
+                      1.2.3 Procesamiento de imagen y semiótica
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-2-4-audio.html" target="visor-temas">
+                      1.2.4 Procesamiento digital de audio
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 1.3 Animación en la multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>1.3 Animación en la multimedia</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/1-3-1-conceptualizacion.html" target="visor-temas">
+                      1.3.1 La animación y su conceptualización
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-3-2-tipos.html" target="visor-temas">
+                      1.3.2 Tipos y características
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-3-3-procesos.html" target="visor-temas">
+                      1.3.3 Procesos en tipos de animación
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 1.4 La animación y la realidad virtual -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>1.4 Animación y Realidad Virtual</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/1-4-1-tecnologias.html" target="visor-temas">
+                      1.4.1 Tecnologías abiertas y cerradas
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/1-4-2-base-rv.html" target="visor-temas">
+                      1.4.2 Animación como base de la RV
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+            </div>
+          </details>
+
+          <!-- ===============================================================
+               UNIDAD TEMÁTICA II
+               =============================================================== -->
+          <details class="unit-details">
+            <summary class="unit-summary">
+              <span class="unit-title-text">
+                <span class="unit-badge-tag">U-II</span>
+                Tecnologías emergentes en herramientas multimedias
+              </span>
+              <span class="unit-icon-arrow">▶</span>
+            </summary>
+            <div class="unit-body">
+
+              <!-- 2.1 Antecedentes de la realidad virtual -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>2.1 Antecedentes de RV</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/2-1-1-caracteristicas.html" target="visor-temas">
+                      2.1.1 Características
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-1-2-diferencias.html" target="visor-temas">
+                      2.1.2 Diferencias
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-1-3-hibridacion.html" target="visor-temas">
+                      2.1.3 Hibridación de tecnologías emergentes
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 2.2 Entornos Virtuales -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>2.2 Entornos Virtuales</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/2-2-1-recorridos.html" target="visor-temas">
+                      2.2.1 Tecnología de recorridos virtuales
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-2-2-software.html" target="visor-temas">
+                      2.2.2 Software de entornos virtuales
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-2-3-herramientas.html" target="visor-temas">
+                      2.2.3 Herramientas de RV y RA
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-2-4-aplicaciones.html" target="visor-temas">
+                      2.2.4 Aplicaciones de entornos virtuales
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-2-5-motores.html" target="visor-temas">
+                      2.2.5 Motores de videojuegos: Unity, Unreal
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 2.3 Desarrollo en las herramientas multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>2.3 Desarrollo en multimedia</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/2-3-1-lenguajes-web.html" target="visor-temas">
+                      2.3.1 Lenguajes Web: HTML5, PHP, JS, etc.
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-3-2-lenguajes-grafica.html" target="visor-temas">
+                      2.3.2 Lenguajes gráficos: OpenGL, OpenCV, Python
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 2.4 Creación de herramientas multimedia con tecnologías emergentes -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>2.4 Creación con tecnologías emergentes</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/2-4-1-ambientes.html" target="visor-temas">
+                      2.4.1 Ambientes de desarrollo
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-4-2-integracion.html" target="visor-temas">
+                      2.4.2 Integración de tecnologías emergentes
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/2-4-3-aplicaciones.html" target="visor-temas">
+                      2.4.3 Aplicaciones usuario final y desarrollador
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+            </div>
+          </details>
+
+          <!-- ===============================================================
+               UNIDAD TEMÁTICA III
+               =============================================================== -->
+          <details class="unit-details">
+            <summary class="unit-summary">
+              <span class="unit-title-text">
+                <span class="unit-badge-tag">U-III</span>
+                Desarrollo e integración de herramientas a sistemas
+              </span>
+              <span class="unit-icon-arrow">▶</span>
+            </summary>
+            <div class="unit-body">
+
+              <!-- 3.1 El video en las herramientas multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>3.1 El video en multimedia</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/3-1-1-edicion-video.html" target="visor-temas">
+                      3.1.1 Edición del video
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/3-1-2-herramientas.html" target="visor-temas">
+                      3.1.2 Herramientas de edición
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 3.2 La autoría de los elementos multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>3.2 Autoría de elementos</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/3-2-1-software-autoria.html" target="visor-temas">
+                      3.2.1 Software de autoría
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/3-2-2-software-originalidad.html" target="visor-temas">
+                      3.2.2 Software de originalidad
+                    </a>
+                  </li>
+                  <li>
+                    <a href="vistas/3-2-3-registro.html" target="visor-temas">
+                      3.2.3 Registro de mi autoría
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+              <!-- 3.2 (Bis) Aplicaciones informáticas con herramientas multimedia -->
+              <details class="section-details">
+                <summary class="section-summary">
+                  <span>3.2 (Bis) Proyectos disruptivos</span>
+                  <span class="section-arrow">▶</span>
+                </summary>
+                <ul class="topic-list">
+                  <li>
+                    <a href="vistas/3-2-bis-etapas-planeacion.html" target="visor-temas">
+                      3.2.1 Etapas de planeación de proyectos disruptivos
+                    </a>
+                  </li>
+                </ul>
+              </details>
+
+            </div>
+          </details>
+
+          <!-- Enlace de Créditos en la navegación -->
+          <a href="vistas/autores.html" target="visor-temas" class="nav-root-link" style="margin-top: 10px;">
+            <span>🎓</span> Créditos de Estudiantes
+          </a>
+
+        </nav>
+      </aside>
+
+      <!-- VISOR CENTRAL IFRAME -->
+      <main class="viewer-container">
+        <iframe 
+          name="visor-temas" 
+          id="visorTemas"
+          class="viewer-iframe" 
+          src="vistas/inicio.html" 
+          title="Visor de Contenido de Temario Multimedia UPIICSA">
+        </iframe>
+      </main>
+
+    </div>
+
+    <!-- =====================================================================
+         4. FOOTER INSTITUCIONAL
+         ===================================================================== -->
+    <footer class="main-footer">
+      <div class="footer-copy">
+        &copy; 2026 Instituto Politécnico Nacional — UPIICSA. Repositorio de la Materia de Multimedia.
+      </div>
+      <div class="footer-credits">
+        <span>Desarrollado para la comunidad politécnica</span>
+        <a href="vistas/autores.html" target="visor-temas" class="footer-authors-link" title="Ver autores del proyecto">
+          👥 Ver Autores
+        </a>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- JavaScript para el Splash Screen y soporte responsive -->
+  <script src="js/app.js"></script>
+</body>
+</html>

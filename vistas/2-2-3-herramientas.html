@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.2.3 Herramientas de RV y RA | UPIICSA</title>
+  <link rel="stylesheet" href="../css/vista.css">
+</head>
+<body>
+
+  <div class="content-container">
+
+    <nav class="breadcrumb" aria-label="Migas de pan">
+      <a href="inicio.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>Unidad II</span>
+      <span class="breadcrumb-separator">/</span>
+      <span>2.2 Entornos Virtuales</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">2.2.3 Herramientas RV y RA</span>
+    </nav>
+
+    <header class="topic-header">
+      <div class="topic-unit-badge">Unidad II · Tecnologías Emergentes</div>
+      <span class="topic-code">Tema 2.2.3</span>
+      <h1 class="topic-title">Herramientas de Realidad Virtual y Realidad Aumentada</h1>
+      <p class="topic-summary">
+        Kits de desarrollo de software (SDKs), frameworks de seguimiento espacial, interfaces de sensores y estándares abiertos como OpenXR.
+      </p>
+    </header>
+
+    <section class="card">
+      <h2>🧰 SDKs y Frameworks de Desarrollo Inmersivo</h2>
+      <div class="concept-grid">
+        <div class="concept-item">
+          <div class="concept-title">OpenXR (Estándar de la Industria)</div>
+          <div class="concept-desc">
+            Estándar abierto y libre de regalías desarrollado por <em>Khronos Group</em>. Proporciona una API unificada y de alto rendimiento que permite a los desarrolladores escribir una sola aplicación XR y ejecutarla en cualquier visor (Meta, HTC, Valve, Magic Leap, Windows Mixed Reality) sin reescribir código para cada SDK propietario.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-title">ARCore (Google) & ARKit (Apple)</div>
+          <div class="concept-desc">
+            Kits nativos para smartphones que realizan seguimiento de movimiento por visión computacional (Visual-Inertial Odometry), comprensión ambiental (detección de superficies horizontales y verticales planas) y estimación de iluminación física real.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-title">Vuforia Engine & 8th Wall</div>
+          <div class="concept-desc">
+            Reconocimiento de imágenes objetivo (Image Targets), objetos 3D y seguimiento sin marcadores en la Web (WebAR sin necesidad de descargar una app).
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>🕶️ Hardware y Sensores de Captura</h2>
+      <ul>
+        <li><strong>Unidades de Medición Inercial (IMU):</strong> Combinación de acelerómetros, giroscopios y magnetómetros para calcular la orientación con altísima frecuencia (hasta 1000 Hz).</li>
+        <li><strong>Cámaras de Paso (Passthrough Stereo):</strong> Transmiten el video del entorno real exterior hacia las pantallas OLED internas con corrección de perspectiva milimétrica.</li>
+        <li><strong>Sensores LiDAR y Tiempo de Vuelo (ToF):</strong> Disparan pulsos de luz infrarroja para calcular la distancia exacta a los objetos circundantes mediante el tiempo que tarda la luz en rebotar.</li>
+        <li><strong>Seguimiento Ocular (Eye Tracking) y Foveated Rendering:</strong> Detecta exactamente hacia dónde mira la pupila, permitiendo renderizar con máxima resolución únicamente la pequeña zona central focal y ahorrar hasta un 60% de recursos gráficos.</li>
+      </ul>
+    </section>
+
+    <!-- Zona de Contribución Estudiantil -->
+    <div class="contribution-zone">
+      <div class="contribution-header">
+        <div class="contribution-title">
+          <span>📝</span> Zona de Contribución Estudiantil
+        </div>
+        <span class="contribution-badge">Subtema 2.2.3</span>
+      </div>
+      <p class="contribution-instructions">
+        Comparte guías de instalación para XR Interaction Toolkit en Unity o configuración del plugin OpenXR.
+      </p>
+      
+      <div class="student-notes-area">
+        <p><em>Actualmente listo para recibir notas de clase y aportaciones de los estudiantes sobre herramientas de RV y RA.</em></p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

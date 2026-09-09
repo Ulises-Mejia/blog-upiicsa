@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3.1.2 Herramientas de edición de video | UPIICSA</title>
+  <link rel="stylesheet" href="../css/vista.css">
+</head>
+<body>
+
+  <div class="content-container">
+
+    <nav class="breadcrumb" aria-label="Migas de pan">
+      <a href="inicio.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>Unidad III</span>
+      <span class="breadcrumb-separator">/</span>
+      <span>3.1 Video en Multimedia</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">3.1.2 Herramientas de Edición</span>
+    </nav>
+
+    <header class="topic-header">
+      <div class="topic-unit-badge">Unidad III · Integración y Sistemas</div>
+      <span class="topic-code">Tema 3.1.2</span>
+      <h1 class="topic-title">Herramientas de Edición de Video</h1>
+      <p class="topic-summary">
+        Análisis comparativo de software profesional NLE: DaVinci Resolve, Adobe Premiere Pro, Final Cut Pro, Kdenlive y FFmpeg por línea de comandos.
+      </p>
+    </header>
+
+    <section class="card">
+      <h2>🖥️ Panorama del Software de Edición No Lineal</h2>
+      <div class="table-responsive">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Software</th>
+              <th>Licencia / Costo</th>
+              <th>Fortalezas Principales</th>
+              <th>Perfil de Usuario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>DaVinci Resolve (Blackmagic)</strong></td>
+              <td>Versión gratuita robusta / Studio de pago único</td>
+              <td>El estándar de la industria cinematográfica en corrección de color y etalonaje; suite integrada de audio (Fairlight) y efectos (Fusion).</td>
+              <td>Coloristas, editores de cine y creadores audiovisuales exigentes.</td>
+            </tr>
+            <tr>
+              <td><strong>Adobe Premiere Pro</strong></td>
+              <td>Suscripción periódica (Adobe Creative Cloud)</td>
+              <td>Integración perfecta con After Effects, Photoshop y Audition (Dynamic Link); soporte inmenso de plugins.</td>
+              <td>Agencias de publicidad, televisoras y creadores de contenido digital.</td>
+            </tr>
+            <tr>
+              <td><strong>Final Cut Pro (Apple)</strong></td>
+              <td>Pago único (Exclusivo macOS)</td>
+              <td>Línea de tiempo magnética innovadora, renderizado ultrarrápido optimizado para Apple Silicon (M1/M2/M3/M4).</td>
+              <td>Editores de flujo rápido y usuarios del ecosistema Mac.</td>
+            </tr>
+            <tr>
+              <td><strong>Kdenlive / Shotcut</strong></td>
+              <td>Código Abierto (GPL, Gratis)</td>
+              <td>Multiplataforma (Linux, Windows, Mac), ligero, sin telemetría corporativa ni cuentas obligatorias.</td>
+              <td>Educación, comunidad de software libre y proyectos de bajo presupuesto.</td>
+            </tr>
+            <tr>
+              <td><strong>FFmpeg (Línea de comandos)</strong></td>
+              <td>Código Abierto (LGPL/GPL)</td>
+              <td>La navaja suiza de la transcodificación: recorta, convierte, une pistas y comprime de forma automatizada por scripts.</td>
+              <td>Ingenieros de sistemas, desarrolladores backend y administradores de video web.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>⚡ Automatización Multimedia con FFmpeg</h2>
+      <p>
+        Para los estudiantes de informática en UPIICSA, FFmpeg es una herramienta esencial para procesar video en servidores o tuberías de datos automatizadas:
+      </p>
+      
+      <div class="student-notes-area" style="background:#1E293B; color:#E2E8F0; font-family:monospace; border-radius:6px; font-size: 0.82rem;">
+        # Convertir un video a MP4 H.264 optimizado para Web con compresión CRF 23<br>
+        ffmpeg -i entrada.mov -c:v libx264 -crf 23 -preset medium -c:a aac -b:a 128k salida_web.mp4<br><br>
+        # Extraer un fotograma como póster en el segundo 5<br>
+        ffmpeg -ss 00:00:05 -i entrada.mp4 -frames:v 1 poster.jpg
+      </div>
+    </section>
+
+    <!-- Zona de Contribución Estudiantil -->
+    <div class="contribution-zone">
+      <div class="contribution-header">
+        <div class="contribution-title">
+          <span>📝</span> Zona de Contribución Estudiantil
+        </div>
+        <span class="contribution-badge">Subtema 3.1.2</span>
+      </div>
+      <p class="contribution-instructions">
+        Comparte atajos de teclado clave de DaVinci Resolve (J-K-L, I-O) o comandos útiles de FFmpeg.
+      </p>
+      
+      <div class="student-notes-area">
+        <p><em>Actualmente listo para recibir notas de clase y aportaciones de los estudiantes sobre herramientas de edición.</em></p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2.3.1 Lenguajes de desarrollo Web | UPIICSA</title>
+  <link rel="stylesheet" href="../css/vista.css">
+</head>
+<body>
+
+  <div class="content-container">
+
+    <nav class="breadcrumb" aria-label="Migas de pan">
+      <a href="inicio.html">Inicio</a>
+      <span class="breadcrumb-separator">/</span>
+      <span>Unidad II</span>
+      <span class="breadcrumb-separator">/</span>
+      <span>2.3 Desarrollo en Multimedia</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-current">2.3.1 Lenguajes Web</span>
+    </nav>
+
+    <header class="topic-header">
+      <div class="topic-unit-badge">Unidad II · Tecnologías Emergentes</div>
+      <span class="topic-code">Tema 2.3.1</span>
+      <h1 class="topic-title">Lenguajes de Desarrollo Web: HTML5, CSS3, JavaScript y PHP</h1>
+      <p class="topic-summary">
+        La triada del cliente web y tecnologías de servidor aplicadas a la arquitectura de aplicaciones multimedia interactivas.
+      </p>
+    </header>
+
+    <section class="card">
+      <h2>🌐 La Pila de Tecnologías Web en Multimedia</h2>
+      <div class="concept-grid">
+        <div class="concept-item">
+          <div class="concept-title">HTML5 (Estructura Semántica)</div>
+          <div class="concept-desc">
+            Define la arquitectura y el contenido del documento. En multimedia aporta elementos nativos como <code>&lt;video&gt;</code>, <code>&lt;audio&gt;</code>, <code>&lt;canvas&gt;</code>, <code>&lt;svg&gt;</code> y navegación mediante <code>&lt;iframe&gt;</code>.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-title">CSS3 (Diseño y Animación)</div>
+          <div class="concept-desc">
+            Control de estilos visuales, transformaciones espaciales 2D/3D (<code>transform: rotateY()</code>), transiciones fluidas, animaciones por fotogramas clave (<code>@keyframes</code>) y diseño responsivo adaptativo (Flexbox y Grid).
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-title">JavaScript (Interactividad Dinámica)</div>
+          <div class="concept-desc">
+            Lenguaje de programación del lado del cliente. Manipula el DOM, gestiona eventos, coordina el audio interactivo con Web Audio API y renderiza gráficos 3D acelerados por GPU mediante WebGL/Three.js.
+          </div>
+        </div>
+
+        <div class="concept-item">
+          <div class="concept-title">PHP y Tecnologías de Servidor</div>
+          <div class="concept-desc">
+            Gestión en backend de bases de datos, procesamiento y compresión de archivos subidos por usuarios, autenticación y generación dinámica de plantillas o APIs RESTful JSON.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>💻 Ejemplo Práctico: El Lienzo Multimedia de HTML5 (&lt;canvas&gt;)</h2>
+      <p>
+        El elemento <code>&lt;canvas&gt;</code> permite dibujar mapas de bits y crear animaciones complejas directamente mediante JavaScript:
+      </p>
+      
+      <div class="student-notes-area" style="background:#1E293B; color:#E2E8F0; font-family:monospace; border-radius:6px; font-size: 0.82rem;">
+        // Inicialización básica del contexto 2D<br>
+        const canvas = document.getElementById('miLienzo');<br>
+        const ctx = canvas.getContext('2d');<br><br>
+        // Dibujando un rectángulo con identidad UPIICSA<br>
+        ctx.fillStyle = '#00643A'; // Verde UPIICSA<br>
+        ctx.fillRect(20, 20, 180, 100);<br><br>
+        // Borde dorado de acento<br>
+        ctx.lineWidth = 4;<br>
+        ctx.strokeStyle = '#D4AF37'; // Dorado UPIICSA<br>
+        ctx.strokeRect(20, 20, 180, 100);
+      </div>
+    </section>
+
+    <!-- Zona de Contribución Estudiantil -->
+    <div class="contribution-zone">
+      <div class="contribution-header">
+        <div class="contribution-title">
+          <span>📝</span> Zona de Contribución Estudiantil
+        </div>
+        <span class="contribution-badge">Subtema 2.3.1</span>
+      </div>
+      <p class="contribution-instructions">
+        Comparte experimentos interactivos usando WebSockets, Canvas o Web Workers en JavaScript.
+      </p>
+      
+      <div class="student-notes-area">
+        <p><em>Actualmente listo para recibir notas de clase y aportaciones de los estudiantes sobre lenguajes de desarrollo web.</em></p>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
