@@ -60,34 +60,70 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // =========================================================================
-  // 2. RESALTADO VISUAL DE ENLACE ACTIVO EN EL MENÚ
+  // 2. RESALTADO VISUAL DE ENLACE ACTIVO EN EL MENÚ Y CIERRE EN MÓVIL
   // =========================================================================
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  function closeMobileSidebar() {
+    if (sidebar && sidebar.classList.contains('open')) {
+      sidebar.classList.remove('open');
+      if (menuToggle) {
+        menuToggle.setAttribute('aria-expanded', 'false');
+      }
+      if (sidebarBackdrop) {
+        sidebarBackdrop.classList.remove('active');
+      }
+    }
+  }
+
   topicLinks.forEach(link => {
     link.addEventListener('click', () => {
       topicLinks.forEach(l => l.classList.remove('active-link'));
       link.classList.add('active-link');
 
       // En pantallas móviles, cerrar la barra lateral al seleccionar un tema
-      if (window.innerWidth <= 768 && sidebar) {
-        sidebar.classList.remove('open');
+      if (window.innerWidth <= 768) {
+        closeMobileSidebar();
       }
     });
   });
 
   // =========================================================================
-  // 3. CONTROL DE MENÚ RESPONSIVO (MÓVIL / TABLET)
+  // 3. CONTROL DE MENÚ (VISIBLE Y ACTIVO EN TODO MOMENTO)
   // =========================================================================
   if (menuToggle && sidebar) {
     menuToggle.addEventListener('click', (e) => {
       e.stopPropagation();
-      sidebar.classList.toggle('open');
+      const isMobile = window.innerWidth <= 768;
+
+      if (isMobile) {
+        // En móviles/tablets: alternar visibilidad flotante (open)
+        const willOpen = !sidebar.classList.contains('open');
+        sidebar.classList.toggle('open', willOpen);
+        menuToggle.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        if (sidebarBackdrop) {
+          sidebarBackdrop.classList.toggle('active', willOpen);
+        }
+      } else {
+        // En escritorio: colapsar o expandir hacia la izquierda
+        const willCollapse = !sidebar.classList.contains('collapsed');
+        sidebar.classList.toggle('collapsed', willCollapse);
+        menuToggle.setAttribute('aria-expanded', willCollapse ? 'false' : 'true');
+      }
     });
+
+    // Cerrar sidebar si se hace clic en el fondo semitransparente (móvil)
+    if (sidebarBackdrop) {
+      sidebarBackdrop.addEventListener('click', () => {
+        closeMobileSidebar();
+      });
+    }
 
     // Cerrar sidebar si se hace clic fuera de él en pantallas pequeñas
     document.addEventListener('click', (e) => {
       if (window.innerWidth <= 768 && sidebar.classList.contains('open')) {
         if (!sidebar.contains(e.target) && e.target !== menuToggle) {
-          sidebar.classList.remove('open');
+          closeMobileSidebar();
         }
       }
     });

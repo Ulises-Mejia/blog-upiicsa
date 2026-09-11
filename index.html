@@ -20,13 +20,13 @@
         <img src="assets/upiicsa_logo.svg" alt="Escudo UPIICSA" width="72" height="72">
       </div>
       <div class="splash-institution">Instituto Politécnico Nacional · UPIICSA</div>
-      <h1 class="splash-title">Repositorio Multimedia</h1>
+      <h1 class="splash-title">Herramientas Multimedia</h1>
       <p class="splash-subtitle">
-        Plataforma académica interactiva para la consulta, aprendizaje y contribución estudiantil de las herramientas y procesos multimedia.
+        Aqui encontraras todo lo necesario para repasar todos los temas de la materia Herramientas Multimedia.
       </p>
       <div class="splash-divider"></div>
       <button id="splashDismissBtn" class="splash-btn" type="button">
-        Ingresar al Repositorio &rarr;
+        Inicio &rarr;
       </button>
       <div class="splash-hint">Haz clic en cualquier parte para continuar</div>
     </div>
@@ -38,30 +38,35 @@
          2. HEADER DINÁMICO INSTITUCIONAL (STICKY)
          ===================================================================== -->
     <header class="main-header">
-      <a href="vistas/inicio.html" target="visor-temas" class="header-brand" title="Ir al Inicio">
-        <div class="header-logos">
-          <img src="assets/ipn_logo.svg" alt="Logo IPN" width="44" height="44">
-          <img src="assets/upiicsa_logo.svg" alt="Logo UPIICSA" width="44" height="44">
-        </div>
-        <div class="brand-text">
-          <div class="brand-title">
-            MULTIMEDIA
-            <span class="brand-badge">UPIICSA</span>
+      <div class="header-brand-group">
+        <button id="menuToggle" class="menu-toggle" aria-label="Alternar menú lateral" title="Ocultar / Mostrar menú lateral" aria-expanded="true">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+
+        <a href="vistas/inicio.html" target="visor-temas" class="header-brand" title="Ir al Inicio">
+          <div class="header-logos">
+            <img src="assets/ipn_logo.svg" alt="Logo IPN" width="44" height="44">
+            <img src="assets/upiicsa_logo.svg" alt="Logo UPIICSA" width="44" height="44">
           </div>
-          <span class="brand-subtitle">REPOSITORIO DIGITAL DE CONOCIMIENTOS</span>
-        </div>
-      </a>
+          <div class="brand-text">
+            <div class="brand-title">
+              MULTIMEDIA
+              <span class="brand-badge">UPIICSA</span>
+            </div>
+            <span class="brand-subtitle">REPOSITORIO DIGITAL DE CONOCIMIENTOS</span>
+          </div>
+        </a>
+      </div>
 
       <div class="header-actions">
         <a href="vistas/inicio.html" target="visor-temas" class="header-link-btn" title="Página Principal">
-          <span>🏠</span> Inicio
+          <span>🏠</span> <span class="nav-btn-text">Inicio</span>
         </a>
         <a href="vistas/autores.html" target="visor-temas" class="header-link-btn" title="Créditos del equipo">
-          <span>👥</span> Autores
+          <span>👥</span> <span class="nav-btn-text">Autores</span>
         </a>
-        <button id="menuToggle" class="menu-toggle" aria-label="Alternar menú lateral" title="Menú">
-          ☰
-        </button>
       </div>
     </header>
 
@@ -69,6 +74,9 @@
          3. CONTENEDOR PRINCIPAL: SIDEBAR + VISOR IFRAME
          ===================================================================== -->
     <div class="main-content-wrapper">
+
+      <!-- FONDO DE BLOQUEO PARA MÓVILES -->
+      <div id="sidebarBackdrop" class="sidebar-backdrop" aria-hidden="true"></div>
 
       <!-- BARRA LATERAL DESPLEGABLE CON <details> Y <summary> -->
       <aside id="mainSidebar" class="sidebar" aria-label="Navegación del Temario">
