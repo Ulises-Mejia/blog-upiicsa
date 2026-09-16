@@ -1,0 +1,417 @@
+---
+import { siteBrand } from '../config/site';
+
+interface Props {
+  isEn?: boolean;
+}
+
+const { isEn = false } = Astro.props;
+const currentYear = new Date().getFullYear();
+
+const institutionLabel = `${siteBrand.institution} • ${siteBrand.campus}`;
+const description = isEn ? siteBrand.welcomeDescription.en : siteBrand.welcomeDescription.es;
+const buttonLabel = isEn ? siteBrand.welcomeButton.en : siteBrand.welcomeButton.es;
+const dismissHint = isEn ? 'Press Escape or click to enter' : 'Presiona Esc o haz clic para ingresar';
+const copyrightText = isEn
+  ? `© ${currentYear} Instituto Politécnico Nacional — ${siteBrand.campus}. All rights reserved.`
+  : `© ${currentYear} Instituto Politécnico Nacional — ${siteBrand.campus}. Todos los derechos reservados.`;
+---
+
+<!-- SCRIPT ANTI-FOUC INLINE: Oculta inmediatamente si ya se vio en esta sesión -->
+<script is:inline>
+  (function () {
+    try {
+      if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
+        document.documentElement.setAttribute('data-welcome-seen', 'true');
+      }
+    } catch (e) {}
+  })();
+</script>
+
+<div
+  id="welcomeCurtain"
+  class="welcome-curtain"
+  role="dialog"
+  aria-modal="true"
+  aria-label={isEn ? "Welcome to Multimedia UPIICSA" : "Bienvenida a Multimedia UPIICSA"}
+>
+  <div class="curtain-overlay" id="curtainOverlay"></div>
+
+  <div class="curtain-container">
+    <div class="curtain-card">
+      <!-- Anillo y Logo Central -->
+      <div class="curtain-logo-wrapper">
+        <div class="curtain-logo-glow"></div>
+        <img
+          src={siteBrand.logoUrl}
+          alt={siteBrand.logoAlt}
+          width="84"
+          height="84"
+          class="curtain-logo"
+        />
+      </div>
+
+      <!-- Insignia Institucional -->
+      <div class="curtain-badge-tag">
+        <span class="badge-dot"></span>
+        <span>{institutionLabel}</span>
+      </div>
+
+      <!-- Título Principal -->
+      <h1 class="curtain-title">
+        {siteBrand.title}
+        <span class="title-highlight">{siteBrand.badge}</span>
+      </h1>
+
+      <!-- Subtítulo / Descripción Breve -->
+      <p class="curtain-description">
+        {description}
+      </p>
+
+      <!-- Botón de Acción Principal -->
+      <div class="curtain-actions">
+        <button
+          id="enterRepoBtn"
+          class="enter-btn"
+          type="button"
+          autofocus
+        >
+          <span class="enter-btn-icon">🚀</span>
+          <span>{buttonLabel}</span>
+        </button>
+      </div>
+
+      <span class="curtain-hint">{dismissHint}</span>
+    </div>
+
+    <!-- Pie sutil con Derechos de Autor -->
+    <footer class="curtain-footer">
+      <span>{copyrightText}</span>
+    </footer>
+  </div>
+</div>
+
+<script>
+  function setupWelcomeCurtain() {
+    const curtain = document.getElementById('welcomeCurtain');
+    const enterBtn = document.getElementById('enterRepoBtn');
+    const overlay = document.getElementById('curtainOverlay');
+
+    if (!curtain) return;
+
+    // Si ya se registró como visto en la sesión, asegurarse de removerlo
+    try {
+      if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
+        curtain.remove();
+        return;
+      }
+    } catch (e) {}
+
+    let isClosing = false;
+
+    function closeCurtain() {
+      if (isClosing) return;
+      isClosing = true;
+
+      try {
+        sessionStorage.setItem('upiicsa_welcome_seen', 'true');
+      } catch (e) {}
+
+      document.documentElement.setAttribute('data-welcome-seen', 'true');
+      curtain.classList.add('is-closing');
+
+      // Remover del DOM tras concluir la transición física
+      setTimeout(() => {
+        curtain.remove();
+      }, 550);
+    }
+
+    if (enterBtn) {
+      enterBtn.addEventListener('click', closeCurtain);
+    }
+
+    if (overlay) {
+      overlay.addEventListener('click', closeCurtain);
+    }
+
+    // Teclas rápidas para accesibilidad (Escape o Enter)
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' || e.key === 'Enter') {
+        window.removeEventListener('keydown', onKeyDown);
+        closeCurtain();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+  }
+
+  // Inicializar en carga y en transiciones de Astro
+  setupWelcomeCurtain();
+  document.addEventListener('astro:page-load', setupWelcomeCurtain);
+</script>
+
+<style>
+  /* Si ya se vio en la sesión actual, no mostrar nada (cero parpadeo) */
+  :global(html[data-welcome-seen='true']) .welcome-curtain {
+    display: none !important;
+  }
+
+  .welcome-curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
+  }
+
+  /* Animación de salida hacia arriba (Efecto Telón/Cortina Digital) */
+  .welcome-curtain.is-closing {
+    transform: translateY(-100%);
+    opacity: 0.95;
+    pointer-events: none;
+  }
+
+  /* Fondo tipo velo con desenfoque de cristal (Glassmorphism) */
+  .curtain-overlay {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at 50% 40%,
+      rgba(0, 54, 31, 0.94) 0%,
+      rgba(6, 23, 14, 0.98) 100%
+    );
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
+
+  :global(:root[data-theme='light']) .curtain-overlay {
+    background: radial-gradient(
+      circle at 50% 40%,
+      rgba(0, 100, 58, 0.94) 0%,
+      rgba(7, 28, 18, 0.98) 100%
+    );
+  }
+
+  /* Contenedor central y tarjeta */
+  .curtain-container {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem 1.5rem;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 650px;
+    margin: 0 auto;
+  }
+
+  .curtain-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin: auto 0;
+    padding: 2.2rem 2rem;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(212, 175, 55, 0.25);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    width: 100%;
+    box-sizing: border-box;
+    animation: curtainCardIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes curtainCardIn {
+    0% {
+      opacity: 0;
+      transform: translateY(24px) scale(0.96);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Anillo y Logo */
+  .curtain-logo-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    margin-bottom: 1.25rem;
+  }
+
+  .curtain-logo-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.25) 0%, transparent 70%);
+    filter: blur(8px);
+    z-index: 0;
+  }
+
+  .curtain-logo {
+    position: relative;
+    z-index: 1;
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  /* Insignia */
+  .curtain-badge-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(212, 175, 55, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: #D4AF37;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+
+  .badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #D4AF37;
+    box-shadow: 0 0 8px #D4AF37;
+  }
+
+  /* Título */
+  .curtain-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #FFFFFF;
+    margin: 0 0 0.75rem 0;
+    line-height: 1.15;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .title-highlight {
+    background: #D4AF37;
+    color: #00361F;
+    font-size: 1.1rem;
+    font-weight: 900;
+    padding: 3px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Descripción */
+  .curtain-description {
+    font-size: 0.96rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.85);
+    margin: 0 0 1.75rem 0;
+    max-width: 480px;
+  }
+
+  /* Botón de Entrada */
+  .curtain-actions {
+    margin-bottom: 0.75rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .enter-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #D4AF37;
+    color: #00361F;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    padding: 13px 32px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+    transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
+    outline: none;
+  }
+
+  .enter-btn:hover {
+    background: #FFFFFF;
+    color: #00643A;
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+  }
+
+  .enter-btn:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  .enter-btn-icon {
+    font-size: 1.15rem;
+    transition: transform 0.2s ease;
+  }
+
+  .enter-btn:hover .enter-btn-icon {
+    transform: translateX(3px) translateY(-1px);
+  }
+
+  /* Pista accesible */
+  .curtain-hint {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.45);
+    margin-top: 0.25rem;
+  }
+
+  /* Pie discreto con derechos de autor */
+  .curtain-footer {
+    padding-top: 1rem;
+    font-size: 0.76rem;
+    color: rgba(212, 175, 55, 0.75);
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+
+  @media (max-width: 600px) {
+    .curtain-card {
+      padding: 1.75rem 1.25rem;
+    }
+    .curtain-title {
+      font-size: 1.7rem;
+    }
+    .title-highlight {
+      font-size: 0.95rem;
+    }
+    .curtain-description {
+      font-size: 0.88rem;
+    }
+    .enter-btn {
+      width: 100%;
+      padding: 12px 20px;
+    }
+    .curtain-footer {
+      font-size: 0.7rem;
+    }
+  }
+</style>

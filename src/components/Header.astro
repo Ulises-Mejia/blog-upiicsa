@@ -1,0 +1,451 @@
+---
+import { siteBrand } from '../config/site';
+
+const homeHref = '/es/';
+const homeLabel = 'Inicio';
+const subtitle = siteBrand.subtitle.es;
+---
+
+<div class="header-custom sl-flex">
+  <!-- GRUPO IZQUIERDO: MENÚ SANDWICH + LOGOS + TÍTULO -->
+  <div class="header-brand-group sl-flex">
+    <button
+      id="menuToggle"
+      class="menu-toggle"
+      aria-label="Abrir menú lateral"
+      title="Abrir menú lateral"
+      aria-expanded="false"
+      popovertarget="starlight__sidebar"
+      type="button"
+    >
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+
+    <a href={homeHref} class="header-brand sl-flex" title="Ir al Inicio">
+      <div class="header-logos sl-flex">
+        <img src={siteBrand.logoUrl} alt={siteBrand.logoAlt} width="38" height="38" />
+      </div>
+      <div class="brand-text">
+        <div class="brand-title">
+          {siteBrand.title}
+          <span class="brand-badge">{siteBrand.badge}</span>
+        </div>
+        <span class="brand-subtitle">{subtitle}</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- GRUPO DERECHO: INICIO + TEMA + IDIOMA (ESTILO UNIFICADO Y CONSISTENTE) -->
+  <div class="header-actions sl-flex">
+    <!-- Botón Inicio -->
+    <a href={homeHref} class="header-link-btn" title={homeLabel} aria-label={homeLabel}>
+      <span class="btn-icon home-icon">🏠</span>
+      <span class="nav-btn-text">{homeLabel}</span>
+    </a>
+
+    <!-- Botón Modo Oscuro / Claro interactivo -->
+    <button
+      id="themeToggleBtn"
+      class="header-link-btn"
+      type="button"
+      aria-label="Cambiar tema"
+      title="Cambiar tema"
+    >
+      <span id="themeIcon" class="btn-icon theme-icon">🌙</span>
+      <span id="themeLabel" class="nav-btn-text">Oscuro</span>
+    </button>
+
+    <!-- Botón Cambio de Idioma con Google Translate -->
+    <button
+      id="langToggleBtn"
+      class="header-link-btn"
+      type="button"
+      title="Traducir al Inglés"
+      aria-label="Traducir al Inglés"
+    >
+      <span class="btn-icon lang-icon">🌐</span>
+      <span id="langBtnText" class="nav-btn-text">English</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  function setupMenuToggle() {
+    const menuToggle = document.getElementById('menuToggle');
+    if (!menuToggle) return;
+
+    // Asegurar que cada carga de página comience con el menú cerrado
+    document.documentElement.removeAttribute('data-sidebar-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
+    menuToggle.setAttribute('title', 'Abrir menú lateral');
+
+    menuToggle.onclick = (e) => {
+      const isDesktop = window.innerWidth >= 800;
+      if (isDesktop) {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = document.documentElement.getAttribute('data-sidebar-open') === 'true';
+        const willOpen = !isOpen;
+        
+        if (willOpen) {
+          document.documentElement.setAttribute('data-sidebar-open', 'true');
+          menuToggle.setAttribute('aria-expanded', 'true');
+          menuToggle.setAttribute('aria-label', 'Cerrar menú lateral');
+          menuToggle.setAttribute('title', 'Cerrar menú lateral');
+        } else {
+          document.documentElement.removeAttribute('data-sidebar-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
+          menuToggle.setAttribute('title', 'Abrir menú lateral');
+        }
+      } else {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
+      }
+    };
+
+    // Cerrar al hacer clic fuera del sidebar en escritorio
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth >= 800 && document.documentElement.getAttribute('data-sidebar-open') === 'true') {
+        const sidebarPane = document.getElementById('starlight__sidebar');
+        const target = e.target as HTMLElement;
+        if (sidebarPane && !sidebarPane.contains(target) && !menuToggle.contains(target)) {
+          document.documentElement.removeAttribute('data-sidebar-open');
+          menuToggle.setAttribute('aria-expanded', 'false');
+          menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
+          menuToggle.setAttribute('title', 'Abrir menú lateral');
+        }
+      }
+    });
+
+    // Cerrar al presionar la tecla Escape en escritorio
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.documentElement.getAttribute('data-sidebar-open') === 'true') {
+        document.documentElement.removeAttribute('data-sidebar-open');
+        menuToggle.setAttribute('aria-expanded', 'false');
+        menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
+        menuToggle.setAttribute('title', 'Abrir menú lateral');
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 800) {
+        const sidebarPane = document.getElementById('starlight__sidebar');
+        if (sidebarPane && typeof (sidebarPane as any).hidePopover === 'function') {
+          try { (sidebarPane as any).hidePopover(); } catch(err) {}
+        }
+      }
+    });
+  }
+
+  function setupThemeToggle() {
+    const themeBtn = document.getElementById('themeToggleBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    const themeLabel = document.getElementById('themeLabel');
+    if (!themeBtn) return;
+
+    const isEn = document.documentElement.lang === 'en';
+
+    function updateThemeUI(theme: string) {
+      const isDark = theme === 'dark';
+      if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
+      if (themeLabel) themeLabel.textContent = isDark ? (isEn ? 'Light' : 'Claro') : (isEn ? 'Dark' : 'Oscuro');
+      const title = isDark
+        ? (isEn ? 'Switch to Light mode' : 'Cambiar a Modo Claro')
+        : (isEn ? 'Switch to Dark mode' : 'Cambiar a Modo Oscuro');
+      themeBtn.setAttribute('title', title);
+      themeBtn.setAttribute('aria-label', title);
+    }
+
+    // Obtener tema actual
+    const currentTheme = document.documentElement.dataset.theme || 
+      (typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme') === 'dark' ? 'dark' : 'light');
+    updateThemeUI(currentTheme);
+
+    // Alternar tema al hacer clic
+    themeBtn.onclick = (e) => {
+      e.preventDefault();
+      const current = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+      const nextTheme = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem('starlight-theme', nextTheme);
+      } catch (err) {}
+      updateThemeUI(nextTheme);
+    };
+  }
+
+  function getGoogleTransCookie(): string {
+    if (typeof document === 'undefined') return '';
+    const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]*)/);
+    return match ? decodeURIComponent(match[1]) : '';
+  }
+
+  function setupLangToggle() {
+    const langBtn = document.getElementById('langToggleBtn');
+    const langBtnText = document.getElementById('langBtnText');
+    if (!langBtn) return;
+
+    function isEnglishActive(): boolean {
+      const cookie = getGoogleTransCookie();
+      return cookie.includes('/en') || (typeof localStorage !== 'undefined' && localStorage.getItem('upiicsa_gt_lang') === 'en');
+    }
+
+    function updateBtnUI(isEn: boolean) {
+      if (langBtnText) langBtnText.textContent = isEn ? 'Español' : 'English';
+      const title = isEn ? 'Restaurar a Español' : 'Traducir al Inglés';
+      langBtn.setAttribute('title', title);
+      langBtn.setAttribute('aria-label', title);
+    }
+
+    updateBtnUI(isEnglishActive());
+
+    function triggerGoogleTranslate(targetLang: string) {
+      const select = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+      if (select) {
+        select.value = targetLang;
+        select.dispatchEvent(new Event('change'));
+      } else {
+        let retries = 0;
+        const interval = setInterval(() => {
+          retries++;
+          const delayedSelect = document.querySelector<HTMLSelectElement>('.goog-te-combo');
+          if (delayedSelect) {
+            clearInterval(interval);
+            delayedSelect.value = targetLang;
+            delayedSelect.dispatchEvent(new Event('change'));
+          } else if (retries > 8) {
+            clearInterval(interval);
+            window.location.reload();
+          }
+        }, 150);
+      }
+    }
+
+    langBtn.onclick = (e) => {
+      e.preventDefault();
+      const isEn = isEnglishActive();
+      const nextLang = isEn ? 'es' : 'en';
+
+      const domain = window.location.hostname;
+      if (nextLang === 'en') {
+        document.cookie = 'googtrans=/es/en; path=/;';
+        document.cookie = `googtrans=/es/en; path=/; domain=${domain};`;
+        try { localStorage.setItem('upiicsa_gt_lang', 'en'); } catch(err) {}
+      } else {
+        document.cookie = 'googtrans=/es/es; path=/;';
+        document.cookie = `googtrans=/es/es; path=/; domain=${domain};`;
+        document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = `googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${domain};`;
+        try { localStorage.setItem('upiicsa_gt_lang', 'es'); } catch(err) {}
+      }
+
+      updateBtnUI(nextLang === 'en');
+      triggerGoogleTranslate(nextLang);
+    };
+  }
+
+  function setupScrollRestoration() {
+    if (typeof window !== 'undefined' && 'scrollRestoration' in history) {
+      try {
+        history.scrollRestoration = 'manual';
+      } catch (err) {}
+    }
+  }
+
+  function initHeader() {
+    setupMenuToggle();
+    setupThemeToggle();
+    setupLangToggle();
+    setupScrollRestoration();
+  }
+
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
+</script>
+
+<style>
+  .header-custom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 1rem;
+  }
+
+  .header-brand-group {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .header-logos {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .header-logos img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .brand-badge {
+    background: #D4AF37;
+    color: #00361F;
+    font-size: 0.65rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+  }
+
+  .brand-subtitle {
+    font-size: 0.72rem;
+    color: #D4AF37;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+  }
+
+  /* Botón de Menú Sandwich / Hamburguesa */
+  .menu-toggle {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    width: 38px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #FFFFFF;
+    padding: 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+    outline: none;
+  }
+
+  .menu-toggle:hover {
+    background: #D4AF37;
+    color: #00361F;
+    border-color: #D4AF37;
+  }
+
+  .menu-toggle .hamburger-bar {
+    display: block;
+    width: 20px;
+    height: 2.2px;
+    background-color: currentColor;
+    border-radius: 2px;
+    transition: all 0.2s ease;
+  }
+
+  /* Acciones de la Cabecera */
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .header-link-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 0 14px;
+    height: 38px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    cursor: pointer;
+    font-family: inherit;
+    line-height: 1;
+    outline: none;
+    user-select: none;
+  }
+
+  .header-link-btn:hover {
+    background: #D4AF37;
+    color: #00361F;
+    border-color: #D4AF37;
+  }
+
+  /* Iconos dentro de los botones */
+  .btn-icon {
+    display: inline-block;
+    font-size: 0.95rem;
+    line-height: 1;
+  }
+
+  /* Animación exclusiva en el icono del sol/luna (sin mover el botón) */
+  .theme-icon {
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .header-link-btn:hover .theme-icon {
+    transform: rotate(25deg) scale(1.18);
+  }
+
+  .home-icon,
+  .lang-icon {
+    transition: transform 0.2s ease;
+  }
+
+  .header-link-btn:hover .home-icon,
+  .header-link-btn:hover .lang-icon {
+    transform: scale(1.15);
+  }
+
+  @media (max-width: 768px) {
+    .brand-subtitle,
+    .nav-btn-text {
+      display: none;
+    }
+    .header-link-btn {
+      width: 38px;
+      padding: 0;
+      justify-content: center;
+    }
+    .header-actions {
+      gap: 6px;
+    }
+  }
+</style>

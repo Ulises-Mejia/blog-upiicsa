@@ -1,0 +1,418 @@
+:root {
+  --sl-color-accent-low: #00361F;
+  --sl-color-accent: #00643A;
+  --sl-color-accent-high: #D4AF37;
+  --sl-color-white: #FFFFFF;
+  --sl-color-gray-1: #ECEEF2;
+  --sl-color-gray-2: #C0C5D0;
+  --sl-color-gray-3: #8890A0;
+  --sl-color-gray-4: #545868;
+  --sl-color-gray-5: #353845;
+  --sl-color-gray-6: #242734;
+  --sl-color-black: #0B1410;
+  --sl-content-width: 60rem;
+  --sl-toc-width: 15rem;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #E8F5E9;
+  --sl-color-accent: #00643A;
+  --sl-color-accent-high: #004D2C;
+  --sl-color-white: #1E293B;
+  --sl-color-gray-1: #334155;
+  --sl-color-gray-2: #475569;
+  --sl-color-gray-3: #64748B;
+  --sl-color-gray-4: #94A3B8;
+  --sl-color-gray-5: #E2E8F0;
+  --sl-color-gray-6: #F1F5F9;
+  --sl-color-gray-7: #F8FAFC;
+  --sl-color-black: #FFFFFF;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #0F2318;
+  --sl-color-accent: #34D399;
+  --sl-color-accent-high: #D4AF37;
+  --sl-color-black: #0B1410;
+  --sl-color-gray-6: #122119;
+  --sl-color-gray-5: #1B3527;
+}
+
+/* Starlight header institucional */
+header.header {
+  background-color: #00643A !important;
+  border-bottom: 3px solid #D4AF37 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding-inline-end: var(--sl-nav-pad-x) !important;
+}
+
+:root[data-theme='dark'] header.header {
+  background-color: #071C12 !important;
+  border-bottom: 3px solid #D4AF37 !important;
+}
+
+/* Ocultar botón circular flotante de Starlight (reemplazado por nuestro menú sandwich en el header) */
+.sl-menu-button {
+  display: none !important;
+}
+
+/* Ocultar pie de página del drawer móvil de Starlight (los controles ya residen en el header superior) */
+.mobile-preferences {
+  display: none !important;
+}
+
+[data-has-sidebar] .header {
+  padding-inline-end: var(--sl-nav-pad-x) !important;
+}
+
+/* ==========================================================================
+   COLAPSO / EXPANSIÓN DEL SIDEBAR CON EL MENÚ HAMBURGUESA EN ESCRITORIO
+   El menú lateral inicia SIEMPRE CERRADO por defecto (ancho completo).
+   ========================================================================== */
+@media (min-width: 50rem) {
+  /* Por defecto: CERRADO (sin parpadeos de apertura/cierre al cambiar de página) */
+  :root {
+    --sl-content-inline-start: 0rem !important;
+  }
+
+  .sidebar-pane {
+    transform: translateX(-100%) !important;
+    pointer-events: none !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+
+  .main-frame {
+    transition: padding-inline-start 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Estado ABIERTO cuando el usuario pulsa el botón ☰ */
+  :root[data-sidebar-open="true"] {
+    --sl-content-inline-start: var(--sl-sidebar-width) !important;
+  }
+
+  :root[data-sidebar-open="true"] .sidebar-pane {
+    transform: translateX(0) !important;
+    pointer-events: auto !important;
+  }
+}
+
+:root[data-theme='dark'] .sidebar-pane {
+  background-color: #06170E !important;
+  border-right: 2px solid rgba(212, 175, 55, 0.2) !important;
+}
+
+:root[data-theme='light'] .sidebar-pane {
+  background-color: #F8F9FA !important;
+  border-right: 2px solid rgba(0, 100, 58, 0.15) !important;
+}
+
+/* Media helper classes for Markdown */
+.media-container {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background: var(--sl-color-gray-6);
+  border: 1px solid var(--sl-color-gray-5);
+  text-align: center;
+}
+
+.media-container img {
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 0 auto;
+}
+
+.media-caption {
+  font-size: 0.85rem;
+  color: var(--sl-color-gray-3);
+  font-style: italic;
+  margin-top: 0.5rem;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  margin: 1rem 0;
+}
+
+.video-wrapper iframe,
+.video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+/* Ajuste inferior para la tabla de contenidos con la barra institucional de pie de página */
+.right-sidebar-panel,
+.right-sidebar {
+  padding-bottom: 48px !important;
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN DEL ESPACIO Y PANEL DERECHO (OPCIÓN 1)
+   ========================================================================== */
+@media (min-width: 72rem) {
+  /* Ancho compacto y fijo para el panel de la tabla de contenidos nativa */
+  .right-sidebar-container {
+    width: var(--sl-toc-width, 15rem) !important;
+  }
+
+  .right-sidebar {
+    width: var(--sl-toc-width, 15rem) !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.2) !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar {
+    background-color: #06170E !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar {
+    background-color: #F8F9FA !important;
+  }
+
+  .right-sidebar-panel .sl-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* El contenido central ocupa todo el ancho restante y se centra con amplitud */
+  [data-has-sidebar][data-has-toc] .main-pane {
+    width: calc(100% - var(--sl-toc-width, 15rem)) !important;
+    --sl-content-margin-inline: auto !important;
+  }
+
+  :root[data-sidebar-open="true"][data-has-toc] .main-pane {
+    width: calc(100% - var(--sl-toc-width, 15rem)) !important;
+    --sl-content-margin-inline: auto !important;
+  }
+
+  .content-panel .sl-container {
+    max-width: var(--sl-content-width, 60rem) !important;
+    margin-inline: auto !important;
+  }
+}
+
+/* ==========================================================================
+   TARJETAS DE AUTORES Y COLABORADORES
+   ========================================================================== */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.75rem;
+  margin: 2rem 0;
+}
+
+.author-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  padding: 1.75rem;
+  background: var(--sl-color-gray-6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+:root[data-theme='light'] .author-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 100, 58, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.author-card:hover {
+  transform: translateY(-4px);
+  border-color: #D4AF37;
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+}
+
+.author-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  margin-bottom: 1.25rem;
+}
+
+:root[data-theme='light'] .author-header {
+  border-bottom-color: var(--sl-color-gray-5);
+}
+
+.author-photo-wrapper {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2.5px solid #D4AF37;
+  overflow: hidden;
+  background: rgba(0, 100, 58, 0.15);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.author-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.author-avatar-fallback {
+  font-size: 2.4rem;
+  line-height: 1;
+  user-select: none;
+}
+
+.author-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.author-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--sl-color-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+:root[data-theme='light'] .author-name {
+  color: #00361F;
+}
+
+.author-role-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #00361F;
+  background: #D4AF37;
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.author-section {
+  margin-bottom: 1.15rem;
+  text-align: left;
+}
+
+.author-section:last-child {
+  margin-bottom: 0;
+}
+
+.author-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #D4AF37;
+  margin-bottom: 0.4rem;
+}
+
+:root[data-theme='light'] .author-section-title {
+  color: #00643A;
+}
+
+.author-section-content {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--sl-color-gray-2);
+  margin: 0;
+}
+
+:root[data-theme='light'] .author-section-content {
+  color: #334155;
+}
+
+.author-section-content ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.author-section-content li {
+  margin-bottom: 0.3rem;
+}
+
+.author-info-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 0.3rem;
+}
+
+.author-info-label {
+  font-weight: 700;
+  color: var(--sl-color-white);
+  flex-shrink: 0;
+}
+
+:root[data-theme='light'] .author-info-label {
+  color: #0F172A;
+}
+
+/* ==========================================================================
+   INTEGRACIÓN LIMPIA / INVISIBLE DE GOOGLE TRANSLATE
+   ========================================================================== */
+#google_translate_element {
+  display: none !important;
+  visibility: hidden !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Ocultar barra superior fija y popups de Google */
+.goog-te-banner-frame,
+.skiptranslate.goog-te-banner-frame,
+iframe.goog-te-banner-frame {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+}
+
+body {
+  top: 0 !important;
+  position: static !important;
+}
+
+/* Ocultar el contenedor de salto que inyecta Google en el body */
+body > .skiptranslate {
+  display: none !important;
+}
+
+/* Ocultar globos de sugerencia y tooltips de traducción */
+#goog-gt-tt,
+.goog-tooltip,
+.goog-tooltip:hover,
+.goog-te-balloon-frame {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Evitar que Google pinte fondos amarillos en los textos */
+.goog-text-highlight {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}

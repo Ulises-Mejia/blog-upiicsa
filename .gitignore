@@ -1,0 +1,21 @@
+# Salida de compilación
+dist/
+.astro/
+
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Metadatos del sistema operativo
+.DS_Store
+Thumbs.db
