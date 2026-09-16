@@ -30,12 +30,24 @@
 }
 
 :root[data-theme='dark'] {
-  --sl-color-accent-low: #0F2318;
-  --sl-color-accent: #34D399;
-  --sl-color-accent-high: #D4AF37;
-  --sl-color-black: #0B1410;
-  --sl-color-gray-6: #122119;
-  --sl-color-gray-5: #1B3527;
+  /* Paleta Verde Obsidiana / UPIICSA / Dorado de la Cortina de Bienvenida */
+  --sl-color-black: #06170E;
+  --sl-color-accent: #D4AF37;
+  --sl-color-accent-high: #F4E8C1;
+  --sl-color-accent-low: #0D2B1B;
+  --sl-color-white: #FFFFFF;
+  --sl-color-gray-1: #E2E8F0;
+  --sl-color-gray-2: #B2C5BC;
+  --sl-color-gray-3: #759886;
+  --sl-color-gray-4: #244C36;
+  --sl-color-gray-5: #143523;
+  --sl-color-gray-6: #0A1E14;
+}
+
+:root[data-theme='dark'] body {
+  background: radial-gradient(circle at 50% 0%, rgba(0, 54, 31, 0.4) 0%, #06170E 70%) fixed !important;
+  background-color: #06170E !important;
+  color: #E2E8F0;
 }
 
 /* Starlight header institucional */
@@ -47,8 +59,9 @@ header.header {
 }
 
 :root[data-theme='dark'] header.header {
-  background-color: #071C12 !important;
+  background: linear-gradient(180deg, #092215 0%, #06170E 100%) !important;
   border-bottom: 3px solid #D4AF37 !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
 /* Ocultar botón circular flotante de Starlight (reemplazado por nuestro menú sandwich en el header) */
@@ -98,7 +111,33 @@ header.header {
 
 :root[data-theme='dark'] .sidebar-pane {
   background-color: #06170E !important;
-  border-right: 2px solid rgba(212, 175, 55, 0.2) !important;
+  border-right: 1px solid rgba(212, 175, 55, 0.22) !important;
+}
+
+:root[data-theme='dark'] .sidebar-content a {
+  color: #CBD5E1;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+:root[data-theme='dark'] .sidebar-content a:hover {
+  color: #F4E8C1 !important;
+  background-color: rgba(212, 175, 55, 0.08) !important;
+}
+
+:root[data-theme='dark'] .sidebar-content a[aria-current='page'] {
+  color: #D4AF37 !important;
+  background-color: rgba(212, 175, 55, 0.15) !important;
+  border-left: 3px solid #D4AF37 !important;
+  font-weight: 700;
+}
+
+:root[data-theme='dark'] .sidebar-content summary {
+  color: #FFFFFF;
+}
+
+:root[data-theme='dark'] .sidebar-content summary:hover {
+  color: #D4AF37;
 }
 
 :root[data-theme='light'] .sidebar-pane {
@@ -109,16 +148,22 @@ header.header {
 /* Media helper classes for Markdown */
 .media-container {
   margin: 1.5rem 0;
-  padding: 1rem;
-  border-radius: 8px;
+  padding: 1.25rem;
+  border-radius: 12px;
   background: var(--sl-color-gray-6);
   border: 1px solid var(--sl-color-gray-5);
   text-align: center;
 }
 
+:root[data-theme='dark'] .media-container {
+  background: #0A1E14;
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
 .media-container img {
   max-width: 100%;
-  border-radius: 6px;
+  border-radius: 8px;
   margin: 0 auto;
 }
 
@@ -126,7 +171,11 @@ header.header {
   font-size: 0.85rem;
   color: var(--sl-color-gray-3);
   font-style: italic;
-  margin-top: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+:root[data-theme='dark'] .media-caption {
+  color: rgba(212, 175, 55, 0.85);
 }
 
 .video-wrapper {
@@ -134,8 +183,13 @@ header.header {
   padding-bottom: 56.25%;
   height: 0;
   overflow: hidden;
-  border-radius: 6px;
-  margin: 1rem 0;
+  border-radius: 10px;
+  margin: 1.25rem 0;
+}
+
+:root[data-theme='dark'] .video-wrapper {
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
 }
 
 .video-wrapper iframe,
@@ -169,6 +223,26 @@ header.header {
 
   :root[data-theme='dark'] .right-sidebar {
     background-color: #06170E !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.22) !important;
+  }
+
+  :root[data-theme='dark'] starlight-toc a,
+  :root[data-theme='dark'] .sl-toc a,
+  :root[data-theme='dark'] .right-sidebar a {
+    color: #B2C5BC !important;
+  }
+
+  :root[data-theme='dark'] starlight-toc a:hover,
+  :root[data-theme='dark'] .sl-toc a:hover,
+  :root[data-theme='dark'] .right-sidebar a:hover {
+    color: #F4E8C1 !important;
+  }
+
+  :root[data-theme='dark'] starlight-toc a[aria-current='true'],
+  :root[data-theme='dark'] .sl-toc a[aria-current='true'],
+  :root[data-theme='dark'] .right-sidebar a[aria-current='true'] {
+    color: #D4AF37 !important;
+    font-weight: 700 !important;
   }
 
   :root[data-theme='light'] .right-sidebar {
@@ -224,6 +298,12 @@ header.header {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
+:root[data-theme='dark'] .author-card {
+  background: #0A1E14;
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+}
+
 .author-card:hover {
   transform: translateY(-4px);
   border-color: #D4AF37;
@@ -256,6 +336,12 @@ header.header {
   align-items: center;
   justify-content: center;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='dark'] .author-photo-wrapper {
+  background: rgba(0, 54, 31, 0.35);
+  border-color: #D4AF37;
+  box-shadow: 0 0 16px rgba(212, 175, 55, 0.25);
 }
 
 .author-photo {
@@ -416,3 +502,98 @@ font {
   background-color: transparent !important;
   box-shadow: none !important;
 }
+
+/* ==========================================================================
+   MODO OSCURO INSTITUCIONAL (PALETA VERDE OBSIDIANA Y ORO IPN)
+   ========================================================================== */
+:root[data-theme='dark'] .starlight-aside {
+  border-radius: 8px;
+}
+
+:root[data-theme='dark'] .starlight-aside--note {
+  background-color: #071F14 !important;
+  border-color: rgba(212, 175, 55, 0.45) !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--note .starlight-aside__title {
+  color: #D4AF37 !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--tip {
+  background-color: rgba(212, 175, 55, 0.08) !important;
+  border-color: #D4AF37 !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--tip .starlight-aside__title {
+  color: #F4E8C1 !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--caution {
+  background-color: #231906 !important;
+  border-color: #D4AF37 !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--caution .starlight-aside__title {
+  color: #D4AF37 !important;
+}
+
+:root[data-theme='dark'] .starlight-aside--danger {
+  background-color: #260E0E !important;
+  border-color: #EF4444 !important;
+}
+
+:root[data-theme='dark'] blockquote {
+  border-left: 4px solid #D4AF37 !important;
+  background-color: rgba(212, 175, 55, 0.05) !important;
+  color: #CBD5E1 !important;
+  padding: 0.75rem 1.25rem !important;
+  border-radius: 0 8px 8px 0;
+}
+
+:root[data-theme='dark'] table {
+  border-collapse: collapse;
+  border: 1px solid rgba(212, 175, 55, 0.25) !important;
+}
+
+:root[data-theme='dark'] th {
+  background-color: #0C281B !important;
+  color: #D4AF37 !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  font-weight: 700;
+}
+
+:root[data-theme='dark'] td {
+  border: 1px solid rgba(212, 175, 55, 0.15) !important;
+}
+
+:root[data-theme='dark'] tr:nth-child(2n) {
+  background-color: rgba(212, 175, 55, 0.03) !important;
+}
+
+:root[data-theme='dark'] .expressive-code pre,
+:root[data-theme='dark'] pre {
+  background-color: #041009 !important;
+  border: 1px solid rgba(212, 175, 55, 0.22) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+:root[data-theme='dark'] .pagination-links a {
+  background-color: #0A1E14 !important;
+  border: 1px solid rgba(212, 175, 55, 0.25) !important;
+  transition: all 0.25s ease;
+}
+
+:root[data-theme='dark'] .pagination-links a:hover {
+  border-color: #D4AF37 !important;
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.15);
+}
+
+:root[data-theme='dark'] .pagination-links .link-title {
+  color: #FFFFFF !important;
+}
+
+:root[data-theme='dark'] .pagination-links a:hover .link-title {
+  color: #D4AF37 !important;
+}
+
