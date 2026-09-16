@@ -2,7 +2,8 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 export default defineConfig({
-  site: 'https://multimedia-upiicsa.ipn.mx',
+  site: 'https://ulises-mejia.github.io',
+  base: '/blog-upiicsa',
   integrations: [
     starlight({
       title: 'Multimedia UPIICSA',

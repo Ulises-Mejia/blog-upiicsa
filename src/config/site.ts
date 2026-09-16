@@ -4,9 +4,11 @@
  * Modifica este archivo para cambiar el logo o títulos en todo el sitio:
  * - El Header y la Cortina de Bienvenida se actualizarán automáticamente.
  */
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
 export const siteBrand = {
   // Ruta al archivo del logo (colócalo dentro de la carpeta /public/)
-  logoUrl: '/upiicsa_logo.svg',
+  logoUrl: `${base}/upiicsa_logo.svg`,
   logoAlt: 'Escudo Oficial UPIICSA - IPN',
   
   // Títulos y subtítulos principales
