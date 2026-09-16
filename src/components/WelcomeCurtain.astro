@@ -17,11 +17,15 @@ const copyrightText = isEn
   : `© ${currentYear} Instituto Politécnico Nacional — ${siteBrand.campus}. Todos los derechos reservados.`;
 ---
 
-<!-- SCRIPT ANTI-FOUC INLINE: Oculta inmediatamente si ya se vio en esta sesión -->
+<!-- SCRIPT ANTI-FOUC INLINE: Oculta inmediatamente si ya se vio en esta sesión (salvo si se solicita ?welcome) -->
 <script is:inline>
   (function () {
     try {
-      if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('welcome')) {
+        sessionStorage.removeItem('upiicsa_welcome_seen');
+        document.documentElement.removeAttribute('data-welcome-seen');
+      } else if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
         document.documentElement.setAttribute('data-welcome-seen', 'true');
       }
     } catch (e) {}
@@ -39,16 +43,31 @@ const copyrightText = isEn
 
   <div class="curtain-container">
     <div class="curtain-card">
-      <!-- Anillo y Logo Central -->
-      <div class="curtain-logo-wrapper">
-        <div class="curtain-logo-glow"></div>
-        <img
-          src={siteBrand.logoUrl}
-          alt={siteBrand.logoAlt}
-          width="84"
-          height="84"
-          class="curtain-logo"
-        />
+      <!-- Anillos y Logos Centrales (IPN y UPIICSA) -->
+      <div class="curtain-logos-group">
+        <div class="curtain-logo-wrapper" title="Instituto Politécnico Nacional">
+          <div class="curtain-logo-glow"></div>
+          <img
+            src={siteBrand.ipnLogoUrl}
+            alt={siteBrand.ipnLogoAlt}
+            width="88"
+            height="88"
+            class="curtain-logo"
+          />
+        </div>
+
+        <div class="curtain-logos-divider" aria-hidden="true"></div>
+
+        <div class="curtain-logo-wrapper" title="UPIICSA">
+          <div class="curtain-logo-glow"></div>
+          <img
+            src={siteBrand.upiicsaLogoUrl}
+            alt={siteBrand.upiicsaLogoAlt}
+            width="88"
+            height="88"
+            class="curtain-logo"
+          />
+        </div>
       </div>
 
       <!-- Insignia Institucional -->
@@ -99,9 +118,13 @@ const copyrightText = isEn
 
     if (!curtain) return;
 
-    // Si ya se registró como visto en la sesión, asegurarse de removerlo
+    // Si ya se registró como visto en la sesión, asegurarse de removerlo (salvo si se solicita ?welcome)
     try {
-      if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('welcome')) {
+        sessionStorage.removeItem('upiicsa_welcome_seen');
+        document.documentElement.removeAttribute('data-welcome-seen');
+      } else if (sessionStorage.getItem('upiicsa_welcome_seen') === 'true') {
         curtain.remove();
         return;
       }
@@ -237,19 +260,38 @@ const copyrightText = isEn
     }
   }
 
+  /* Contenedor de Logos Institucionales */
+  .curtain-logos-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .curtain-logos-divider {
+    width: 2px;
+    height: 48px;
+    background: linear-gradient(to bottom, transparent, rgba(212, 175, 55, 0.7), transparent);
+  }
+
   /* Anillo y Logo */
   .curtain-logo-wrapper {
     position: relative;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 100px;
-    height: 100px;
+    width: 108px;
+    height: 108px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
-    border: 2px solid rgba(212, 175, 55, 0.4);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    margin-bottom: 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 2px solid rgba(212, 175, 55, 0.45);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .curtain-logo-wrapper:hover {
+    transform: scale(1.06);
   }
 
   .curtain-logo-glow {
@@ -264,8 +306,8 @@ const copyrightText = isEn
   .curtain-logo {
     position: relative;
     z-index: 1;
-    width: 76px;
-    height: 76px;
+    width: 86px;
+    height: 86px;
     object-fit: contain;
     border-radius: 50%;
   }
@@ -394,6 +436,21 @@ const copyrightText = isEn
   }
 
   @media (max-width: 600px) {
+    .curtain-logos-group {
+      gap: 0.85rem;
+      margin-bottom: 1rem;
+    }
+    .curtain-logo-wrapper {
+      width: 88px;
+      height: 88px;
+    }
+    .curtain-logo {
+      width: 70px;
+      height: 70px;
+    }
+    .curtain-logos-divider {
+      height: 38px;
+    }
     .curtain-card {
       padding: 1.75rem 1.25rem;
     }

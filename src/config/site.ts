@@ -7,9 +7,15 @@
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 export const siteBrand = {
-  // Ruta al archivo del logo (colócalo dentro de la carpeta /public/)
+  // Rutas a los logos oficiales en /public/
+  ipnLogoUrl: `${base}/ipn_logo.svg`,
+  ipnLogoAlt: 'Escudo Oficial IPN',
+  upiicsaLogoUrl: `${base}/upiicsa_logo.svg`,
+  upiicsaLogoAlt: 'Escudo Oficial UPIICSA',
+
+  // Compatibilidad con referencias previas
   logoUrl: `${base}/upiicsa_logo.svg`,
-  logoAlt: 'Escudo Oficial UPIICSA - IPN',
+  logoAlt: 'Escudos Oficiales IPN y UPIICSA',
   
   // Títulos y subtítulos principales
   title: 'MULTIMEDIA',
