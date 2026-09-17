@@ -103,6 +103,16 @@ header.header {
   padding-inline-end: var(--sl-nav-pad-x) !important;
 }
 
+@media (max-width: 50rem) {
+  header.header,
+  [data-has-sidebar] header.header,
+  [data-has-sidebar] .header {
+    padding-inline: 0.5rem !important;
+    padding-inline-start: 0.5rem !important;
+    padding-inline-end: 0.5rem !important;
+  }
+}
+
 /* ==========================================================================
    COLAPSO / EXPANSIÓN DEL SIDEBAR CON EL MENÚ HAMBURGUESA EN ESCRITORIO
    El menú lateral inicia SIEMPRE CERRADO por defecto (ancho completo).

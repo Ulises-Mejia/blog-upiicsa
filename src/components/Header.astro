@@ -449,17 +449,91 @@ const subtitle = siteBrand.subtitle.es;
   }
 
   @media (max-width: 768px) {
+    .header-custom {
+      gap: 6px;
+    }
+    .header-brand-group {
+      gap: 8px;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+    .header-brand {
+      gap: 8px;
+      min-width: 0;
+    }
+    .header-logos {
+      gap: 5px;
+      flex-shrink: 0;
+    }
+    .header-logos img {
+      width: 34px;
+      height: 34px;
+      padding: 1px;
+    }
+    .brand-title {
+      font-size: 0.95rem;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
     .brand-subtitle,
     .nav-btn-text {
       display: none;
     }
+    .menu-toggle {
+      width: 34px;
+      height: 34px;
+      padding: 6px;
+    }
+    .menu-toggle .hamburger-bar {
+      width: 17px;
+      height: 2px;
+    }
+    .header-actions {
+      gap: 5px;
+      flex-shrink: 0;
+    }
     .header-link-btn {
-      width: 38px;
+      width: 34px;
+      height: 34px;
       padding: 0;
       justify-content: center;
     }
-    .header-actions {
+  }
+
+  @media (max-width: 480px) {
+    .header-custom {
+      gap: 4px;
+    }
+    .header-brand-group {
       gap: 6px;
+    }
+    .header-brand {
+      gap: 6px;
+    }
+    .header-logos {
+      gap: 4px;
+    }
+    .header-logos img {
+      width: 30px;
+      height: 30px;
+    }
+    .brand-title {
+      font-size: 0.88rem;
+    }
+    .brand-badge {
+      display: none; /* Como ya están los dos escudos IPN y UPIICSA, ocultamos el badge de texto en móviles estrechos */
+    }
+    .header-actions {
+      gap: 4px;
+    }
+    .header-link-btn {
+      width: 32px;
+      height: 32px;
+    }
+    .menu-toggle {
+      width: 32px;
+      height: 32px;
+      padding: 5px;
     }
   }
 </style>
