@@ -186,34 +186,37 @@ const copyrightText = isEn
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background-color: #06170E;
     transition: transform 0.55s cubic-bezier(0.76, 0, 0.24, 1), opacity 0.4s ease;
   }
 
   /* Animación de salida hacia arriba (Efecto Telón/Cortina Digital) */
   .welcome-curtain.is-closing {
     transform: translateY(-100%);
-    opacity: 0.95;
+    opacity: 0.98;
     pointer-events: none;
   }
 
-  /* Fondo tipo velo con desenfoque de cristal (Glassmorphism) */
+  /* Fondo completamente opaco con atmósfera institucional (cero transparencia hacia la página trasera) */
   .curtain-overlay {
     position: absolute;
     inset: 0;
     background: radial-gradient(
-      circle at 50% 40%,
-      rgba(0, 54, 31, 0.94) 0%,
-      rgba(6, 23, 14, 0.98) 100%
+      circle at 50% 35%,
+      #00361F 0%,
+      #06170E 80%
     );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+  }
+
+  :global(:root[data-theme='light']) .welcome-curtain {
+    background-color: #071C12;
   }
 
   :global(:root[data-theme='light']) .curtain-overlay {
     background: radial-gradient(
-      circle at 50% 40%,
-      rgba(0, 100, 58, 0.94) 0%,
-      rgba(7, 28, 18, 0.98) 100%
+      circle at 50% 35%,
+      #004D2C 0%,
+      #06170E 80%
     );
   }
 
