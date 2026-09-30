@@ -5,62 +5,28 @@ description: "Plantilla académica para 1.1.4: Formatos de Imagen, Audio, Video 
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Los formatos de archivo son las estructuras estandarizadas que definen cómo se codifica, comprime y almacena la información binaria para representar medios en un sistema computacional. En la web y los entornos multimedia, elegir el formato adecuado representa el balance crítico entre calidad perceptiva, compatibilidad con el navegador y consumo eficiente de ancho de banda. Entender la diferencia técnica entre cada contenedor y códec permite construir sitios rápidos, accesibles y visualmente profesionales.
 
-## Desarrollo del Contenido
+## Desarrollo del Contenido Clasificacion de Medios
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Formatos de Imagen: Se dividen en gráficos vectoriales (fórmulas geométricas que escalan infinitamente sin perder resolución, como .svg) y mapas de bits (cuadrículas de píxeles). En la web predominan formatos comprimidos modernos como .webp y .avif, que ofrecen hasta un 30% a 50% mayor compresión que los tradicionales .jpg y .png manteniendo transparencia y fidelidad cromática.
+
+Formatos de Audio: Diseñados para codificar ondas sonoras. Varían desde formatos sin compresión o compresión sin pérdida (PCM/.wav, .flac) ideales para producción, hasta formatos con pérdida altamente eficientes (.mp3, .aac/.m4a, .opus) diseñados para reproducirse al instante en reproductores web y transmisiones en línea.
+
+Formatos de Video: Funcionan como contenedores digitales (como .mp4 y .webm) que encapsulan pistas sincronizadas de video comprimido, pistas de audio y metadatos (como subtítulos). Su eficiencia depende del códec subyacente (H.264, VP9, AV1), buscando la menor cantidad de megabytes por segundo sin generar artefactos visuales.
+
+Formatos de Texto y Tipografía: Es el medio fundamental para transmitir semántica e información estructurada. Abarca el marcado hipertextual (.html), hojas de estilo (.css), datos estructurados (.json) y archivos de fuentes web optimizadas (.woff2), los cuales comprimen glifos tipográficos para acelerar el renderizado del texto en pantalla.
 
 ### Conceptos Clave
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+* **Concepto Principal:** Métodos de representación bidimensional mediante matrices discretas de píxeles o mediante instrucciones matemáticas de puntos, líneas y curvas.
+* **Aspecto Técnico:** Codificación matricial comprimida (.webp, .png, .jpg) evaluada por profundidad de bits por canal (RGB/RGBA) frente a marcado XML vectorial escalable (.svg) procesado en tiempo real por el motor del navegador.
+* **Aplicación Práctica:** Uso de SVG para iconos e isotipos nítidos en pantallas Retina, y WebP para fotografías de artículos de blog con tiempos de carga mínimos.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+Los formatos de archivo constituyen la infraestructura técnica sobre la cual se sostiene cualquier producto digital. No existe un formato único universal; el éxito de una página web depende de saber asociar cada tipo de contenido con el formato que mejor optimice su propósito.
+
+La evolución hacia estándares modernos y abiertos —como WebP, AV1, Opus y WOFF2— ha transformado la web en un ecosistema más rápido, eficiente y sostenible, permitiendo una experiencia de alta fidelidad sin penalizar el rendimiento ni la accesibilidad para usuarios con conexiones limitadas.
 
 ---
-
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```

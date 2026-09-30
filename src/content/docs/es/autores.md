@@ -22,7 +22,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
     </div>
     <div class="author-meta">
       <h3 class="author-name">Ulises Mejía Ortega</h3>
-      <span class="author-role-badge">Arquitectura y Desarrollo</span>
+      <span class="author-role-badge">ARQUITECTURA DESARROLLO Y CURADURIA</span>
     </div>
   </div>
 
@@ -39,7 +39,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
       </div>
       <div class="author-info-row">
         <span class="author-info-label">Contacto:</span>
-        <span>correo@alumno.ipn.mx</span>
+        <span>umeji2500@alumno.ipn.mx</span>
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
     </div>
     <div class="author-meta">
       <h3 class="author-name">Marco Antonio Linares Zurita</h3>
-      <span class="author-role-badge">Curaduría de Contenidos</span>
+      <span class="author-role-badge">ARQUITECTURA DESARROLLO Y CURADURIA </span>
     </div>
   </div>
 
@@ -108,7 +108,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
       </div>
       <div class="author-info-row">
         <span class="author-info-label">Contacto:</span>
-        <span>correo@alumno.ipn.mx</span>
+        <span>mlinaresz2500@alumno.ipn.mx</span>
       </div>
     </div>
   </div>
@@ -139,9 +139,9 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
     <div class="author-section-title">💼 Perfil Profesional</div>
     <div class="author-section-content">
       <ul>
-        <li><strong>Especialidad:</strong> Curaduría y redacción de contenido académico, metodologías de producción multimedia, edición de audio/video y autoría.</li>
-        <li><strong>Áreas de Dominio:</strong> Realidad Virtual, entornos inmersivos, compresión de formatos y derechos de autor.</li>
-        <li><strong>Rol en el Proyecto:</strong> Estructuración pedagógica del temario, validación de contenidos de las 3 unidades y compilación de recursos multimedia.</li>
+        <li><strong>Especialidad:</strong> Arquitectura de software, desarrollo frontend con Astro, diseño de sistemas responsivos y optimización web.</li>
+        <li><strong>Tecnologías:</strong> Astro, TypeScript, HTML5 Multimedia, Tailwind/CSS3, Git.</li>
+        <li><strong>Rol en el Proyecto:</strong> Diseño de arquitectura del repositorio, desarrollo de componentes interactivos, internacionalización (ES/EN) y experiencia de usuario.</li>
       </ul>
     </div>
   </div>
@@ -150,11 +150,3 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
 </div>
 
 ---
-
-:::tip[📸 ¿Cómo subir o actualizar las fotografías?]
-Para mostrar tus fotos reales:
-1. Guarda tu fotografía en formato JPG o PNG dentro de la carpeta:  
-   * Para Ulises: `public/images/autor_ulises.jpg`
-   * Para Marco: `public/images/autor_marco.jpg`
-2. Se actualizarán automáticamente en la tarjeta conservando el marco institucional dorado.
-:::

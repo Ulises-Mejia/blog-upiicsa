@@ -3,7 +3,6 @@ title: "Identidad Institucional IPN"
 description: "Símbolos, Himno Oficial con audio y letra, y Decálogo del Instituto Politécnico Nacional."
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 El **Instituto Politécnico Nacional (IPN)** es la institución educativa pública laica y gratuita del Estado mexicano rectora de la educación tecnológica nacional. A través de sus símbolos, himno y principios cívicos, se forja el compromiso de poner **"La Técnica al Servicio de la Patria"**.
 
@@ -16,25 +15,19 @@ El Himno Oficial del IPN fue creado con motivo del XXV Aniversario de la fundaci
 * **Letra:** Maestra y poetisa Carmen de la Fuente.
 * **Música:** Profesor Armando González Domínguez.
 
-### Reproductor de Audio
-
 <div class="media-container" style="max-width: 620px; margin: 1.5rem auto; padding: 1.25rem; border-radius: 12px; background: rgba(0, 100, 58, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
   <p style="margin-top: 0; font-weight: 700; color: var(--sl-color-accent-high);">🔊 Grabación Oficial del Himno Politécnico</p>
   <audio controls style="width: 100%; border-radius: 8px; outline: none;">
-    <source src="/audios/himno_ipn.mp3" type="audio/mpeg" />
-    <source src="/audios/himno_ipn.ogg" type="audio/ogg" />
+    <source src="../../audios/himno_ipn.mp3" type="audio/mpeg" />
+    <source src="../../audios/himno_ipn.ogg" type="audio/ogg" />
     Tu navegador no soporta el elemento de audio HTML5.
   </audio>
   <p class="media-caption" style="margin-top: 0.6rem; font-size: 0.8rem; margin-bottom: 0;">
-    Coloca el archivo de audio institucional en <code>public/audios/himno_ipn.mp3</code> para reproducirlo directamente.
+    Audio del Himno Oficial del IPN (Grabación: Carmen de la Fuente / Armando González Domínguez).
   </p>
 </div>
 
 ### Letra Oficial Completa
-
-:::tip[Estructura Lírica]
-El himno se compone de una estrofa introductoria, el coro distintivo y cuatro estrofas que exaltan la ciencia, la técnica, el saber y el despertar social de México.
-:::
 
 #### Estrofa Inicial
 

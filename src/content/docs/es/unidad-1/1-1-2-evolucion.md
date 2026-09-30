@@ -5,62 +5,34 @@ description: "Plantilla académica para 1.1.2: La Evolución de la Computación 
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+La computación gráfica es el motor visual detrás de la multimedia contemporánea. Nació como una disciplina experimental para representar trazos simples en monitores de tubos de rayos catódicos y se transformó en una industria capaz de simular la física de la luz con exactitud matemática. Su evolución no solo redefinió la estética digital, sino que cambió radicalmente la forma en que los seres humanos interactúan con la información, pasando de interfaces alfanuméricas estáticas a entornos inmersivos, tridimensionales y en tiempo real.
 
 ## Desarrollo del Contenido
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Orígenes y Gráficos Vectoriales (Años 60 – 70): Pioneros como Ivan Sutherland con Sketchpad sentaron las bases del diseño asistido por computadora (CAD). La visualización dependía de líneas de alambre (wireframe) y trazado vectorial directo en fósforo verde, con fines principalmente militares y de ingeniería.
+
+La Revolución del Pixel y 2D (Años 80): Con el surgimiento de las computadoras personales, se estandarizó el uso del mapa de bits (raster graphics) y las paletas de color indexadas (CGA, EGA, VGA). La computación gráfica penetró en la cultura popular a través de videojuegos, interfaces gráficas de usuario (GUI) y software de edición digital.
+
+El Salto a la 3D y Hardware Dedicado (Años 90): La llegada de las tarjetas aceleradoras gráficas (como las Voodoo de 3dfx y las primeras GPUs) permitió procesar polígonos, texturas y sombreado en tiempo real. Se consolidaron APIs fundamentales como OpenGL y Direct3D, llevando el modelado tridimensional al cine y al consumo masivo.
+
+Fotorrealismo y Gráficos Web (Años 2000 – 2010): Introducción de los programmable shaders, iluminación global y motores de renderizado como RenderMan. En la web, la llegada del elemento y WebGL permitió ejecutar escenas 3D aceleradas por hardware directamente en el navegador sin complementos adicionales.
+
+Trazado de Rayos, Tiempo Real y XR (Actualidad): Maduración del Ray Tracing acelerado por hardware, renderizado basado en física (PBR), APIs modernas de bajo nivel (Vulkan, DirectX 12, WebGPU) e integración de realidad virtual y aumentada (WebXR).
 
 ### Conceptos Clave
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+* **Renderizado (Rendering):** 
+Concepto Principal: Proceso algorítmico mediante el cual se genera una imagen bidimensional a partir de un modelo o escena tridimensional estructurada en datos matemáticos.
+
+* **Aspecto Técnico:** Cálculo de proyección de coordenadas espaciales ($X, Y, Z$) a píxeles de pantalla ($X, Y$), aplicando modelos matemáticos de iluminación, sombras y materiales mediante shaders de fragmentos.
+
+* **Aplicación Práctica:** Aplicación Práctica: Generación de fotogramas finales en producciones de animación 3D o visualización de productos 3D interactivos en tiendas en línea vía Three.js.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La evolución de la computación gráfica transformó a la multimedia de una simple herramienta de apoyo visual a un ecosistema de inmersión total. Lo que comenzó como experimentos con trazos vectoriales y pantallas monocromáticas hoy permite ejecutar simulaciones fotorrealistas directamente en la ventana de un navegador.
+
+Esta trayectoria demuestra que el verdadero poder de los gráficos por computadora no radica únicamente en su capacidad de imitar la realidad física, sino en su habilidad para hacer accesible, interactiva y comprensible la complejidad del mundo digital para cualquier usuario.
 
 ---
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
