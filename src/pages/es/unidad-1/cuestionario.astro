@@ -1,0 +1,16 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import WebXRQuiz from '../../../components/quiz/WebXRQuiz.astro';
+---
+
+<StarlightPage
+  frontmatter={{
+    title: 'Cuestionario en Realidad Aumentada — Unidad I',
+    description: 'Evaluación interactiva inmersiva WebXR para la Unidad I.',
+    template: 'splash',
+    prev: false,
+    next: false,
+  }}
+>
+  <WebXRQuiz unit={1} />
+</StarlightPage>

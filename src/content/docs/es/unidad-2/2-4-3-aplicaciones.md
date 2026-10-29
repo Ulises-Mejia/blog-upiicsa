@@ -34,3 +34,15 @@ Un ingeniero en ciencias de la informática completo domina ambas caras de la mo
 * García García, L. I., et al. (2023). Realidad aumentada como mecanismo para incrementar el grado de aprendizaje. *Ciencia ergo-sum*, 30(3).  
 * García Sánchez, E., et al. (2016). Metodología para el desarrollo de software multimedia educativo MEDESME. *CPU-e*, (23), 216-226.  
 * Mihelič, A., Hovelja, T., & Vrhovec, S. (2023). Identifying Key Activities, Artifacts and Roles in Agile Engineering of Secure Software with Hierarchical Clustering. *Applied Sciences*, 13(7), 4563.
+
+---
+
+:::tip[¿Listo para poner a prueba tus conocimientos?]
+Has concluido todos los temas de la **Unidad II: Tecnologías Emergentes en las Herramientas Multimedias**. Pon a prueba lo aprendido interactuando con preguntas y objetos 3D flotantes en tu entorno real:
+
+<div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
+  <a href="/blog-upiicsa/es/unidad-2/cuestionario/" class="quiz-cta-btn">
+    🥽 Iniciar Cuestionario en Realidad Aumentada (Unidad II) →
+  </a>
+</div>
+:::

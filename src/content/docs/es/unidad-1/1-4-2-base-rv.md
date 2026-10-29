@@ -31,4 +31,14 @@ Sin los algoritmos de animación por computadora —transformaciones matriciales
 * Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 7, 16 y 17). CRC Press.  
 * Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. *Revista ICONO 14*, 9(2), 185-211.
 
-# Unidad Temática II: Tecnologías Emergentes en las Herramientas Multimedias
+---
+
+:::tip[¿Listo para poner a prueba tus conocimientos?]
+Has concluido todos los temas de la **Unidad I: Contexto y Fundamentos de la Multimedia**. Pon a prueba lo aprendido interactuando con preguntas y objetos 3D flotantes en tu entorno real:
+
+<div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
+  <a href="/blog-upiicsa/es/unidad-1/cuestionario/" class="quiz-cta-btn">
+    🥽 Iniciar Cuestionario en Realidad Aumentada (Unidad I) →
+  </a>
+</div>
+:::
