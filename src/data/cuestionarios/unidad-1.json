@@ -1,0 +1,184 @@
+{
+  "unidad": 1,
+  "titulo": {
+    "es": "Cuestionario de Evaluación — Unidad I",
+    "en": "Evaluation Quiz — Unit I"
+  },
+  "descripcion": {
+    "es": "Evaluación interactiva sobre los fundamentos, evolución, producción y animación multimedia.",
+    "en": "Interactive assessment on multimedia fundamentals, evolution, production, and animation."
+  },
+  "estado": "completo",
+  "preguntas": [
+    {
+      "id": "u1-q1",
+      "unidad": 1,
+      "tema": "1.1.1 Elementos de la Multimedia",
+      "nivel": "basico",
+      "pendiente": false,
+      "enunciado": {
+        "es": "¿Cuáles son los tres pilares técnicos que sostienen a un sistema multimedia interactivo según el marco informático?",
+        "en": "What are the three technical pillars supporting an interactive multimedia system according to computer science theory?"
+      },
+      "opciones": [
+        {
+          "es": "Rasterización, compresión y color",
+          "en": "Rasterization, compression, and color"
+        },
+        {
+          "es": "Digitalización, interactividad e hipermedia",
+          "en": "Digitization, interactivity, and hypermedia"
+        },
+        {
+          "es": "Modulación, frecuencia y muestreo",
+          "en": "Modulation, frequency, and sampling"
+        },
+        {
+          "es": "Sincronización, bitrate y latencia",
+          "en": "Synchronization, bitrate, and latency"
+        }
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": {
+        "es": "El subtema 1.1.1 establece que la multimedia interactiva se fundamenta en la digitalización de señales físicas, la interactividad que cede control al usuario y la hipermedia no lineal.",
+        "en": "Topic 1.1.1 establishes that interactive multimedia is based on digitizing physical signals, user-driven interactivity, and non-linear hypermedia."
+      }
+    },
+    {
+      "id": "u1-q2",
+      "unidad": 1,
+      "tema": "1.2.4 Procesamiento Digital de Audio",
+      "nivel": "intermedio",
+      "pendiente": false,
+      "enunciado": {
+        "es": "Según el Teorema de Nyquist-Shannon, ¿qué condición debe cumplir la frecuencia de muestreo (fs) al digitalizar una señal con frecuencia máxima fmax?",
+        "en": "According to the Nyquist-Shannon Theorem, what condition must the sampling rate (fs) satisfy when digitizing a signal with maximum frequency fmax?"
+      },
+      "opciones": [
+        {
+          "es": "fs debe ser menor a la mitad de fmax",
+          "en": "fs must be less than half of fmax"
+        },
+        {
+          "es": "fs debe ser idéntica a fmax",
+          "en": "fs must be identical to fmax"
+        },
+        {
+          "es": "fs debe ser al menos el doble de fmax",
+          "en": "fs must be at least twice fmax"
+        },
+        {
+          "es": "fs debe ser diez veces superior a fmax",
+          "en": "fs must be ten times higher than fmax"
+        }
+      ],
+      "respuestaCorrecta": 2,
+      "explicacion": {
+        "es": "El subtema 1.2.4 detalla que para evitar aliasing, la tasa de muestreo debe ser estrictamente mayor o igual al doble de la frecuencia máxima de la señal (fs >= 2 · fmax).",
+        "en": "Topic 1.2.4 details that to prevent aliasing, the sampling rate must strictly be greater than or equal to twice the maximum signal frequency (fs >= 2 · fmax)."
+      }
+    },
+    {
+      "id": "u1-q3",
+      "unidad": 1,
+      "tema": "1.2.1 Descripción de los Elementos y Etapas de la Producción Multimedia",
+      "nivel": "intermedio",
+      "pendiente": false,
+      "enunciado": {
+        "es": "En la metodología MEDESME de 8 fases para desarrollo de software multimedia, ¿en qué fase se generan el mapa de navegación, el storyboard y los diagramas UML?",
+        "en": "In the 8-phase MEDESME methodology for multimedia software development, in which phase are the navigation map, storyboard, and UML diagrams created?"
+      },
+      "opciones": [
+        {
+          "es": "Fase 3: Diseño (Estructural y Lógico)",
+          "en": "Phase 3: Design (Structural & Logical)"
+        },
+        {
+          "es": "Fase 1: Concepto o Preproducción",
+          "en": "Phase 1: Concept or Preproduction"
+        },
+        {
+          "es": "Fase 5: Implementación de Código",
+          "en": "Phase 5: Code Implementation"
+        },
+        {
+          "es": "Fase 7: Producción y Masterizado",
+          "en": "Phase 7: Production & Mastering"
+        }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "En el subtema 1.2.1, la Fase 3 (Diseño) abarca el diseño lógico, funcional y estructural mediante los 6 diagramas de ingeniería (esquema, mapa de navegación, storyboard, UML y E-R).",
+        "en": "In topic 1.2.1, Phase 3 (Design) encompasses logical, functional, and structural design using 6 engineering diagrams (navigation map, storyboard, UML, and E-R)."
+      }
+    },
+    {
+      "id": "u1-q4",
+      "unidad": 1,
+      "tema": "1.4.1 Tecnologías Abiertas y Cerradas en la Animación",
+      "nivel": "basico",
+      "pendiente": false,
+      "enunciado": {
+        "es": "¿Qué formato abierto, desarrollado por Khronos Group, es reconocido en la industria como «el JPEG del 3D» por optimizar la transmisión de modelos interactivos?",
+        "en": "Which open standard developed by Khronos Group is known as 'the JPEG of 3D' for optimizing the transmission of interactive models?"
+      },
+      "opciones": [
+        {
+          "es": ".FLA (archivo de proyecto Adobe)",
+          "en": ".FLA (Adobe project file)"
+        },
+        {
+          "es": ".SWF (archivo compilado de Flash)",
+          "en": ".SWF (compiled Flash binary)"
+        },
+        {
+          "es": ".MB (archivo binario de Maya)",
+          "en": ".MB (Maya binary scene file)"
+        },
+        {
+          "es": "glTF / GLB (estándar abierto 3D)",
+          "en": "glTF / GLB (open 3D standard)"
+        }
+      ],
+      "respuestaCorrecta": 3,
+      "explicacion": {
+        "es": "El subtema 1.4.1 destaca a glTF/GLB como el estándar abierto multiplataforma de Khronos Group para empaquetar geometrías, texturas PBR y animaciones con rápida carga en tiempo real.",
+        "en": "Topic 1.4.1 highlights glTF/GLB as Khronos Group's open multiplatform standard for packaging geometries, PBR textures, and animations with rapid real-time runtime loading."
+      }
+    },
+    {
+      "id": "u1-q5",
+      "unidad": 1,
+      "tema": "1.4.2 La Animación: La Base de la Realidad Virtual",
+      "nivel": "avanzado",
+      "pendiente": false,
+      "enunciado": {
+        "es": "En visores de Realidad Virtual, ¿cuál es el límite crítico de latencia motion-to-photon para garantizar coherencia sensoriomotriz y evitar mareo por simulación?",
+        "en": "In Virtual Reality headsets, what is the critical motion-to-photon latency threshold to ensure sensorimotor coherence and prevent simulation sickness?"
+      },
+      "opciones": [
+        {
+          "es": "Menor a 20 milisegundos (< 20 ms)",
+          "en": "Under 20 milliseconds (< 20 ms)"
+        },
+        {
+          "es": "Mayor a 80 milisegundos (> 80 ms)",
+          "en": "Over 80 milliseconds (> 80 ms)"
+        },
+        {
+          "es": "Exactamente 250 milisegundos",
+          "en": "Exactly 250 milliseconds"
+        },
+        {
+          "es": "Menor a 1 microsegundo (< 1 µs)",
+          "en": "Under 1 microsecond (< 1 µs)"
+        }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "El subtema 1.4.2 especifica que el retraso entre el movimiento físico de la cabeza y la respuesta de la pantalla debe ser inferior a 20 ms para evitar cinetosis.",
+        "en": "Topic 1.4.2 specifies that the delay between physical head movement and the display's optical response must stay under 20 ms to prevent motion sickness."
+      }
+    }
+  ]
+}

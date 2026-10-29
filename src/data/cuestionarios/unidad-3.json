@@ -1,0 +1,124 @@
+{
+  "unidad": 3,
+  "titulo": {
+    "es": "Cuestionario de Evaluación — Unidad III (Pendiente)",
+    "en": "Evaluation Quiz — Unit III (Pending)"
+  },
+  "descripcion": {
+    "es": "Evaluación sobre edición de video, autoría multimedia, detección de plagio y etapas de planeación de proyectos disruptivos.",
+    "en": "Assessment on video editing, multimedia authoring, plagiarism detection, and planning stages for disruptive projects."
+  },
+  "estado": "pendiente",
+  "preguntas": [
+    {
+      "id": "u3-q1",
+      "unidad": 3,
+      "tema": "3.1.1 Edición del Video en las Herramientas Multimedia",
+      "nivel": "basico",
+      "pendiente": true,
+      "enunciado": {
+        "es": "[Contenido Pendiente] Pregunta sobre edición de video digital en sistemas informáticos.",
+        "en": "[Pending Content] Question regarding digital video editing in computer systems."
+      },
+      "opciones": [
+        { "es": "Opción A (Pendiente de redacción)", "en": "Option A (Pending drafting)" },
+        { "es": "Opción B (Pendiente de redacción)", "en": "Option B (Pending drafting)" },
+        { "es": "Opción C (Pendiente de redacción)", "en": "Option C (Pending drafting)" },
+        { "es": "Opción D (Pendiente de redacción)", "en": "Option D (Pending drafting)" }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "Esta pregunta se formulará cuando los temas de la Unidad III sean desarrollados a partir de sus fuentes definitivas.",
+        "en": "This question will be formulated once Unit III topics are written from their definitive sources."
+      }
+    },
+    {
+      "id": "u3-q2",
+      "unidad": 3,
+      "tema": "3.1.2 Herramientas de Edición de Video",
+      "nivel": "intermedio",
+      "pendiente": true,
+      "enunciado": {
+        "es": "[Contenido Pendiente] Pregunta sobre herramientas de edición y posproducción no lineal.",
+        "en": "[Pending Content] Question regarding non-linear editing and post-production software."
+      },
+      "opciones": [
+        { "es": "Opción A (Pendiente de redacción)", "en": "Option A (Pending drafting)" },
+        { "es": "Opción B (Pendiente de redacción)", "en": "Option B (Pending drafting)" },
+        { "es": "Opción C (Pendiente de redacción)", "en": "Option C (Pending drafting)" },
+        { "es": "Opción D (Pendiente de redacción)", "en": "Option D (Pending drafting)" }
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": {
+        "es": "Esta pregunta se formulará cuando los temas de la Unidad III sean desarrollados a partir de sus fuentes definitivas.",
+        "en": "This question will be formulated once Unit III topics are written from their definitive sources."
+      }
+    },
+    {
+      "id": "u3-q3",
+      "unidad": 3,
+      "tema": "3.2.1 Software de Autoría Multimedia",
+      "nivel": "intermedio",
+      "pendiente": true,
+      "enunciado": {
+        "es": "[Contenido Pendiente] Pregunta sobre arquitectura y paradigmas de software de autoría multimedia.",
+        "en": "[Pending Content] Question regarding multimedia authoring software architecture and paradigms."
+      },
+      "opciones": [
+        { "es": "Opción A (Pendiente de redacción)", "en": "Option A (Pending drafting)" },
+        { "es": "Opción B (Pendiente de redacción)", "en": "Option B (Pending drafting)" },
+        { "es": "Opción C (Pendiente de redacción)", "en": "Option C (Pending drafting)" },
+        { "es": "Opción D (Pendiente de redacción)", "en": "Option D (Pending drafting)" }
+      ],
+      "respuestaCorrecta": 2,
+      "explicacion": {
+        "es": "Esta pregunta se formulará cuando los temas de la Unidad III sean desarrollados a partir de sus fuentes definitivas.",
+        "en": "This question will be formulated once Unit III topics are written from their definitive sources."
+      }
+    },
+    {
+      "id": "u3-q4",
+      "unidad": 3,
+      "tema": "3.2.2 Software de Originalidad y Detección de Plagio",
+      "nivel": "basico",
+      "pendiente": true,
+      "enunciado": {
+        "es": "[Contenido Pendiente] Pregunta sobre algoritmos de similitud de texto y detección de originalidad.",
+        "en": "[Pending Content] Question regarding text similarity algorithms and originality verification."
+      },
+      "opciones": [
+        { "es": "Opción A (Pendiente de redacción)", "en": "Option A (Pending drafting)" },
+        { "es": "Opción B (Pendiente de redacción)", "en": "Option B (Pending drafting)" },
+        { "es": "Opción C (Pendiente de redacción)", "en": "Option C (Pending drafting)" },
+        { "es": "Opción D (Pendiente de redacción)", "en": "Option D (Pending drafting)" }
+      ],
+      "respuestaCorrecta": 3,
+      "explicacion": {
+        "es": "Esta pregunta se formulará cuando los temas de la Unidad III sean desarrollados a partir de sus fuentes definitivas.",
+        "en": "This question will be formulated once Unit III topics are written from their definitive sources."
+      }
+    },
+    {
+      "id": "u3-q5",
+      "unidad": 3,
+      "tema": "3.2.3 Registro de Mi Autoría",
+      "nivel": "avanzado",
+      "pendiente": true,
+      "enunciado": {
+        "es": "[Contenido Pendiente] Pregunta sobre licencias de propiedad intelectual (INDAUTOR, Creative Commons, Copyright).",
+        "en": "[Pending Content] Question regarding intellectual property licensing (INDAUTOR, Creative Commons, Copyright)."
+      },
+      "opciones": [
+        { "es": "Opción A (Pendiente de redacción)", "en": "Option A (Pending drafting)" },
+        { "es": "Opción B (Pendiente de redacción)", "en": "Option B (Pending drafting)" },
+        { "es": "Opción C (Pendiente de redacción)", "en": "Option C (Pending drafting)" },
+        { "es": "Opción D (Pendiente de redacción)", "en": "Option D (Pending drafting)" }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "Esta pregunta se formulará cuando los temas de la Unidad III sean desarrollados a partir de sus fuentes definitivas.",
+        "en": "This question will be formulated once Unit III topics are written from their definitive sources."
+      }
+    }
+  ]
+}

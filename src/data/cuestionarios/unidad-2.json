@@ -1,0 +1,184 @@
+{
+  "unidad": 2,
+  "titulo": {
+    "es": "Cuestionario de Evaluación — Unidad II",
+    "en": "Evaluation Quiz — Unit II"
+  },
+  "descripcion": {
+    "es": "Evaluación interactiva sobre Realidad Virtual, Aumentada, Recorridos 360°, Motores de videojuegos y Gráficos.",
+    "en": "Interactive assessment on Virtual Reality, Augmented Reality, 360° Tours, Game Engines, and Graphics."
+  },
+  "estado": "completo",
+  "preguntas": [
+    {
+      "id": "u2-q1",
+      "unidad": 2,
+      "tema": "2.1.1 Características de la Realidad Virtual",
+      "nivel": "basico",
+      "pendiente": false,
+      "enunciado": {
+        "es": "¿Qué diferencia técnica fundamental distingue a un sistema de seguimiento 6DoF de uno 3DoF en Realidad Virtual?",
+        "en": "What fundamental technical difference distinguishes a 6DoF tracking system from a 3DoF system in Virtual Reality?"
+      },
+      "opciones": [
+        {
+          "es": "6DoF añade traslaciones en los ejes X, Y y Z",
+          "en": "6DoF adds translations along X, Y, and Z axes"
+        },
+        {
+          "es": "6DoF solo mide la inclinación lateral (Roll)",
+          "en": "6DoF only measures lateral tilt (Roll)"
+        },
+        {
+          "es": "6DoF suprime la visión estereoscópica 3D",
+          "en": "6DoF suppresses 3D stereoscopic vision"
+        },
+        {
+          "es": "3DoF permite caminar libremente por el espacio",
+          "en": "3DoF enables free walking throughout the room"
+        }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "El subtema 2.1.1 define que 3DoF solo registra rotaciones angulares (Pitch, Yaw, Roll), mientras que 6DoF añade las traslaciones posicionales en los tres ejes espaciales (X, Y, Z).",
+        "en": "Topic 2.1.1 defines that 3DoF only tracks rotational angles (Pitch, Yaw, Roll), while 6DoF adds positional translations across the three spatial axes (X, Y, Z)."
+      }
+    },
+    {
+      "id": "u2-q2",
+      "unidad": 2,
+      "tema": "2.1.2 Diferencias entre Realidad Virtual, Aumentada y Mixta",
+      "nivel": "basico",
+      "pendiente": false,
+      "enunciado": {
+        "es": "En el Continuo de Virtualidad de Milgram y Kishino (1994), ¿cómo se denomina al término paraguas que engloba a la RA, la Virtualidad Aumentada y la RV?",
+        "en": "In the Virtuality Continuum of Milgram & Kishino (1994), what umbrella term encompasses AR, Augmented Virtuality, and VR?"
+      },
+      "opciones": [
+        {
+          "es": "Ciberespacio Ubicuo Conectado",
+          "en": "Ubiquitous Connected Cyberspace"
+        },
+        {
+          "es": "Realidad Sintética Distribuida",
+          "en": "Distributed Synthetic Reality"
+        },
+        {
+          "es": "Realidad Extendida (XR)",
+          "en": "Extended Reality (XR)"
+        },
+        {
+          "es": "Telepresencia Háptica Global",
+          "en": "Global Haptic Telepresence"
+        }
+      ],
+      "respuestaCorrecta": 2,
+      "explicacion": {
+        "es": "El subtema 2.1.2 establece que Realidad Extendida (XR) es la categoría general que engloba todo el espectro interactivo entre el entorno físico real y la simulación virtual pura.",
+        "en": "Topic 2.1.2 establishes that Extended Reality (XR) is the overarching umbrella term covering the entire continuum between purely physical and completely virtual simulations."
+      }
+    },
+    {
+      "id": "u2-q3",
+      "unidad": 2,
+      "tema": "2.2.1 Tecnología de Recorridos Virtuales",
+      "nivel": "intermedio",
+      "pendiente": false,
+      "enunciado": {
+        "es": "En recorridos virtuales esféricos 360°, ¿qué relación de aspecto rectangular (proporción ancho:alto) caracteriza típicamente a una imagen equirrectangulares completa (360° x 180°)?",
+        "en": "In 360° spherical virtual tours, what rectangular aspect ratio (width:height) typically characterizes a complete equirectangular image (360° x 180°)?"
+      },
+      "opciones": [
+        {
+          "es": "16:9 (formato panorámico estándar)",
+          "en": "16:9 (standard widescreen ratio)"
+        },
+        {
+          "es": "2:1 (el doble de ancho que de alto)",
+          "en": "2:1 (twice as wide as it is high)"
+        },
+        {
+          "es": "4:3 (formato tradicional de video)",
+          "en": "4:3 (traditional television ratio)"
+        },
+        {
+          "es": "1:1 (formato cuadrado perfecto)",
+          "en": "1:1 (perfect square ratio)"
+        }
+      ],
+      "respuestaCorrecta": 1,
+      "explicacion": {
+        "es": "Como describe el subtema 2.2.1, el mapa equirrectangular cubre 360° en el eje horizontal y 180° en el vertical, resultando siempre en una proporción matemática de 2:1.",
+        "en": "As described in topic 2.2.1, the equirectangular map spans 360° horizontally and 180° vertically, always yielding an exact mathematical 2:1 aspect ratio."
+      }
+    },
+    {
+      "id": "u2-q4",
+      "unidad": 2,
+      "tema": "2.3.2 Lenguajes y Librerías de Computación Gráfica: OpenGL, OpenCV y Python",
+      "nivel": "intermedio",
+      "pendiente": false,
+      "enunciado": {
+        "es": "En el pipeline gráfico programable de OpenGL/WebGL, ¿cuál es la función primaria que ejecuta el Fragment Shader (Pixel Shader)?",
+        "en": "In the programmable OpenGL/WebGL graphics pipeline, what is the primary role executed by the Fragment Shader (Pixel Shader)?"
+      },
+      "opciones": [
+        {
+          "es": "Detectar colisiones físicas del motor",
+          "en": "Detect engine physics collisions"
+        },
+        {
+          "es": "Calcular la traslación de los vértices 3D",
+          "en": "Calculate 3D vertex spatial translation"
+        },
+        {
+          "es": "Empaquetar peticiones HTTP al servidor",
+          "en": "Package HTTP requests to the server"
+        },
+        {
+          "es": "Calcular el color e iluminación del píxel",
+          "en": "Calculate pixel final color and lighting"
+        }
+      ],
+      "respuestaCorrecta": 3,
+      "explicacion": {
+        "es": "El subtema 2.3.2 puntualiza que mientras el Vertex Shader procesa la posición geométrica de los vértices, el Fragment Shader calcula el color final, textura y sombreado de cada píxel en pantalla.",
+        "en": "Topic 2.3.2 points out that while the Vertex Shader processes vertex geometric positions, the Fragment Shader calculates the final color, texture, and shading for each screen pixel."
+      }
+    },
+    {
+      "id": "u2-q5",
+      "unidad": 2,
+      "tema": "2.4.3 Aplicaciones Multimedia: Perspectiva del Usuario Final vs. Desarrollador",
+      "nivel": "avanzado",
+      "pendiente": false,
+      "enunciado": {
+        "es": "Según la norma internacional ISO 9241-11, ¿cuáles son los tres factores fundamentales para medir la usabilidad en sistemas multimedia interactivos?",
+        "en": "According to international standard ISO 9241-11, what are the three fundamental metrics to evaluate usability in interactive multimedia systems?"
+      },
+      "opciones": [
+        {
+          "es": "Eficacia, eficiencia y satisfacción",
+          "en": "Effectiveness, efficiency, and satisfaction"
+        },
+        {
+          "es": "Resolución, fotogramas y compresión",
+          "en": "Resolution, framerate, and compression"
+        },
+        {
+          "es": "Modularidad, portabilidad y herencia",
+          "en": "Modularity, portability, and inheritance"
+        },
+        {
+          "es": "Ancho de banda, latencia y bitrate",
+          "en": "Bandwidth, latency, and bitrate"
+        }
+      ],
+      "respuestaCorrecta": 0,
+      "explicacion": {
+        "es": "El subtema 2.4.3 señala que la norma ISO 9241-11 define la usabilidad en función de la eficacia (logro de metas), eficiencia (esfuerzo/recursos) y satisfacción del usuario.",
+        "en": "Topic 2.4.3 notes that ISO 9241-11 defines usability based on effectiveness (goal achievement), efficiency (resources spent), and user satisfaction."
+      }
+    }
+  ]
+}
