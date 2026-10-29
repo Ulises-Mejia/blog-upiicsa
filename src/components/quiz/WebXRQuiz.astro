@@ -25,10 +25,16 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       </button>
     </div>
 
-    <!-- Indicador central de escena de prueba Fase 3 -->
-    <div class="ar-hud-instructions">
-      <p class="lang-es">📍 Objeto de prueba 3D anclado a 1.2 m frente a ti. Muévete libremente alrededor.</p>
-      <p class="lang-en" style="display: none;">📍 3D test object anchored 1.2m in front of you. Move freely around it.</p>
+    <!-- Controles inferiores en RA: centrado inmediato y guía -->
+    <div class="ar-hud-bottom">
+      <button id="btn-recenter-ar" class="btn-recenter-ar" type="button">
+        🎯 <span class="lang-es">Centrar objeto frente a mí</span>
+        <span class="lang-en" style="display: none;">Center object in front of me</span>
+      </button>
+      <div class="ar-hud-instructions">
+        <p class="lang-es">📍 Objeto 3D fijado a 85 cm frente a ti. Toca la pantalla o pulsa el botón para reubicarlo frente a ti.</p>
+        <p class="lang-en" style="display: none;">📍 3D object anchored 85 cm in front of you. Tap screen or button to bring it in front of you.</p>
+      </div>
     </div>
   </div>
 
@@ -177,8 +183,15 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private renderer: THREE.WebGLRenderer | null = null;
     private scene: THREE.Scene | null = null;
     private camera: THREE.PerspectiveCamera | null = null;
+
+    // Jerarquía 3D: ancla mundial + grupo de mallas con flotación local
+    private objectAnchor: THREE.Group | null = null;
+    private meshGroup: THREE.Group | null = null;
     private testMesh: THREE.Mesh | null = null;
     private wireframeMesh: THREE.LineSegments | null = null;
+    private ring1: THREE.Mesh | null = null;
+    private ring2: THREE.Mesh | null = null;
+    private badgeMesh: THREE.Mesh | null = null;
 
     private viewportContainer = document.getElementById('quiz-3d-viewport');
     private stateChecking = document.getElementById('quiz-state-checking');
@@ -188,6 +201,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private arDomOverlay = document.getElementById('ar-dom-overlay');
     private btnStartAR = document.getElementById('btn-start-ar');
     private btnExitAR = document.getElementById('btn-exit-ar');
+    private btnRecenterAR = document.getElementById('btn-recenter-ar');
     private btnRecheckAR = document.getElementById('btn-recheck-ar');
     private btnRetryAR = document.getElementById('btn-retry-ar');
     private errorText = document.getElementById('error-message-text');
@@ -195,11 +209,57 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private isDragging = false;
     private previousMousePosition = { x: 0, y: 0 };
     private isARActive = false;
+    private hasAutoCenteredInAR = false;
+    private unitNumber = Number(document.getElementById('webxr-quiz-root')?.getAttribute('data-unit') || 1);
 
     constructor() {
       this.init3DScene();
       this.bindEvents();
       this.checkWebXRSupport();
+    }
+
+    private createBadgeTexture(unit: number): THREE.CanvasTexture {
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 256;
+      const ctx = canvas.getContext('2d');
+      if (ctx) {
+        // Fondo con bordes redondeados y gradiente institucional
+        ctx.fillStyle = 'rgba(0, 54, 31, 0.94)';
+        if (typeof ctx.roundRect === 'function') {
+          ctx.roundRect(12, 12, 488, 232, 24);
+        } else {
+          ctx.rect(12, 12, 488, 232);
+        }
+        ctx.fill();
+
+        // Borde dorado de alto contraste
+        ctx.lineWidth = 6;
+        ctx.strokeStyle = '#D4AF37';
+        ctx.stroke();
+
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+
+        ctx.fillStyle = '#D4AF37';
+        ctx.font = 'bold 20px system-ui, sans-serif';
+        ctx.fillText('INSTITUTO POLITÉCNICO NACIONAL', 256, 50);
+
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 26px system-ui, sans-serif';
+        ctx.fillText('UPIICSA • HERRAMIENTAS MULTIMEDIA', 256, 98);
+
+        ctx.fillStyle = '#10B981';
+        ctx.font = 'bold 22px system-ui, sans-serif';
+        ctx.fillText(`CUESTIONARIO RA — UNIDAD ${unit}`, 256, 146);
+
+        ctx.fillStyle = '#FBBF24';
+        ctx.font = 'bold 16px system-ui, sans-serif';
+        ctx.fillText('✨ Objeto 3D Activo en tu Espacio', 256, 192);
+      }
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+      return texture;
     }
 
     private init3DScene() {
@@ -211,65 +271,142 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       // Crear escena y cámara
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(50, width / height, 0.01, 20);
-      this.camera.position.set(0, 0, 0.7);
+      this.camera.position.set(0, 0, 0.95);
 
-      // Crear renderizador
-      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      // Crear renderizador con soporte WebXR habilitado de antemano
+      this.renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
       this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       this.renderer.setSize(width, height);
+      this.renderer.setClearColor(0x000000, 0); // Fondo 100% transparente en AR
+      this.renderer.xr.enabled = true; // Activo para gestión uniforme del WebXRManager
+
       this.viewportContainer.innerHTML = '';
       this.viewportContainer.appendChild(this.renderer.domElement);
 
-      // Iluminación
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+      // Iluminación intensa para entorno real
+      const ambientLight = new THREE.AmbientLight(0xffffff, 2.2);
       this.scene.add(ambientLight);
 
-      const dirLight = new THREE.DirectionalLight(0xd4af37, 2.0);
-      dirLight.position.set(1, 2, 1.5);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 2.0);
+      dirLight.position.set(1.5, 3, 2);
       this.scene.add(dirLight);
 
-      const dirLight2 = new THREE.DirectionalLight(0x00643a, 1.5);
-      dirLight2.position.set(-1, -1, 1);
-      this.scene.add(dirLight2);
+      const dirLightGold = new THREE.DirectionalLight(0xd4af37, 1.8);
+      dirLightGold.position.set(-1.5, -1, 1.5);
+      this.scene.add(dirLightGold);
 
-      // Objeto institucional de prueba: Dodecaedro Verde UPIICSA
-      const geometry = new THREE.DodecahedronGeometry(0.18, 0);
+      // JERARQUÍA 3D
+      // 1. Ancla mundial (se posiciona en el espacio real frente al usuario)
+      this.objectAnchor = new THREE.Group();
+      this.objectAnchor.position.set(0, 0, 0);
+      this.scene.add(this.objectAnchor);
+
+      // 2. Grupo de mallas (rota y flota armónicamente sin alterar la posición mundial del ancla)
+      this.meshGroup = new THREE.Group();
+      this.objectAnchor.add(this.meshGroup);
+
+      // Núcleo: Dodecaedro Verde UPIICSA con emisión luminosa para visibilidad en cualquier iluminación real
+      const geometry = new THREE.DodecahedronGeometry(0.20, 0);
       const material = new THREE.MeshStandardMaterial({
         color: 0x00643a,
-        roughness: 0.25,
-        metalness: 0.5,
+        emissive: 0x004d2c,
+        emissiveIntensity: 0.55,
+        roughness: 0.2,
+        metalness: 0.25,
         transparent: true,
-        opacity: 0.92,
+        opacity: 0.96,
       });
 
       this.testMesh = new THREE.Mesh(geometry, material);
-      this.testMesh.position.set(0, 0, 0);
-      this.scene.add(this.testMesh);
+      this.meshGroup.add(this.testMesh);
 
-      // Marco dorado poligonal exterior (wireframe)
+      // Marco dorado poligonal exterior
       const wireframeGeo = new THREE.WireframeGeometry(geometry);
-      const wireframeMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 });
+      const wireframeMat = new THREE.LineBasicMaterial({ color: 0xffe066 });
       this.wireframeMesh = new THREE.LineSegments(wireframeGeo, wireframeMat);
-      this.wireframeMesh.position.copy(this.testMesh.position);
-      this.scene.add(this.wireframeMesh);
+      this.meshGroup.add(this.wireframeMesh);
 
-      // Bucle de animación continuo
-      let clock = new THREE.Clock();
-      this.renderer.setAnimationLoop(() => {
+      // Anillo orbital dorado 1 (IPN Gold)
+      const ringGeo1 = new THREE.TorusGeometry(0.31, 0.012, 16, 64);
+      const ringMat1 = new THREE.MeshStandardMaterial({
+        color: 0xd4af37,
+        emissive: 0xd4af37,
+        emissiveIntensity: 0.65,
+        roughness: 0.2,
+        metalness: 0.8,
+      });
+      this.ring1 = new THREE.Mesh(ringGeo1, ringMat1);
+      this.ring1.rotation.x = Math.PI / 3;
+      this.meshGroup.add(this.ring1);
+
+      // Anillo orbital dorado 2
+      const ringGeo2 = new THREE.TorusGeometry(0.35, 0.008, 16, 64);
+      const ringMat2 = new THREE.MeshStandardMaterial({
+        color: 0xffd700,
+        emissive: 0xffd700,
+        emissiveIntensity: 0.5,
+        roughness: 0.2,
+        metalness: 0.8,
+      });
+      this.ring2 = new THREE.Mesh(ringGeo2, ringMat2);
+      this.ring2.rotation.y = Math.PI / 3.5;
+      this.meshGroup.add(this.ring2);
+
+      // Cartel flotante institucional sobre el objeto
+      const badgeTexture = this.createBadgeTexture(this.unitNumber);
+      const badgeGeo = new THREE.PlaneGeometry(0.55, 0.275);
+      const badgeMat = new THREE.MeshBasicMaterial({
+        map: badgeTexture,
+        transparent: true,
+        side: THREE.DoubleSide,
+      });
+      this.badgeMesh = new THREE.Mesh(badgeGeo, badgeMat);
+      this.badgeMesh.position.set(0, 0.36, 0);
+      this.meshGroup.add(this.badgeMesh);
+
+      // Luz puntual interna esmeralda
+      const pointLight = new THREE.PointLight(0x10b981, 2.5, 3.5);
+      this.meshGroup.add(pointLight);
+
+      // Bucle de animación continuo WebXR
+      const clock = new THREE.Clock();
+      this.renderer.setAnimationLoop((timestamp, frame) => {
         const elapsedTime = clock.getElapsedTime();
 
-        if (this.testMesh && this.wireframeMesh) {
+        // Si estamos en AR y aún no se ha auto-posicionado frente a la cámara con seguimiento activo
+        if (this.isARActive && frame && !this.hasAutoCenteredInAR) {
+          const refSpace = this.renderer?.xr.getReferenceSpace();
+          if (refSpace) {
+            const pose = frame.getViewerPose(refSpace);
+            if (pose) {
+              this.centerObjectInFrontOfCamera(0.85);
+              this.hasAutoCenteredInAR = true;
+            }
+          }
+        }
+
+        // Animación de rotación del grupo y anillos
+        if (this.meshGroup) {
           if (!this.isDragging) {
-            this.testMesh.rotation.y += 0.008;
-            this.testMesh.rotation.x = Math.sin(elapsedTime * 0.5) * 0.15;
+            this.meshGroup.rotation.y += 0.009;
+            this.meshGroup.rotation.x = Math.sin(elapsedTime * 0.5) * 0.10;
           }
 
-          if (this.isARActive) {
-            this.testMesh.position.y = Math.sin(elapsedTime * 1.5) * 0.03;
+          if (this.ring1) {
+            this.ring1.rotation.x += 0.014;
+            this.ring1.rotation.y += 0.008;
+          }
+          if (this.ring2) {
+            this.ring2.rotation.y -= 0.011;
+            this.ring2.rotation.z += 0.007;
           }
 
-          this.wireframeMesh.rotation.copy(this.testMesh.rotation);
-          this.wireframeMesh.position.copy(this.testMesh.position);
+          // Flotación armónica vertical LOCAL (nunca sobreescribe la posición mundial del ancla)
+          this.meshGroup.position.y = Math.sin(elapsedTime * 1.6) * 0.035;
         }
 
         if (this.renderer && this.scene && this.camera) {
@@ -292,6 +429,49 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       });
     }
 
+    /**
+     * Posiciona el objeto 3D con precisión milimétrica frente a la lente del usuario,
+     * siguiendo exactamente la inclinación y orientación actual de su teléfono.
+     */
+    public centerObjectInFrontOfCamera(distance = 0.85) {
+      if (!this.renderer || !this.objectAnchor) return;
+      const xrCamera = this.renderer.xr.getCamera();
+
+      const camPos = new THREE.Vector3();
+      const camDir = new THREE.Vector3();
+      xrCamera.getWorldPosition(camPos);
+      xrCamera.getWorldDirection(camDir);
+
+      // Si la dirección no es medible, apuntar al frente por defecto
+      if (camDir.lengthSq() < 0.001) {
+        camDir.set(0, 0, -1);
+      }
+
+      // Posicionar a 'distance' metros justo en el centro del cono visual de la cámara
+      const targetPos = camPos.clone().add(camDir.multiplyScalar(distance));
+      this.objectAnchor.position.copy(targetPos);
+      this.objectAnchor.lookAt(camPos);
+    }
+
+    private pulseObject() {
+      if (!this.meshGroup) return;
+      this.meshGroup.scale.set(1.2, 1.2, 1.2);
+      setTimeout(() => {
+        if (this.meshGroup) this.meshGroup.scale.set(1.0, 1.0, 1.0);
+      }, 180);
+
+      if ('vibrate' in navigator) {
+        try {
+          navigator.vibrate([40, 30, 40]);
+        } catch {}
+      }
+    }
+
+    private onARSelect() {
+      this.centerObjectInFrontOfCamera(0.85);
+      this.pulseObject();
+    }
+
     private setupInteractiveControls() {
       const dom = this.renderer?.domElement;
       if (!dom) return;
@@ -303,12 +483,12 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       };
 
       const onMove = (clientX: number, clientY: number) => {
-        if (!this.isDragging || this.isARActive || !this.testMesh) return;
+        if (!this.isDragging || this.isARActive || !this.meshGroup) return;
         const deltaX = clientX - this.previousMousePosition.x;
         const deltaY = clientY - this.previousMousePosition.y;
 
-        this.testMesh.rotation.y += deltaX * 0.01;
-        this.testMesh.rotation.x += deltaY * 0.01;
+        this.meshGroup.rotation.y += deltaX * 0.01;
+        this.meshGroup.rotation.x += deltaY * 0.01;
 
         this.previousMousePosition = { x: clientX, y: clientY };
       };
@@ -332,7 +512,15 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
     private bindEvents() {
       this.btnStartAR?.addEventListener('click', () => this.startARSession());
-      this.btnExitAR?.addEventListener('click', () => this.endARSession());
+      this.btnExitAR?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.endARSession();
+      });
+      this.btnRecenterAR?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.centerObjectInFrontOfCamera(0.85);
+        this.pulseObject();
+      });
       this.btnRecheckAR?.addEventListener('click', () => this.checkWebXRSupport());
       this.btnRetryAR?.addEventListener('click', () => this.checkWebXRSupport());
 
@@ -383,7 +571,9 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
           optionalFeatures: ['dom-overlay', 'hit-test', 'local-floor'],
         };
 
+        // Mostrar overlay antes de inicializar para asegurar un tamaño de viewport válido en Chrome
         if (this.arDomOverlay) {
+          this.arDomOverlay.style.display = 'flex';
           sessionInit.domOverlay = { root: this.arDomOverlay };
         }
 
@@ -391,6 +581,9 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
         this.onSessionStarted(session);
       } catch (err: any) {
         console.error('[WebXR] Fallo al iniciar sesión AR:', err);
+        if (this.arDomOverlay) {
+          this.arDomOverlay.style.display = 'none';
+        }
         const msg = err?.message || 'Permiso de cámara denegado o error de inicialización en el dispositivo.';
         this.showState('error', msg);
       }
@@ -399,7 +592,10 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private async onSessionStarted(session: XRSession) {
       this.xrSession = session;
       this.isARActive = true;
+      this.hasAutoCenteredInAR = false;
+
       session.addEventListener('end', () => this.onSessionEnded());
+      session.addEventListener('select', () => this.onARSelect());
 
       if (this.arDomOverlay) {
         this.arDomOverlay.style.display = 'flex';
@@ -411,10 +607,10 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       this.renderer.xr.setReferenceSpaceType('local');
       await this.renderer.xr.setSession(session);
 
-      // En AR, posicionamos el objeto a 1.2 metros al frente
-      if (this.testMesh && this.wireframeMesh) {
-        this.testMesh.position.set(0, 0, -1.2);
-        this.wireframeMesh.position.copy(this.testMesh.position);
+      // Posición tentativa inicial al frente
+      if (this.objectAnchor) {
+        this.objectAnchor.position.set(0, 0, -0.85);
+        this.objectAnchor.rotation.set(0, 0, 0);
       }
     }
 
@@ -426,6 +622,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
     private onSessionEnded() {
       this.isARActive = false;
+      this.hasAutoCenteredInAR = false;
       this.xrSession = null;
 
       if (this.arDomOverlay) {
@@ -433,22 +630,21 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       }
 
       if (this.renderer) {
-        this.renderer.xr.enabled = false;
         if (this.viewportContainer) {
           const w = this.viewportContainer.clientWidth || 600;
           const h = this.viewportContainer.clientHeight || 320;
           this.renderer.setSize(w, h);
           if (this.camera) {
             this.camera.aspect = w / h;
-            this.camera.position.set(0, 0, 0.7);
+            this.camera.position.set(0, 0, 0.95);
             this.camera.updateProjectionMatrix();
           }
         }
       }
 
-      if (this.testMesh && this.wireframeMesh) {
-        this.testMesh.position.set(0, 0, 0);
-        this.wireframeMesh.position.copy(this.testMesh.position);
+      if (this.objectAnchor) {
+        this.objectAnchor.position.set(0, 0, 0);
+        this.objectAnchor.rotation.set(0, 0, 0);
       }
 
       this.showState('supported');
@@ -894,22 +1090,56 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   }
 
-  .ar-hud-instructions {
-    background: rgba(0, 0, 0, 0.75);
+  .ar-hud-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    pointer-events: auto;
+  }
+
+  .btn-recenter-ar {
+    background: linear-gradient(135deg, #00643A 0%, #004d2c 100%);
     color: #FFFFFF;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 10px 22px;
+    border: 2px solid #D4AF37;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 10px rgba(212, 175, 55, 0.4);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+
+  .btn-recenter-ar:active {
+    transform: scale(0.95);
+    background: #D4AF37;
+    color: #00361F;
+  }
+
+  .ar-hud-instructions {
+    background: rgba(0, 0, 0, 0.8);
+    color: #FFFFFF;
+    font-size: 0.88rem;
     font-weight: 600;
     padding: 10px 18px;
     border-radius: 12px;
     text-align: center;
     border: 1px solid rgba(212, 175, 55, 0.4);
     backdrop-filter: blur(8px);
-    max-width: 460px;
+    max-width: 480px;
     margin: 0 auto;
     pointer-events: auto;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   }
 
   .ar-hud-instructions p {
     margin: 0;
+    line-height: 1.4;
   }
 </style>
