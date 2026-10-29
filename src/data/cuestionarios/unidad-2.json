@@ -5,179 +5,179 @@
     "en": "Evaluation Quiz — Unit II"
   },
   "descripcion": {
-    "es": "Evaluación interactiva sobre Realidad Virtual, Aumentada, Recorridos 360°, Motores de videojuegos y Gráficos.",
-    "en": "Interactive assessment on Virtual Reality, Augmented Reality, 360° Tours, Game Engines, and Graphics."
+    "es": "Evaluación interactiva en Realidad Aumentada sobre Realidad Virtual, Realidad Aumentada, Recorridos 360° y Motores 3D.",
+    "en": "Interactive Augmented Reality quiz on Virtual Reality, Augmented Reality, 360° Tours, and 3D Engines."
   },
   "estado": "completo",
   "preguntas": [
     {
       "id": "u2-q1",
       "unidad": 2,
-      "tema": "2.1.1 Características de la Realidad Virtual",
+      "tema": "2.1.2 Diferencias entre Realidad Virtual, Realidad Aumentada y Realidad Mixta",
       "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "¿Qué diferencia técnica fundamental distingue a un sistema de seguimiento 6DoF de uno 3DoF en Realidad Virtual?",
-        "en": "What fundamental technical difference distinguishes a 6DoF tracking system from a 3DoF system in Virtual Reality?"
+        "es": "¿Cuál es la diferencia fundamental entre la Realidad Aumentada (RA) y la Realidad Virtual (RV)?",
+        "en": "What is the fundamental difference between Augmented Reality (AR) and Virtual Reality (VR)?"
       },
       "opciones": [
         {
-          "es": "6DoF añade traslaciones en los ejes X, Y y Z",
-          "en": "6DoF adds translations along X, Y, and Z axes"
+          "es": "La RA superpone elementos al mundo real y la RV crea un mundo digital",
+          "en": "AR superimposes elements onto the real world and VR creates a digital world"
         },
         {
-          "es": "6DoF solo mide la inclinación lateral (Roll)",
-          "en": "6DoF only measures lateral tilt (Roll)"
+          "es": "La RV funciona únicamente en teléfonos inteligentes económicos",
+          "en": "VR functions solely on low-cost smartphones"
         },
         {
-          "es": "6DoF suprime la visión estereoscópica 3D",
-          "en": "6DoF suppresses 3D stereoscopic vision"
+          "es": "La RA aísla por completo la vista exterior del usuario",
+          "en": "AR completely isolates the user's view of the exterior"
         },
         {
-          "es": "3DoF permite caminar libremente por el espacio",
-          "en": "3DoF enables free walking throughout the room"
+          "es": "La RA requiere visores opacos y la RV se proyecta sin pantallas",
+          "en": "AR requires opaque headsets and VR projects without displays"
         }
       ],
       "respuestaCorrecta": 0,
       "explicacion": {
-        "es": "El subtema 2.1.1 define que 3DoF solo registra rotaciones angulares (Pitch, Yaw, Roll), mientras que 6DoF añade las traslaciones posicionales en los tres ejes espaciales (X, Y, Z).",
-        "en": "Topic 2.1.1 defines that 3DoF only tracks rotational angles (Pitch, Yaw, Roll), while 6DoF adds positional translations across the three spatial axes (X, Y, Z)."
+        "es": "La Realidad Aumentada enriquece el mundo físico con capas digitales en tiempo real, mientras que la Realidad Virtual aísla al usuario y lo sumerge en una simulación 100% sintética.",
+        "en": "Augmented Reality enhances the physical world with real-time digital overlays, while Virtual Reality isolates the user inside a 100% synthetic simulation."
       }
     },
     {
       "id": "u2-q2",
       "unidad": 2,
-      "tema": "2.1.2 Diferencias entre Realidad Virtual, Aumentada y Mixta",
+      "tema": "2.1.1 Características de la Realidad Virtual",
       "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "En el Continuo de Virtualidad de Milgram y Kishino (1994), ¿cómo se denomina al término paraguas que engloba a la RA, la Virtualidad Aumentada y la RV?",
-        "en": "In the Virtuality Continuum of Milgram & Kishino (1994), what umbrella term encompasses AR, Augmented Virtuality, and VR?"
+        "es": "¿Qué dispositivo es indispensable para experimentar una Realidad Virtual totalmente inmersiva?",
+        "en": "Which device is essential to experience fully immersive Virtual Reality?"
       },
       "opciones": [
         {
-          "es": "Ciberespacio Ubicuo Conectado",
-          "en": "Ubiquitous Connected Cyberspace"
+          "es": "Un teclado ergonómico",
+          "en": "An ergonomic keyboard"
         },
         {
-          "es": "Realidad Sintética Distribuida",
-          "en": "Distributed Synthetic Reality"
+          "es": "Un monitor de escritorio",
+          "en": "A desktop monitor"
         },
         {
-          "es": "Realidad Extendida (XR)",
-          "en": "Extended Reality (XR)"
+          "es": "Un visor o casco de RV (HMD)",
+          "en": "A VR headset (HMD)"
         },
         {
-          "es": "Telepresencia Háptica Global",
-          "en": "Global Haptic Telepresence"
+          "es": "Un proyector de video",
+          "en": "A video projector"
         }
       ],
       "respuestaCorrecta": 2,
       "explicacion": {
-        "es": "El subtema 2.1.2 establece que Realidad Extendida (XR) es la categoría general que engloba todo el espectro interactivo entre el entorno físico real y la simulación virtual pura.",
-        "en": "Topic 2.1.2 establishes that Extended Reality (XR) is the overarching umbrella term covering the entire continuum between purely physical and completely virtual simulations."
+        "es": "El visor HMD (Head-Mounted Display) aísla visual y auditivamente al usuario, permitiendo seguimiento del movimiento de la cabeza para lograr inmersión y presencia total.",
+        "en": "The HMD (Head-Mounted Display) visually and aurally isolates the user, tracking head orientation to achieve complete immersion and presence."
       }
     },
     {
       "id": "u2-q3",
       "unidad": 2,
       "tema": "2.2.1 Tecnología de Recorridos Virtuales",
-      "nivel": "intermedio",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "En recorridos virtuales esféricos 360°, ¿qué relación de aspecto rectangular (proporción ancho:alto) caracteriza típicamente a una imagen equirrectangulares completa (360° x 180°)?",
-        "en": "In 360° spherical virtual tours, what rectangular aspect ratio (width:height) typically characterizes a complete equirectangular image (360° x 180°)?"
+        "es": "¿Qué tipo de imágenes se emplean comúnmente para crear recorridos virtuales interactivos como Google Street View?",
+        "en": "What type of imagery is commonly employed to build interactive virtual tours like Google Street View?"
       },
       "opciones": [
         {
-          "es": "16:9 (formato panorámico estándar)",
-          "en": "16:9 (standard widescreen ratio)"
+          "es": "Fotografías fijas en blanco y negro",
+          "en": "Black and white still photos"
         },
         {
-          "es": "2:1 (el doble de ancho que de alto)",
-          "en": "2:1 (twice as wide as it is high)"
+          "es": "Fotografías panorámicas esféricas de 360°",
+          "en": "360° spherical panoramic photos"
         },
         {
-          "es": "4:3 (formato tradicional de video)",
-          "en": "4:3 (traditional television ratio)"
+          "es": "Dibujos vectoriales simples en 2D",
+          "en": "Simple 2D vector drawings"
         },
         {
-          "es": "1:1 (formato cuadrado perfecto)",
-          "en": "1:1 (perfect square ratio)"
+          "es": "Capturas de pantalla de baja resolución",
+          "en": "Low-resolution screen captures"
         }
       ],
       "respuestaCorrecta": 1,
       "explicacion": {
-        "es": "Como describe el subtema 2.2.1, el mapa equirrectangular cubre 360° en el eje horizontal y 180° en el vertical, resultando siempre en una proporción matemática de 2:1.",
-        "en": "As described in topic 2.2.1, the equirectangular map spans 360° horizontally and 180° vertically, always yielding an exact mathematical 2:1 aspect ratio."
+        "es": "Los recorridos virtuales panorámicos se construyen uniendo capturas fotográficas en proyecciones equirrectangulares de 360 grados que permiten navegar la vista en cualquier dirección.",
+        "en": "Panoramic virtual tours are constructed by stitching photos into 360-degree equirectangular projections that allow looking around in any direction."
       }
     },
     {
       "id": "u2-q4",
       "unidad": 2,
-      "tema": "2.3.2 Lenguajes y Librerías de Computación Gráfica: OpenGL, OpenCV y Python",
-      "nivel": "intermedio",
+      "tema": "2.2.5 Motores de Videojuegos: Unity, Unreal, etc.",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "En el pipeline gráfico programable de OpenGL/WebGL, ¿cuál es la función primaria que ejecuta el Fragment Shader (Pixel Shader)?",
-        "en": "In the programmable OpenGL/WebGL graphics pipeline, what is the primary role executed by the Fragment Shader (Pixel Shader)?"
+        "es": "¿Cuál de los siguientes es un motor líder en la industria para crear videojuegos y experiencias interactivas en Realidad Virtual y Aumentada?",
+        "en": "Which of the following is an industry-leading game engine used to create interactive Virtual and Augmented Reality experiences?"
       },
       "opciones": [
         {
-          "es": "Detectar colisiones físicas del motor",
-          "en": "Detect engine physics collisions"
+          "es": "Microsoft Word",
+          "en": "Microsoft Word"
         },
         {
-          "es": "Calcular la traslación de los vértices 3D",
-          "en": "Calculate 3D vertex spatial translation"
+          "es": "Audacity",
+          "en": "Audacity"
         },
         {
-          "es": "Empaquetar peticiones HTTP al servidor",
-          "en": "Package HTTP requests to the server"
+          "es": "VLC Media Player",
+          "en": "VLC Media Player"
         },
         {
-          "es": "Calcular el color e iluminación del píxel",
-          "en": "Calculate pixel final color and lighting"
+          "es": "Unity",
+          "en": "Unity"
         }
       ],
       "respuestaCorrecta": 3,
       "explicacion": {
-        "es": "El subtema 2.3.2 puntualiza que mientras el Vertex Shader procesa la posición geométrica de los vértices, el Fragment Shader calcula el color final, textura y sombreado de cada píxel en pantalla.",
-        "en": "Topic 2.3.2 points out that while the Vertex Shader processes vertex geometric positions, the Fragment Shader calculates the final color, texture, and shading for each screen pixel."
+        "es": "Unity es uno de los motores gráficos y de física más extendidos en la industria para el desarrollo de simulaciones 3D, videojuegos y aplicaciones XR multiplataforma.",
+        "en": "Unity is one of the most widely used graphics and physics engines in the industry for developing multiplatform 3D simulations, games, and XR applications."
       }
     },
     {
       "id": "u2-q5",
       "unidad": 2,
-      "tema": "2.4.3 Aplicaciones Multimedia: Perspectiva del Usuario Final vs. Desarrollador",
-      "nivel": "avanzado",
+      "tema": "2.2.4 Aplicaciones de Entornos Virtuales",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "Según la norma internacional ISO 9241-11, ¿cuáles son los tres factores fundamentales para medir la usabilidad en sistemas multimedia interactivos?",
-        "en": "According to international standard ISO 9241-11, what are the three fundamental metrics to evaluate usability in interactive multimedia systems?"
+        "es": "¿En cuál de las siguientes áreas se utiliza ampliamente la Realidad Virtual para entrenar a personas en escenarios de riesgo sin peligro físico?",
+        "en": "In which of the following areas is Virtual Reality extensively used to train people in hazardous scenarios without physical danger?"
       },
       "opciones": [
         {
-          "es": "Eficacia, eficiencia y satisfacción",
-          "en": "Effectiveness, efficiency, and satisfaction"
+          "es": "Simuladores quirúrgicos médicos y entrenamiento de pilotos",
+          "en": "Medical surgical simulators and pilot flight training"
         },
         {
-          "es": "Resolución, fotogramas y compresión",
-          "en": "Resolution, framerate, and compression"
+          "es": "Impresión de documentos en papel continuo",
+          "en": "Printing documents on continuous paper"
         },
         {
-          "es": "Modularidad, portabilidad y herencia",
-          "en": "Modularity, portability, and inheritance"
+          "es": "Llenado manual de hojas de cálculo",
+          "en": "Manual spreadsheet data entry"
         },
         {
-          "es": "Ancho de banda, latencia y bitrate",
-          "en": "Bandwidth, latency, and bitrate"
+          "es": "Envío de mensajes de correo electrónico",
+          "en": "Sending daily office emails"
         }
       ],
       "respuestaCorrecta": 0,
       "explicacion": {
-        "es": "El subtema 2.4.3 señala que la norma ISO 9241-11 define la usabilidad en función de la eficacia (logro de metas), eficiencia (esfuerzo/recursos) y satisfacción del usuario.",
-        "en": "Topic 2.4.3 notes that ISO 9241-11 defines usability based on effectiveness (goal achievement), efficiency (resources spent), and user satisfaction."
+        "es": "La Realidad Virtual permite practicar cirugías complejas, maniobras de vuelo y protocolos de rescate en un entorno simulado seguro y repetible.",
+        "en": "Virtual Reality allows practicing complex surgeries, flight maneuvers, and emergency rescue protocols in a safe and repeatable simulated environment."
       }
     }
   ]

@@ -5,179 +5,179 @@
     "en": "Evaluation Quiz — Unit I"
   },
   "descripcion": {
-    "es": "Evaluación interactiva sobre los fundamentos, evolución, producción y animación multimedia.",
-    "en": "Interactive assessment on multimedia fundamentals, evolution, production, and animation."
+    "es": "Evaluación interactiva en Realidad Aumentada sobre los fundamentos, evolución y elementos de la multimedia.",
+    "en": "Interactive Augmented Reality quiz on multimedia fundamentals, evolution, and elements."
   },
   "estado": "completo",
   "preguntas": [
     {
       "id": "u1-q1",
       "unidad": 1,
-      "tema": "1.1.1 Elementos de la Multimedia",
+      "tema": "1.1.3 La Web en la Multimedia",
       "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "¿Cuáles son los tres pilares técnicos que sostienen a un sistema multimedia interactivo según el marco informático?",
-        "en": "What are the three technical pillars supporting an interactive multimedia system according to computer science theory?"
+        "es": "¿Qué tecnología moderna permitió reproducir audio y video de forma nativa en los navegadores sin instalar plugins como Flash?",
+        "en": "Which modern technology enabled native audio and video playback in web browsers without plugins like Flash?"
       },
       "opciones": [
         {
-          "es": "Rasterización, compresión y color",
-          "en": "Rasterization, compression, and color"
+          "es": "Java Applets",
+          "en": "Java Applets"
         },
         {
-          "es": "Digitalización, interactividad e hipermedia",
-          "en": "Digitization, interactivity, and hypermedia"
+          "es": "HTML5",
+          "en": "HTML5"
         },
         {
-          "es": "Modulación, frecuencia y muestreo",
-          "en": "Modulation, frequency, and sampling"
+          "es": "Silverlight",
+          "en": "Silverlight"
         },
         {
-          "es": "Sincronización, bitrate y latencia",
-          "en": "Synchronization, bitrate, and latency"
+          "es": "QuickTime",
+          "en": "QuickTime"
         }
       ],
       "respuestaCorrecta": 1,
       "explicacion": {
-        "es": "El subtema 1.1.1 establece que la multimedia interactiva se fundamenta en la digitalización de señales físicas, la interactividad que cede control al usuario y la hipermedia no lineal.",
-        "en": "Topic 1.1.1 establishes that interactive multimedia is based on digitizing physical signals, user-driven interactivity, and non-linear hypermedia."
+        "es": "HTML5 introdujo las etiquetas nativas <video> y <audio>, eliminando la dependencia de complementos de terceros como Adobe Flash.",
+        "en": "HTML5 introduced native <video> and <audio> tags, eliminating dependency on third-party plugins like Adobe Flash."
       }
     },
     {
       "id": "u1-q2",
       "unidad": 1,
-      "tema": "1.2.4 Procesamiento Digital de Audio",
-      "nivel": "intermedio",
+      "tema": "1.1.4 Formatos de Imagen, Audio, Video y Texto",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "Según el Teorema de Nyquist-Shannon, ¿qué condición debe cumplir la frecuencia de muestreo (fs) al digitalizar una señal con frecuencia máxima fmax?",
-        "en": "According to the Nyquist-Shannon Theorem, what condition must the sampling rate (fs) satisfy when digitizing a signal with maximum frequency fmax?"
+        "es": "¿Cuál es la principal ventaja de una imagen vectorial (como SVG) frente a una fotografía en mapa de bits?",
+        "en": "What is the main advantage of a vector image (like SVG) compared to a bitmap photograph?"
       },
       "opciones": [
         {
-          "es": "fs debe ser menor a la mitad de fmax",
-          "en": "fs must be less than half of fmax"
+          "es": "Usa millones de colores por píxel",
+          "en": "Uses millions of colors per pixel"
         },
         {
-          "es": "fs debe ser idéntica a fmax",
-          "en": "fs must be identical to fmax"
+          "es": "Ocupa mayor peso en megabytes",
+          "en": "Takes up more storage in megabytes"
         },
         {
-          "es": "fs debe ser al menos el doble de fmax",
-          "en": "fs must be at least twice fmax"
+          "es": "Se puede ampliar sin perder calidad",
+          "en": "Can be scaled up without quality loss"
         },
         {
-          "es": "fs debe ser diez veces superior a fmax",
-          "en": "fs must be ten times higher than fmax"
+          "es": "Solo se visualiza en blanco y negro",
+          "en": "Can only be displayed in black and white"
         }
       ],
       "respuestaCorrecta": 2,
       "explicacion": {
-        "es": "El subtema 1.2.4 detalla que para evitar aliasing, la tasa de muestreo debe ser estrictamente mayor o igual al doble de la frecuencia máxima de la señal (fs >= 2 · fmax).",
-        "en": "Topic 1.2.4 details that to prevent aliasing, the sampling rate must strictly be greater than or equal to twice the maximum signal frequency (fs >= 2 · fmax)."
+        "es": "Los gráficos vectoriales se definen mediante fórmulas geométricas (curvas de Bézier y polígonos), lo que permite escalarlos a cualquier resolución manteniendo su nitidez.",
+        "en": "Vector graphics are defined by geometric formulas (Bézier curves and polygons), allowing them to scale to any resolution while remaining razor sharp."
       }
     },
     {
       "id": "u1-q3",
       "unidad": 1,
-      "tema": "1.2.1 Descripción de los Elementos y Etapas de la Producción Multimedia",
-      "nivel": "intermedio",
+      "tema": "1.3.2 Tipos y Características de la Animación",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "En la metodología MEDESME de 8 fases para desarrollo de software multimedia, ¿en qué fase se generan el mapa de navegación, el storyboard y los diagramas UML?",
-        "en": "In the 8-phase MEDESME methodology for multimedia software development, in which phase are the navigation map, storyboard, and UML diagrams created?"
+        "es": "¿Cómo se llama la técnica de animación que consiste en manipular y fotografiar objetos físicos reales cuadro por cuadro?",
+        "en": "What is the animation technique of physically moving and photographing real objects frame by frame?"
       },
       "opciones": [
         {
-          "es": "Fase 3: Diseño (Estructural y Lógico)",
-          "en": "Phase 3: Design (Structural & Logical)"
+          "es": "Stop Motion",
+          "en": "Stop Motion"
         },
         {
-          "es": "Fase 1: Concepto o Preproducción",
-          "en": "Phase 1: Concept or Preproduction"
+          "es": "Modelado 3D",
+          "en": "3D Modeling"
         },
         {
-          "es": "Fase 5: Implementación de Código",
-          "en": "Phase 5: Code Implementation"
+          "es": "Rotoscopía digital",
+          "en": "Digital rotoscoping"
         },
         {
-          "es": "Fase 7: Producción y Masterizado",
-          "en": "Phase 7: Production & Mastering"
+          "es": "Animación esquelética",
+          "en": "Skeletal animation"
         }
       ],
       "respuestaCorrecta": 0,
       "explicacion": {
-        "es": "En el subtema 1.2.1, la Fase 3 (Diseño) abarca el diseño lógico, funcional y estructural mediante los 6 diagramas de ingeniería (esquema, mapa de navegación, storyboard, UML y E-R).",
-        "en": "In topic 1.2.1, Phase 3 (Design) encompasses logical, functional, and structural design using 6 engineering diagrams (navigation map, storyboard, UML, and E-R)."
+        "es": "Stop Motion es la técnica tradicional que captura objetos físicos reales (muñecos de plastilina, maquetas) fotograma a fotograma.",
+        "en": "Stop Motion is the traditional technique that captures real physical objects (clay figures, models) frame by frame."
       }
     },
     {
       "id": "u1-q4",
       "unidad": 1,
-      "tema": "1.4.1 Tecnologías Abiertas y Cerradas en la Animación",
-      "nivel": "basico",
+      "tema": "1.2.2 Proceso de Producción con Manejo de la Cámara: Tomas, Movimientos y Planos",
+      "nivel": "intermedio",
       "pendiente": false,
       "enunciado": {
-        "es": "¿Qué formato abierto, desarrollado por Khronos Group, es reconocido en la industria como «el JPEG del 3D» por optimizar la transmisión de modelos interactivos?",
-        "en": "Which open standard developed by Khronos Group is known as 'the JPEG of 3D' for optimizing the transmission of interactive models?"
+        "es": "En la producción audiovisual, ¿qué tipo de plano de cámara se utiliza principalmente para enfocar el rostro y destacar las emociones?",
+        "en": "In audiovisual production, which camera shot is primarily used to focus on the face and highlight emotions?"
       },
       "opciones": [
         {
-          "es": ".FLA (archivo de proyecto Adobe)",
-          "en": ".FLA (Adobe project file)"
+          "es": "Gran Plano General",
+          "en": "Extreme Long Shot"
         },
         {
-          "es": ".SWF (archivo compilado de Flash)",
-          "en": ".SWF (compiled Flash binary)"
+          "es": "Plano Entero",
+          "en": "Full Shot"
         },
         {
-          "es": ".MB (archivo binario de Maya)",
-          "en": ".MB (Maya binary scene file)"
+          "es": "Plano Americano",
+          "en": "Medium Long Shot"
         },
         {
-          "es": "glTF / GLB (estándar abierto 3D)",
-          "en": "glTF / GLB (open 3D standard)"
+          "es": "Primer Plano (Close-up)",
+          "en": "Close-up Shot"
         }
       ],
       "respuestaCorrecta": 3,
       "explicacion": {
-        "es": "El subtema 1.4.1 destaca a glTF/GLB como el estándar abierto multiplataforma de Khronos Group para empaquetar geometrías, texturas PBR y animaciones con rápida carga en tiempo real.",
-        "en": "Topic 1.4.1 highlights glTF/GLB as Khronos Group's open multiplatform standard for packaging geometries, PBR textures, and animations with rapid real-time runtime loading."
+        "es": "El Primer Plano (Close-up) encuadra desde los hombros hasta la cabeza, concentrando toda la atención en la expresión facial del personaje.",
+        "en": "The Close-up shot frames from the shoulders to the head, focusing all audience attention on the character's facial expression."
       }
     },
     {
       "id": "u1-q5",
       "unidad": 1,
-      "tema": "1.4.2 La Animación: La Base de la Realidad Virtual",
-      "nivel": "avanzado",
+      "tema": "1.1.1 Elementos de la Multimedia",
+      "nivel": "basico",
       "pendiente": false,
       "enunciado": {
-        "es": "En visores de Realidad Virtual, ¿cuál es el límite crítico de latencia motion-to-photon para garantizar coherencia sensoriomotriz y evitar mareo por simulación?",
-        "en": "In Virtual Reality headsets, what is the critical motion-to-photon latency threshold to ensure sensorimotor coherence and prevent simulation sickness?"
+        "es": "¿Cuáles son los cinco elementos constitutivos que integran las aplicaciones multimedia informáticas?",
+        "en": "What are the five core building block elements that integrate computer multimedia applications?"
       },
       "opciones": [
         {
-          "es": "Menor a 20 milisegundos (< 20 ms)",
-          "en": "Under 20 milliseconds (< 20 ms)"
+          "es": "Monitor, teclado, ratón, CPU y GPU",
+          "en": "Monitor, keyboard, mouse, CPU, and GPU"
         },
         {
-          "es": "Mayor a 80 milisegundos (> 80 ms)",
-          "en": "Over 80 milliseconds (> 80 ms)"
+          "es": "Texto, imagen, audio, video y animación",
+          "en": "Text, image, audio, video, and animation"
         },
         {
-          "es": "Exactamente 250 milisegundos",
-          "en": "Exactly 250 milliseconds"
+          "es": "HTML, CSS, JavaScript, PHP y SQL",
+          "en": "HTML, CSS, JavaScript, PHP, and SQL"
         },
         {
-          "es": "Menor a 1 microsegundo (< 1 µs)",
-          "en": "Under 1 microsecond (< 1 µs)"
+          "es": "Cámara, micrófono, bocinas, cable y red",
+          "en": "Camera, microphone, speakers, cable, and network"
         }
       ],
-      "respuestaCorrecta": 0,
+      "respuestaCorrecta": 1,
       "explicacion": {
-        "es": "El subtema 1.4.2 especifica que el retraso entre el movimiento físico de la cabeza y la respuesta de la pantalla debe ser inferior a 20 ms para evitar cinetosis.",
-        "en": "Topic 1.4.2 specifies that the delay between physical head movement and the display's optical response must stay under 20 ms to prevent motion sickness."
+        "es": "La multimedia informática se compone de cinco medios coordinados: texto, imágenes, audio, video y animación digital.",
+        "en": "Computer multimedia consists of five coordinated media forms: text, images, audio, video, and digital animation."
       }
     }
   ]
