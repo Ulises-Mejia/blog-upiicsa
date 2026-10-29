@@ -4,6 +4,11 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
   site: 'https://ulises-mejia.github.io',
   base: '/blog-upiicsa',
+  vite: {
+    build: {
+      chunkSizeWarningLimit: 650,
+    },
+  },
   integrations: [
     starlight({
       title: 'Multimedia UPIICSA',

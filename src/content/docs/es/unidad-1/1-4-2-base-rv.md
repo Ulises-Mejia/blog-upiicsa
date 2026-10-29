@@ -34,11 +34,11 @@ Sin los algoritmos de animación por computadora —transformaciones matriciales
 ---
 
 :::tip[¿Listo para poner a prueba tus conocimientos?]
-Has concluido todos los temas de la **Unidad I: Contexto y Fundamentos de la Multimedia**. Pon a prueba lo aprendido interactuando con preguntas y objetos 3D flotantes en tu entorno real:
+Has concluido todos los temas de la **Unidad I: Contexto y Fundamentos de la Multimedia**. Pon a prueba lo aprendido interactuando con preguntas en Realidad Aumentada o en modo clásico:
 
 <div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
   <a href="/blog-upiicsa/es/unidad-1/cuestionario/" class="quiz-cta-btn">
-    🥽 Iniciar Cuestionario en Realidad Aumentada (Unidad I) →
+    🥽 Iniciar Cuestionario de Evaluación (Unidad I) →
   </a>
 </div>
 :::

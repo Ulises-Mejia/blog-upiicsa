@@ -65,3 +65,15 @@ Guarda el archivo de audio en `public/audios/`:
   Tu navegador no soporta audio HTML5.
 </audio>
 ```
+
+---
+
+:::tip[¿Listo para poner a prueba tus conocimientos?]
+Has concluido los temas de la **Unidad III: Integración y Autoría Multimedia**. Pon a prueba lo aprendido interactuando con preguntas y objetos 3D flotantes en tu entorno real o en modo clásico:
+
+<div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
+  <a href="/blog-upiicsa/es/unidad-3/cuestionario/" class="quiz-cta-btn">
+    🥽 Iniciar Cuestionario de Evaluación (Unidad III) →
+  </a>
+</div>
+:::
