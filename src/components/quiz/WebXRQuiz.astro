@@ -63,23 +63,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       </p>
     </div>
 
-    <!-- VISOR 3D DIRECTO EN PANTALLA (Objeto de prueba interactivo visible en web) -->
-    <div class="viewport-wrapper">
-      <div class="viewport-header">
-        <span class="viewport-badge">
-          <span class="badge-dot"></span>
-          <span class="lang-es">Escena 3D de Prueba (Fase 3)</span>
-          <span class="lang-en" style="display: none;">3D Test Scene (Phase 3)</span>
-        </span>
-        <span class="viewport-hint">
-          <span class="lang-es">Arrastra con el ratón o dedo para rotar</span>
-          <span class="lang-en" style="display: none;">Drag with mouse or finger to rotate</span>
-        </span>
-      </div>
-      <div id="quiz-3d-viewport" class="quiz-3d-viewport">
-        <!-- El canvas Three.js se inserta aquí dinámicamente -->
-      </div>
-    </div>
+
 
     <!-- ESTADO 1: COMPROBANDO COMPATIBILIDAD CON RA -->
     <div id="quiz-state-checking" class="quiz-state-box">
@@ -201,7 +185,6 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private ring2: THREE.Mesh | null = null;
     private badgeMesh: THREE.Mesh | null = null;
 
-    private viewportContainer = document.getElementById('quiz-3d-viewport');
     private stateChecking = document.getElementById('quiz-state-checking');
     private stateSupported = document.getElementById('quiz-state-supported');
     private stateUnsupported = document.getElementById('quiz-state-unsupported');
@@ -215,8 +198,6 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private statusText = document.getElementById('ar-status-text');
     private errorText = document.getElementById('error-message-text');
 
-    private isDragging = false;
-    private previousMousePosition = { x: 0, y: 0 };
     private isARActive = false;
     private frameCount = 0;
     private unitNumber = Number(document.getElementById('webxr-quiz-root')?.getAttribute('data-unit') || 1);
@@ -270,17 +251,15 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     }
 
     private init3DScene() {
-      if (!this.viewportContainer) return;
-
-      const width = this.viewportContainer.clientWidth || 600;
-      const height = this.viewportContainer.clientHeight || 320;
+      const width = window.innerWidth || 800;
+      const height = window.innerHeight || 600;
 
       // Crear escena y cámara
       this.scene = new THREE.Scene();
       this.camera = new THREE.PerspectiveCamera(50, width / height, 0.01, 25);
       this.camera.position.set(0, 0, 0.95);
 
-      // Renderizador WebGL
+      // Renderizador WebGL (canvas invisible para presentación pura en WebXR)
       this.renderer = new THREE.WebGLRenderer({
         antialias: true,
         alpha: true,
@@ -290,9 +269,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       this.renderer.setSize(width, height);
       this.renderer.setClearColor(0x000000, 0);
       this.renderer.xr.enabled = true;
-
-      this.viewportContainer.innerHTML = '';
-      this.viewportContainer.appendChild(this.renderer.domElement);
+      this.renderer.domElement.style.display = 'none';
+      document.body.appendChild(this.renderer.domElement);
 
       // Controlador oficial Three.js XR para tracking y eventos táctiles en RA
       this.controller = this.renderer.xr.getController(0);
@@ -379,10 +357,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
           // Rotación y flotación del grupo de mallas
           if (this.meshGroup) {
-            if (!this.isDragging) {
-              this.meshGroup.rotation.y += 0.009;
-              this.meshGroup.rotation.x = Math.sin(elapsedTime * 0.5) * 0.10;
-            }
+            this.meshGroup.rotation.y += 0.009;
+            this.meshGroup.rotation.x = Math.sin(elapsedTime * 0.5) * 0.10;
 
             if (this.ring1) {
               this.ring1.rotation.x += 0.014;
@@ -417,14 +393,11 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
         }
       });
 
-      // Controles táctiles / ratón en el visor 2D
-      this.setupInteractiveControls();
-
       // Ajuste al redimensionar ventana
       window.addEventListener('resize', () => {
-        if (!this.isARActive && this.viewportContainer && this.renderer && this.camera) {
-          const w = this.viewportContainer.clientWidth;
-          const h = this.viewportContainer.clientHeight || 320;
+        if (!this.isARActive && this.renderer && this.camera) {
+          const w = window.innerWidth;
+          const h = window.innerHeight;
           this.camera.aspect = w / h;
           this.camera.updateProjectionMatrix();
           this.renderer.setSize(w, h);
@@ -482,43 +455,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       this.pulseObject();
     }
 
-    private setupInteractiveControls() {
-      const dom = this.renderer?.domElement;
-      if (!dom) return;
 
-      const onStart = (clientX: number, clientY: number) => {
-        if (this.isARActive) return;
-        this.isDragging = true;
-        this.previousMousePosition = { x: clientX, y: clientY };
-      };
-
-      const onMove = (clientX: number, clientY: number) => {
-        if (!this.isDragging || this.isARActive || !this.meshGroup) return;
-        const deltaX = clientX - this.previousMousePosition.x;
-        const deltaY = clientY - this.previousMousePosition.y;
-
-        this.meshGroup.rotation.y += deltaX * 0.01;
-        this.meshGroup.rotation.x += deltaY * 0.01;
-
-        this.previousMousePosition = { x: clientX, y: clientY };
-      };
-
-      const onEnd = () => {
-        this.isDragging = false;
-      };
-
-      dom.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
-      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
-      window.addEventListener('mouseup', onEnd);
-
-      dom.addEventListener('touchstart', (e) => {
-        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-      window.addEventListener('touchmove', (e) => {
-        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
-      }, { passive: true });
-      window.addEventListener('touchend', onEnd);
-    }
 
     private bindEvents() {
       this.btnStartAR?.addEventListener('click', () => this.startARSession());
@@ -651,16 +588,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       }
 
       if (this.renderer) {
-        if (this.viewportContainer) {
-          const w = this.viewportContainer.clientWidth || 600;
-          const h = this.viewportContainer.clientHeight || 320;
-          this.renderer.setSize(w, h);
-          if (this.camera) {
-            this.camera.aspect = w / h;
-            this.camera.position.set(0, 0, 0.95);
-            this.camera.updateProjectionMatrix();
-          }
-        }
+        this.renderer.domElement.style.display = 'none';
       }
 
       if (this.objectAnchor) {
@@ -753,61 +681,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     margin: 0 auto;
   }
 
-  /* VISOR 3D DIRECTO EN PANTALLA */
-  .viewport-wrapper {
-    margin: 1.5rem 0 2rem 0;
-    background: radial-gradient(circle at center, rgba(0, 100, 58, 0.15) 0%, rgba(10, 20, 15, 0.9) 100%);
-    border: 2px solid rgba(212, 175, 55, 0.45);
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), inset 0 0 30px rgba(0, 100, 58, 0.2);
-  }
 
-  .viewport-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 16px;
-    background: rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
-    font-size: 0.8rem;
-  }
-
-  .viewport-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    color: #D4AF37;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-  }
-
-  .badge-dot {
-    width: 7px;
-    height: 7px;
-    background: #10B981;
-    border-radius: 50%;
-  }
-
-  .viewport-hint {
-    color: var(--sl-color-gray-3);
-    font-size: 0.78rem;
-  }
-
-  .quiz-3d-viewport {
-    width: 100%;
-    height: 320px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: grab;
-    touch-action: none;
-  }
-
-  .quiz-3d-viewport:active {
-    cursor: grabbing;
-  }
 
   .quiz-state-box {
     margin: 1rem 0 1.5rem 0;
