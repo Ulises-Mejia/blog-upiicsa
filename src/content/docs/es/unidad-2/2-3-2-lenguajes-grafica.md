@@ -5,62 +5,32 @@ description: "Plantilla académica para 2.3.2: Lenguajes y Librerías de Computa
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+En la computación visual existen dos procesos complementarios e inversos: el primero consiste en tomar un modelo matemático (coordenadas de triángulos, luces y texturas) y **sintetizar una imagen en pantalla**; esa es la tarea de la **Computación Gráfica con OpenGL**. El segundo proceso consiste en tomar una imagen o video capturado del mundo real y **extraer de él información, formas y decisiones**; esa es la tarea de la **Visión por Computadora con OpenCV y Python** (Marschner & Shirley, 2016; González & Woods, 2017; Guzmán et al., 2020).
 
-## Desarrollo del Contenido
+## OpenGL y el Pipeline de Renderizado Gráfico Acelerado por GPU (GLSL)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como explican Marschner y Shirley (2016, Cap. 17), **OpenGL (*Open Graphics Library*)** es una especificación estándar multiplataforma y multilenguaje mantenida por el consorcio Khronos Group que proporciona una interfaz de programación (API) directa hacia la Unidad de Procesamiento Gráfico (GPU) para renderizar gráficos vectoriales 2D y 3D en tiempo real (y cuya variante para navegadores es **WebGL** y para móviles **OpenGL ES**).
 
-### Conceptos Clave
+OpenGL opera como una máquina de estados que ejecuta el **Pipeline Gráfico Programable** a través de etapas sucesivas en los miles de núcleos de la GPU:
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+1. **Datos de Vértices (*Vertex Specification*):** El programa en CPU envía a la memoria de la tarjeta gráfica (*VRAM*) arreglos de coordenadas 3D $(x, y, z)$, colores, vectores normales y coordenadas de textura $(u, v)$ empaquetados en **VBOs (*Vertex Buffer Objects*)** y **VAOs (*Vertex Array Objects*)**.  
+2. ***Vertex Shader*** **(Programable en GLSL):** Pequeño programa escrito en **GLSL (*OpenGL Shading Language*, de sintaxis tipo C)** que se ejecuta en paralelo una vez por cada vértice de la malla, multiplicando su posición por las matrices de **Modelo, Vista y Proyección ($M_{MVP}$)** para proyectarlo en el espacio de pantalla.  
+3. **Ensamblaje de Primitivas, Recorte (*Clipping*) y Rasterización:** La GPU une los vértices en triángulos, recorta lo que queda fuera del cono de visión (*Frustum*) y convierte cada triángulo continuo en una rejilla discreta de candidatos a píxel llamados **fragmentos**.  
+4. ***Fragment Shader*** **(Programable en GLSL):** Se ejecuta en paralelo para cada fragmento, consultando las texturas (*samplers*) y aplicando las ecuaciones de iluminación (como el modelo de reflexión difusa de Lambert y especular de Blinn-Phong) para calcular el color final `RGBA` del píxel.  
+5. **Pruebas por Muestra y *Framebuffer*:** Se ejecuta la prueba de profundidad (***Z-Buffer / Depth Test***) para descartar fragmentos ocultos detrás de objetos más cercanos, se aplica la mezcla de transparencia (*Alpha Blending*) y se escribe la imagen en el *Framebuffer* que se muestra en el monitor.
+
+## OpenCV y Python: Procesamiento Digital de Imágenes y Visión Artificial en Tiempo Real
+
+Por su parte, **OpenCV (*Open Source Computer Vision Library*)** —escrita originalmente en C/C++ de alto rendimiento y utilizada universalmente a través de su interfaz en **Python**— cuenta con más de 2,500 algoritmos optimizados de procesamiento de imágenes y visión artificial (González & Woods, 2017; Guzmán et al., 2020).
+
+En el ecosistema **Python + NumPy + OpenCV (`cv2`)**, toda imagen o cuadro de video capturado con `cv2.VideoCapture()` es un arreglo matricial multidimensional (`numpy.ndarray`) de dimensiones $(\text{Alto}, \text{Ancho}, \text{Canales})$, permitiendo encadenar en pocas líneas de código operaciones de alto nivel: conversión entre espacios de color (`cv2.cvtColor`, notando que OpenCV carga por defecto en orden **BGR** y suele convertirse a **HSV** o escala de grises), filtrado espacial por convolución (`cv2.GaussianBlur`, `cv2.Canny`), umbralización binaria y adaptativa (`cv2.threshold`), morfología matemática, extracción de contornos y envolvente convexa (`cv2.findContours`, `cv2.convexHull`), detección de marcadores fiduciales **ArUco** para Realidad Aumentada y ejecución de redes neuronales profundas (`cv2.dnn`) para detección de rostros, manos y objetos en tiempo real.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La combinación de OpenGL (síntesis gráfica acelerada por GPU) con OpenCV y Python (análisis de imagen y visión artificial) constituye la columna vertebral técnica de las aplicaciones interactivas más avanzadas, como los sistemas de Realidad Aumentada donde OpenCV detecta la pose del mundo real a partir de la cámara y OpenGL dibuja el objeto 3D virtual perfectamente alineado sobre ella.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* González, R. C., & Woods, R. E. (2017). *Digital Image Processing* (4th ed.). Pearson Education.  
+* Guzmán, J., et al. (2020). Visión artificial profunda aplicada a la identificación temprana en imágenes digitales. *Computación y Sistemas*, 24(2), 751-764.  
+* Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 17: Using Graphics Hardware). CRC Press.

@@ -5,62 +5,28 @@ description: "Plantilla académica para 2.2.1: Tecnología de Recorridos Virtual
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Cuando buscas rentar un departamento en otra ciudad, visitas la página de un museo como el Louvre o el Museo Nacional de Antropología, o exploras el campus de una universidad desde tu navegador usando *Street View*, estás utilizando un **recorrido virtual (*Virtual Walkthrough / Virtual Tour*)**. Esta tecnología permite a cualquier usuario desplazarse e inspeccionar un espacio arquitectónico, natural o histórico a distancia como si caminara físicamente por sus pasillos, combinando fotografía omnidireccional, reconstrucción geométrica tridimensional y puntos de interacción hipermedia (Otero & Flores, 2011).
 
-## Desarrollo del Contenido
+## Arquitecturas Técnicas: Recorridos Panorámicos Esféricos (360°) vs. Recorridos Geométricos 3D en Tiempo Real
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como analizan Otero y Flores (2011) en su estudio de casos sobre paseos virtuales museográficos, existen dos arquitecturas técnicas fundamentales para construir un recorrido virtual:
 
-### Conceptos Clave
+* **1. Recorridos Basados en Imagen Omnidireccional (Panoramas Esféricos o Cúbicos $360^\circ$):** Se capturan fotografías reales desde múltiples puntos estratégicos del recinto utilizando cámaras de doble lente ojo de pez ($360^\circ$) o cabezales robóticos panorámicos. Las imágenes se unen matemáticamente mediante algoritmos de **cosido fotogramétrico (*Image Stitching*)** que detectan puntos característicos invariantes (como descriptores SIFT/ORB) en las zonas de traslape y las proyectan en un mapa **equirrectangular** (relación de aspecto $2:1$, donde el eje horizontal abarca $360^\circ$ de longitud y el vertical $180^\circ$ de latitud) o en las seis caras de un cubo (***Cube Map / Skybox***). En el visor web, la cámara del usuario se sitúa en el centro de la esfera o cubo y salta de un nodo a otro mediante flechas de transición.  
+* **2. Recorridos Basados en Geometría Tridimensional en Tiempo Real (*3D Real-Time Walkthroughs*):** El edificio o espacio se modela por completo como una malla poligonal 3D con texturas PBR e iluminación precalculada (*Baked Lightmaps*), o bien se escanea con sensores láser **LiDAR / Fotogrametría** (como en cámaras Matterport) para generar el modelo tridimensional («vista de casa de muñecas» o *Dollhouse View*). Aquí el usuario no está limitado a saltar entre puntos fijos, sino que puede caminar libremente por cualquier coordenada $(X, Y, Z)$ con detección de colisiones en paredes y pisos.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Elementos de Interacción Hipermedia (Hotspots), Orientación Espacial (Wayfinding) y Optimización
+
+Para que un recorrido virtual sea una herramienta informática informativa y no solo una galería pasiva, incorpora tres capas de diseño (Otero & Flores, 2011):
+
+* **Puntos de Interacción o *Hotspots*:** Nodos anclados a coordenadas esféricas $(\theta, \phi)$ o tridimensionales $(X, Y, Z)$ que, al hacer clic o fijar la mirada sobre ellos, despliegan fichas de texto, locuciones de audioguía, videos explicativos o modelos 3D inspeccionables.  
+* **Sistemas de Orientación (*Wayfinding*):** Inclusión de minimapas de planta arquitectónica con indicador de radar del campo visual actual, brújula y menú de salto directo por zonas para evitar que el usuario se desoriente.  
+* **Carga Progresiva (*Multi-Resolution Tiling*):** Dividir los panoramas de ultra alta resolución (8K a 16K) en teselas piramidales que solo se descargan a máxima calidad en la región exacta hacia donde el usuario está mirando en ese instante.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La tecnología de recorridos virtuales democratiza el acceso a espacios físicos remotos o inexistentes, combinando la precisión óptica de las proyecciones esféricas con la interactividad hipermedia para aplicaciones educativas, turísticas, museográficas e inmobiliarias.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 11: Texture Mapping). CRC Press.  
+* Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. Aplicación como herramienta educativa y factores de diseño e implantación en museos y espacios públicos. *Revista ICONO 14*, 9(2), 185-211.

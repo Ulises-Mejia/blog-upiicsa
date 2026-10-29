@@ -5,62 +5,31 @@ description: "Plantilla académica para 1.2.2: Manejo de la Cámara: Tomas, Movi
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Cuando ves una película, un videojuego en tercera persona como *The Last of Us* o un video corporativo bien producido, la cámara nunca está colocada al azar: si se acerca a los ojos del protagonista sientes empatía o tensión; si lo enfoca desde arriba se percibe vulnerable; si se desplaza suavemente junto a él sientes dinamismo. Esta gramática visual —compuesta por **planos, ángulos, movimientos y tomas**— es el lenguaje universal que comparten el cine, el video digital, la animación 3D y el diseño de cámaras virtuales en entornos interactivos (Ruiz, 2018; de Vega, 2017).
 
-## Desarrollo del Contenido
+## Unidades Narrativas (Cuadro, Toma, Escena y Secuencia) y Escala de Planos
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+En la producción audiovisual y en la cinemática de motores gráficos, la estructura temporal se organiza de menor a mayor jerarquía en: **Cuadro o Fotograma (*Frame*)**, que es cada imagen estática individual; **Toma (*Shot*)**, el fragmento continuo capturado desde que la cámara inicia la grabación hasta que corta; **Escena (*Scene*)**, el conjunto de tomas que ocurren en un mismo espacio y tiempo dramático; y **Secuencia (*Sequence*)**, una unidad narrativa completa con planteamiento, desarrollo y desenlace que puede abarcar varias escenas (Ruiz, 2018; Ojeda Linares, 2012).
 
-### Conceptos Clave
+Por su parte, el **plano cinematográfico** define la proporción de la figura humana o del objeto encuadrado respecto a los bordes del visor, dividiéndose en tres grandes familias:
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+* **Planos Descriptivos o Abiertos:** El **Gran Plano General (GPG)** y el **Plano General (PG)** muestran el escenario completo donde la figura humana es pequeña o contextual, sirviendo para ubicar geográficamente al espectador.  
+* **Planos Narrativos o de Acción:** El **Plano Entero (PE)** encuadra al personaje de pies a cabeza; el **Plano Americano (PA)** o tres cuartos corta a la altura de las rodillas; y el **Plano Medio (PM)** (abierto a la cintura o cerrado al pecho) es el estándar para diálogos, entrevistas, tutoriales y avatares interactivos porque equilibra la expresión facial con la gesticulación de las manos.  
+* **Planos Expresivos o Cerrados:** El **Primer Plano (PP)** (de los hombros a la cabeza), el **Primerísimo Primer Plano (PPP)** (del mentón a la frente) y el **Plano Detalle (PD)** (un objeto específico o parte del cuerpo, como un dedo presionando una tecla) concentran toda la atención psicológica y dramática del usuario.
+
+## Angulación de Cámara, Movimientos Físicos/Ópticos y Continuidad Visual (Raccord)
+
+La posición vertical e inclinación de la cámara respecto al sujeto (**angulación**) altera radicalmente la lectura semiótica de la imagen: el **Ángulo Normal** (a la altura de los ojos) transmite neutralidad e igualdad; el **Picado** (cámara arriba mirando hacia abajo) empequeñece al sujeto y connota inferioridad o fragilidad; el **Contrapicado** (cámara abajo mirando hacia arriba) engrandece al sujeto proyectando poder, autoridad o monumentalidad; el **Cenital** ($90^\circ$ perpendicular desde arriba) ofrece una vista de mapa o esquema táctico; el **Nadir** ($90^\circ$ desde el suelo hacia el cielo) genera vértigo; y el **Plano Holandés o Aberrante** (inclinación lateral del horizonte) comunica inestabilidad o peligro (Ruiz, 2018; de Vega, 2017).
+
+Respecto a los **movimientos de cámara**, se distinguen los **rotacionales sobre el propio eje del trípode** —**Paneo o Panorámica horizontal (*Pan*)** y **Basculamiento vertical (*Tilt*)**—, los **traslacionales donde todo el cuerpo de la cámara se desplaza en el espacio** —**Travelling** lateral, **Dolly In/Out** de acercamiento o alejamiento físico que modifica la perspectiva espacial, **Grúa/Jib** y estabilizadores o drones— y el **movimiento óptico (*Zoom*)**, donde la cámara permanece fija y solo varía la distancia focal de los lentes, aplanando o comprimiendo el fondo sin cambiar la perspectiva geométrica. Todo ello se rige por las reglas de **continuidad o *raccord*** y la **regla del eje de 180 grados**, que impide cruzar la línea imaginaria entre dos interlocutores para no desorientar espacialmente al espectador.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+Dominar la escala de planos, las angulaciones y los movimientos de cámara dota al desarrollador multimedia de las herramientas narrativas necesarias tanto para producir video instruccional de calidad como para programar cámaras virtuales en motores 3D y recorridos interactivos.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* Carpio, S. (2015). *Arte y gestión de la producción audiovisual*. Editorial UPC.  
+* de Vega, A. (2017). *Animación de elementos*. Alfaomega.  
+* Ojeda Linares, N. D. (2012). *Introducción a la multimedia*. Red Tercer Milenio.  
+* Ruiz, D. (2018). *Manual de Producción Multimedia: De la idea al remake*. Ediciones Promonet.

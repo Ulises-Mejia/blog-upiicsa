@@ -5,62 +5,30 @@ description: "Plantilla académica para 1.4.2: La Animación: La Base de la Real
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+En una sala de cine tradicional, puedes mover la cabeza hacia la izquierda o levantarte de tu asiento, pero la imagen proyectada en la pantalla seguirá mostrando exactamente el mismo ángulo que decidió el director meses atrás. En cambio, cuando te colocas un visor de **Realidad Virtual (RV)** y giras la cabeza o das un paso hacia adelante, todo el mundo tridimensional que te rodea debe recalcular su perspectiva, sus sombras, sus colisiones y el movimiento de sus objetos en menos de **11 milisegundos** para engañar a tus sentidos y hacerte sentir que realmente estás dentro de ese lugar. Por ello, **la animación en tiempo real es el cimiento matemático y computacional de la Realidad Virtual** (Otero & Flores, 2011; Marschner & Shirley, 2016).
 
-## Desarrollo del Contenido
+## De la Animación Lineal Prerenderizada a la Simulación Interactiva en Tiempo Real
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como analizan Otero y Flores (2011) y Marschner y Shirley (2016), la diferencia esencial entre el cine de animación (renderizado *offline*) y la Realidad Virtual (renderizado *real-time*) radica en **quién gobierna el estado del tiempo y la cámara**:
 
-### Conceptos Clave
+* **Animación Lineal Prerenderizada:** Cada fotograma puede tardar minutos u horas en calcularse en una granja de servidores; el resultado es un archivo de video fijo donde el espectador es pasivo.  
+* **Animación Interactiva en Tiempo Real (El Bucle de Simulación / *Render Loop*):** En un entorno de RV, no existe un video pregrabado. El motor gráfico ejecuta un ciclo continuo de alta frecuencia (90 a 120 veces por segundo) compuesto por cuatro fases en cada cuadro: **(1) Captura de sensores (*Input Polling*)**, leyendo la posición y orientación 6DoF del casco HMD y los controladores de mano; **(2) Actualización de lógica y física (*Simulation Step*)**, calculando colisiones, gravedad, sistemas de partículas y cinemática inversa de avatares según el intervalo de tiempo $\Delta t$; **(3) Transformación Matricial Modelo-Vista-Proyección ($M_{MVP} = M_{proj} \cdot M_{view} \cdot M_{model}$)**, proyectando los vértices 3D del mundo hacia dos cámaras virtuales separadas por la distancia interpupilar (IPD $\approx 63\text{ mm}$) para generar visión estereoscópica; y **(4) Rasterización y Post-procesamiento en GPU**, enviando el par de imágenes al visor.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Animación Reactiva, Presencia y Coherencia Sensoriomotriz (Latencia Motion-to-Photon)
+
+Para que la animación sostenga la ilusión psicológica de **presencia** («estar ahí» dentro del entorno sintético) y evite la **cinetosis** (mareo inducido por el conflicto entre lo que ven los ojos y lo que detecta el sistema vestibular del oído interno), el sistema de animación en RV debe cumplir tres requisitos estrictos (Otero & Flores, 2011; Glover & Linowes, 2019):
+
+* **Latencia *Motion-to-Photon* inferior a 20 milisegundos:** El tiempo total desde que el usuario mueve físicamente la cabeza hasta que los fotones actualizados brillan en la pantalla del visor debe ser menor a $20\text{ ms}$, apoyándose en tasas de refresco de **90 Hz ($11.1\text{ ms}$ por cuadro) o 120 Hz ($8.3\text{ ms}$)** y técnicas de reproyección temporal asíncrona (*Asynchronous Timewarp / Spacewarp*).  
+* **Animación Corporal e Interacción Física Creíble:** Cuando el usuario extiende su mano real para empujar una puerta virtual, el avatar debe animar sus dedos y brazo en tiempo real mediante Cinemática Inversa (IK) y el motor de física debe animar la apertura de la puerta con inercia, sonido espacializado y vibración háptica congruentes.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+Sin los algoritmos de animación por computadora —transformaciones matriciales, interpolación de esqueletos, motores de física y renderizado acelerado por hardware—, la Realidad Virtual sería imposible: la RV es, en esencia, una animación tridimensional viviente dentro de la cual habita e interactúa el usuario.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
+* Glover, J., & Linowes, J. (2019). *Complete Virtual Reality and Augmented Reality Development with Unity*. Packt Publishing.  
+* Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 7, 16 y 17). CRC Press.  
+* Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. *Revista ICONO 14*, 9(2), 185-211.
 
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+# Unidad Temática II: Tecnologías Emergentes en las Herramientas Multimedias

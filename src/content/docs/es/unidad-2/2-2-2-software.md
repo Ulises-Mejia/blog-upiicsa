@@ -5,62 +5,27 @@ description: "Plantilla académica para 2.2.2: Software de Entornos Virtuales"
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Ningún entorno virtual interactivo se construye con una sola herramienta: igual que en el desarrollo web intervienen programas de diseño de interfaces, editores de código, gestores de bases de datos y servidores de despliegue, la creación de un mundo virtual requiere una cadena de software especializada (**pipeline de creación de entornos virtuales**) donde las herramientas de modelado 3D, texturizado físico, edición de audio espacial y motores de visualización trabajan en perfecta sincronía (García García et al., 2023; Glover & Linowes, 2019).
 
-## Desarrollo del Contenido
+## Clasificación Funcional del Software de Entornos Virtuales
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como se documenta en la metodología de desarrollo de García García et al. (2023) y en Glover y Linowes (2019), el software involucrado en la construcción y ejecución de entornos virtuales se divide en cuatro capas tecnológicas:
 
-### Conceptos Clave
+* **1. Software de Creación de Contenido Digital 3D (*DCC - Digital Content Creation*):** Son las herramientas donde se esculpen, modelan, mapean en UV y articulan (*rigging*) los objetos, edificios y personajes tridimensionales que poblarán el entorno. Destaca **Blender** (como estándar abierto gratuito empleado en investigaciones académicas como el proyecto *MiCTL* de García et al., 2023), junto con **Autodesk Maya**, **3ds Max**, **Cinema 4D** y software CAD/BIM arquitectónico (como **Revit** o **SketchUp**) para importar planos de ingeniería.  
+* **2. Software de Autoría de Materiales Físicos (PBR) y Fotogrametría:** Programas dedicados a generar mapas de texturas realistas (color, rugosidad, metalicidad, normales y oclusión ambiental) como **Adobe Substance 3D Painter/Designer**, **Quixel Mixer** o **ArmorPaint**, así como software de reconstrucción fotogramétrica (**Meshroom**, **RealityCapture**, **Metashape**) que convierte fotografías de objetos reales en modelos 3D.  
+* **3. Plataformas Especializadas en Recorridos Panorámicos y Mundos Web:** Herramientas orientadas a ensamblar recorridos virtuales y espacios multiusuario directamente para el navegador web sin requerir programación compleja desde cero, tales como **Pano2VR**, **3DVista**, **Krpano**, **Marzipano** (código abierto de Google para panoramas $360^\circ$) y frameworks declarativos de WebXR como **A-Frame** y **Three.js**.  
+* **4. Motores de Simulación e Integración en Tiempo Real:** Entornos donde convergen todos los activos anteriores para dotarlos de iluminación, colisiones físicas, sonido espacial 3D y lógica interactiva (como **Unity**, **Unreal Engine** y **Godot**).
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Interoperabilidad, Optimización de Mallas (Polígonos y Draw Calls) y Flujo de Trabajo
+
+El reto crítico al comunicar estas distintas piezas de software es el **presupuesto de rendimiento en tiempo real**: un modelo esculpido en un software DCC puede tener 5 millones de polígonos, pero para ejecutarse fluidamente en un entorno virtual web o móvil debe someterse a **decimación o retopología** (*Low-Poly*), transferencia de detalles a mapas de normales (*Normal Map Baking*), compresión de texturas en potencias de dos ($1024\times 1024$ o $2048\times 2048$) y exportación en estándares de intercambio limpios como **glTF 2.0 / GLB** o **FBX** (Glover & Linowes, 2019; Marschner & Shirley, 2016).
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+Seleccionar y articular correctamente el software de entornos virtuales permite separar la creación artística de activos 3D de la programación lógica del sistema, logrando flujos de trabajo modulares donde diseñadores e ingenieros en informática colaboran sobre formatos estándar.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* García García, L. I., et al. (2023). Realidad aumentada como mecanismo para incrementar el grado de aprendizaje en individuos con discapacidades. *Ciencia ergo-sum*, 30(3).  
+* Glover, J., & Linowes, J. (2019). *Complete Virtual Reality and Augmented Reality Development with Unity*. Packt Publishing.  
+* Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. *Revista ICONO 14*, 9(2), 185-211.

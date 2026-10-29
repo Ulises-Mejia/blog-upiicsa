@@ -5,62 +5,26 @@ description: "Plantilla académica para 2.4.2: Integración de las Tecnologías 
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+En un proyecto real de informática, un módulo de Realidad Aumentada, un clasificador de imágenes en OpenCV o un visor 3D nunca viven aislados en una burbuja: necesitan consultar el catálogo de productos de una base de datos corporativa, autenticar al estudiante en el sistema escolar, recibir datos de sensores externos y funcionar dentro de una aplicación web o móvil existente. La **integración de las tecnologías emergentes** aborda los patrones arquitectónicos, protocolos de comunicación y estándares de intercambio de datos que permiten acoplar componentes multimedia avanzados dentro de ecosistemas de software más amplios (García Sánchez et al., 2016; Glover & Linowes, 2019).
 
-## Desarrollo del Contenido
+## Patrones Arquitectónicos de Integración: Acoplamiento de Módulos Multimedia, IA y Motores 3D
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Cuando se integran tecnologías emergentes heterogéneas (por ejemplo, combinar un módulo de visión por computadora e inteligencia artificial en Python/OpenCV con un entorno tridimensional en Unity o una plataforma web en HTML5/JavaScript), la ingeniería de software emplea tres patrones de integración principales:
 
-### Conceptos Clave
+* **1. Integración Mediante APIs RESTful y Comunicación en Tiempo Real (WebSockets / gRPC):** El cliente multimedia interactivo (ej. una app en Unity o un visor WebXR en el navegador) se mantiene ligero y se comunica a través de la red con microservicios backend. Para consultas de catálogo, perfiles de usuario o descarga dinámica de modelos 3D (*Addressables / AssetBundles / glTF*) se utilizan peticiones HTTP asíncronas (**REST / JSON**); en cambio, cuando se requiere sincronización continua de baja latencia (como transmitir las coordenadas $(x, y, z)$ de múltiples usuarios en una sala virtual compartida o recibir telemetría en vivo), se emplean canales bidireccionales persistentes mediante **WebSockets** o **WebRTC Data Channels**.  
+* **2. Integración Nativa en Proceso (*Plugins*, Bibliotecas Dinámicas `.dll` / `.so` y *Unity as a Library*):** Cuando la latencia de red no es aceptable —por ejemplo, al procesar cada cuadro de la cámara a 60 FPS con OpenCV dentro de Unity—, la biblioteca de C++/OpenCV se compila como un plugin nativo enlazado dinámicamente en memoria, o bien el motor 3D se incrusta como un componente visual dentro de una aplicación nativa Android (Kotlin/Java) o iOS (Swift) mediante arquitecturas como ***Unity as a Library (UaaL)***.  
+* **3. Interoperabilidad mediante Estándares de Activos Dinámicos (glTF 2.0 y USDZ):** Para que una plataforma web o móvil pueda cargar modelos 3D dinámicamente desde un servidor de almacenamiento en la nube sin recompilar la aplicación, los activos se estandarizan en **glTF 2.0 / GLB** (compatible con Android *Scene Viewer* y WebGL) y **USDZ** (compatible con iOS *AR Quick Look*).
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Sincronización Multimodal y Coherencia de Estado en la Integración
+
+Integrar tecnologías emergentes exige garantizar la **coherencia multimodal**: los datos provenientes de una base de datos externa, las detecciones de la cámara (RA/OpenCV), las animaciones del modelo 3D y la retroalimentación sonora deben compartir un mismo sistema de coordenadas espaciales y un reloj de sincronización de eventos, evitando bloqueos del hilo principal de renderizado (*Main Thread*) mediante programación asíncrona (`async/await`, corrutinas o hilos de trabajo secundarios) (Glover & Linowes, 2019).
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La integración exitosa de tecnologías emergentes se basa en el desacoplamiento modular y el uso de protocolos estándar: al comunicar los motores gráficos, los algoritmos de visión artificial y los servidores empresariales mediante interfaces limpias y asíncronas, se obtienen sistemas escalables, fáciles de mantener y fluidos para el usuario.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* García García, L. I., et al. (2023). Realidad aumentada como mecanismo para incrementar el grado de aprendizaje. *Ciencia ergo-sum*, 30(3).  
+* García Sánchez, E., et al. (2016). Metodología para el desarrollo de software multimedia educativo MEDESME. *CPU-e*, (23), 216-226.  
+* Glover, J., & Linowes, J. (2019). *Complete Virtual Reality and Augmented Reality Development with Unity*. Packt Publishing.

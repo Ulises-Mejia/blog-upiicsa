@@ -5,62 +5,29 @@ description: "Plantilla académica para 2.2.4: Aplicaciones de Entornos Virtuale
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+¿Por qué una universidad invertiría en un laboratorio virtual de química, un museo en reconstruir digitalmente un templo del siglo XII o un hospital en un cuento interactivo con realidad aumentada? Porque los entornos virtuales permiten realizar experiencias que en el mundo físico serían **demasiado peligrosas** (apagar un incendio en una plataforma petrolera), **demasiado costosas** (consumir reactivos químicos caros en cada práctica estudiantil), **físicamente imposibles** (viajar al interior de una célula o al pasado histórico) o **terapéuticamente inaccesibles** (Otero & Flores, 2011; Prendes Espinosa, 2015; García García et al., 2023).
 
-## Desarrollo del Contenido
+## Aplicaciones en Educación, Inclusión y Rehabilitación Cognitiva (Casos Empíricos)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+La literatura científica de nuestro acervo documenta con evidencia cuantitativa el impacto de los entornos virtuales en el ámbito educativo y de la salud:
 
-### Conceptos Clave
+* **Educación Superior y Laboratorios Virtuales (Prendes Espinosa, 2015):** En ingeniería, arquitectura, medicina y ciencias exactas, los entornos virtuales y la realidad aumentada permiten visualizar estructuras tridimensionales complejas (como campos electromagnéticos, moléculas orgánicas, anatomía humana o mecanismos mecánicos) que en un pizarrón 2D resultan abstractas, fomentando el aprendizaje constructivista y basado en proyectos.  
+* **Educación Especial y Terapia de Lenguaje — El Caso *MiCTL* (García García et al., 2023):** Desarrollado con Unity, Vuforia, Blender y C# en colaboración con especialistas del CRIT Teletón y aplicado en Centros de Atención Múltiple (CAM), el software *Mi Cuento de Terapia de Lenguaje (MiCTL)* demostró mediante Análisis de Varianza Múltiple (MANOVA) y Análisis de Componentes Principales (ACP, explicando el **90.23 % de la varianza**) mejoras estadísticamente significativas ($p < 0.0001$) en comprensión, vocabulario, capacidad visual/auditiva, atención e imaginación en niños de preescolar, primaria y secundaria con discapacidad intelectual, auditiva, motriz, de lenguaje y autismo.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Aplicaciones en Patrimonio Cultural y Museografía, Medicina, Industria 4.0 y Comercio
+
+* **Museografía Interactiva y Patrimonio Histórico (Otero & Flores, 2011):** Otero y Flores documentan dos casos emblemáticos desarrollados en la Universidad de Santiago de Compostela: el ***Botafumeiro Virtual*** (una instalación inmersiva donde los visitantes interactúan físicamente con la simulación tridimensional del incensario de la Catedral de Santiago, ejemplificando inmersión, interacción, retroalimentación y presencia sin poner en riesgo el patrimonio real) y el proyecto ***Paseo Submarino (Submarine Voyage)***, un recorrido virtual educativo por ecosistemas marinos. Estos sistemas exigeninterfaces ergonómicas robustas, cero curva de aprendizaje para el público general y alta fidelidad visual.  
+* **Medicina y Psicología Clínica:** Planificación preoperatoria sobre reconstrucciones 3D de tomografías, entrenamiento de cirugía laparoscópica con retroalimentación de fuerza háptica, rehabilitación motora post-infarto cerebral y **terapia de exposición en realidad virtual (VRET)** para tratar fobias (acrofobia, aracnofobia) y estrés postraumático bajo control gradual del terapeuta.  
+* **Industria 4.0, Arquitectura y Comercio Electrónico:** Mantenimiento aeronáutico y automotriz asistido por gafas de RA (donde el manual técnico se proyecta paso a paso sobre el motor real), preventa arquitectónica interactiva y prueba virtual de productos (*Virtual Try-On*) en tiendas en línea.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+El valor real de un entorno virtual se mide por el impacto humano, educativo o productivo que genera: cuando la tecnología se diseña con rigor pedagógico y ergonómico, se convierte en un multiplicador de capacidades para la educación, la inclusión, la ciencia y la industria.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* García García, L. I., et al. (2023). Realidad aumentada como mecanismo para incrementar el grado de aprendizaje en individuos con discapacidades. *Ciencia ergo-sum*, 30(3).  
+* Glover, J., & Linowes, J. (2019). *Complete Virtual Reality and Augmented Reality Development with Unity*. Packt Publishing.  
+* Jerald, J. (2016). *The VR Book: Human-Centered Design for Virtual Reality*. ACM Books.  
+* Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. *Revista ICONO 14*, 9(2), 185-211.  
+* Prendes Espinosa, C. (2015). Realidad aumentada y educación: análisis de experiencias prácticas. *Pixel-Bit*, (46), 187-203.

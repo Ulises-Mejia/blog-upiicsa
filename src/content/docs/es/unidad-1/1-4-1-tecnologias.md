@@ -5,62 +5,28 @@ description: "Plantilla académica para 1.4.1: Tecnologías Abiertas y Cerradas 
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Cuando un equipo de ingeniería desarrolla un proyecto con animación 2D, gráficos 3D o entornos interactivos, una de las decisiones arquitectónicas más importantes no es artística, sino estratégica: ¿construimos nuestros activos y sistemas sobre **tecnologías abiertas** (estándares públicos libres de regalías y software de código abierto) o sobre **tecnologías cerradas** (ecosistemas propietarios comerciales)? Entender las diferencias técnicas, legales y de interoperabilidad entre ambos mundos determina la longevidad, el costo y la portabilidad multiplataforma de cualquier solución multimedia (Marschner & Shirley, 2016; Otero & Flores, 2011).
 
-## Desarrollo del Contenido
+## Tecnologías Abiertas: Estándares de Consorcio y Software Libre de Producción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Las **tecnologías abiertas** se dividen en dos categorías complementarias que garantizan la soberanía tecnológica y la interoperabilidad entre sistemas:
 
-### Conceptos Clave
+* **Estándares Abiertos de Formato y APIs (W3C, Khronos Group, Pixar/AOUSD):** Son especificaciones técnicas públicas, documentadas y libres de patentes o regalías que cualquier desarrollador puede implementar. En animación 2D/Web destacan **SVG** (gráficos vectoriales escalables en XML), **CSS Animations/Transitions**, la **Web Animations API (WAAPI)** y el formato basado en JSON **Lottie**; en el ámbito 3D e inmersivo destacan **glTF 2.0 / GLB** (*GL Transmission Format* de Khronos Group, considerado el «JPEG del 3D» por su eficiencia para transmitir mallas, materiales PBR, esqueletos y animaciones directo a la GPU), **OpenUSD** (*Universal Scene Description* para intercambio de escenas complejas), **WebGL / WebGPU** (aceleración 3D en el navegador) y **OpenXR** (estándar abierto para visores de realidad virtual y aumentada).  
+* **Software de Creación de Código Abierto (*Open Source*):** Herramientas cuyo código fuente es público y gratuito bajo licencias como GPL o MIT, encabezadas por **Blender** (suite integral de modelado, *rigging*, animación 2D *Grease Pencil*, animación 3D, simulación física, edición de video y renderizado *Cycles/Eevee*), **Godot Engine** (motor de videojuegos 2D/3D bajo licencia MIT), **Synfig Studio** y **OpenToonz** (animación 2D).
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Tecnologías Cerradas o Propietarias en la Industria Audiovisual y de Videojuegos
+
+Las **tecnologías cerradas** son desarrolladas y comercializadas por empresas privadas bajo licencias de suscripción o pago de regalías, manteniendo su código fuente y, en ocasiones, la especificación interna de sus formatos bajo secreto industrial:
+
+* **Suites Comerciales Estándar de Estudio:** **Autodesk Maya** y **3ds Max** (estándares históricos en grandes estudios de cine CGI y videojuegos AAA por sus avanzados sistemas de *rigging* y soporte técnico empresarial), **Cinema 4D** (líder en *motion graphics* 3D), **Adobe After Effects** y **Adobe Animate** (estándares comerciales en composición y animación 2D) y **Toon Boom Harmony**.  
+* **Formatos y APIs Propietarias:** El formato de intercambio **FBX** (propiedad de Autodesk, ampliamente usado en motores como Unity y Unreal aunque su especificación binaria interna es cerrada), o las APIs gráficas exclusivas de un sistema operativo como **DirectX 12** (Microsoft Windows/Xbox) y **Metal** (ecosistema Apple iOS/macOS/visionOS), las cuales ofrecen máxima optimización para su hardware específico a cambio de sacrificar la portabilidad directa hacia otros sistemas operativos.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La tendencia contemporánea en la ingeniería multimedia combina estratégicamente ambos mundos: incluso cuando un estudio utiliza herramientas de autoría propietarias en su flujo interno, la entrega, transmisión e integración web se realiza sobre formatos y estándares abiertos como glTF 2.0, HTML5, WebGL y OpenXR.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* de Vega, A. (2017). *Animación de elementos*. Alfaomega.  
+* Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 17: Using Graphics Hardware). CRC Press.  
+* Otero, A., & Flores, J. (2011). Realidad virtual: un medio de comunicación de contenidos. *Revista ICONO 14*, 9(2), 185-211.

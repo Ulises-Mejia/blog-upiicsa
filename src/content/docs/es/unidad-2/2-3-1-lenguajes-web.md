@@ -5,62 +5,26 @@ description: "Plantilla académica para 2.3.1: Lenguajes de Desarrollo Web: HTML
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Cada vez que abres un reproductor de video interactivo en una plataforma educativa, dibujas en una pizarra colaborativa en línea o exploras un modelo tridimensional dentro de una tienda virtual, están trabajando en equipo cuatro tecnologías con responsabilidades claramente separadas: **HTML5** construye la estructura semántica y los contenedores de medios, **CSS3** define la estética visual y las animaciones de interfaz, **JavaScript** programa la lógica interactiva y gráfica en tiempo real dentro de tu navegador (cliente), y lenguajes como **PHP** (junto con bases de datos) procesan la seguridad, los usuarios y el catálogo de archivos en el servidor (Adell, 2021; Chong Qui, 2019).
 
-## Desarrollo del Contenido
+## El Lado del Cliente (Frontend Multimedia): HTML5 Semántico, CSS3 y el Motor de JavaScript
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+En la arquitectura de las aplicaciones web modernas, el navegador del usuario ejecuta directamente tres lenguajes estandarizados por el W3C y ECMA (Adell, 2021):
 
-### Conceptos Clave
+* **HTML5 (*HyperText Markup Language 5*):** Además de estructurar el documento mediante etiquetas semánticas (`<header>`, `<main>`, `<article>`, `<section>`), introdujo los elementos multimedia nativos que erradicaron los antiguos *plugins*: `<video>` y `<audio>` (con atributos `controls`, `preload`, pistas de subtítulos `<track>` y múltiples fuentes `<source>` para negociación automática de códecs MP4/WebM), `<picture>` (para servir imágenes responsivas en formatos modernos como AVIF o WebP según la pantalla del dispositivo), `<svg>` (para insertar gráficos vectoriales manipulables nodo por nodo en el DOM) y **`<canvas>`** (un lienzo de mapa de bits dinámico direccionable por píxeles mediante scripts).  
+* **CSS3 (*Cascading Style Sheets 3*):** Gobierna la presentación visual, el diseño adaptativo (*Responsive Design* mediante *Flexbox*, *CSS Grid* y *Media Queries*) y las **animaciones declarativas aceleradas por GPU** a través de las propiedades `transition`, `transform` (matrices de traslación, rotación, escala y perspectiva 3D) y `@keyframes`.  
+* **JavaScript (ES6+):** Es el lenguaje de programación imperativo, orientado a objetos y dirigido por eventos que dota de inteligencia a la página en el cliente. A través de JavaScript se controlan programáticamente los reproductores multimedia (`video.play()`, `currentTime`, eventos de progreso) y se accede a las **APIs Multimedia del Navegador**: **Canvas 2D API**, **WebGL / WebGPU** (con bibliotecas como *Three.js* o *Babylon.js* para gráficos 3D), **Web Audio API** (síntesis y análisis espectral de sonido con nodos de ganancia y FFT en vivo), **MediaStream / WebRTC** (acceso a cámara web y micrófono) y **WebXR**.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## El Lado del Servidor (Backend Multimedia): PHP, APIs REST y Gestión de Activos
+
+Mientras que HTML5, CSS3 y JavaScript se ejecutan en el dispositivo del usuario, un sistema multimedia completo necesita un **servidor (*Backend*)** programado en lenguajes como **PHP** (o alternativas como Python, Node.js, Java/C#) conectado a un gestor de bases de datos (MySQL / PostgreSQL). En una aplicación multimedia, el backend en PHP se encarga de autenticar usuarios, recibir la subida segura de archivos pesados (`$_FILES` validando tipos MIME reales y límites de tamaño), invocar procesos de optimización o transcodificación en el servidor, consultar en la base de datos las rutas y metadatos de las imágenes, audios o modelos 3D, y entregarlos dinámicamente al frontend mediante páginas generadas o **APIs RESTful en formato JSON**.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+La separación limpia de responsabilidades entre HTML5 (estructura y medios), CSS3 (presentación y transiciones), JavaScript (interactividad y cómputo gráfico en el cliente) y PHP (lógica de servidor y persistencia de datos) constituye la base de cualquier plataforma multimedia web escalable.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* Adell, F. (2021). *Fundamentos y evolución de la multimedia*. Universitat Oberta de Catalunya (UOC).  
+* Chong Qui, L. (2019). *Las Herramientas Multimedia en el Proceso de Aprendizaje Implícito: Entorno Web*. Editorial Académica Española.  
+* Ojeda Linares, N. D. (2012). *Introducción a la multimedia*. Red Tercer Milenio.

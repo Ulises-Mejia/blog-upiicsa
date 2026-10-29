@@ -5,62 +5,27 @@ description: "Plantilla académica para 2.4.1: Ambientes de Desarrollo para Tecn
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Desarrollar una aplicación tradicional de consola requiere únicamente un editor de texto y un compilador; en cambio, crear una solución multimedia con tecnologías emergentes —como una app de Realidad Aumentada o un entorno 3D interactivo— exige coordinar código fuente, modelos tridimensionales, texturas de alta resolución, pistas de audio espacial, simuladores de visores o teléfonos y herramientas de diagnóstico de tarjeta gráfica. El **ambiente de desarrollo integrado (IDE) y su cadena de herramientas (*Toolchain*)** es el taller de ingeniería donde todos estos componentes se ensamblan, depuran y empaquetan (Glover & Linowes, 2019; García Sánchez et al., 2016).
 
-## Desarrollo del Contenido
+## Componentes de una Cadena de Herramientas (Toolchain) para Multimedia y XR
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como describen Glover y Linowes (2019) y la Fase 4 de la metodología MEDESME (García Sánchez et al., 2016), un ambiente de desarrollo profesional para tecnologías emergentes integra cinco capas de software:
 
-### Conceptos Clave
+* **1. Entorno de Autoría Escénica y Motor Gráfico:** El editor visual (como **Unity Editor**, **Unreal Editor** o **Godot**) donde se organizan jerárquicamente las escenas, se configuran cámaras, luces, sistemas de partículas y físicas, y se inspeccionan las propiedades de cada objeto en tiempo real.  
+* **2. Entorno de Desarrollo Integrado (IDE) de Código:** El editor de programación acoplado al motor (**Visual Studio**, **Visual Studio Code**, **JetBrains Rider** o **PyCharm**) que proporciona autocompletado inteligente (*IntelliSense*), análisis estático de tipos, refactorización y depuración paso a paso con puntos de interrupción (*Breakpoints*) conectados al proceso en ejecución del motor.  
+* **3. Kits de Desarrollo de Plataforma (SDKs y NDKs):** Los paquetes de compilación cruzada necesarios para traducir el proyecto hacia el dispositivo destino: **Android SDK / NDK y OpenJDK** (para generar paquetes `.apk` o `.aab` para teléfonos Android y visores autónomos como Meta Quest), **Xcode** (para compilar hacia iOS/iPadOS/visionOS) y **Emscripten / WebAssembly** (para compilar hacia navegadores HTML5/WebGL).  
+* **4. Simuladores de Dispositivos y Depuración en Vivo:** Herramientas como **XR Device Simulator** (que permite probar movimientos 6DoF de casco y manos con teclado y ratón sin ponerse el visor en cada cambio de código) o transmisión en vivo al visor por cable/Wi-Fi (*Quest Link / Air Link / AR Foundation Remote*).  
+* **5. Perfiladores de Rendimiento (*Profilers*) y Control de Versiones Binario (Git LFS):** El **CPU/GPU Profiler** y el **Frame Debugger** permiten inspeccionar cuántos milisegundos tarda cada función y cada llamada de dibujo (*Draw Call*) para evitar caídas de FPS, mientras que **Git con Git LFS (*Large File Storage*)** gestiona el control de versiones separando los scripts ligeros de los activos multimedia pesados (texturas, audios y mallas 3D).
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Criterios de Selección y Configuración del Ambiente según el Proyecto
+
+En la Fase 4 de MEDESME (García Sánchez et al., 2016), la selección del ambiente de desarrollo debe justificarse en función de cuatro variables: (1) los requerimientos técnicos del equipo cliente donde correrá la aplicación, (2) la compatibilidad nativa con los formatos de los elementos multimedia diseñados, (3) la curva de aprendizaje y dominio técnico del equipo multidisciplinario, y (4) la facilidad de mantenimiento documentada en el Manual Técnico.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+Configurar adecuadamente el ambiente de desarrollo —integrando el motor gráfico, el IDE depurador, los simuladores de dispositivo, el analizador de rendimiento y el control de versiones con Git LFS— multiplica la productividad del equipo y asegura que el software cumpla los estándares de rendimiento desde las primeras fases de construcción.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* García Sánchez, E., et al. (2016). Metodología para el desarrollo de software multimedia educativo MEDESME. *CPU-e, Revista de Investigación Educativa*, (23), 216-226.  
+* Glover, J., & Linowes, J. (2019). *Complete Virtual Reality and Augmented Reality Development with Unity*. Packt Publishing.

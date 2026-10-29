@@ -5,62 +5,33 @@ description: "Plantilla académica para 1.3.3: El Proceso en los Diferentes Tipo
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Detrás de una escena animada de apenas diez segundos donde un personaje 3D camina, recoge un objeto y sonríe, existe una cadena de ingeniería gráfica altamente especializada conocida como **pipeline de producción de animación**. Igual que una línea de ensamblaje automotriz donde cada estación construye y valida un subsistema antes de pasarlo a la siguiente, el proceso de animación transforma un boceto conceptual en una malla geométrica articulada, iluminada y renderizada mediante algoritmos matemáticos precisos (Marschner & Shirley, 2016; de Vega, 2017).
 
-## Desarrollo del Contenido
+## Preproducción Visual (Guion, Storyboard, Animatic) y Construcción de Activos (Modelado y Texturizado)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+El proceso inicia en la fase de **Preproducción Visual**, donde el guion escrito se traduce en un **Storyboard** (secuencia de viñetas que especifican el encuadre, la acción y los movimientos de cámara) y posteriormente en un **Animatic o *Leica Reel***, que monta los cuadros del *storyboard* en una línea de tiempo de video sincronizada con la pista de audio temporal (*scratch track*) para validar el ritmo exacto (*timing*) de cada escena antes de producir un solo cuadro definitivo (de Vega, 2017; Ruiz, 2018).
 
-### Conceptos Clave
+En la animación 3D, la construcción de activos (*Asset Creation*) comprende tres etapas geométricas y ópticas (Marschner & Shirley, 2016):
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+* **Modelado 3D y Topología:** Creación de la superficie del objeto en el espacio $(X, Y, Z)$ mediante mallas de polígonos (preferentemente cuadriláteros o *quads* que fluyen siguiendo los músculos para deformarse limpiamente al animar), superficies paramétricas *NURBS* o escultura digital de alta densidad seguida de *retopología*.  
+* **Mapeo UV (*UV Unwrapping*):** Proyección bidimensional $(u, v)$ de la malla 3D —similar a desplegar un cubo de cartón sobre una mesa plana— para poder pintar texturas 2D sobre su superficie sin distorsión.  
+* **Texturizado y Materiales PBR (*Physically Based Rendering*):** Asignación de mapas de bits que definen el comportamiento óptico de la superficie ante la luz: mapa de color base (*Albedo*), rugosidad microscópica (*Roughness*), carácter metálico (*Metallic*) y mapa de normales (*Normal Map*, que simula relieves detallados alterando el vector normal por píxel sin añadir polígonos).
+
+## Esqueletización (Rigging, Skinning, FK/IK), Interpolación por Curvas y Renderizado
+
+Para dotar de movimiento a la malla estática se ejecutan las fases de articulación y cálculo cinemático (Marschner & Shirley, 2016, Cap. 15 y 16):
+
+* **Rigging y Skinning (Pesado de Vértices):** El *Rigging* construye un esqueleto jerárquico de huesos (*bones/joints*) emparentados (donde mover el hombro arrastra al codo, y el codo arrastra a la muñeca), además de expresiones faciales mediante deformaciones de malla (*Blend Shapes / Morph Targets*). El *Skinning* (como el algoritmo *Linear Blend Skinning*) asigna pesos de influencia $w_i \in [0, 1]$ a cada vértice de la malla respecto a los huesos cercanos.  
+* **Cinemática Directa (FK) vs. Cinemática Inversa (IK):** En **Cinemática Directa (*Forward Kinematics*)**, el animador rota manualmente cada hueso padre hacia los hijos ($	heta_1 \to \theta_2 \to \theta_3$) para calcular la posición final de la mano; es ideal para el balanceo libre de brazos al caminar. En **Cinemática Inversa (*Inverse Kinematics* - IK)**, el animador coloca directamente la posición objetivo del extremo final (*end-effector*, por ejemplo, el pie firme sobre un escalón o la mano agarrando una palanca) y el algoritmo (como el método heurístico iterativo **FABRIK** —*Forward And Backward Reaching Inverse Kinematics*— o el Jacobiano inverso) resuelve automáticamente los ángulos $\theta_1, \theta_2$ de la cadera y la rodilla.  
+* **Interpolación Matemática (*Splines* y Cuaterniones), Iluminación y Renderizado:** Los fotogramas clave se interpolan en el editor de curvas (*Graph Editor*) mediante polinomios cúbicos de **Hermite, Catmull-Rom o Bézier** $P(t) = (1-t)^3 P_0 + 3(1-t)^2 t P_1 + 3(1-t) t^2 P_2 + t^3 P_3$ para las traslaciones, y mediante **interpolación lineal esférica de cuaterniones unitarios (*SLERP*)** para las rotaciones 3D, evitando el bloqueo de cardán (*Gimbal Lock*). Finalmente, el motor de **Renderizado** (por rasterización en tiempo real o por trazado de rayos *Path Tracing*) calcula la iluminación global y entrega los cuadros para la **Composición Final**.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+El éxito técnico de cualquier producción animada reside en la disciplina de su pipeline: una buena topología en el modelado facilita el *skinning*, un *rig* bien construido con controles FK/IK acelera la animación, y el uso de curvas de Bézier y cuaterniones garantiza movimientos fluidos y físicamente creíbles.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* de Vega, A. (2017). *Animación de elementos*. Alfaomega.  
+* Marschner, S., & Shirley, P. (2016). *Fundamentals of Computer Graphics* (4th ed., Cap. 15: Curves y Cap. 16: Computer Animation). CRC Press.  
+* Ruiz, D. (2018). *Manual de Producción Multimedia: De la idea al remake*. Ediciones Promonet.  
+* Williams, R. (2019). *Técnicas de animación. Dibujos animados, animación 3D y videojuegos*. Anaya Multimedia.

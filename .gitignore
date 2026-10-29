@@ -5,6 +5,9 @@ dist/
 # Dependencias
 node_modules/
 
+# Documentación y fuentes de referencia
+fonts/
+
 # Variables de entorno
 .env
 .env.*
