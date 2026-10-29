@@ -14,6 +14,9 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 <div id="webxr-quiz-root" class="quiz-root" data-unit={unit}>
   <!-- OVERLAY DE DOM DURANTE LA SESIÓN AR MÓVIL -->
   <div id="ar-dom-overlay" class="ar-dom-overlay" style="display: none;">
+    <!-- Plano transparente para capturar toques en cualquier zona de la pantalla -->
+    <div id="ar-touch-plane" class="ar-touch-plane" aria-hidden="true"></div>
+
     <div class="ar-hud-header">
       <div class="ar-hud-badge">
         <span class="hud-dot"></span>
@@ -398,10 +401,11 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
           }
 
           // Telemetría en el HUD en tiempo real
-          if (this.isARActive && this.frameCount % 15 === 0 && this.statusText) {
+          if (this.isARActive && this.frameCount % 10 === 0 && this.statusText) {
             const p = this.objectAnchor?.position;
-            if (p) {
-              this.statusText.textContent = `RA Activo | (${p.x.toFixed(2)}, ${p.y.toFixed(2)}, ${p.z.toFixed(2)}) | Toca para centrar`;
+            const c = this.camera?.position;
+            if (p && c) {
+              this.statusText.textContent = `AR: Cam(${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}) | Obj(${p.x.toFixed(1)}, ${p.y.toFixed(1)}, ${p.z.toFixed(1)})`;
             }
           }
         } catch (err: any) {
@@ -437,18 +441,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       try {
         let placed = false;
 
-        // Prioridad 1: Controller oficial Three.js (la matriz 4x4 del rayo de la pantalla/cámara)
-        if (this.controller && this.controller.matrixWorld && this.controller.matrixWorld.elements[15] === 1) {
-          const forward = new THREE.Vector3(0, 0, -distance).applyMatrix4(this.controller.matrixWorld);
-          if (!isNaN(forward.x) && !isNaN(forward.y) && !isNaN(forward.z)) {
-            this.objectAnchor.position.copy(forward);
-            this.objectAnchor.quaternion.setFromRotationMatrix(this.controller.matrixWorld);
-            placed = true;
-          }
-        }
-
-        // Prioridad 2: Cámara de usuario descompuesta por Three.js WebXRManager
-        if (!placed && this.camera) {
+        // Prioridad 1: Cámara de usuario descompuesta en tiempo real por Three.js WebXRManager
+        if (this.camera) {
           const forward = new THREE.Vector3(0, 0, -distance);
           forward.applyQuaternion(this.camera.quaternion);
           forward.add(this.camera.position);
@@ -459,7 +453,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
           }
         }
 
-        // Prioridad 3: Respaldo estático en coordenadas locales
+        // Prioridad 2: Respaldo estático en coordenadas locales
         if (!placed) {
           this.objectAnchor.position.set(0, 0, -distance);
           this.objectAnchor.quaternion.set(0, 0, 0, 1);
@@ -538,7 +532,14 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
         this.pulseObject();
       });
 
-      // Tocar en cualquier área libre del overlay en RA recentra el modelo frente a la cámara
+      // Tocar en el plano táctil de pantalla completa en RA recentra el modelo frente a la cámara
+      const touchPlane = document.getElementById('ar-touch-plane');
+      touchPlane?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.recenterInFrontOfCamera(0.70);
+        this.pulseObject();
+      });
+
       this.arDomOverlay?.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
         if (target.closest('#btn-exit-ar')) return;
@@ -1063,12 +1064,25 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     box-sizing: border-box;
   }
 
+  .ar-touch-plane {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: auto;
+    z-index: 1;
+    background: transparent;
+  }
+
   .ar-hud-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
     pointer-events: auto;
+    position: relative;
+    z-index: 10;
   }
 
   .ar-hud-badge {
@@ -1117,6 +1131,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     gap: 0.75rem;
     width: 100%;
     pointer-events: auto;
+    position: relative;
+    z-index: 10;
   }
 
   .ar-status-pill {
