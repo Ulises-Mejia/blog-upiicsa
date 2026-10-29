@@ -1,6 +1,8 @@
 ---
 title: "Identidad Institucional IPN"
 description: "Símbolos, Himno Oficial con audio y letra, y Decálogo del Instituto Politécnico Nacional."
+prev: false
+next: false
 ---
 
 

@@ -1,6 +1,8 @@
 ---
 title: "Autores y Créditos"
 description: "Perfil de los autores y desarrolladores del Repositorio Multimedia UPIICSA - IPN."
+prev: false
+next: false
 ---
 
 Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría de contenidos para el **Repositorio Digital de Multimedia UPIICSA**.

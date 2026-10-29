@@ -1,6 +1,7 @@
 ---
 title: "Etapas de Planeación para Proyectos con Herramientas Multimedia Disruptivas"
 description: "Plantilla académica para 3.2.bis: Etapas de Planeación para Proyectos con Herramientas Multimedia Disruptivas"
+next: false
 ---
 
 ## Introducción
