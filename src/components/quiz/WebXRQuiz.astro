@@ -12,7 +12,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 ---
 
 <div id="webxr-quiz-root" class="quiz-root" data-unit={unit}>
-  <!-- OVERLAY DE DOM DURANTE LA SESIÓN AR -->
+  <!-- OVERLAY DE DOM DURANTE LA SESIÓN AR MÓVIL -->
   <div id="ar-dom-overlay" class="ar-dom-overlay" style="display: none;">
     <div class="ar-hud-header">
       <div class="ar-hud-badge">
@@ -27,12 +27,12 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
     <!-- Indicador central de escena de prueba Fase 3 -->
     <div class="ar-hud-instructions">
-      <p class="lang-es">📍 Objeto de prueba 3D anclado a 1.2 m frente a ti. Muévete para comprobar el anclaje espacial.</p>
-      <p class="lang-en" style="display: none;">📍 3D test object anchored 1.2m in front of you. Move around to test spatial tracking.</p>
+      <p class="lang-es">📍 Objeto de prueba 3D anclado a 1.2 m frente a ti. Muévete libremente alrededor.</p>
+      <p class="lang-en" style="display: none;">📍 3D test object anchored 1.2m in front of you. Move freely around it.</p>
     </div>
   </div>
 
-  <!-- TARJETA PRINCIPAL DEL CUESTIONARIO (PANTALLA 2D) -->
+  <!-- TARJETA PRINCIPAL DEL CUESTIONARIO -->
   <div class="quiz-card">
     <div class="quiz-header">
       <div class="unit-pill">
@@ -50,29 +50,47 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       </p>
     </div>
 
-    <!-- ESTADO 1: COMPROBANDO COMPATIBILIDAD -->
+    <!-- VISOR 3D DIRECTO EN PANTALLA (Objeto de prueba interactivo visible en web) -->
+    <div class="viewport-wrapper">
+      <div class="viewport-header">
+        <span class="viewport-badge">
+          <span class="badge-dot"></span>
+          <span class="lang-es">Escena 3D de Prueba (Fase 3)</span>
+          <span class="lang-en" style="display: none;">3D Test Scene (Phase 3)</span>
+        </span>
+        <span class="viewport-hint">
+          <span class="lang-es">Arrastra con el ratón o dedo para rotar</span>
+          <span class="lang-en" style="display: none;">Drag with mouse or finger to rotate</span>
+        </span>
+      </div>
+      <div id="quiz-3d-viewport" class="quiz-3d-viewport">
+        <!-- El canvas Three.js se inserta aquí dinámicamente -->
+      </div>
+    </div>
+
+    <!-- ESTADO 1: COMPROBANDO COMPATIBILIDAD CON RA -->
     <div id="quiz-state-checking" class="quiz-state-box">
       <div class="spinner"></div>
-      <p class="lang-es">Verificando compatibilidad de Realidad Aumentada (WebXR)...</p>
+      <p class="lang-es">Verificando compatibilidad con Realidad Aumentada (WebXR)...</p>
       <p class="lang-en" style="display: none;">Checking Augmented Reality (WebXR) compatibility...</p>
     </div>
 
-    <!-- ESTADO 2: DISPOSITIVO COMPATIBLE (BOTÓN DE INICIO) -->
+    <!-- ESTADO 2: DISPOSITIVO COMPATIBLE (BOTÓN PARA LANZAR CÁMARA AR) -->
     <div id="quiz-state-supported" class="quiz-state-box" style="display: none;">
       <div class="supported-banner">
         <div class="ar-icon-glow">🥽</div>
         <div class="supported-text">
           <h2 class="lang-es">¡Tu dispositivo es compatible con Realidad Aumentada!</h2>
           <h2 class="lang-en" style="display: none;">Your device supports Augmented Reality!</h2>
-          <p class="lang-es">Al presionar el botón se activará la cámara para proyectar la escena 3D interactiva en tu espacio físico.</p>
-          <p class="lang-en" style="display: none;">Tapping the button will launch the camera to project the interactive 3D scene into your physical room.</p>
+          <p class="lang-es">Pulsa el botón para abrir la cámara del móvil y proyectar el objeto 3D en tu espacio real.</p>
+          <p class="lang-en" style="display: none;">Tap the button to open your mobile camera and project the 3D object into your real room.</p>
         </div>
       </div>
 
       <button id="btn-start-ar" class="btn-start-ar" type="button">
         <span class="btn-ar-icon">✨</span>
-        <span class="lang-es">Iniciar Cuestionario en RA</span>
-        <span class="lang-en" style="display: none;">Start AR Quiz</span>
+        <span class="lang-es">Proyectar en Realidad Aumentada (Cámara)</span>
+        <span class="lang-en" style="display: none;">Project in Augmented Reality (Camera)</span>
       </button>
 
       <div class="ar-tips">
@@ -89,47 +107,32 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
             <span class="lang-es">Apunta el móvil hacia un espacio despejado frente a ti.</span>
             <span class="lang-en" style="display: none;">Point your phone at an open space in front of you.</span>
           </li>
-          <li>
-            <span class="lang-es">Puedes acercarte físicamente o caminar alrededor de los objetos 3D.</span>
-            <span class="lang-en" style="display: none;">You can physically move closer or walk around 3D objects.</span>
-          </li>
         </ul>
       </div>
     </div>
 
-    <!-- ESTADO 3: DISPOSITIVO NO COMPATIBLE -->
+    <!-- ESTADO 3: DISPOSITIVO SIN SOPORTE AR (PC O MÓVIL SIN ARCORE) -->
     <div id="quiz-state-unsupported" class="quiz-state-box" style="display: none;">
       <div class="unsupported-banner">
         <div class="unsupported-icon">📱</div>
         <div class="unsupported-content">
-          <h2 class="lang-es">Realidad Aumentada WebXR no disponible</h2>
-          <h2 class="lang-en" style="display: none;">WebXR Augmented Reality Not Available</h2>
+          <h2 class="lang-es">Modo Cámara RA disponible en móvil compatible</h2>
+          <h2 class="lang-en" style="display: none;">AR Camera Mode Available on Supported Mobile</h2>
           <p class="lang-es">
-            La sesión inmersiva de Realidad Aumentada (<code>immersive-ar</code>) requiere un teléfono móvil compatible (Android con <strong>Google Chrome</strong> y <strong>Servicios de Google Play para RA / ARCore</strong> instalados) ejecutado sobre un contexto seguro <strong>HTTPS</strong>.
+            Estás visualizando el objeto de prueba en <strong>3D interactivo en pantalla</strong>. Para proyectarlo mediante la cámara de tu habitación con Realidad Aumentada (<code>immersive-ar</code>), abre este enlace en un móvil <strong>Android con Google Chrome</strong> y <strong>ARCore</strong> por <strong>HTTPS</strong>.
           </p>
           <p class="lang-en" style="display: none;">
-            Immersive Augmented Reality (<code>immersive-ar</code>) requires a supported mobile phone (Android with <strong>Google Chrome</strong> and <strong>Google Play Services for AR / ARCore</strong>) running over a secure <strong>HTTPS</strong> context.
+            You are viewing the test object in <strong>interactive on-screen 3D</strong>. To project it through your room camera using Augmented Reality (<code>immersive-ar</code>), open this link on an <strong>Android phone with Google Chrome</strong> and <strong>ARCore</strong> over <strong>HTTPS</strong>.
           </p>
         </div>
       </div>
 
-      <div class="info-checklist">
-        <h3 class="lang-es">Requisitos para ejecutar en RA:</h3>
-        <h3 class="lang-en" style="display: none;">Requirements to run in AR:</h3>
-        <ul>
-          <li>✅ Dispositivo Android con giroscopio y cámara</li>
-          <li>✅ Navegador Google Chrome actualizado</li>
-          <li>✅ Google Play Services para RA (ARCore) habilitado</li>
-          <li>✅ Conexión HTTPS o localhost con depuración USB</li>
-        </ul>
-      </div>
-
       <button id="btn-recheck-ar" class="btn-secondary" type="button">
-        🔄 <span class="lang-es">Volver a comprobar compatibilidad</span><span class="lang-en" style="display: none;">Recheck Compatibility</span>
+        🔄 <span class="lang-es">Volver a comprobar compatibilidad RA</span><span class="lang-en" style="display: none;">Recheck AR Compatibility</span>
       </button>
     </div>
 
-    <!-- ESTADO 4: ERROR AL INICIAR LA SESIÓN -->
+    <!-- ESTADO 4: ERROR AL INICIAR LA SESIÓN AR -->
     <div id="quiz-state-error" class="quiz-state-box" style="display: none;">
       <div class="error-banner">
         <span class="error-icon">⚠️</span>
@@ -156,7 +159,6 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 <script>
   import * as THREE from 'three';
 
-  // Sincronización visual bilingüe con el sistema del Header
   function syncLanguageVisibility() {
     const isEn = localStorage.getItem('upiicsa_gt_lang') === 'en' ||
       document.documentElement.lang === 'en' ||
@@ -170,15 +172,15 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     });
   }
 
-  // Clase controladora de la sesión WebXR
   class WebXRQuizController {
     private xrSession: XRSession | null = null;
     private renderer: THREE.WebGLRenderer | null = null;
     private scene: THREE.Scene | null = null;
     private camera: THREE.PerspectiveCamera | null = null;
     private testMesh: THREE.Mesh | null = null;
-    private wireframeMesh: THREE.Mesh | null = null;
+    private wireframeMesh: THREE.LineSegments | null = null;
 
+    private viewportContainer = document.getElementById('quiz-3d-viewport');
     private stateChecking = document.getElementById('quiz-state-checking');
     private stateSupported = document.getElementById('quiz-state-supported');
     private stateUnsupported = document.getElementById('quiz-state-unsupported');
@@ -190,9 +192,142 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     private btnRetryAR = document.getElementById('btn-retry-ar');
     private errorText = document.getElementById('error-message-text');
 
+    private isDragging = false;
+    private previousMousePosition = { x: 0, y: 0 };
+    private isARActive = false;
+
     constructor() {
+      this.init3DScene();
       this.bindEvents();
       this.checkWebXRSupport();
+    }
+
+    private init3DScene() {
+      if (!this.viewportContainer) return;
+
+      const width = this.viewportContainer.clientWidth || 600;
+      const height = this.viewportContainer.clientHeight || 320;
+
+      // Crear escena y cámara
+      this.scene = new THREE.Scene();
+      this.camera = new THREE.PerspectiveCamera(50, width / height, 0.01, 20);
+      this.camera.position.set(0, 0, 0.7);
+
+      // Crear renderizador
+      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      this.renderer.setSize(width, height);
+      this.viewportContainer.innerHTML = '';
+      this.viewportContainer.appendChild(this.renderer.domElement);
+
+      // Iluminación
+      const ambientLight = new THREE.AmbientLight(0xffffff, 1.4);
+      this.scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xd4af37, 2.0);
+      dirLight.position.set(1, 2, 1.5);
+      this.scene.add(dirLight);
+
+      const dirLight2 = new THREE.DirectionalLight(0x00643a, 1.5);
+      dirLight2.position.set(-1, -1, 1);
+      this.scene.add(dirLight2);
+
+      // Objeto institucional de prueba: Dodecaedro Verde UPIICSA
+      const geometry = new THREE.DodecahedronGeometry(0.18, 0);
+      const material = new THREE.MeshStandardMaterial({
+        color: 0x00643a,
+        roughness: 0.25,
+        metalness: 0.5,
+        transparent: true,
+        opacity: 0.92,
+      });
+
+      this.testMesh = new THREE.Mesh(geometry, material);
+      this.testMesh.position.set(0, 0, 0);
+      this.scene.add(this.testMesh);
+
+      // Marco dorado poligonal exterior (wireframe)
+      const wireframeGeo = new THREE.WireframeGeometry(geometry);
+      const wireframeMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 });
+      this.wireframeMesh = new THREE.LineSegments(wireframeGeo, wireframeMat);
+      this.wireframeMesh.position.copy(this.testMesh.position);
+      this.scene.add(this.wireframeMesh);
+
+      // Bucle de animación continuo
+      let clock = new THREE.Clock();
+      this.renderer.setAnimationLoop(() => {
+        const elapsedTime = clock.getElapsedTime();
+
+        if (this.testMesh && this.wireframeMesh) {
+          if (!this.isDragging) {
+            this.testMesh.rotation.y += 0.008;
+            this.testMesh.rotation.x = Math.sin(elapsedTime * 0.5) * 0.15;
+          }
+
+          if (this.isARActive) {
+            this.testMesh.position.y = Math.sin(elapsedTime * 1.5) * 0.03;
+          }
+
+          this.wireframeMesh.rotation.copy(this.testMesh.rotation);
+          this.wireframeMesh.position.copy(this.testMesh.position);
+        }
+
+        if (this.renderer && this.scene && this.camera) {
+          this.renderer.render(this.scene, this.camera);
+        }
+      });
+
+      // Controles táctiles / ratón en el visor 2D
+      this.setupInteractiveControls();
+
+      // Ajuste al redimensionar ventana
+      window.addEventListener('resize', () => {
+        if (!this.isARActive && this.viewportContainer && this.renderer && this.camera) {
+          const w = this.viewportContainer.clientWidth;
+          const h = this.viewportContainer.clientHeight || 320;
+          this.camera.aspect = w / h;
+          this.camera.updateProjectionMatrix();
+          this.renderer.setSize(w, h);
+        }
+      });
+    }
+
+    private setupInteractiveControls() {
+      const dom = this.renderer?.domElement;
+      if (!dom) return;
+
+      const onStart = (clientX: number, clientY: number) => {
+        if (this.isARActive) return;
+        this.isDragging = true;
+        this.previousMousePosition = { x: clientX, y: clientY };
+      };
+
+      const onMove = (clientX: number, clientY: number) => {
+        if (!this.isDragging || this.isARActive || !this.testMesh) return;
+        const deltaX = clientX - this.previousMousePosition.x;
+        const deltaY = clientY - this.previousMousePosition.y;
+
+        this.testMesh.rotation.y += deltaX * 0.01;
+        this.testMesh.rotation.x += deltaY * 0.01;
+
+        this.previousMousePosition = { x: clientX, y: clientY };
+      };
+
+      const onEnd = () => {
+        this.isDragging = false;
+      };
+
+      dom.addEventListener('mousedown', (e) => onStart(e.clientX, e.clientY));
+      window.addEventListener('mousemove', (e) => onMove(e.clientX, e.clientY));
+      window.addEventListener('mouseup', onEnd);
+
+      dom.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) onStart(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length === 1) onMove(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+      window.addEventListener('touchend', onEnd);
     }
 
     private bindEvents() {
@@ -201,7 +336,6 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
       this.btnRecheckAR?.addEventListener('click', () => this.checkWebXRSupport());
       this.btnRetryAR?.addEventListener('click', () => this.checkWebXRSupport());
 
-      // Escuchar cambios de idioma globales
       window.addEventListener('storage', (e) => {
         if (e.key === 'upiicsa_gt_lang') syncLanguageVisibility();
       });
@@ -241,7 +375,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     }
 
     private async startARSession() {
-      if (!navigator.xr) return;
+      if (!navigator.xr || !this.renderer) return;
 
       try {
         const sessionInit: XRSessionInit = {
@@ -264,73 +398,24 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
     private async onSessionStarted(session: XRSession) {
       this.xrSession = session;
+      this.isARActive = true;
       session.addEventListener('end', () => this.onSessionEnded());
 
-      // Mostrar overlay de AR
       if (this.arDomOverlay) {
         this.arDomOverlay.style.display = 'flex';
       }
 
-      // Inicializar Three.js WebGLRenderer con fondo transparente
-      this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-      this.renderer.setPixelRatio(window.devicePixelRatio);
-      this.renderer.setSize(window.innerWidth, window.innerHeight);
-      this.renderer.xr.enabled = true;
+      if (!this.renderer) return;
 
+      this.renderer.xr.enabled = true;
+      this.renderer.xr.setReferenceSpaceType('local');
       await this.renderer.xr.setSession(session);
 
-      // Crear escena y cámara
-      this.scene = new THREE.Scene();
-      this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.01, 20);
-
-      // Iluminación
-      const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
-      this.scene.add(ambientLight);
-
-      const dirLight = new THREE.DirectionalLight(0xd4af37, 1.5);
-      dirLight.position.set(0.5, 2, 1);
-      this.scene.add(dirLight);
-
-      // ESCENA MÍNIMA DE PRUEBA (Fase 3): Objeto institucional flotando a 1.2m al frente
-      const geometry = new THREE.DodecahedronGeometry(0.18, 0);
-      const material = new THREE.MeshStandardMaterial({
-        color: 0x00643a,
-        roughness: 0.2,
-        metalness: 0.6,
-        transparent: true,
-        opacity: 0.92,
-      });
-
-      this.testMesh = new THREE.Mesh(geometry, material);
-      // Posición fija relativa al usuario: 1.2m al frente (Z = -1.2) y a la altura de la vista (Y = 0)
-      this.testMesh.position.set(0, 0, -1.2);
-      this.scene.add(this.testMesh);
-
-      // Marco dorado poligonal exterior (wireframe)
-      const wireframeGeo = new THREE.WireframeGeometry(geometry);
-      const wireframeMat = new THREE.LineBasicMaterial({ color: 0xd4af37, linewidth: 2 });
-      this.wireframeMesh = new THREE.LineSegments(wireframeGeo, wireframeMat) as any;
-      this.wireframeMesh.position.copy(this.testMesh.position);
-      this.scene.add(this.wireframeMesh);
-
-      // Bucle de animación
-      let clock = new THREE.Clock();
-      this.renderer.setAnimationLoop(() => {
-        const elapsedTime = clock.getElapsedTime();
-        if (this.testMesh && this.wireframeMesh) {
-          this.testMesh.rotation.y = elapsedTime * 0.6;
-          this.testMesh.rotation.x = Math.sin(elapsedTime * 0.4) * 0.3;
-          // Oscilación vertical sutil (flotación)
-          this.testMesh.position.y = Math.sin(elapsedTime * 1.5) * 0.04;
-
-          this.wireframeMesh.rotation.copy(this.testMesh.rotation);
-          this.wireframeMesh.position.copy(this.testMesh.position);
-        }
-
-        if (this.renderer && this.scene && this.camera) {
-          this.renderer.render(this.scene, this.camera);
-        }
-      });
+      // En AR, posicionamos el objeto a 1.2 metros al frente
+      if (this.testMesh && this.wireframeMesh) {
+        this.testMesh.position.set(0, 0, -1.2);
+        this.wireframeMesh.position.copy(this.testMesh.position);
+      }
     }
 
     private endARSession() {
@@ -340,35 +425,36 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     }
 
     private onSessionEnded() {
+      this.isARActive = false;
+      this.xrSession = null;
+
       if (this.arDomOverlay) {
         this.arDomOverlay.style.display = 'none';
       }
 
       if (this.renderer) {
-        this.renderer.setAnimationLoop(null);
-        if (this.testMesh) {
-          this.testMesh.geometry.dispose();
-          (this.testMesh.material as THREE.Material).dispose();
+        this.renderer.xr.enabled = false;
+        if (this.viewportContainer) {
+          const w = this.viewportContainer.clientWidth || 600;
+          const h = this.viewportContainer.clientHeight || 320;
+          this.renderer.setSize(w, h);
+          if (this.camera) {
+            this.camera.aspect = w / h;
+            this.camera.position.set(0, 0, 0.7);
+            this.camera.updateProjectionMatrix();
+          }
         }
-        if (this.wireframeMesh) {
-          this.wireframeMesh.geometry.dispose();
-          (this.wireframeMesh.material as THREE.Material).dispose();
-        }
-        this.renderer.dispose();
-        this.renderer = null;
       }
 
-      this.xrSession = null;
-      this.scene = null;
-      this.camera = null;
-      this.testMesh = null;
-      this.wireframeMesh = null;
+      if (this.testMesh && this.wireframeMesh) {
+        this.testMesh.position.set(0, 0, 0);
+        this.wireframeMesh.position.copy(this.testMesh.position);
+      }
 
       this.showState('supported');
     }
   }
 
-  // Inicializar controlador cuando el componente esté montado
   function initWebXR() {
     syncLanguageVisibility();
     new WebXRQuizController();
@@ -403,7 +489,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
 
   .quiz-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .unit-pill {
@@ -450,9 +536,65 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     margin: 0 auto;
   }
 
+  /* VISOR 3D DIRECTO EN PANTALLA */
+  .viewport-wrapper {
+    margin: 1.5rem 0 2rem 0;
+    background: radial-gradient(circle at center, rgba(0, 100, 58, 0.15) 0%, rgba(10, 20, 15, 0.9) 100%);
+    border: 2px solid rgba(212, 175, 55, 0.45);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25), inset 0 0 30px rgba(0, 100, 58, 0.2);
+  }
+
+  .viewport-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    background: rgba(0, 0, 0, 0.4);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    font-size: 0.8rem;
+  }
+
+  .viewport-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #D4AF37;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge-dot {
+    width: 7px;
+    height: 7px;
+    background: #10B981;
+    border-radius: 50%;
+  }
+
+  .viewport-hint {
+    color: var(--sl-color-gray-3);
+    font-size: 0.78rem;
+  }
+
+  .quiz-3d-viewport {
+    width: 100%;
+    height: 320px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .quiz-3d-viewport:active {
+    cursor: grabbing;
+  }
+
   .quiz-state-box {
-    margin: 2rem 0;
-    padding: 1.8rem;
+    margin: 1rem 0 1.5rem 0;
+    padding: 1.5rem;
     border-radius: 12px;
     box-sizing: border-box;
   }
@@ -471,8 +613,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   }
 
   .spinner {
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border: 3px solid rgba(212, 175, 55, 0.2);
     border-top-color: #D4AF37;
     border-radius: 50%;
@@ -490,9 +632,9 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     gap: 1.2rem;
     background: rgba(0, 100, 58, 0.1);
     border: 1px solid rgba(0, 100, 58, 0.3);
-    padding: 1.4rem;
+    padding: 1.2rem;
     border-radius: 12px;
-    margin-bottom: 1.8rem;
+    margin-bottom: 1.5rem;
   }
 
   :root[data-theme='dark'] .supported-banner {
@@ -501,13 +643,13 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   }
 
   .ar-icon-glow {
-    font-size: 2.8rem;
+    font-size: 2.6rem;
     filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
     flex-shrink: 0;
   }
 
   .supported-text h2 {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 700;
     margin: 0 0 0.35rem 0;
     color: #00643A;
@@ -518,7 +660,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   }
 
   .supported-text p {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--sl-color-gray-2);
     margin: 0;
   }
@@ -529,8 +671,8 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     justify-content: center;
     gap: 12px;
     width: 100%;
-    max-width: 440px;
-    margin: 0 auto 2rem auto;
+    max-width: 480px;
+    margin: 0 auto 1.5rem auto;
     background: linear-gradient(135deg, #00643A 0%, #004d2c 100%);
     color: #FFFFFF;
     font-size: 1.15rem;
@@ -558,16 +700,16 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   .ar-tips {
     background: rgba(255, 255, 255, 0.04);
     border-left: 3px solid #D4AF37;
-    padding: 1rem 1.4rem;
+    padding: 0.9rem 1.2rem;
     border-radius: 0 8px 8px 0;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     color: var(--sl-color-gray-2);
   }
 
   .tips-title {
     font-weight: 700;
     color: var(--sl-color-text);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.4rem 0;
   }
 
   .ar-tips ul {
@@ -576,7 +718,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   }
 
   .ar-tips li {
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.3rem;
   }
 
   /* Estado No Compatible */
@@ -586,18 +728,18 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     gap: 1.2rem;
     background: rgba(245, 158, 11, 0.08);
     border: 1px solid rgba(245, 158, 11, 0.3);
-    padding: 1.4rem;
+    padding: 1.2rem;
     border-radius: 12px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
   }
 
   .unsupported-icon {
-    font-size: 2.5rem;
+    font-size: 2.3rem;
     flex-shrink: 0;
   }
 
   .unsupported-content h2 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #D97706;
     margin: 0 0 0.4rem 0;
@@ -608,46 +750,10 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
   }
 
   .unsupported-content p {
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     color: var(--sl-color-gray-2);
     margin: 0;
     line-height: 1.5;
-  }
-
-  .info-checklist {
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1.2rem;
-    border-radius: 10px;
-    margin-bottom: 1.5rem;
-  }
-
-  :root[data-theme='dark'] .info-checklist {
-    background: rgba(255, 255, 255, 0.02);
-  }
-
-  .info-checklist h3 {
-    font-size: 1rem;
-    font-weight: 700;
-    margin: 0 0 0.6rem 0;
-    color: var(--sl-color-text);
-  }
-
-  .info-checklist ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
-    font-size: 0.88rem;
-    color: var(--sl-color-gray-2);
-  }
-
-  @media (max-width: 600px) {
-    .info-checklist ul {
-      grid-template-columns: 1fr;
-    }
   }
 
   .btn-secondary {
@@ -657,9 +763,9 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(212, 175, 55, 0.4);
     color: var(--sl-color-text);
-    font-size: 0.95rem;
+    font-size: 0.92rem;
     font-weight: 600;
-    padding: 0.65rem 1.4rem;
+    padding: 0.6rem 1.2rem;
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -680,7 +786,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     border: 1px solid rgba(239, 68, 68, 0.35);
     padding: 1.2rem;
     border-radius: 10px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
   }
 
   .error-icon {
@@ -725,7 +831,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     text-decoration: underline;
   }
 
-  /* OVERLAY DURANTE LA SESIÓN AR */
+  /* OVERLAY EN PANTALLA COMPLETA DURANTE LA SESIÓN AR */
   .ar-dom-overlay {
     position: fixed;
     top: 0;
@@ -733,7 +839,7 @@ const unitBackHref = unit === 1 ? `${base}/es/unidad-1/1-4-2-base-rv/` : `${base
     width: 100vw;
     height: 100vh;
     z-index: 999999;
-    pointer-events: none; /* Permite que los toques pasen a WebXR salvo en botones */
+    pointer-events: none;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
