@@ -19,13 +19,25 @@ Por su parte, el **plano cinematográfico** define la proporción de la figura h
 
 ## Angulación de Cámara, Movimientos Físicos/Ópticos y Continuidad Visual (Raccord)
 
-La posición vertical e inclinación de la cámara respecto al sujeto (**angulación**) altera radicalmente la lectura semiótica de la imagen: el **Ángulo Normal** (a la altura de los ojos) transmite neutralidad e igualdad; el **Picado** (cámara arriba mirando hacia abajo) empequeñece al sujeto y connota inferioridad o fragilidad; el **Contrapicado** (cámara abajo mirando hacia arriba) engrandece al sujeto proyectando poder, autoridad o monumentalidad; el **Cenital** ($90^\circ$ perpendicular desde arriba) ofrece una vista de mapa o esquema táctico; el **Nadir** ($90^\circ$ desde el suelo hacia el cielo) genera vértigo; y el **Plano Holandés o Aberrante** (inclinación lateral del horizonte) comunica inestabilidad o peligro (Ruiz, 2018; de Vega, 2017).
+La posición vertical e inclinación de la cámara respecto al sujeto (**angulación**) altera radicalmente la lectura semiótica de la imagen (Ruiz, 2018; de Vega, 2017):
 
-Respecto a los **movimientos de cámara**, se distinguen los **rotacionales sobre el propio eje del trípode** —**Paneo o Panorámica horizontal (*Pan*)** y **Basculamiento vertical (*Tilt*)**—, los **traslacionales donde todo el cuerpo de la cámara se desplaza en el espacio** —**Travelling** lateral, **Dolly In/Out** de acercamiento o alejamiento físico que modifica la perspectiva espacial, **Grúa/Jib** y estabilizadores o drones— y el **movimiento óptico (*Zoom*)**, donde la cámara permanece fija y solo varía la distancia focal de los lentes, aplanando o comprimiendo el fondo sin cambiar la perspectiva geométrica. Todo ello se rige por las reglas de **continuidad o *raccord*** y la **regla del eje de 180 grados**, que impide cruzar la línea imaginaria entre dos interlocutores para no desorientar espacialmente al espectador.
+* **Ángulo Normal:** A la altura de los ojos; transmite neutralidad, naturalidad e igualdad.
+* **Picado:** Cámara situada arriba mirando hacia abajo; empequeñece al sujeto y connota inferioridad o fragilidad.
+* **Contrapicado:** Cámara abajo mirando hacia arriba; engrandece al sujeto proyectando poder, autoridad o monumentalidad.
+* **Cenital y Nadir:** El ángulo **Cenital** (`90°` perpendicular desde arriba) ofrece una vista de mapa o esquema táctico, mientras que el **Nadir** (`90°` desde el suelo hacia el cielo) provoca sensación de vértigo.
+* **Plano Holandés o Aberrante:** Inclinación lateral del eje del horizonte para comunicar inestabilidad psicológica o peligro.
+
+Respecto a los **movimientos de cámara**, se distinguen tres categorías técnicas:
+
+* **Rotacionales (sobre el propio eje del trípode):** **Paneo o Panorámica horizontal (*Pan*)** y **Basculamiento vertical (*Tilt*)**.
+* **Traslacionales (desplazamiento físico de la cámara en el espacio):** **Travelling** lateral, **Dolly In/Out** de acercamiento o alejamiento físico (que modifica la perspectiva espacial), **Grúa / Jib** y estabilizadores o drones.
+* **Movimiento Óptico (*Zoom*):** La cámara permanece fija y solo varía la distancia focal de las lentes, comprimiendo o expandiendo el fondo sin cambiar la perspectiva geométrica.
+
+Todo el montaje se rige por las reglas de **continuidad visual (*raccord*)** y la **regla del eje de `180°`**, que impide cruzar la línea imaginaria entre dos interlocutores para no desorientar espacialmente al espectador.
 
 ## Conclusiones
 
-Dominar la escala de planos, las angulaciones y los movimientos de cámara dota al desarrollador multimedia de las herramientas narrativas necesarias tanto para producir video instruccional de calidad como para programar cámaras virtuales en motores 3D y recorridos interactivos.
+> Dominar la escala de planos, las angulaciones y los movimientos de cámara dota al desarrollador multimedia de las herramientas narrativas necesarias tanto para producir video instruccional de calidad como para programar cámaras virtuales en motores `3D` y recorridos interactivos.
 
 ## Fuentes Documentales
 

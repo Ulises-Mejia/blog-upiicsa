@@ -18,11 +18,15 @@ La genealogía de la computación gráfica y la multimedia interactiva se articu
 
 ## La Era de la Multimedia Personal y las GPUs Programables (1987–Actualidad)
 
-En **1987**, Apple lanzó **HyperCard**, el primer sistema de autoría hipermedia masivo basado en la metáfora de pilas de tarjetas interactivas. En **1990**, un consorcio liderado por Microsoft estableció el estándar **MPC (Multimedia Personal Computer)**, que incorporó unidades de CD-ROM (650 MB) y tarjetas de sonido de 16 bits a las computadoras personales (Ojeda Linares, 2012). Finalmente, a partir de **1999** (con la aparición del término GPU con la GeForce 256) y la llegada de **OpenGL 2.0 / DirectX 9**, el hardware gráfico abandonó el pipeline de función fija (*fixed-function pipeline*) para adoptar un **pipeline de sombreadores programables (*programmable shaders*)**, culminando en las arquitecturas actuales capaces de ejecutar trazado de rayos en tiempo real (*hardware-accelerated ray tracing*) y reconstrucción de imagen por inteligencia artificial (Marschner & Shirley, 2016).
+A partir de finales de los años ochenta, la evolución gráfica aceleró su llegada al usuario final a través de tres grandes etapas tecnológicas:
+
+* **1987 — Autoría Hipermedia Personal:** Apple lanzó **HyperCard**, el primer sistema de autoría hipermedia masivo basado en la metáfora de pilas de tarjetas interactivas.
+* **1990 — El Estándar `MPC` (*Multimedia Personal Computer*):** Un consorcio liderado por Microsoft estableció la especificación `MPC`, que incorporó unidades de `CD-ROM` (650 MB) y tarjetas de sonido de 16 bits a las computadoras personales (Ojeda Linares, 2012).
+* **1999–Actualidad — GPUs Programables y Trazado de Rayos:** Con la introducción de la primera `GPU` dedicada (GeForce 256) y las especificaciones `OpenGL 2.0` / `DirectX 9`, el hardware gráfico abandonó el pipeline de función fija (*fixed-function pipeline*) para adoptar un **pipeline de sombreadores programables (*programmable shaders*)**, culminando en las arquitecturas actuales capaces de ejecutar trazado de rayos en tiempo real (*hardware-accelerated ray tracing*) y reconstrucción de imagen por inteligencia artificial (Marschner & Shirley, 2016).
 
 ## Conclusiones
 
-Comprender la evolución de la computación gráfica demuestra que cada salto en la expresividad de las herramientas multimedia ha sido impulsado por innovaciones matemáticas en estructuras de datos y por la transición del procesamiento secuencial en CPU al paralelismo masivo en GPU.
+> Comprender la evolución de la computación gráfica demuestra que cada salto en la expresividad de las herramientas multimedia ha sido impulsado por innovaciones matemáticas en estructuras de datos y por la transición del procesamiento secuencial en `CPU` al paralelismo masivo en `GPU`.
 
 ## Fuentes Documentales
 

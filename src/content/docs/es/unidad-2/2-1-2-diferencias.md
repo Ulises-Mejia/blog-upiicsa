@@ -11,10 +11,13 @@ Es común que en el lenguaje cotidiano se confundan los términos Realidad Virtu
 
 Para clasificar rigurosamente estas tecnologías, Paul Milgram y Fumio Kishino formularon en **1994** el **Continuo de Virtualidad (*Reality-Virtuality Continuum*)**, una escala continua cuyos dos extremos son el **Entorno Real** (el mundo físico sin ninguna intervención digital) y el **Entorno Virtual Puro (Realidad Virtual)**, donde el 100 % de lo que percibe el usuario es generado por computadora. Todo el espectro intermedio donde se mezclan píxeles digitales y átomos físicos se denomina hoy bajo el término paraguas de **Realidad Extendida (XR)** (Cejudo-Mejías et al., 2023; Prendes Espinosa, 2015):
 
-* **Realidad Virtual (RV / VR):** Aísla visual y auditivamente al usuario del mundo físico para transportarlo a un entorno completamente sintético.  
-* **Realidad Aumentada (RA / AR):** Mantiene el mundo real como escenario principal y **superpone capas de información digital** (modelos 3D, textos, videos o indicadores) sobre la vista del entorno físico. Conforme a la definición clásica de Ronald Azuma (1997) citada por Prendes Espinosa (2015), todo sistema de RA debe cumplir tres requisitos: **(1) combinar elementos reales y virtuales**, **(2) ser interactivo en tiempo real** y **(3) estar registrado espacialmente en tres dimensiones (3D)**.  
-* **Virtualidad Aumentada (VA / AV):** Caso inverso a la RA donde el entorno base es virtual pero se incrustan objetos o video en vivo del mundo físico (por ejemplo, ver tus propias manos reales o tu teclado físico recortados dentro de una oficina virtual).  
-* **Realidad Mixta (RM / MR):** Representa la convergencia avanzada donde los objetos virtuales no solo se dibujan encima de la imagen de la cámara, sino que **comprenden la geometría tridimensional de la habitación real**: un personaje virtual puede esconderse detrás de tu sillón físico (**oclusión espacial**), rebotar contra tus paredes reales (**colisiones con malla espacial**) y recibir sombras acordes a la lámpara de tu sala.
+* **Realidad Virtual (`RV / VR`):** Aísla visual y auditivamente al usuario del mundo físico para transportarlo a un entorno completamente sintético.  
+* **Realidad Aumentada (`RA / AR`):** Mantiene el mundo real como escenario principal y **superpone capas de información digital** (modelos 3D, textos, videos o indicadores) sobre la vista del entorno físico. Conforme a la definición clásica de Ronald Azuma (1997) citada por Prendes Espinosa (2015), todo sistema de RA debe cumplir tres requisitos esenciales:
+  1. Combinar elementos reales y virtuales.
+  2. Ser interactivo en tiempo real.
+  3. Estar registrado espacialmente en tres dimensiones (`3D`).  
+* **Virtualidad Aumentada (`VA / AV`):** Caso inverso a la RA donde el entorno base es virtual pero se incrustan objetos o video en vivo del mundo físico (por ejemplo, ver tus propias manos reales o tu teclado físico recortados dentro de una oficina virtual).  
+* **Realidad Mixta (`RM / MR`):** Representa la convergencia avanzada donde los objetos virtuales no solo se dibujan encima de la imagen de la cámara, sino que **comprenden la geometría tridimensional de la habitación real**: un personaje virtual puede esconderse detrás de tu sillón físico (**oclusión espacial**), rebotar contra tus paredes reales (**colisiones con malla espacial**) y recibir sombras acordes a la lámpara de tu sala.
 
 ## Los Cuatro Niveles Evolutivos de la Realidad Aumentada (Prendes Espinosa, 2015)
 
@@ -27,7 +30,7 @@ En su estudio en *Pixel-Bit*, Carlos Prendes Espinosa (2015) detalla la taxonom�
 
 ## Conclusiones
 
-Comprender las diferencias técnicas entre RV, RA y RM a lo largo del Continuo de Virtualidad permite seleccionar el paradigma exacto que requiere cada problema informático: aislar para simular mundos inexistentes (RV), superponer para enriquecer el entorno con datos móviles (RA) o fusionar geométricamente ambos mundos para asistir tareas complejas manos libres (RM).
+> Comprender las diferencias técnicas entre `RV`, `RA` y `RM` a lo largo del **Continuo de Virtualidad** permite seleccionar el paradigma exacto que requiere cada problema informático: aislar para simular mundos inexistentes (`RV`), superponer para enriquecer el entorno con datos móviles (`RA`) o fusionar geométricamente ambos mundos para asistir tareas complejas manos libres (`RM`).
 
 ## Fuentes Documentales
 

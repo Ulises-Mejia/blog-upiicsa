@@ -11,7 +11,9 @@ Cuando un equipo de ingeniería desarrolla un proyecto con animación 2D, gráfi
 
 Las **tecnologías abiertas** se dividen en dos categorías complementarias que garantizan la soberanía tecnológica y la interoperabilidad entre sistemas:
 
-* **Estándares Abiertos de Formato y APIs (W3C, Khronos Group, Pixar/AOUSD):** Son especificaciones técnicas públicas, documentadas y libres de patentes o regalías que cualquier desarrollador puede implementar. En animación 2D/Web destacan **SVG** (gráficos vectoriales escalables en XML), **CSS Animations/Transitions**, la **Web Animations API (WAAPI)** y el formato basado en JSON **Lottie**; en el ámbito 3D e inmersivo destacan **glTF 2.0 / GLB** (*GL Transmission Format* de Khronos Group, considerado el «JPEG del 3D» por su eficiencia para transmitir mallas, materiales PBR, esqueletos y animaciones directo a la GPU), **OpenUSD** (*Universal Scene Description* para intercambio de escenas complejas), **WebGL / WebGPU** (aceleración 3D en el navegador) y **OpenXR** (estándar abierto para visores de realidad virtual y aumentada).  
+* **Estándares Abiertos de Formato y APIs (W3C, Khronos Group, Pixar/AOUSD):** Son especificaciones técnicas públicas, documentadas y libres de patentes o regalías que cualquier desarrollador puede implementar:
+  * **En animación 2D y Web:** `SVG` (gráficos vectoriales escalables en XML), `CSS Animations/Transitions`, la `Web Animations API (WAAPI)` y el formato basado en JSON `Lottie`.
+  * **En el ámbito 3D e inmersivo:** `glTF 2.0` / `GLB` (*GL Transmission Format* de Khronos Group, considerado el «JPEG del 3D» por su eficiencia para transmitir mallas, materiales PBR, esqueletos y animaciones directo a la `GPU`), `OpenUSD` (*Universal Scene Description* para intercambio de escenas complejas), `WebGL` / `WebGPU` (aceleración 3D en el navegador) y `OpenXR` (estándar abierto para visores de realidad virtual y aumentada).  
 * **Software de Creación de Código Abierto (*Open Source*):** Herramientas cuyo código fuente es público y gratuito bajo licencias como GPL o MIT, encabezadas por **Blender** (suite integral de modelado, *rigging*, animación 2D *Grease Pencil*, animación 3D, simulación física, edición de video y renderizado *Cycles/Eevee*), **Godot Engine** (motor de videojuegos 2D/3D bajo licencia MIT), **Synfig Studio** y **OpenToonz** (animación 2D).
 
 ## Tecnologías Cerradas o Propietarias en la Industria Audiovisual y de Videojuegos
@@ -23,7 +25,7 @@ Las **tecnologías cerradas** son desarrolladas y comercializadas por empresas p
 
 ## Conclusiones
 
-La tendencia contemporánea en la ingeniería multimedia combina estratégicamente ambos mundos: incluso cuando un estudio utiliza herramientas de autoría propietarias en su flujo interno, la entrega, transmisión e integración web se realiza sobre formatos y estándares abiertos como glTF 2.0, HTML5, WebGL y OpenXR.
+> La tendencia contemporánea en la ingeniería multimedia combina estratégicamente ambos mundos: incluso cuando un estudio utiliza herramientas de autoría propietarias en su flujo interno, la entrega, transmisión e integración web se realiza sobre formatos y estándares abiertos como `glTF 2.0`, `HTML5`, `WebGL` y `OpenXR`.
 
 ## Fuentes Documentales
 

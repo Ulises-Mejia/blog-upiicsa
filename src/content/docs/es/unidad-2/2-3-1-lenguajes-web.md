@@ -21,7 +21,7 @@ Mientras que HTML5, CSS3 y JavaScript se ejecutan en el dispositivo del usuario,
 
 ## Conclusiones
 
-La separación limpia de responsabilidades entre HTML5 (estructura y medios), CSS3 (presentación y transiciones), JavaScript (interactividad y cómputo gráfico en el cliente) y PHP (lógica de servidor y persistencia de datos) constituye la base de cualquier plataforma multimedia web escalable.
+> La separación limpia de responsabilidades entre **`HTML5`** (estructura y medios), **`CSS3`** (presentación y transiciones), **`JavaScript`** (interactividad y cómputo gráfico en el cliente) y **`PHP`** (lógica de servidor y persistencia de datos) constituye la base de cualquier plataforma multimedia web escalable.
 
 ## Fuentes Documentales
 

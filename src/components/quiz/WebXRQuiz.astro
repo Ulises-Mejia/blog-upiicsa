@@ -148,16 +148,9 @@ const unitBackHref = `${base}/es/${lastTopicByUnit[unit] ?? ''}/`;
                 <span class="lang-es">Las preguntas flotarán en 3D frente a ti, en tu espacio real, a través de la cámara del móvil.</span>
                 <span class="lang-en" style="display: none;">Questions will float in 3D in front of you, in your real space, through your phone camera.</span>
               </p>
-              <button id="btn-start-ar" class="btn-mode btn-mode--primary is-loading" type="button" disabled>
-                <span class="label-loading">
-                  <span class="spinner spinner--small" aria-hidden="true"></span>
-                  <span class="lang-es">Preparando motor 3D...</span>
-                  <span class="lang-en" style="display: none;">Preparing 3D engine...</span>
-                </span>
-                <span class="label-ready">
-                  ✨ <span class="lang-es">Proyectar en Realidad Aumentada</span>
-                  <span class="lang-en" style="display: none;">Project in Augmented Reality</span>
-                </span>
+              <button id="btn-start-ar" class="btn-mode btn-mode--primary" type="button" disabled>
+                ✨ <span class="lang-es">Proyectar en Realidad Aumentada</span>
+                <span class="lang-en" style="display: none;">Project in Augmented Reality</span>
               </button>
               <details class="ar-tips">
                 <summary>
@@ -777,18 +770,6 @@ const unitBackHref = `${base}/es/${lastTopicByUnit[unit] ?? ''}/`;
   .btn-mode--ghost:hover {
     background: var(--quiz-gold);
     color: var(--quiz-green-deep);
-  }
-
-  .btn-start-ar .label-loading,
-  .btn-start-ar .label-ready {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .btn-start-ar.is-loading .label-ready,
-  .btn-start-ar:not(.is-loading) .label-loading {
-    display: none;
   }
 
   .ar-tips {

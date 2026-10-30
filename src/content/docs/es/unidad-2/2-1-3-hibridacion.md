@@ -23,7 +23,7 @@ La segunda gran dimensión de hibridación conecta los gráficos 3D con los dato
 
 ## Conclusiones
 
-La hibridación demuestra que las herramientas multimedia han dejado de ser simples reproductores de audio o video aislados para convertirse en la interfaz visual y espacial donde convergen la inteligencia artificial, la visión por computadora, el Internet de las Cosas y los sistemas distribuidos.
+> La hibridación demuestra que las herramientas multimedia han dejado de ser simples reproductores de audio o video aislados para convertirse en la interfaz visual y espacial donde convergen la **Inteligencia Artificial**, la **Visión por Computadora**, el **Internet de las Cosas (`IoT`)** y los sistemas distribuidos.
 
 ## Fuentes Documentales
 

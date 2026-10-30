@@ -24,7 +24,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
     </div>
     <div class="author-meta">
       <h3 class="author-name">Ulises Mejía Ortega</h3>
-      <span class="author-role-badge">ARQUITECTURA DESARROLLO Y CURADURIA</span>
+      <span class="author-role-badge">ARQUITECTURA, DESARROLLO Y CURADURÍA</span>
     </div>
   </div>
 
@@ -93,7 +93,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
     </div>
     <div class="author-meta">
       <h3 class="author-name">Marco Antonio Linares Zurita</h3>
-      <span class="author-role-badge">ARQUITECTURA DESARROLLO Y CURADURIA </span>
+      <span class="author-role-badge">ARQUITECTURA, DESARROLLO Y CURADURÍA</span>
     </div>
   </div>
 

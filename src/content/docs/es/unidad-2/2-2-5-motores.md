@@ -27,7 +27,7 @@ Independientemente de la marca comercial, todo motor de videojuegos moderno est�
 
 ## Conclusiones
 
-Los motores de videojuegos han trascendido la industria del entretenimiento para convertirse en los entornos de desarrollo estándar de la computación espacial: elegir entre Unity, Unreal Engine o Godot depende del balance entre movilidad/XR multiplataforma (Unity), hiperrealismo visual (Unreal) y apertura/ligereza (Godot).
+> Los motores de videojuegos han trascendido la industria del entretenimiento para convertirse en los entornos de desarrollo estándar de la computación espacial: elegir entre **Unity**, **Unreal Engine** o **Godot** depende del balance entre movilidad/`XR` multiplataforma (Unity), hiperrealismo visual (Unreal) y apertura/ligereza (Godot).
 
 ## Fuentes Documentales
 

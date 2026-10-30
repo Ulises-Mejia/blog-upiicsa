@@ -12,7 +12,7 @@ Si pasas rápidamente con el pulgar las hojas de una libreta donde dibujaste un 
 La percepción de movimiento continuo a partir de imágenes estáticas discretas no ocurre en la pantalla, sino en el sistema visual y la corteza cerebral del observador gracias a la interacción de dos mecanismos estudiados por la psicofísica (Ojeda Linares, 2012; de Vega, 2017):
 
 * **El Fenómeno Phi y el Movimiento Beta:** Descubiertos por Max Wertheimer (1912), demuestran que cuando dos estímulos visuales cercanos se muestran en rápida sucesión espacial y temporal, el cerebro interpola automáticamente una trayectoria continua de movimiento entre ambos.  
-* **La Frecuencia Crítica de Fusión de Parpadeo (*Critical Flicker Fusion*) y los FPS:** Por debajo de **10 a 12 cuadros por segundo (FPS)**, el ojo humano distingue los saltos individuales entre imágenes. A partir de **24 FPS** (el estándar histórico del cine sonoro), el movimiento se percibe continuo; en televisión y video web se emplean **30 o 60 FPS** para lograr mayor nitidez temporal; y en sistemas interactivos de **Realidad Virtual** se exigen entre **90 y 120 FPS** constantes para que el movimiento de la escena coincida sin retraso con el sistema vestibular del oído interno del usuario (Otero & Flores, 2011; Marschner & Shirley, 2016).
+* **La Frecuencia Crítica de Fusión de Parpadeo (*Critical Flicker Fusion*) y los `FPS`:** Por debajo de `10` a `12 FPS`, el ojo humano distingue los saltos individuales entre imágenes. A partir de **`24 FPS`** (el estándar histórico del cine sonoro), el movimiento se percibe continuo; en televisión y video web se emplean **`30 FPS` o `60 FPS`** para lograr mayor nitidez temporal; y en sistemas interactivos de **Realidad Virtual** se exigen entre **`90 FPS` y `120 FPS`** constantes para que el movimiento de la escena coincida sin retraso con el sistema vestibular del oído interno del usuario (Otero & Flores, 2011; Marschner & Shirley, 2016).
 
 ## Los 12 Principios Fundamentales de la Animación Aplicados a Sistemas Digitales
 
@@ -33,7 +33,7 @@ Sistematizados por Frank Thomas y Ollie Johnston (1981) y adaptados a la animaci
 
 ## Conclusiones
 
-La conceptualización de la animación une la psicología de la percepción visual con las leyes de la cinemática: dominar sus principios transforma simples desplazamientos geométricos en pantalla en experiencias interactivas naturales, expresivas y comprensibles.
+> La conceptualización de la animación une la psicología de la percepción visual con las leyes de la cinemática: dominar sus **12 principios** transforma simples desplazamientos geométricos en pantalla en experiencias interactivas naturales, expresivas y comprensibles.
 
 ## Fuentes Documentales
 

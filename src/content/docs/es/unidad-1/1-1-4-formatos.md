@@ -16,14 +16,24 @@ Como demuestran González y Woods (2017, Cap. 8) y Stanković et al. (2016), los
 
 ## Anatomía de los Formatos de Imagen, Audio, Video (Contenedor vs. Códec) y Texto
 
-* **Formatos de Imagen:** Se dividen en rasterizados con pérdida (**JPEG**, basado en DCT en bloques de $8 \times 8$ píxeles a 24 bits sin transparencia), rasterizados sin pérdida (**PNG-8/24/32**, con algoritmo DEFLATE y canal alfa de 8 bits; **GIF**, limitado a paleta indexada de 256 colores con LZW), híbridos modernos (**WebP** basado en VP8 y **AVIF** basado en AV1, que admiten modos con y sin pérdida, HDR de 10/12 bits y transparencia ahorrando un 30–50 % de peso frente a JPEG) y vectoriales (**SVG**, basado en XML para primitivas matemáticas escalables).  
-* **Formatos de Audio:** Incluyen formatos sin comprimir basados en Modulación por Impulsos Codificados (**WAV** y **AIFF**), formatos comprimidos sin pérdida (**FLAC** y **ALAC**), formatos comprimidos con pérdida psicoacústica (**MP3**, **AAC**, **OGG Vorbis** y **Opus**) y protocolos simbólicos de partitura digital (**MIDI**, que no almacena ondas de sonido sino eventos de nota, intensidad e instrumento ocupando apenas unos kilobytes) (Ojeda Linares, 2012).  
-* **Formatos de Video (Diferencia entre Contenedor y Códec):** En ingeniería multimedia es crucial distinguir el **contenedor** (la «caja» o estructura de archivo que empaqueta pistas de video, varias pistas de audio, subtítulos y metadatos, como **MP4 `.mp4`**, **Matroska `.mkv`**, **WebM `.webm`** o **QuickTime `.mov`**) del **códec** (el algoritmo matemático que comprime y descomprime los fotogramas mediante predicción intra-cuadro *I-frames* e inter-cuadro *P-frames* y *B-frames*, como **H.264/AVC**, **H.265/HEVC**, **VP9** y el estándar abierto libre de regalías **AV1**).  
-* **Formatos de Texto y Documentos:** Abarcan desde texto plano (**TXT** codificado en **UTF-8**), lenguajes de marcado e intercambio (**HTML**, **XML**, **JSON**, **Markdown `.md`**) hasta formatos de diseño fijo o procesador (**PDF** vectorial/compuesto, **RTF** y **DOCX** basado en OpenXML).
+* **Formatos de Imagen:**
+  * **Rasterizados con pérdida:** `JPEG`, basado en la transformada `DCT` en bloques de 8 × 8 píxeles a 24 bits sin canal de transparencia.
+  * **Rasterizados sin pérdida:** `PNG-8/24/32` (con algoritmo `DEFLATE` y canal alfa de 8 bits) y `GIF` (limitado a una paleta indexada de 256 colores con `LZW`).
+  * **Híbridos de nueva generación:** `WebP` (basado en `VP8`) y `AVIF` (basado en `AV1`), que admiten compresión con y sin pérdida, alto rango dinámico (`HDR` de 10/12 bits) y transparencia ahorrando entre un 30 % y un 50 % de peso frente a `JPEG`.
+  * **Vectoriales:** `SVG`, basado en `XML` para primitivas geométricas escalables sin pérdida de resolución.
+* **Formatos de Audio:**
+  * **Sin comprimir (`PCM`):** `WAV` y `AIFF`.
+  * **Comprimidos sin pérdida (*Lossless*):** `FLAC` y `ALAC`.
+  * **Comprimidos con pérdida psicoacústica (*Lossy*):** `MP3`, `AAC`, `OGG Vorbis` y `Opus`.
+  * **Protocolos simbólicos:** `MIDI`, que no almacena ondas acústicas sino eventos de nota, intensidad e instrumento ocupando apenas unos kilobytes (Ojeda Linares, 2012).  
+* **Formatos de Video (Diferencia entre Contenedor y Códec):** En ingeniería multimedia es indispensable distinguir dos niveles:
+  * **Contenedor:** La «caja» o estructura de archivo que empaqueta pistas de video, audio multicanal, subtítulos y metadatos, como **MP4** (`.mp4`), **Matroska** (`.mkv`), **WebM** (`.webm`) o **QuickTime** (`.mov`).
+  * **Códec:** El algoritmo matemático que comprime y descomprime los fotogramas mediante predicción intra-cuadro (*I-frames*) e inter-cuadro (*P-frames* y *B-frames*), como `H.264/AVC`, `H.265/HEVC`, `VP9` y el estándar abierto libre de regalías `AV1`.  
+* **Formatos de Texto y Documentos:** Abarcan desde texto plano (`TXT` codificado en `UTF-8`), lenguajes de marcado e intercambio (`HTML`, `XML`, `JSON`, `Markdown`) hasta formatos de diseño fijo o procesador (`PDF`, `RTF` y `DOCX` basado en OpenXML).
 
 ## Conclusiones
 
-Seleccionar el formato y códec adecuados exige equilibrar tres variables en tensión: fidelidad perceptual, peso de almacenamiento/ancho de banda y costo computacional de decodificación en el dispositivo cliente.
+> Seleccionar el formato contenedor y el códec adecuados exige equilibrar tres variables en tensión: **fidelidad perceptual**, **peso de almacenamiento / ancho de banda** y **costo computacional de decodificación** en el dispositivo cliente.
 
 ## Fuentes Documentales
 

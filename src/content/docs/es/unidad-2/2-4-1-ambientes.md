@@ -19,11 +19,16 @@ Como describen Glover y Linowes (2019) y la Fase 4 de la metodología MEDESME (G
 
 ## Criterios de Selección y Configuración del Ambiente según el Proyecto
 
-En la Fase 4 de MEDESME (García Sánchez et al., 2016), la selección del ambiente de desarrollo debe justificarse en función de cuatro variables: (1) los requerimientos técnicos del equipo cliente donde correrá la aplicación, (2) la compatibilidad nativa con los formatos de los elementos multimedia diseñados, (3) la curva de aprendizaje y dominio técnico del equipo multidisciplinario, y (4) la facilidad de mantenimiento documentada en el Manual Técnico.
+En la Fase 4 de `MEDESME` (García Sánchez et al., 2016), la selección del ambiente de desarrollo debe justificarse en función de cuatro variables de ingeniería:
+
+1. Los **requerimientos técnicos** del equipo cliente donde se ejecutará la aplicación.
+2. La **compatibilidad nativa** con los formatos de los elementos multimedia diseñados.
+3. La **curva de aprendizaje y dominio técnico** del equipo multidisciplinario.
+4. La **facilidad de mantenimiento** documentada formalmente en el Manual Técnico.
 
 ## Conclusiones
 
-Configurar adecuadamente el ambiente de desarrollo —integrando el motor gráfico, el IDE depurador, los simuladores de dispositivo, el analizador de rendimiento y el control de versiones con Git LFS— multiplica la productividad del equipo y asegura que el software cumpla los estándares de rendimiento desde las primeras fases de construcción.
+> Configurar adecuadamente el ambiente de desarrollo —integrando el motor gráfico, el `IDE` depurador, los simuladores de dispositivo, el analizador de rendimiento (*Profiler*) y el control de versiones con `Git LFS`— multiplica la productividad del equipo y asegura que el software cumpla los estándares de rendimiento desde las primeras fases de construcción.
 
 ## Fuentes Documentales
 

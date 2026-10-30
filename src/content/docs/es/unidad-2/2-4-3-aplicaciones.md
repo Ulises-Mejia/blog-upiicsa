@@ -27,7 +27,7 @@ Por el contrario, cuando el producto de software o componente multimedia está d
 
 ## Conclusiones
 
-Un ingeniero en ciencias de la informática completo domina ambas caras de la moneda: diseña hacia afuera experiencias multimedia tan sencillas y envolventes que cualquier usuario final puede disfrutarlas sin leer un manual complejo, mientras que hacia adentro estructura su código, sus APIs y su Manual Técnico con el rigor necesario para que cualquier otro ingeniero pueda auditarlo, integrarlo y escalarlo.
+> Un ingeniero en ciencias de la informática completo domina ambas caras de la moneda: diseña hacia afuera experiencias multimedia tan sencillas y envolventes (`ISO 9241-11`) que cualquier usuario final puede disfrutarlas sin leer un manual complejo, mientras que hacia adentro estructura su código, sus `APIs` y su **Manual Técnico** con el rigor necesario para que cualquier otro ingeniero pueda auditarlo, integrarlo y escalarlo.
 
 ## Fuentes Documentales
 

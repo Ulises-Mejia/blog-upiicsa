@@ -12,18 +12,22 @@ En una sala de cine tradicional, puedes mover la cabeza hacia la izquierda o lev
 Como analizan Otero y Flores (2011) y Marschner y Shirley (2016), la diferencia esencial entre el cine de animación (renderizado *offline*) y la Realidad Virtual (renderizado *real-time*) radica en **quién gobierna el estado del tiempo y la cámara**:
 
 * **Animación Lineal Prerenderizada:** Cada fotograma puede tardar minutos u horas en calcularse en una granja de servidores; el resultado es un archivo de video fijo donde el espectador es pasivo.  
-* **Animación Interactiva en Tiempo Real (El Bucle de Simulación / *Render Loop*):** En un entorno de RV, no existe un video pregrabado. El motor gráfico ejecuta un ciclo continuo de alta frecuencia (90 a 120 veces por segundo) compuesto por cuatro fases en cada cuadro: **(1) Captura de sensores (*Input Polling*)**, leyendo la posición y orientación 6DoF del casco HMD y los controladores de mano; **(2) Actualización de lógica y física (*Simulation Step*)**, calculando colisiones, gravedad, sistemas de partículas y cinemática inversa de avatares según el intervalo de tiempo $\Delta t$; **(3) Transformación Matricial Modelo-Vista-Proyección ($M_{MVP} = M_{proj} \cdot M_{view} \cdot M_{model}$)**, proyectando los vértices 3D del mundo hacia dos cámaras virtuales separadas por la distancia interpupilar (IPD $\approx 63\text{ mm}$) para generar visión estereoscópica; y **(4) Rasterización y Post-procesamiento en GPU**, enviando el par de imágenes al visor.
+* **Animación Interactiva en Tiempo Real (El Bucle de Simulación / *Render Loop*):** En un entorno de RV, no existe un video pregrabado. El motor gráfico ejecuta un ciclo continuo de alta frecuencia (`90` a `120` veces por segundo) compuesto por cuatro fases en cada cuadro:
+  1. **Captura de sensores (*Input Polling*):** Lectura de la posición y orientación `6DoF` del casco `HMD` y los controladores de mano.
+  2. **Actualización de lógica y física (*Simulation Step*):** Cálculo de colisiones, gravedad, sistemas de partículas y cinemática inversa (`IK`) de avatares según el intervalo de tiempo Δ*t*.
+  3. **Transformación Matricial Modelo-Vista-Proyección (*M*<sub>MVP</sub> = *M*<sub>proj</sub> · *M*<sub>view</sub> · *M*<sub>model</sub>):** Proyección de los vértices 3D del mundo hacia dos cámaras virtuales separadas por la distancia interpupilar (`IPD` ≈ 63 mm) para generar visión estereoscópica.
+  4. **Rasterización y Post-procesamiento en `GPU`:** Envío del par de imágenes renderizadas al visor.
 
 ## Animación Reactiva, Presencia y Coherencia Sensoriomotriz (Latencia Motion-to-Photon)
 
-Para que la animación sostenga la ilusión psicológica de **presencia** («estar ahí» dentro del entorno sintético) y evite la **cinetosis** (mareo inducido por el conflicto entre lo que ven los ojos y lo que detecta el sistema vestibular del oído interno), el sistema de animación en RV debe cumplir tres requisitos estrictos (Otero & Flores, 2011; Glover & Linowes, 2019):
+Para que la animación sostenga la ilusión psicológica de **presencia** («estar ahí» dentro del entorno sintético) y evite la **cinetosis** (mareo inducido por el conflicto entre lo que ven los ojos y lo que detecta el sistema vestibular del oído interno), el sistema de animación en RV debe cumplir dos requisitos estrictos (Otero & Flores, 2011; Glover & Linowes, 2019):
 
-* **Latencia *Motion-to-Photon* inferior a 20 milisegundos:** El tiempo total desde que el usuario mueve físicamente la cabeza hasta que los fotones actualizados brillan en la pantalla del visor debe ser menor a $20\text{ ms}$, apoyándose en tasas de refresco de **90 Hz ($11.1\text{ ms}$ por cuadro) o 120 Hz ($8.3\text{ ms}$)** y técnicas de reproyección temporal asíncrona (*Asynchronous Timewarp / Spacewarp*).  
-* **Animación Corporal e Interacción Física Creíble:** Cuando el usuario extiende su mano real para empujar una puerta virtual, el avatar debe animar sus dedos y brazo en tiempo real mediante Cinemática Inversa (IK) y el motor de física debe animar la apertura de la puerta con inercia, sonido espacializado y vibración háptica congruentes.
+* **Latencia *Motion-to-Photon* inferior a `20 ms`:** El tiempo total desde que el usuario mueve físicamente la cabeza hasta que los fotones actualizados brillan en la pantalla del visor debe ser menor a 20 milisegundos, apoyándose en tasas de refresco de **`90 Hz` (`11.1 ms` por cuadro) o `120 Hz` (`8.3 ms`)** y técnicas de reproyección temporal asíncrona (*Asynchronous Timewarp / Spacewarp*).  
+* **Animación Corporal e Interacción Física Creíble:** Cuando el usuario extiende su mano real para empujar una puerta virtual, el avatar debe animar sus dedos y brazo en tiempo real mediante Cinemática Inversa (`IK`) y el motor de física debe animar la apertura de la puerta con inercia, sonido espacializado y vibración háptica congruentes.
 
 ## Conclusiones
 
-Sin los algoritmos de animación por computadora —transformaciones matriciales, interpolación de esqueletos, motores de física y renderizado acelerado por hardware—, la Realidad Virtual sería imposible: la RV es, en esencia, una animación tridimensional viviente dentro de la cual habita e interactúa el usuario.
+> Sin los algoritmos de animación por computadora —transformaciones matriciales, interpolación de esqueletos, motores de física y renderizado acelerado por hardware—, la Realidad Virtual sería imposible: la RV es, en esencia, una animación tridimensional viviente dentro de la cual habita e interactúa el usuario.
 
 ## Fuentes Documentales
 

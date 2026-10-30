@@ -9,7 +9,12 @@ Construir un sistema multimedia complejo —como un simulador médico interactiv
 
 ## Las Cuatro Etapas Clásicas de Producción Audiovisual y Multimedia
 
-En la industria de los medios digitales (Ruiz, 2018; Ojeda Linares, 2012), el flujo de trabajo general se organiza en cuatro macro-etapas: **(1) Preproducción**, donde se define la idea, el público objetivo, el presupuesto, el guion literario/técnico, el *storyboard* y la arquitectura de navegación; **(2) Producción**, fase en la que se capturan, graban, modelan y digitalizan todos los activos primarios (fotografías, locuciones, rodaje de video, gráficos y código base); **(3) Posproducción**, donde se editan, limpian, componen, animan e integran los medios en el motor o sistema de autoría junto con las pruebas de calidad; y **(4) Distribución y Despliegue**, que abarca el empaquetado final, publicación web/móvil y entrega de documentación.
+En la industria de los medios digitales (Ruiz, 2018; Ojeda Linares, 2012), el flujo de trabajo general se organiza en cuatro macro-etapas secuenciales:
+
+1. **Preproducción:** Se define la idea rectora, el público objetivo, el presupuesto, el guion literario/técnico, el *storyboard* y la arquitectura de navegación.
+2. **Producción:** Fase en la que se capturan, graban, modelan y digitalizan todos los activos primarios (fotografías, locuciones, rodaje de video, gráficos y código base).
+3. **Posproducción:** Se editan, limpian, componen, animan e integran los medios en el motor o sistema de autoría junto con las pruebas de aseguramiento de calidad (`QA`).
+4. **Distribución y Despliegue:** Abarca el empaquetado final, la publicación web o móvil y la entrega de documentación técnica y de usuario.
 
 ## La Metodología Académica de 8 Fases MEDESME (García Sánchez et al., 2016)
 
@@ -26,7 +31,7 @@ Para superar las carencias de los modelos puramente informáticos (que olvidan e
 
 ## Conclusiones
 
-La aplicación rigurosa de metodologías como MEDESME garantiza que un proyecto multimedia no sea una colección improvisada de archivos vistosos, sino un producto de ingeniería de software documentado, validado con estándares ISO y centrado en el usuario.
+> La aplicación rigurosa de metodologías como `MEDESME` garantiza que un proyecto multimedia no sea una colección improvisada de archivos vistosos, sino un producto de ingeniería de software documentado, validado con estándares `ISO 9241-11` e `ISO/IEC 9126` y centrado en el usuario.
 
 ## Fuentes Documentales
 

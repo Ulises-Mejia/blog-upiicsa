@@ -9,11 +9,11 @@ Para el ojo humano, una fotografía es un recuerdo lleno de significado, colores
 
 ## Fundamentos Matemáticos: Digitalización, Muestreo, Cuantificación y Espacios de Color
 
-Como establecen González y Woods (2017, Cap. 2) y Martínez Nistal (2010, Cap. 3), una escena óptica continua se describe mediante una función bidimensional de intensidad luminosa $f(x, y)$. Para convertirla en una matriz digital discreta se aplican dos procesos:
+Como establecen González y Woods (2017, Cap. 2) y Martínez Nistal (2010, Cap. 3), una escena óptica continua se describe mediante una función bidimensional de intensidad luminosa *f*(*x*, *y*). Para convertirla en una matriz digital discreta se aplican dos procesos:
 
-* **Muestreo Espacial (*Sampling*):** Discretiza las coordenadas espaciales $(x, y)$ dividiendo la imagen en una rejilla de $M$ filas por $N$ columnas de píxeles. Determina la resolución espacial o geométrica de la imagen.  
-* **Cuantificación de Intensidad (*Quantization*):** Discretiza la amplitud luminosa asignando a cada píxel un valor entero dentro de $L = 2^k$ niveles de gris o color, donde $k$ es la profundidad de bits (1 bit para imágenes binarias blanco/negro, 8 bits para 256 niveles en escala de grises, y 24 bits para 16.7 millones de colores en **RGB** de tres canales de 8 bits).  
-* **Espacios de Color y Operaciones de Procesamiento:** Mientras que **RGB** es un modelo aditivo orientado a pantallas emisoras de luz y **CMYK** es sustractivo para tintas de impresión, en el análisis digital de imágenes suelen emplearse espacios que desacoplan la iluminación del color —como **HSV/HSL** (Matiz, Saturación, Valor/Brillo) y **CIE $L^*a^*b^*$**— para facilitar la segmentación cromática. Sobre la matriz digital se aplican operaciones puntuales (ajuste de brillo, contraste y ecualización de histograma), operaciones locales de vecindad mediante **convolución espacial con máscaras o *kernels*** (filtros de suavizado gaussiano/mediana para eliminar ruido y operadores de gradiente como Sobel, Prewitt o Canny para detectar bordes) y operaciones morfológicas (erosión y dilatación) (González & Woods, 2017; Guzmán et al., 2020).
+* **Muestreo Espacial (*Sampling*):** Discretiza las coordenadas espaciales (*x*, *y*) dividiendo la imagen en una rejilla de *M* filas por *N* columnas de píxeles. Determina la resolución espacial o geométrica de la imagen.  
+* **Cuantificación de Intensidad (*Quantization*):** Discretiza la amplitud luminosa asignando a cada píxel un valor entero dentro de *L* = 2<sup>*k*</sup> niveles de gris o color, donde *k* es la profundidad de bits (1 bit para imágenes binarias blanco/negro, 8 bits para 256 niveles en escala de grises, y 24 bits para 16.7 millones de colores en **RGB** de tres canales de 8 bits).  
+* **Espacios de Color y Operaciones de Procesamiento:** Mientras que **RGB** es un modelo aditivo orientado a pantallas emisoras de luz y **CMYK** es sustractivo para tintas de impresión, en el análisis digital de imágenes suelen emplearse espacios que desacoplan la iluminación del color —como **HSV/HSL** (Matiz, Saturación, Valor/Brillo) y **CIE L\*a\*b\***— para facilitar la segmentación cromática. Sobre la matriz digital se aplican operaciones puntuales (ajuste de brillo, contraste y ecualización de histograma), operaciones locales de vecindad mediante **convolución espacial con máscaras o *kernels*** (filtros de suavizado gaussiano/mediana para eliminar ruido y operadores de gradiente como Sobel, Prewitt o Canny para detectar bordes) y operaciones morfológicas (erosión y dilatación) (González & Woods, 2017; Guzmán et al., 2020).
 
 ## Lenguaje Visual, Leyes de Composición y Semiótica de la Imagen
 
@@ -25,7 +25,7 @@ En el plano comunicacional (Ojeda Linares, 2012, Unidad 3), el **lenguaje visual
 
 ## Conclusiones
 
-La combinación del procesamiento matemático de matrices digitales con la semiótica visual permite al profesional de la informática diseñar sistemas que no solo procesan imágenes con eficiencia algorítmica, sino que comunican mensajes claros e intuitivos a través de interfaces bien compuestas.
+> La combinación del procesamiento matemático de matrices digitales (`RGB`, `HSV`, filtros de convolución) con la semiótica visual permite al profesional de la informática diseñar sistemas que no solo procesan imágenes con eficiencia algorítmica, sino que comunican mensajes claros e intuitivos a través de interfaces bien compuestas.
 
 ## Fuentes Documentales
 

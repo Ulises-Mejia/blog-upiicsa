@@ -1004,9 +1004,234 @@ font {
   color: #FFFFFF !important;
 }
 
-:root[data-theme='dark'] .sl-markdown-content h2,
-:root[data-theme='dark'] .sl-markdown-content h3 {
+:root[data-theme='light'] .sl-markdown-content h1 {
+  color: #004D2C !important;
+}
+
+/* ==========================================================================
+   DINAMISMO EDITORIAL Y JERARQUÍA VISUAL DEL CONTENIDO MARKDOWN
+   ========================================================================== */
+.sl-markdown-content {
+  --sl-line-height-headings: 1.42;
+}
+
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.sl-markdown-content .sl-heading-wrapper {
+  line-height: 1.42 !important;
+}
+
+.sl-markdown-content > p {
+  line-height: 1.78;
+  margin-bottom: 1.15rem;
+}
+
+/* Subtítulos H2: el color va en h2 y la línea inferior va en el contenedor de bloque (.sl-heading-wrapper.level-h2) */
+.sl-markdown-content h2:not([class]) {
+  font-weight: 750;
+  letter-spacing: -0.01em;
+}
+
+.sl-markdown-content .sl-heading-wrapper.level-h2 {
+  padding-bottom: 0.65rem !important;
+  margin-top: 2.3rem !important;
+  margin-bottom: 1.15rem !important;
+  background-position: 0 100%;
+  background-size: 100% 2px;
+  background-repeat: no-repeat;
+}
+
+:root[data-theme='light'] .sl-markdown-content h2:not([class]) {
+  color: #00643A !important;
+}
+
+:root[data-theme='light'] .sl-markdown-content .sl-heading-wrapper.level-h2 {
+  background-image: linear-gradient(
+    90deg,
+    #00643A 0%,
+    #D4AF37 38%,
+    rgba(0, 100, 58, 0.08) 85%,
+    transparent 100%
+  );
+}
+
+:root[data-theme='dark'] .sl-markdown-content h2:not([class]) {
   color: #F4E8C1 !important;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .sl-heading-wrapper.level-h2 {
+  background-image: linear-gradient(
+    90deg,
+    #D4AF37 0%,
+    rgba(0, 168, 98, 0.5) 45%,
+    transparent 100%
+  );
+}
+
+/* Subtítulos H3 con acento lateral en su contenedor de bloque */
+.sl-markdown-content .sl-heading-wrapper.level-h3 {
+  padding-left: 0.75rem !important;
+  border-left: 3px solid #D4AF37;
+  margin-top: 1.65rem !important;
+  margin-bottom: 0.85rem !important;
+}
+
+:root[data-theme='light'] .sl-markdown-content h3:not([class]) {
+  color: #0F5132 !important;
+}
+
+:root[data-theme='light'] .sl-markdown-content .sl-heading-wrapper.level-h3 {
+  border-left-color: #00874E;
+}
+
+:root[data-theme='dark'] .sl-markdown-content h3:not([class]) {
+  color: #F4E8C1 !important;
+}
+
+:root[data-theme='dark'] .sl-markdown-content .sl-heading-wrapper.level-h3 {
+  border-left-color: #D4AF37;
+}
+
+/* Énfasis en conceptos clave (negritas) con matiz institucional */
+:root[data-theme='light'] .sl-markdown-content p strong,
+:root[data-theme='light'] .sl-markdown-content li strong,
+:root[data-theme='light'] .sl-markdown-content td strong {
+  color: #005230;
+  font-weight: 700;
+}
+
+:root[data-theme='dark'] .sl-markdown-content p strong,
+:root[data-theme='dark'] .sl-markdown-content li strong,
+:root[data-theme='dark'] .sl-markdown-content td strong {
+  color: #F4E8C1;
+  font-weight: 700;
+}
+
+/* Viñetas, numeración y espaciado de listas */
+.sl-markdown-content > ul > li,
+.sl-markdown-content > ol > li {
+  margin-bottom: 0.7rem;
+  line-height: 1.74;
+}
+
+:root[data-theme='light'] .sl-markdown-content ul > li::marker,
+:root[data-theme='light'] .sl-markdown-content ol > li::marker {
+  color: #00874E;
+  font-weight: 700;
+}
+
+:root[data-theme='dark'] .sl-markdown-content ul > li::marker,
+:root[data-theme='dark'] .sl-markdown-content ol > li::marker {
+  color: #D4AF37;
+  font-weight: 700;
+}
+
+/* Sub-listas anidadas con guía lateral sutil */
+.sl-markdown-content li > ul,
+.sl-markdown-content li > ol {
+  margin-top: 0.45rem !important;
+  margin-bottom: 0.5rem !important;
+  padding-left: 1.25rem !important;
+}
+
+:root[data-theme='light'] .sl-markdown-content li > ul,
+:root[data-theme='light'] .sl-markdown-content li > ol {
+  border-left: 2px solid rgba(0, 100, 58, 0.18);
+}
+
+:root[data-theme='dark'] .sl-markdown-content li > ul,
+:root[data-theme='dark'] .sl-markdown-content li > ol {
+  border-left: 2px solid rgba(212, 175, 55, 0.25);
+}
+
+.sl-markdown-content li > ul > li,
+.sl-markdown-content li > ol > li {
+  margin-bottom: 0.35rem;
+  line-height: 1.65;
+}
+
+/* Píldoras para código y siglas técnicas inline */
+.sl-markdown-content :not(pre) > code {
+  border-radius: 6px;
+  padding: 0.12rem 0.42rem;
+  font-size: 0.86em;
+  font-weight: 600;
+}
+
+:root[data-theme='light'] .sl-markdown-content :not(pre) > code {
+  background-color: rgba(0, 100, 58, 0.08) !important;
+  color: #005A34 !important;
+  border: 1px solid rgba(0, 100, 58, 0.18);
+}
+
+:root[data-theme='dark'] .sl-markdown-content :not(pre) > code {
+  background-color: rgba(212, 175, 55, 0.12) !important;
+  color: #F4E8C1 !important;
+  border: 1px solid rgba(212, 175, 55, 0.26);
+}
+
+/* Bloques de cita / Conclusiones destacadas en modo claro y oscuro */
+:root[data-theme='light'] .sl-markdown-content blockquote {
+  border-left: 4px solid #00643A !important;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 100, 58, 0.06) 0%,
+    rgba(212, 175, 55, 0.04) 100%
+  ) !important;
+  color: #1E293B !important;
+  padding: 0.85rem 1.25rem !important;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 2px 10px rgba(0, 100, 58, 0.05);
+  margin: 1.15rem 0 !important;
+}
+
+:root[data-theme='dark'] .sl-markdown-content blockquote {
+  border-left: 4px solid #D4AF37 !important;
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0.09) 0%,
+    rgba(0, 100, 58, 0.08) 100%
+  ) !important;
+  color: #E2E8F0 !important;
+  padding: 0.85rem 1.25rem !important;
+  border-radius: 0 10px 10px 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  margin: 1.15rem 0 !important;
+}
+
+:root[data-theme='light'] .starlight-aside {
+  border-radius: 10px;
+}
+
+:root[data-theme='light'] .starlight-aside--note {
+  background-color: rgba(0, 100, 58, 0.05) !important;
+  border-color: #00643A !important;
+}
+
+:root[data-theme='light'] .starlight-aside--note .starlight-aside__title {
+  color: #005230 !important;
+}
+
+:root[data-theme='light'] .starlight-aside--tip {
+  background-color: rgba(212, 175, 55, 0.1) !important;
+  border-color: #B89628 !important;
+}
+
+:root[data-theme='light'] .starlight-aside--tip .starlight-aside__title {
+  color: #004D2C !important;
+}
+
+:root[data-theme='light'] .sl-markdown-content a:not([class]) {
+  color: #00643A !important;
+  font-weight: 600;
+  text-decoration-color: rgba(0, 100, 58, 0.35) !important;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+:root[data-theme='light'] .sl-markdown-content a:not([class]):hover {
+  color: #00874E !important;
+  text-decoration-color: #00874E !important;
 }
 
 :root[data-theme='dark'] .sl-markdown-content a:not([class]) {
