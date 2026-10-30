@@ -138,7 +138,6 @@ export class ARQuizController {
   private resultsCanvas!: HTMLCanvasElement;
   private resultsTexture!: THREE.CanvasTexture;
   private ring1!: THREE.Mesh;
-  private ring2!: THREE.Mesh;
 
   private isARActive = false;
   private isLocked = false;
@@ -217,7 +216,7 @@ export class ARQuizController {
       this.quizGroup.add(mesh);
     });
 
-    // Anillos decorativos institucionales ajustados al nuevo bloque compacto
+    // Anillo decorativo institucional dorado (el aro verde fue retirado)
     this.ring1 = new THREE.Mesh(
       new THREE.TorusGeometry(0.42, 0.007, 16, 64),
       new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.65 })
@@ -225,14 +224,6 @@ export class ARQuizController {
     this.ring1.rotation.x = Math.PI / 2.2;
     this.ring1.position.set(0, -0.35, -0.04);
     this.quizGroup.add(this.ring1);
-
-    this.ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.46, 0.005, 16, 64),
-      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45 })
-    );
-    this.ring2.rotation.y = Math.PI / 4;
-    this.ring2.position.set(0, -0.35, -0.04);
-    this.quizGroup.add(this.ring2);
 
     // Panel de resultados (oculto hasta terminar)
     ({ canvas: this.resultsCanvas, texture: this.resultsTexture } = createCanvasTexture(1280, 680));
@@ -280,7 +271,6 @@ export class ARQuizController {
       }
 
       this.ring1.rotation.z += 0.008;
-      this.ring2.rotation.z -= 0.006;
       if (!this.session.isFinished) {
         this.quizGroup.position.y = Math.sin(elapsed * 1.5) * 0.012;
       }
@@ -362,19 +352,19 @@ export class ARQuizController {
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
 
-    // Franja superior compacta (sin repetir cabeceras que quitaban espacio)
+    // Franja superior compacta y centrada
     const n = this.session.currentIndex + 1;
     const total = this.session.total;
     const qLabel = lang === 'en' ? `QUESTION ${n} / ${total}` : `PREGUNTA ${n} / ${total}`;
     ctx.fillStyle = '#10B981';
-    ctx.font = 'bold 28px system-ui, sans-serif';
-    ctx.fillText(`${qLabel}   •   ${q.tema}`, W / 2, 56);
+    ctx.font = 'bold 26px system-ui, sans-serif';
+    ctx.fillText(`${qLabel}   •   ${q.tema}`, W / 2, 46, W - 96);
 
     ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
     ctx.lineWidth = 2.5;
     ctx.beginPath();
-    ctx.moveTo(48, 92);
-    ctx.lineTo(W - 48, 92);
+    ctx.moveTo(48, 76);
+    ctx.lineTo(W - 48, 76);
     ctx.stroke();
 
     if (!answer) {
@@ -383,22 +373,23 @@ export class ARQuizController {
       const lineHeight = Math.round(fontSize * 1.32);
       ctx.fillStyle = '#FFFFFF';
       ctx.font = `bold ${fontSize}px system-ui, sans-serif`;
-      drawCenteredTextBlock(ctx, statement, W / 2, 294, W - 104, lineHeight, 5);
+      // Centrado tanto horizontal (W / 2) como verticalmente en el área útil (76..490 -> 280)
+      drawCenteredTextBlock(ctx, statement, W / 2, 280, W - 104, lineHeight, 5);
     } else {
       ctx.font = 'bold 46px system-ui, sans-serif';
       if (answer.isCorrect) {
         ctx.fillStyle = '#10B981';
-        ctx.fillText(lang === 'en' ? '✅ CORRECT ANSWER!' : '✅ ¡RESPUESTA CORRECTA!', W / 2, 142);
+        ctx.fillText(lang === 'en' ? '✅ CORRECT ANSWER!' : '✅ ¡RESPUESTA CORRECTA!', W / 2, 134);
       } else {
         ctx.fillStyle = '#EF4444';
-        ctx.fillText(lang === 'en' ? '❌ INCORRECT ANSWER' : '❌ RESPUESTA INCORRECTA', W / 2, 142);
+        ctx.fillText(lang === 'en' ? '❌ INCORRECT ANSWER' : '❌ RESPUESTA INCORRECTA', W / 2, 134);
       }
 
       const explanation = t(q.explicacion, lang);
       const expFont = explanation.length > 165 ? 32 : 36;
       ctx.fillStyle = '#F1F5F9';
       ctx.font = `600 ${expFont}px system-ui, sans-serif`;
-      drawCenteredTextBlock(ctx, explanation, W / 2, 295, W - 104, Math.round(expFont * 1.32), 4);
+      drawCenteredTextBlock(ctx, explanation, W / 2, 290, W - 104, Math.round(expFont * 1.32), 4);
 
       ctx.fillStyle = '#D4AF37';
       ctx.font = 'bold 26px system-ui, sans-serif';
@@ -442,15 +433,21 @@ export class ARQuizController {
     ctx.font = 'bold 40px system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(OPTION_LETTERS[index], 62, H / 2 + 2);
+    ctx.fillText(OPTION_LETTERS[index], 62, H / 2);
 
-    // Texto de la opción: grande y centrado verticalmente sin espacio muerto
+    // Texto de la opción centrado tanto horizontal como verticalmente dentro del área disponible
+    const textAreaLeft = 114;
+    const textAreaRight = W - 24;
+    const textCenterX = (textAreaLeft + textAreaRight) / 2;
+    const textMaxWidth = textAreaRight - textAreaLeft;
+
     const optFont = text.length <= 26 ? 42 : text.length <= 60 ? 36 : 31;
     const optLineHeight = Math.round(optFont * 1.28);
     ctx.fillStyle = '#FFFFFF';
     ctx.font = `bold ${optFont}px system-ui, sans-serif`;
-    ctx.textAlign = 'left';
-    drawCenteredTextBlock(ctx, text, 118, H / 2, W - 144, optLineHeight, 4);
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    drawCenteredTextBlock(ctx, text, textCenterX, H / 2, textMaxWidth, optLineHeight, 4);
 
     this.optionTextures[index].needsUpdate = true;
   }
