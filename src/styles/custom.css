@@ -525,16 +525,16 @@ header.header {
   height: 100%;
   border: 0;
 }
-/* Ajuste inferior para la tabla de contenidos con la barra institucional de pie de página */
-.right-sidebar-panel,
-.right-sidebar {
-  padding-bottom: 48px !important;
-}
-
 /* ==========================================================================
    OPTIMIZACIÓN DEL ESPACIO Y PANEL DERECHO (OPCIÓN 1)
    ========================================================================== */
 @media (min-width: 72rem) {
+  /* Ajuste inferior para la tabla de contenidos con la barra institucional de pie de página */
+  .right-sidebar-panel,
+  .right-sidebar {
+    padding-bottom: 48px !important;
+  }
+
   /* Ancho compacto y fijo para el panel de la tabla de contenidos nativa */
   .right-sidebar-container {
     width: var(--sl-toc-width, 15rem) !important;
@@ -576,6 +576,25 @@ header.header {
     backdrop-filter: blur(14px) !important;
     -webkit-backdrop-filter: blur(14px) !important;
     border-left: 1px solid rgba(0, 100, 58, 0.15) !important;
+  }
+
+  :root[data-theme='light'] starlight-toc a,
+  :root[data-theme='light'] .sl-toc a,
+  :root[data-theme='light'] .right-sidebar a {
+    color: #64748B !important;
+  }
+
+  :root[data-theme='light'] starlight-toc a:hover,
+  :root[data-theme='light'] .sl-toc a:hover,
+  :root[data-theme='light'] .right-sidebar a:hover {
+    color: #00874E !important;
+  }
+
+  :root[data-theme='light'] starlight-toc a[aria-current='true'],
+  :root[data-theme='light'] .sl-toc a[aria-current='true'],
+  :root[data-theme='light'] .right-sidebar a[aria-current='true'] {
+    color: #00643A !important;
+    font-weight: 700 !important;
   }
 
   .right-sidebar-panel .sl-container {
@@ -632,9 +651,18 @@ header.header {
 @media (max-width: 50rem) {
   :root[data-theme='dark'] main[data-pagefind-body],
   :root[data-theme='light'] main[data-pagefind-body] {
-    margin: 0.75rem auto 2.5rem auto !important;
+    margin: 0.4rem auto 2.5rem auto !important;
     border-radius: 14px !important;
-    padding: 0.75rem 0.25rem 1.5rem 0.25rem !important;
+    padding: 0.25rem 0.25rem 1.5rem 0.25rem !important;
+  }
+
+  main[data-pagefind-body] > .content-panel:first-of-type {
+    padding-top: 0.75rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  main[data-pagefind-body] h1#_top {
+    margin-top: 0.25rem !important;
   }
 }
 
