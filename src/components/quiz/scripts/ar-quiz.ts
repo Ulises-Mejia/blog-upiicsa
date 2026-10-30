@@ -22,7 +22,7 @@ import {
 
 type OptionState = 'normal' | 'correct' | 'incorrect' | 'reveal';
 
-const ANCHOR_DISTANCE = 1.5;
+const ANCHOR_DISTANCE = 1.15;
 const ADVANCE_DELAY_CORRECT = 2400;
 const ADVANCE_DELAY_INCORRECT = 3400;
 
@@ -48,33 +48,50 @@ function drawRoundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w:
   ctx.closePath();
 }
 
-function wrapTextLines(
+function computeWrappedLines(
   ctx: CanvasRenderingContext2D,
   text: string,
-  x: number,
-  y: number,
   maxWidth: number,
-  lineHeight: number,
   maxLines = 4
-): number {
-  const words = text.split(' ');
+): string[] {
+  const words = text.trim().split(/\s+/);
   const lines: string[] = [];
   let line = '';
   for (let n = 0; n < words.length; n++) {
-    const testLine = line + words[n] + ' ';
+    const testLine = line ? `${line} ${words[n]}` : words[n];
     if (ctx.measureText(testLine).width > maxWidth && n > 0) {
-      lines.push(line.trim());
-      line = words[n] + ' ';
+      lines.push(line);
+      line = words[n];
     } else {
       line = testLine;
     }
   }
-  lines.push(line.trim());
+  if (line) lines.push(line);
 
   const finalLines = lines.slice(0, maxLines);
-  if (lines.length > maxLines) finalLines[maxLines - 1] += '...';
-  finalLines.forEach((l, i) => ctx.fillText(l, x, y + i * lineHeight));
-  return finalLines.length;
+  if (lines.length > maxLines) {
+    finalLines[maxLines - 1] = finalLines[maxLines - 1].replace(/[.,;:\s]*$/, '') + '…';
+  }
+  return finalLines;
+}
+
+/**
+ * Envuelve el texto y dibuja el bloque centrado verticalmente alrededor de `centerY`.
+ */
+function drawCenteredTextBlock(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  centerY: number,
+  maxWidth: number,
+  lineHeight: number,
+  maxLines = 4
+): number {
+  const lines = computeWrappedLines(ctx, text, maxWidth, maxLines);
+  const totalHeight = (lines.length - 1) * lineHeight;
+  const startY = centerY - totalHeight / 2;
+  lines.forEach((l, i) => ctx.fillText(l, x, startY + i * lineHeight));
+  return lines.length;
 }
 
 function createCanvasTexture(width: number, height: number) {
@@ -82,8 +99,9 @@ function createCanvasTexture(width: number, height: number) {
   canvas.width = width;
   canvas.height = height;
   const texture = new THREE.CanvasTexture(canvas);
-  texture.minFilter = THREE.LinearMipmapLinearFilter;
-  texture.generateMipmaps = true;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.anisotropy = 4;
   return { canvas, texture };
 }
 
@@ -167,59 +185,59 @@ export class ARQuizController {
     this.quizGroup = new THREE.Group();
     this.objectAnchor.add(this.quizGroup);
 
-    // Panel de pregunta
-    ({ canvas: this.questionCanvas, texture: this.questionTexture } = createCanvasTexture(1024, 540));
+    // Panel de pregunta (más compacto y de alta nitidez, sin espacio muerto)
+    ({ canvas: this.questionCanvas, texture: this.questionTexture } = createCanvasTexture(1280, 500));
     const questionMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.74, 0.39),
+      new THREE.PlaneGeometry(0.82, 0.32),
       new THREE.MeshBasicMaterial({ map: this.questionTexture, transparent: true, side: THREE.DoubleSide })
     );
-    questionMesh.position.set(0, 0.23, 0);
+    questionMesh.position.set(0, 0.21, 0);
     this.quizGroup.add(questionMesh);
 
-    // 4 tarjetas de opción en cuadrícula 2x2 ligeramente orientadas hacia el usuario
-    const optionGeo = new THREE.PlaneGeometry(0.44, 0.16);
+    // 4 tarjetas de opción en cuadrícula 2x2 compacta justo debajo del enunciado
+    const optionGeo = new THREE.PlaneGeometry(0.40, 0.175);
     const cardPositions = [
-      { x: -0.24, y: -0.04, rotY: 0.08 },
-      { x: 0.24, y: -0.04, rotY: -0.08 },
-      { x: -0.24, y: -0.22, rotY: 0.08 },
-      { x: 0.24, y: -0.22, rotY: -0.08 },
+      { x: -0.21, y: -0.055, rotY: 0.05 },
+      { x: 0.21, y: -0.055, rotY: -0.05 },
+      { x: -0.21, y: -0.245, rotY: 0.05 },
+      { x: 0.21, y: -0.245, rotY: -0.05 },
     ];
     cardPositions.forEach((pos, i) => {
-      const { canvas, texture } = createCanvasTexture(512, 186);
+      const { canvas, texture } = createCanvasTexture(768, 280);
       this.optionCanvases.push(canvas);
       this.optionTextures.push(texture);
       const mesh = new THREE.Mesh(
         optionGeo,
         new THREE.MeshBasicMaterial({ map: texture, transparent: true, side: THREE.DoubleSide })
       );
-      mesh.position.set(pos.x, pos.y, 0.02);
+      mesh.position.set(pos.x, pos.y, 0.015);
       mesh.rotation.y = pos.rotY;
       mesh.userData = { optionIndex: i };
       this.optionMeshes.push(mesh);
       this.quizGroup.add(mesh);
     });
 
-    // Anillos decorativos institucionales
+    // Anillos decorativos institucionales ajustados al nuevo bloque compacto
     this.ring1 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.48, 0.008, 16, 64),
-      new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.7 })
+      new THREE.TorusGeometry(0.42, 0.007, 16, 64),
+      new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.65 })
     );
     this.ring1.rotation.x = Math.PI / 2.2;
-    this.ring1.position.set(0, -0.32, -0.04);
+    this.ring1.position.set(0, -0.35, -0.04);
     this.quizGroup.add(this.ring1);
 
     this.ring2 = new THREE.Mesh(
-      new THREE.TorusGeometry(0.52, 0.006, 16, 64),
-      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.5 })
+      new THREE.TorusGeometry(0.46, 0.005, 16, 64),
+      new THREE.MeshBasicMaterial({ color: 0x10b981, transparent: true, opacity: 0.45 })
     );
     this.ring2.rotation.y = Math.PI / 4;
-    this.ring2.position.set(0, -0.32, -0.04);
+    this.ring2.position.set(0, -0.35, -0.04);
     this.quizGroup.add(this.ring2);
 
     // Panel de resultados (oculto hasta terminar)
-    ({ canvas: this.resultsCanvas, texture: this.resultsTexture } = createCanvasTexture(1024, 600));
+    ({ canvas: this.resultsCanvas, texture: this.resultsTexture } = createCanvasTexture(1280, 680));
     this.resultsMesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(0.78, 0.46),
+      new THREE.PlaneGeometry(0.82, 0.44),
       new THREE.MeshBasicMaterial({ map: this.resultsTexture, transparent: true, side: THREE.DoubleSide })
     );
     this.resultsMesh.position.set(0, 0.02, 0);
@@ -331,69 +349,63 @@ export class ARQuizController {
     if (!ctx || !q) return;
     const answer = this.session.lastAnswer;
 
-    ctx.clearRect(0, 0, 1024, 540);
-    drawRoundedRect(ctx, 12, 12, 1000, 516, 28);
-    ctx.fillStyle = 'rgba(2, 34, 20, 0.95)';
+    const W = 1280;
+    const H = 500;
+    ctx.clearRect(0, 0, W, H);
+    drawRoundedRect(ctx, 10, 10, W - 20, H - 20, 30);
+    ctx.fillStyle = 'rgba(2, 34, 20, 0.96)';
     ctx.fill();
-    ctx.lineWidth = 6;
+    ctx.lineWidth = 7;
     ctx.strokeStyle = '#D4AF37';
     ctx.stroke();
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#D4AF37';
-    ctx.font = 'bold 19px system-ui, sans-serif';
-    ctx.fillText('INSTITUTO POLITÉCNICO NACIONAL • UPIICSA', 512, 52);
 
-    ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(80, 78);
-    ctx.lineTo(944, 78);
-    ctx.stroke();
-
+    // Franja superior compacta (sin repetir cabeceras que quitaban espacio)
     const n = this.session.currentIndex + 1;
     const total = this.session.total;
-    const qLabel = lang === 'en' ? `QUESTION ${n} OF ${total}` : `PREGUNTA ${n} DE ${total}`;
-    const topicLabel = lang === 'en' ? `Topic: ${q.tema}` : `Tema: ${q.tema}`;
+    const qLabel = lang === 'en' ? `QUESTION ${n} / ${total}` : `PREGUNTA ${n} / ${total}`;
     ctx.fillStyle = '#10B981';
-    ctx.font = 'bold 18px system-ui, sans-serif';
-    ctx.fillText(`${qLabel}  •  ${topicLabel}`, 512, 110);
+    ctx.font = 'bold 28px system-ui, sans-serif';
+    ctx.fillText(`${qLabel}   •   ${q.tema}`, W / 2, 56);
+
+    ctx.strokeStyle = 'rgba(212, 175, 55, 0.45)';
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(48, 92);
+    ctx.lineTo(W - 48, 92);
+    ctx.stroke();
 
     if (!answer) {
+      const statement = t(q.enunciado, lang);
+      const fontSize = statement.length > 140 ? 40 : statement.length > 95 ? 45 : 50;
+      const lineHeight = Math.round(fontSize * 1.32);
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 28px system-ui, sans-serif';
-      wrapTextLines(ctx, t(q.enunciado, lang), 512, 210, 880, 44, 4);
-
-      ctx.fillStyle = '#FBBF24';
-      ctx.font = 'bold 18px system-ui, sans-serif';
-      ctx.fillText(
-        lang === 'en'
-          ? '👇 Tap the correct option card below on your screen'
-          : '👇 Toca la tarjeta de la opción correcta abajo en tu pantalla',
-        512,
-        455
-      );
+      ctx.font = `bold ${fontSize}px system-ui, sans-serif`;
+      drawCenteredTextBlock(ctx, statement, W / 2, 294, W - 104, lineHeight, 5);
     } else {
-      ctx.font = 'bold 36px system-ui, sans-serif';
+      ctx.font = 'bold 46px system-ui, sans-serif';
       if (answer.isCorrect) {
         ctx.fillStyle = '#10B981';
-        ctx.fillText(lang === 'en' ? '✅ CORRECT ANSWER!' : '✅ ¡RESPUESTA CORRECTA!', 512, 190);
+        ctx.fillText(lang === 'en' ? '✅ CORRECT ANSWER!' : '✅ ¡RESPUESTA CORRECTA!', W / 2, 142);
       } else {
         ctx.fillStyle = '#EF4444';
-        ctx.fillText(lang === 'en' ? '❌ INCORRECT ANSWER' : '❌ RESPUESTA INCORRECTA', 512, 190);
+        ctx.fillText(lang === 'en' ? '❌ INCORRECT ANSWER' : '❌ RESPUESTA INCORRECTA', W / 2, 142);
       }
 
-      ctx.fillStyle = '#E5E7EB';
-      ctx.font = '22px system-ui, sans-serif';
-      wrapTextLines(ctx, t(q.explicacion, lang), 512, 270, 860, 36, 4);
+      const explanation = t(q.explicacion, lang);
+      const expFont = explanation.length > 165 ? 32 : 36;
+      ctx.fillStyle = '#F1F5F9';
+      ctx.font = `600 ${expFont}px system-ui, sans-serif`;
+      drawCenteredTextBlock(ctx, explanation, W / 2, 295, W - 104, Math.round(expFont * 1.32), 4);
 
       ctx.fillStyle = '#D4AF37';
-      ctx.font = 'bold 18px system-ui, sans-serif';
+      ctx.font = 'bold 26px system-ui, sans-serif';
       const moving = this.session.isLast
         ? lang === 'en' ? '⏳ Calculating your results...' : '⏳ Calculando tus resultados...'
         : lang === 'en' ? '⏳ Advancing to next question...' : '⏳ Avanzando a la siguiente pregunta...';
-      ctx.fillText(moving, 512, 460);
+      ctx.fillText(moving, W / 2, 448);
     }
     this.questionTexture.needsUpdate = true;
   }
@@ -403,36 +415,42 @@ export class ARQuizController {
     if (!ctx) return;
 
     const palette: Record<OptionState, { bg: string; border: string; badge: string; badgeText: string }> = {
-      normal: { bg: 'rgba(2, 34, 20, 0.94)', border: '#D4AF37', badge: '#D4AF37', badgeText: '#00361F' },
-      correct: { bg: 'rgba(6, 95, 70, 0.96)', border: '#10B981', badge: '#10B981', badgeText: '#FFFFFF' },
-      incorrect: { bg: 'rgba(127, 29, 29, 0.96)', border: '#EF4444', badge: '#EF4444', badgeText: '#FFFFFF' },
-      reveal: { bg: 'rgba(6, 78, 59, 0.96)', border: '#34D399', badge: '#34D399', badgeText: '#00361F' },
+      normal: { bg: 'rgba(2, 34, 20, 0.96)', border: '#D4AF37', badge: '#D4AF37', badgeText: '#00361F' },
+      correct: { bg: 'rgba(6, 95, 70, 0.97)', border: '#10B981', badge: '#10B981', badgeText: '#FFFFFF' },
+      incorrect: { bg: 'rgba(127, 29, 29, 0.97)', border: '#EF4444', badge: '#EF4444', badgeText: '#FFFFFF' },
+      reveal: { bg: 'rgba(6, 78, 59, 0.97)', border: '#34D399', badge: '#34D399', badgeText: '#00361F' },
     };
     const c = palette[state];
 
-    ctx.clearRect(0, 0, 512, 186);
-    drawRoundedRect(ctx, 8, 8, 496, 170, 18);
+    const W = 768;
+    const H = 280;
+    ctx.clearRect(0, 0, W, H);
+    drawRoundedRect(ctx, 8, 8, W - 16, H - 16, 24);
     ctx.fillStyle = c.bg;
     ctx.fill();
-    ctx.lineWidth = 5;
+    ctx.lineWidth = 6;
     ctx.strokeStyle = c.border;
     ctx.stroke();
 
+    // Insignia circular de letra (A, B, C, D)
     ctx.beginPath();
-    ctx.arc(46, 93, 26, 0, Math.PI * 2);
+    ctx.arc(62, H / 2, 38, 0, Math.PI * 2);
     ctx.fillStyle = c.badge;
     ctx.fill();
 
     ctx.fillStyle = c.badgeText;
-    ctx.font = 'bold 24px system-ui, sans-serif';
+    ctx.font = 'bold 40px system-ui, sans-serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(OPTION_LETTERS[index], 46, 94);
+    ctx.fillText(OPTION_LETTERS[index], 62, H / 2 + 2);
 
+    // Texto de la opción: grande y centrado verticalmente sin espacio muerto
+    const optFont = text.length <= 26 ? 42 : text.length <= 60 ? 36 : 31;
+    const optLineHeight = Math.round(optFont * 1.28);
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 20px system-ui, sans-serif';
+    ctx.font = `bold ${optFont}px system-ui, sans-serif`;
     ctx.textAlign = 'left';
-    wrapTextLines(ctx, text, 88, 70, 395, 28, 3);
+    drawCenteredTextBlock(ctx, text, 118, H / 2, W - 144, optLineHeight, 4);
 
     this.optionTextures[index].needsUpdate = true;
   }
@@ -442,45 +460,47 @@ export class ARQuizController {
     if (!ctx) return;
     const { score, total, percent } = this.session;
 
-    ctx.clearRect(0, 0, 1024, 600);
-    drawRoundedRect(ctx, 16, 16, 992, 568, 30);
+    const W = 1280;
+    const H = 680;
+    ctx.clearRect(0, 0, W, H);
+    drawRoundedRect(ctx, 14, 14, W - 28, H - 28, 32);
     ctx.fillStyle = 'rgba(2, 34, 20, 0.96)';
     ctx.fill();
-    ctx.lineWidth = 7;
+    ctx.lineWidth = 8;
     ctx.strokeStyle = '#D4AF37';
     ctx.stroke();
 
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = '64px system-ui, sans-serif';
-    ctx.fillText('🏆', 512, 90);
+    ctx.font = '78px system-ui, sans-serif';
+    ctx.fillText('🏆', W / 2, 96);
 
     ctx.fillStyle = '#D4AF37';
-    ctx.font = 'bold 34px system-ui, sans-serif';
-    ctx.fillText(lang === 'en' ? 'QUIZ COMPLETED!' : '¡CUESTIONARIO COMPLETADO!', 512, 165);
+    ctx.font = 'bold 44px system-ui, sans-serif';
+    ctx.fillText(lang === 'en' ? 'QUIZ COMPLETED!' : '¡CUESTIONARIO COMPLETADO!', W / 2, 185);
 
     ctx.fillStyle = '#10B981';
-    ctx.font = 'bold 46px system-ui, sans-serif';
+    ctx.font = 'bold 58px system-ui, sans-serif';
     ctx.fillText(
       `${lang === 'en' ? 'SCORE' : 'PUNTAJE'}: ${score} / ${total} (${percent}%)`,
-      512,
-      245
+      W / 2,
+      275
     );
 
-    ctx.fillStyle = '#E5E7EB';
-    ctx.font = '22px system-ui, sans-serif';
-    wrapTextLines(ctx, getResultMessage(percent, lang), 512, 315, 880, 34, 2);
+    ctx.fillStyle = '#F1F5F9';
+    ctx.font = '600 32px system-ui, sans-serif';
+    drawCenteredTextBlock(ctx, getResultMessage(percent, lang), W / 2, 385, W - 120, 44, 3);
 
-    drawRoundedRect(ctx, 262, 410, 500, 78, 20);
+    drawRoundedRect(ctx, (W - 620) / 2, 495, 620, 100, 24);
     ctx.fillStyle = '#00643A';
     ctx.fill();
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 5;
     ctx.strokeStyle = '#D4AF37';
     ctx.stroke();
 
     ctx.fillStyle = '#FFFFFF';
-    ctx.font = 'bold 24px system-ui, sans-serif';
-    ctx.fillText(lang === 'en' ? '🔄 TAP HERE TO RETRY' : '🔄 TOCA AQUÍ PARA REINTENTAR', 512, 450);
+    ctx.font = 'bold 32px system-ui, sans-serif';
+    ctx.fillText(lang === 'en' ? '🔄 TAP HERE TO RETRY' : '🔄 TOCA AQUÍ PARA REINTENTAR', W / 2, 545);
 
     this.resultsTexture.needsUpdate = true;
   }
@@ -628,11 +648,25 @@ export class ARQuizController {
   }
 
   private onControllerSelect() {
-    // Respaldo para dispositivos sin dom-overlay: rayo desde el centro de la vista
+    // Respaldo exclusivo para dispositivos sin dom-overlay: si dom-overlay está activo,
+    // los toques ya se procesan con coordenadas exactas en #ar-touch-plane.
+    if (this.xrSession?.domOverlayState) return;
     this.handleRay(0, 0);
   }
 
   private bindOverlayEvents() {
+    // Evitar que toques en los controles del HUD disparen eventos `select` de WebXR o raycasts
+    const hudZones = this.overlay?.querySelectorAll('.ar-hud-header, .ar-hud-bottom, .ar-results-modal');
+    hudZones?.forEach((zone) => {
+      zone.addEventListener('beforexrselect', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+      zone.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: true });
+      zone.addEventListener('touchend', (e) => e.stopPropagation(), { passive: true });
+      zone.addEventListener('click', (e) => e.stopPropagation());
+    });
+
     const touchPlane = document.getElementById('ar-touch-plane');
     touchPlane?.addEventListener('click', (e: MouseEvent) => {
       e.stopPropagation();
@@ -655,10 +689,13 @@ export class ARQuizController {
     });
     document.getElementById('btn-recenter-ar')?.addEventListener('click', (e) => {
       e.stopPropagation();
+      this.lastInteractionTime = performance.now();
       this.recenter();
+      vibrate(30);
     });
     document.getElementById('btn-results-retry')?.addEventListener('click', (e) => {
       e.stopPropagation();
+      this.lastInteractionTime = performance.now();
       this.restart();
     });
     document.getElementById('btn-results-exit')?.addEventListener('click', (e) => {
