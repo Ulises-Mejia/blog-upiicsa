@@ -22,7 +22,7 @@ import {
 
 type OptionState = 'normal' | 'correct' | 'incorrect' | 'reveal';
 
-const ANCHOR_DISTANCE = 0.8;
+const ANCHOR_DISTANCE = 1.5;
 const ADVANCE_DELAY_CORRECT = 2400;
 const ADVANCE_DELAY_INCORRECT = 3400;
 
