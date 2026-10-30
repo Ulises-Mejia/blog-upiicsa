@@ -22,7 +22,7 @@ import {
 
 type OptionState = 'normal' | 'correct' | 'incorrect' | 'reveal';
 
-const ANCHOR_DISTANCE = 1.15;
+const ANCHOR_DISTANCE = 1.45;
 const ADVANCE_DELAY_CORRECT = 2400;
 const ADVANCE_DELAY_INCORRECT = 3400;
 
@@ -261,19 +261,16 @@ export class ARQuizController {
     return renderer;
   }
 
-  private tick(elapsed: number) {
+  private tick(_elapsed: number) {
     try {
       this.frameCount++;
 
-      // En los primeros fotogramas el rastreo se estabiliza: recolocar al frente
-      if (this.isARActive && (this.frameCount === 3 || this.frameCount === 12 || this.frameCount === 30)) {
+      // Colocar una sola vez cuando el rastreo inicial ya tiene pose estable
+      if (this.isARActive && this.frameCount === 10) {
         this.recenter();
       }
 
       this.ring1.rotation.z += 0.008;
-      if (!this.session.isFinished) {
-        this.quizGroup.position.y = Math.sin(elapsed * 1.5) * 0.012;
-      }
 
       if (this.renderer) this.renderer.render(this.scene, this.camera);
 
@@ -294,14 +291,28 @@ export class ARQuizController {
     }
   }
 
-  /** Coloca el cuestionario frente a la cámara usando su pose real (actualizada por Three.js en cada frame). */
+  /**
+   * Coloca el cuestionario frente a la cámara manteniéndolo nivelado con el horizonte
+   * (sin inclinación lateral ni cabeceo brusco de la mano) para máxima estabilidad.
+   */
   public recenter(distance = ANCHOR_DISTANCE) {
-    const forward = new THREE.Vector3(0, 0, -distance)
-      .applyQuaternion(this.camera.quaternion)
-      .add(this.camera.position);
-    if (Number.isFinite(forward.x) && Number.isFinite(forward.y) && Number.isFinite(forward.z)) {
-      this.objectAnchor.position.copy(forward);
-      this.objectAnchor.quaternion.copy(this.camera.quaternion);
+    const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+    if (Number.isFinite(dir.x) && Number.isFinite(dir.y) && Number.isFinite(dir.z)) {
+      // Proyección horizontal nivelada para que el panel quede firme y vertical en el espacio
+      const horiz = new THREE.Vector2(dir.x, dir.z);
+      if (horiz.lengthSq() > 1e-4) {
+        horiz.normalize();
+      } else {
+        horiz.set(0, -1);
+      }
+      const clampedY = THREE.MathUtils.clamp(dir.y * distance * 0.35, -0.25, 0.25);
+      this.objectAnchor.position.set(
+        this.camera.position.x + horiz.x * distance,
+        this.camera.position.y + clampedY,
+        this.camera.position.z + horiz.y * distance
+      );
+      const yaw = Math.atan2(-horiz.x, -horiz.y);
+      this.objectAnchor.rotation.set(0, yaw, 0);
     } else {
       this.objectAnchor.position.set(0, 0, -distance);
       this.objectAnchor.quaternion.identity();
