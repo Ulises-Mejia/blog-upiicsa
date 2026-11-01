@@ -142,6 +142,16 @@ export class ARQuizController {
   private isARActive = false;
   private isLocked = false;
   private frameCount = 0;
+  private validPoseFrames = 0;
+  private nullPoseStreak = 0;
+  private hasInitialAnchor = false;
+  private hasUserInteracted = false;
+  private usingViewerFallback = false;
+  private localRefSpace: XRReferenceSpace | null = null;
+  private viewerRefSpace: XRReferenceSpace | null = null;
+  private anchorHoriz = new THREE.Vector2(0, -1);
+  private anchorYOffset = 0;
+  private smoothedCamQuat = new THREE.Quaternion();
   private lastInteractionTime = 0;
   private advanceTimer: number | null = null;
 
@@ -247,39 +257,98 @@ export class ARQuizController {
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 0);
     renderer.xr.enabled = true;
-    renderer.domElement.style.display = 'none';
+    Object.assign(renderer.domElement.style, {
+      position: 'fixed',
+      inset: '0',
+      width: '100%',
+      height: '100%',
+      pointerEvents: 'none',
+      zIndex: '-1',
+      display: 'none',
+    });
     document.body.appendChild(renderer.domElement);
 
     const controller = renderer.xr.getController(0);
     controller.addEventListener('select', () => this.onControllerSelect());
     this.scene.add(controller);
 
-    const clock = new THREE.Clock();
-    renderer.setAnimationLoop(() => this.tick(clock.getElapsedTime()));
-
     this.renderer = renderer;
     return renderer;
   }
 
-  private tick(_elapsed: number) {
+  private tick(_elapsed: number, frame?: XRFrame) {
     try {
+      if (!this.isARActive || !this.renderer) return;
       this.frameCount++;
 
-      // Colocar una sola vez cuando el rastreo inicial ya tiene pose estable
-      if (this.isARActive && this.frameCount === 10) {
+      // Verificar si ARCore ya entrega pose válida en el espacio `local` (6DoF / 3DoF)
+      const localPose =
+        frame && this.localRefSpace ? frame.getViewerPose(this.localRefSpace) : null;
+
+      if (localPose !== null) {
+        this.nullPoseStreak = 0;
+
+        // Si estábamos en el respaldo `viewer`, regresar a `local` ahora que ARCore tiene pose
+        if (this.usingViewerFallback && this.localRefSpace) {
+          this.usingViewerFallback = false;
+          this.validPoseFrames = 0;
+          this.hasInitialAnchor = false;
+          this.renderer.xr.setReferenceSpace(this.localRefSpace);
+        }
+      } else {
+        this.nullPoseStreak++;
+
+        // Si `local` aún no entrega pose tras ~12 cuadros (p. ej. poca luz o pared lisa en Android),
+        // activar respaldo `viewer` para que el modelo flotante aparezca siempre de inmediato
+        if (!this.usingViewerFallback && this.nullPoseStreak >= 12 && this.viewerRefSpace) {
+          this.usingViewerFallback = true;
+          this.renderer.xr.setReferenceSpace(this.viewerRefSpace);
+          this.recenter();
+        }
+      }
+
+      // Sincronizar `this.camera` con `cameraXR` ANTES de renderizar para que la estabilización
+      // se aplique en el mismo cuadro sin 1 frame de retraso
+      if (this.renderer.xr.isPresenting) {
+        const xrCam = this.renderer.xr.getCamera();
+        this.camera.position.copy(xrCam.position);
+        this.camera.quaternion.copy(xrCam.quaternion);
+      }
+
+      if (localPose !== null && !this.usingViewerFallback) {
+        this.validPoseFrames++;
+
+        // Fijar el ancla inicial una sola vez cuando el giroscopio ya entregó su pose estable
+        if (!this.hasInitialAnchor && this.validPoseFrames >= 3) {
+          this.hasInitialAnchor = true;
+          this.recenter();
+        } else if (this.hasInitialAnchor) {
+          // Auto-rescate durante los primeros 2 s si ARCore recalibra bruscamente el rumbo inicial
+          if (this.validPoseFrames <= 90 && !this.hasUserInteracted) {
+            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+            const horizDot = forward.x * this.anchorHoriz.x + forward.z * this.anchorHoriz.y;
+            if (horizDot < 0.65) {
+              this.recenter();
+            }
+          }
+          // Actualizar ancla estabilizada (0% deriva posicional SLAM + amortiguación de pulso)
+          this.updateStabilizedAnchor();
+        }
+      } else if (this.usingViewerFallback) {
         this.recenter();
       }
 
       this.ring1.rotation.z += 0.008;
 
-      if (this.renderer) this.renderer.render(this.scene, this.camera);
+      this.renderer.render(this.scene, this.camera);
 
       // Telemetría de depuración en el HUD (se conserva visible a petición del usuario)
-      if (this.isARActive && this.frameCount % 10 === 0 && this.statusText) {
+      if (this.frameCount % 10 === 0 && this.statusText) {
         const p = this.objectAnchor.position;
         const c = this.camera.position;
+        const modeTag = this.usingViewerFallback ? 'AR(3DoF)' : 'AR';
         this.statusText.textContent =
-          `AR: Cam(${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}) | ` +
+          `${modeTag}: Cam(${c.x.toFixed(1)}, ${c.y.toFixed(1)}, ${c.z.toFixed(1)}) | ` +
           `Q(${p.x.toFixed(1)}, ${p.y.toFixed(1)}, ${p.z.toFixed(1)})`;
       }
     } catch (err: any) {
@@ -292,30 +361,70 @@ export class ARQuizController {
   }
 
   /**
+   * Mantiene el cuestionario a distancia constante de la cámara (eliminando el 100 % de la
+   * deriva de traslación X/Y/Z de ARCore) y amortigua el micro-temblor del pulso de la mano
+   * (tipo estabilizador óptico OIS) para que el texto se lea con total firmeza.
+   */
+  private updateStabilizedAnchor(distance = ANCHOR_DISTANCE) {
+    // Filtro paso-bajo de la orientación de la mano
+    this.smoothedCamQuat.slerp(this.camera.quaternion, 0.09);
+
+    // Calcular el micro-temblor instantáneo de alta frecuencia: tremor = camQuat * inv(smoothedCamQuat)
+    const invSmoothed = this.smoothedCamQuat.clone().invert();
+    const tremorQuat = this.camera.quaternion.clone().multiply(invSmoothed);
+
+    // Amortiguar el 82 % del micro-temblor (limitado a ~3.5° para no afectar giros voluntarios)
+    const angle = 2 * Math.acos( Math.min(1, Math.abs(tremorQuat.w)) );
+    const dampingFactor = angle < 0.065 ? 0.82 : Math.max(0, 0.82 * (1 - (angle - 0.065) / 0.12));
+    const stabilizedQuat = new THREE.Quaternion().slerp(tremorQuat, dampingFactor);
+
+    const offset = new THREE.Vector3(
+      this.anchorHoriz.x * distance,
+      this.anchorYOffset,
+      this.anchorHoriz.y * distance
+    ).applyQuaternion(stabilizedQuat);
+
+    this.objectAnchor.position.copy(this.camera.position).add(offset);
+
+    const yaw = Math.atan2(-offset.x, -offset.z);
+    this.objectAnchor.rotation.set(0, yaw, 0);
+    this.objectAnchor.updateMatrixWorld(true);
+  }
+
+  /**
    * Coloca el cuestionario frente a la cámara manteniéndolo nivelado con el horizonte
    * (sin inclinación lateral ni cabeceo brusco de la mano) para máxima estabilidad.
    */
   public recenter(distance = ANCHOR_DISTANCE) {
+    if (this.usingViewerFallback) {
+      this.objectAnchor.position.set(0, 0, -distance);
+      this.objectAnchor.quaternion.identity();
+      this.objectAnchor.updateMatrixWorld(true);
+      return;
+    }
+
+    if (this.renderer?.xr.isPresenting) {
+      const xrCam = this.renderer.xr.getCamera();
+      this.camera.position.copy(xrCam.position);
+      this.camera.quaternion.copy(xrCam.quaternion);
+    }
+
     const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
     if (Number.isFinite(dir.x) && Number.isFinite(dir.y) && Number.isFinite(dir.z)) {
-      // Proyección horizontal nivelada para que el panel quede firme y vertical en el espacio
       const horiz = new THREE.Vector2(dir.x, dir.z);
       if (horiz.lengthSq() > 1e-4) {
         horiz.normalize();
       } else {
         horiz.set(0, -1);
       }
-      const clampedY = THREE.MathUtils.clamp(dir.y * distance * 0.35, -0.25, 0.25);
-      this.objectAnchor.position.set(
-        this.camera.position.x + horiz.x * distance,
-        this.camera.position.y + clampedY,
-        this.camera.position.z + horiz.y * distance
-      );
-      const yaw = Math.atan2(-horiz.x, -horiz.y);
-      this.objectAnchor.rotation.set(0, yaw, 0);
+      this.anchorHoriz.copy(horiz);
+      this.anchorYOffset = THREE.MathUtils.clamp(dir.y * distance * 0.35, -0.22, 0.22);
+      this.smoothedCamQuat.copy(this.camera.quaternion);
+      this.updateStabilizedAnchor(distance);
     } else {
       this.objectAnchor.position.set(0, 0, -distance);
       this.objectAnchor.quaternion.identity();
+      this.objectAnchor.updateMatrixWorld(true);
     }
   }
 
@@ -630,6 +739,7 @@ export class ARQuizController {
     const now = performance.now();
     if (now - this.lastInteractionTime < 280) return;
     this.lastInteractionTime = now;
+    this.hasUserInteracted = true;
 
     this.raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), this.camera);
 
@@ -725,9 +835,11 @@ export class ARQuizController {
     }
     const renderer = this.ensureRenderer();
 
+    // Solo pedimos `local` y `dom-overlay` (sin `hit-test` ni `local-floor` para evitar que
+    // ARCore bloquee el inicio esperando detección de planos del suelo en interiores)
     const sessionInit: XRSessionInit = {
       requiredFeatures: ['local'],
-      optionalFeatures: ['dom-overlay', 'hit-test', 'local-floor'],
+      optionalFeatures: ['dom-overlay'],
     };
     if (this.overlay) {
       this.overlay.style.display = 'flex';
@@ -740,10 +852,32 @@ export class ARQuizController {
         this.xrSession = xrSession;
         this.isARActive = true;
         this.frameCount = 0;
+        this.validPoseFrames = 0;
+        this.nullPoseStreak = 0;
+        this.hasInitialAnchor = false;
+        this.hasUserInteracted = false;
+        this.usingViewerFallback = false;
+
+        // Limpiar coordenadas previas de la cámara para no heredar poses de una sesión anterior
+        this.camera.position.set(0, 0, 0);
+        this.camera.quaternion.identity();
+        this.camera.updateMatrixWorld(true);
+
         xrSession.addEventListener('end', () => this.onSessionEnded());
 
+        renderer.domElement.style.display = 'block';
         renderer.xr.setReferenceSpaceType('local');
         await renderer.xr.setSession(xrSession);
+
+        this.localRefSpace = renderer.xr.getReferenceSpace();
+        try {
+          this.viewerRefSpace = await xrSession.requestReferenceSpace('viewer');
+        } catch {
+          this.viewerRefSpace = null;
+        }
+
+        const clock = new THREE.Clock();
+        renderer.setAnimationLoop((_time, frame) => this.tick(clock.getElapsedTime(), frame));
 
         syncLanguageVisibility(this.overlay ?? document);
         this.restart();
@@ -751,6 +885,7 @@ export class ARQuizController {
       .catch((err: any) => {
         console.error('[WebXR] Fallo al iniciar sesión AR:', err);
         if (this.overlay) this.overlay.style.display = 'none';
+        if (this.renderer) this.renderer.domElement.style.display = 'none';
         this.callbacks.onError(
           err?.message || 'Permiso de cámara denegado o error de inicialización en el dispositivo.'
         );
@@ -769,11 +904,20 @@ export class ARQuizController {
     this.isARActive = false;
     this.isLocked = false;
     this.frameCount = 0;
+    this.validPoseFrames = 0;
+    this.nullPoseStreak = 0;
+    this.hasInitialAnchor = false;
+    this.usingViewerFallback = false;
+    this.localRefSpace = null;
+    this.viewerRefSpace = null;
     this.xrSession = null;
 
     if (this.overlay) this.overlay.style.display = 'none';
     if (this.resultsModal) this.resultsModal.style.display = 'none';
-    if (this.renderer) this.renderer.domElement.style.display = 'none';
+    if (this.renderer) {
+      this.renderer.setAnimationLoop(null);
+      this.renderer.domElement.style.display = 'none';
+    }
 
     this.callbacks.onSessionEnd();
   }
