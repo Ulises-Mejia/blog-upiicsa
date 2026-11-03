@@ -11,6 +11,7 @@ const identidadUI = {
     en: "The room content could not be loaded. Reload the page to try again."
   },
   hymn: { es: "HIMNO POLITÉCNICO", en: "POLYTECHNIC HYMN" },
+  hymnSubtitle: { es: "Símbolo institucional", en: "Institutional symbol" },
   play: { es: "Reproducir", en: "Play" },
   pause: { es: "Pausar", en: "Pause" },
   audioError: { es: "No se pudo reproducir el audio", en: "Audio could not be played" },
@@ -133,7 +134,7 @@ function applyContent(content) {
 
   // Estación Himno
   setText('himno-title', t(identidadUI.hymn));
-  setText('himno-subtitle', t(content.himno.titulo));
+  setText('himno-subtitle', t(identidadUI.hymnSubtitle));
   setText(
     'himno-info',
     `${t(content.himno.autorLetra)}\n${t(content.himno.autorMusica)}`
