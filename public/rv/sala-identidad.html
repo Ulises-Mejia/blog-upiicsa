@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#00643A">
+  <title>Sala de Identidad Institucional IPN - Realidad Virtual</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="https://unpkg.com/aframe-environment-component@1.3.7/dist/aframe-environment-component.min.js"></script>
+  <script src="https://unpkg.com/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
+  <style>
+    html, body { margin: 0; padding: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; touch-action: none; }
+    #loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #00643A 0%, #00361F 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; z-index: 9999; transition: opacity 0.5s; padding: 20px; text-align: center; }
+    #loading.hidden { opacity: 0; pointer-events: none; }
+    #loading-text { font-size: clamp(16px, 4vw, 20px); margin-top: 20px; text-align: center; line-height: 1.4; }
+    #no-webgl { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(128, 0, 64, 0.98); color: #fff; padding: clamp(20px, 5vw, 30px) clamp(25px, 6vw, 40px); border-radius: 12px; max-width: min(400px, 90vw); text-align: center; z-index: 10000; border: 2px solid #D4AF37; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+    #hud { position: fixed; bottom: max(15px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: rgba(0, 54, 31, 0.95); color: #fff; padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px); border-radius: 10px; font-size: clamp(11px, 2.5vw, 13px); z-index: 100; display: flex; gap: clamp(8px, 2vw, 15px); align-items: center; border: 1px solid #D4AF37; flex-wrap: wrap; justify-content: center; max-width: 95vw; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
+    #hud.hidden { display: none; }
+    .hud-btn { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 1px solid #D4AF37; padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 14px); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: clamp(11px, 2.2vw, 12px); white-space: nowrap; transition: all 0.2s ease; }
+    .hud-btn:hover, .hud-btn:active { background: #fff; transform: scale(1.05); }
+    #station-info { position: fixed; top: max(15px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); background: rgba(0, 54, 31, 0.95); color: #fff; padding: clamp(10px, 2.5vw, 14px) clamp(16px, 4vw, 28px); border-radius: 10px; font-size: clamp(12px, 3vw, 15px); z-index: 100; max-width: 92vw; text-align: center; border: 1px solid #D4AF37; display: none; box-shadow: 0 4px 20px rgba(0,0,0,0.6); line-height: 1.4; }
+    #station-info.visible { display: block; }
+    #decalogue-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(520px, 92vw); max-height: min(75vh, 600px); overflow-y: auto; overflow-x: hidden; z-index: 1000; display: none; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9); }
+    #decalogue-panel.visible { display: block; }
+    #decalogue-panel h2 { color: #D4AF37; margin: 0 30px 20px 0; text-align: center; font-size: clamp(18px, 4vw, 24px); line-height: 1.3; }
+    #decalogue-panel .decalogue-item { margin: 12px 0; padding: clamp(10px, 2.5vw, 14px); background: linear-gradient(90deg, rgba(128, 0, 64, 0.4) 0%, rgba(128, 0, 64, 0.2) 100%); border-left: 4px solid #D4AF37; border-radius: 6px; line-height: 1.6; font-size: clamp(13px, 3vw, 15px); word-break: break-word; }
+    #decalogue-close { position: absolute; top: 10px; right: 12px; background: rgba(128, 0, 64, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s ease; }
+    #decalogue-close:hover, #decalogue-close:active { background: #D4AF37; color: #00361F; }
+    #lyrics-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(560px, 92vw); max-height: min(78vh, 650px); overflow-y: auto; overflow-x: hidden; z-index: 1000; display: none; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9); }
+    #lyrics-panel.visible { display: block; }
+    #lyrics-panel h2 { color: #D4AF37; margin: 0 30px 18px 0; text-align: center; font-size: clamp(18px, 4vw, 24px); line-height: 1.3; }
+    #lyrics-panel h3 { color: #D4AF37; margin: 18px 0 8px 0; font-size: clamp(15px, 3vw, 18px); text-align: center; }
+    #lyrics-panel .lyrics-stanza { margin: 0 0 14px 0; padding: clamp(10px, 2.5vw, 14px); background: linear-gradient(90deg, rgba(0, 100, 58, 0.4) 0%, rgba(0, 100, 58, 0.2) 100%); border-left: 4px solid #D4AF37; border-radius: 6px; }
+    #lyrics-panel .lyrics-stanza p { margin: 4px 0; line-height: 1.55; font-size: clamp(13px, 3vw, 15px); }
+    #lyrics-close { position: absolute; top: 10px; right: 12px; background: rgba(0, 100, 58, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s ease; }
+    #lyrics-close:hover, #lyrics-close:active { background: #D4AF37; color: #00361F; }
+    @media (max-width: 600px) {
+      #hud { bottom: max(10px, env(safe-area-inset-bottom)); gap: 6px; padding: 8px 10px; }
+      #decalogue-panel, #lyrics-panel { padding: 20px 16px; max-height: 80vh; }
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div style="font-size: clamp(40px, 12vw, 56px);">🏛️</div>
+    <div id="loading-text">Cargando sala...</div>
+  </div>
+  <div id="no-webgl">
+    <div style="font-size: clamp(32px, 10vw, 42px); margin-bottom: 12px;">⚠️</div>
+    <div id="no-webgl-text">Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.</div>
+  </div>
+  <div id="station-info"></div>
+  <div id="hud" class="hidden">
+    <span id="hud-help">Teletransporte: toca el piso para moverte</span>
+    <button class="hud-btn" id="btn-fullscreen">Pantalla completa</button>
+    <button class="hud-btn" id="btn-vr">Entrar en modo VR</button>
+    <button class="hud-btn" id="btn-quiz">Quiz Identidad</button>
+  </div>
+  <div id="quiz-panel" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(520px, 92vw); max-height: min(80vh, 650px); overflow-y: auto; overflow-x: hidden; z-index: 2000; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9);">
+    <button id="quiz-close" aria-label="Cerrar" style="position: absolute; top: 10px; right: 12px; background: rgba(128, 0, 64, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
+    <h2 id="quiz-title" style="color: #D4AF37; margin: 0 30px 10px 0; text-align: center; font-size: clamp(18px, 4vw, 24px);">Quiz Identidad Institucional IPN</h2>
+    <p id="quiz-subtitle" style="text-align: center; margin: 0 0 20px 0; color: #fff; opacity: 0.9;">Pon a prueba tus conocimientos</p>
+    <div id="quiz-start" style="text-align: center;">
+      <button id="quiz-start-btn" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer;">Iniciar Quiz</button>
+    </div>
+    <div id="quiz-content" style="display: none;">
+      <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; color: #D4AF37;">
+        <span id="quiz-progress">Pregunta 1 / 5</span>
+        <span id="quiz-score">Puntuación: 0</span>
+      </div>
+      <p id="quiz-question" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;"></p>
+      <div id="quiz-options" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      <button id="quiz-next" style="display: none; margin-top: 20px; width: 100%; background: #00643A; color: #fff; border: 1px solid #D4AF37; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">Siguiente</button>
+    </div>
+    <div id="quiz-result" style="display: none; text-align: center;">
+      <div style="font-size: 48px; margin-bottom: 10px;">🏆</div>
+      <h3 id="quiz-result-title" style="color: #D4AF37; margin: 0 0 10px 0;"></h3>
+      <p id="quiz-result-score" style="font-size: 1.3rem; margin: 10px 0;"></p>
+      <button id="quiz-restart" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 15px;">Reintentar</button>
+    </div>
+  </div>
+  <div id="decalogue-panel">
+    <button id="decalogue-close" aria-label="Cerrar">×</button>
+    <h2 id="decalogue-title">Decálogo del Politécnico</h2>
+    <div id="decalogue-content"></div>
+  </div>
+  <div id="lyrics-panel">
+    <button id="lyrics-close" aria-label="Cerrar">×</button>
+    <h2 id="lyrics-title">Himno del Instituto Politécnico Nacional</h2>
+    <div id="lyrics-content"></div>
+  </div>
+
+  <a-scene 
+    vr-mode-ui="enabled: true" 
+    device-orientation-permission-ui="enabled: true"
+    renderer="antialias: true; colorManagement: true; sortObjects: true; highRefreshRate: true;"
+    loading-screen="enabled: false">
+    
+    <a-assets timeout="15000">
+      <img id="ipn-logo" src="../ipn_logo.svg">
+      <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="metadata"></audio>
+    </a-assets>
+
+    <!-- Entorno tipo salón IPN -->
+    <a-plane id="floor" position="0 0 0" rotation="-90 0 0" width="16" height="16" color="#2f2f2f" material="roughness: 0.95; metalness: 0.05" blink-controls="cameraRig: #cameraRig; teleportOrigin: #cameraRig; collisionEntities: #floor, #wall-back, #wall-front, #wall-left, #wall-right"></a-plane>
+    <a-plane position="0 0.01 0" rotation="-90 0 0" width="4.6" height="4.6" color="#3a3a3a"></a-plane>
+    <a-ring position="0 0.015 0" rotation="-90 0 0" radius-inner="2" radius-outer="2.15" color="#D4AF37" opacity="0.5"></a-ring>
+
+    <!-- Techo -->
+    <a-plane position="0 4.2 0" rotation="90 0 0" width="16" height="16" color="#f7f7f7" material="roughness: 0.9"></a-plane>
+
+    <!-- Paredes -->
+    <a-box id="wall-back" position="0 2.1 -8" width="16" height="4.2" depth="0.25" color="#800040"></a-box>
+    <a-box position="0 2.1 -8" width="15.5" height="0.4" depth="0.27" color="#D4AF37"></a-box>
+    <a-box position="0 3.9 -8" width="15.5" height="0.25" depth="0.27" color="#D4AF37"></a-box>
+
+    <a-box id="wall-front" position="0 2.1 8" width="16" height="4.2" depth="0.25" color="#800040"></a-box>
+    <a-box position="0 2.1 8" width="15.5" height="0.4" depth="0.27" color="#D4AF37"></a-box>
+    <a-box position="0 3.9 8" width="15.5" height="0.25" depth="0.27" color="#D4AF37"></a-box>
+
+    <a-box id="wall-left" position="-8 2.1 0" width="0.25" height="4.2" depth="16" color="#800040"></a-box>
+    <a-box position="-8 2.1 0" width="0.27" height="0.4" depth="15.5" color="#D4AF37"></a-box>
+    <a-box position="-8 3.9 0" width="0.27" height="0.25" depth="15.5" color="#D4AF37"></a-box>
+
+    <a-box id="wall-right" position="8 2.1 0" width="0.25" height="4.2" depth="16" color="#800040"></a-box>
+    <a-box position="8 2.1 0" width="0.27" height="0.4" depth="15.5" color="#D4AF37"></a-box>
+    <a-box position="8 3.9 0" width="0.27" height="0.25" depth="15.5" color="#D4AF37"></a-box>
+
+    <!-- Iluminación interior -->
+    <a-light type="ambient" color="#ffffff" intensity="0.7"></a-light>
+    <a-light type="point" color="#fff3d6" intensity="0.6" position="0 3.8 -6" distance="8" decay="2"></a-light>
+    <a-light type="point" color="#fff3d6" intensity="0.6" position="0 3.8 6" distance="8" decay="2"></a-light>
+    <a-light type="point" color="#fff3d6" intensity="0.5" position="-6 3.8 0" distance="8" decay="2"></a-light>
+    <a-light type="point" color="#fff3d6" intensity="0.5" position="6 3.8 0" distance="8" decay="2"></a-light>
+    <a-light type="point" color="#D4AF37" intensity="0.4" position="0 3.6 0" distance="6" decay="2"></a-light>
+
+    <!-- Escudo central girando -->
+    <a-entity id="escudo-station" position="0 2.6 0" rotation="0 0 0">
+      <a-box width="2.8" height="0.12" depth="2.8" color="#00361F" position="0 -1.3 0"></a-box>
+      <a-box width="2.4" height="0.14" depth="2.4" color="#D4AF37" position="0 -1.22 0"></a-box>
+      <a-cylinder radius="1.3" height="0.1" color="#800040" position="0 -1.14 0"></a-cylinder>
+      <a-circle radius="1.1" src="#ipn-logo" position="0 -1.08 0" rotation="-90 0 0" material="shader: flat; transparent: true" animation="property: rotation; to: -90 360 0; loop: true; dur: 16000; easing: linear"></a-circle>
+      <a-text id="escudo-label" value="Escudo IPN" align="center" position="0 -0.6 0" width="4.4" color="#D4AF37"></a-text>
+      <a-entity geometry="primitive: plane; width: 2.6; height: 0.5" material="color: #800040; opacity: 0.9" position="0 -0.05 0" rotation="-90 0 0"></a-entity>
+      <a-text value="INSTITUTO POLITÉCNICO NACIONAL" align="center" position="0 -0.04 0" rotation="-90 0 0" width="4.2" color="#D4AF37"></a-text>
+    </a-entity>
+
+    <!-- Estación Himno -->
+    <a-entity id="himno-station" position="-5.5 0 -6" rotation="0 40 0">
+      <a-box width="3.2" height="3.2" depth="0.18" color="#00643A" position="0 1.6 0"></a-box>
+      <a-box width="2.9" height="2.9" depth="0.2" color="#00361F" position="0 1.6 0.01"></a-box>
+      <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
+      <a-text id="himno-title" value="HIMNO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
+      <a-text id="himno-subtitle" value="" align="center" position="0 2.4 0.12" width="3.4" color="#ffffff" wrap-count="32"></a-text>
+      <a-entity id="himno-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
+        <a-text id="himno-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+      </a-entity>
+      <a-entity id="himno-lyrics-toggle" class="interactive" position="0 1.15 0.12" geometry="primitive: plane; width: 1.6; height: 0.42" material="color: #800040">
+        <a-text id="himno-lyrics-text" value="Mostrar letra" align="center" position="0 0 0.01" width="2.4" color="#ffffff"></a-text>
+      </a-entity>
+      <a-text id="himno-info" value="" align="center" position="0 0.55 0.12" width="2.8" color="#ffffff" wrap-count="32"></a-text>
+    </a-entity>
+
+    <!-- Estación Decálogo -->
+    <a-entity id="decalogo-station" position="5.5 0 -6" rotation="0 -40 0">
+      <a-box width="3.2" height="3.2" depth="0.18" color="#800040" position="0 1.6 0"></a-box>
+      <a-box width="2.9" height="2.9" depth="0.2" color="#600030" position="0 1.6 0.01"></a-box>
+      <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
+      <a-text id="decalogo-title" value="DECÁLOGO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#600030"></a-text>
+      <a-entity id="decalogo-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
+        <a-text id="decalogo-btn-text" value="Ver Decálogo" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+      </a-entity>
+      <a-text id="decalogo-approach" value="Mural con los 10 puntos" align="center" position="0 0.9 0.12" width="2.8" color="#ffffff"></a-text>
+    </a-entity>
+
+    <!-- Estación Porra -->
+    <a-entity id="porra-station" position="0 0 6.5" rotation="0 180 0">
+      <a-box width="3.2" height="3.2" depth="0.18" color="#00643A" position="0 1.6 0"></a-box>
+      <a-box width="2.9" height="2.9" depth="0.2" color="#00361F" position="0 1.6 0.01"></a-box>
+      <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
+      <a-text id="porra-title" value="PORRA POLITÉCNICA" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
+      <a-entity id="porra-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
+        <a-text id="porra-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+      </a-entity>
+      <a-text id="porra-current" value="" align="center" position="0 0.6 0.12" width="3.0" color="#D4AF37" wrap-count="35"></a-text>
+      <a-text id="porra-tagline" value="" align="center" position="0 0.25 0.12" width="2.8" color="#ffffff"></a-text>
+    </a-entity>
+
+    <!-- Título mural principal -->
+    <a-entity position="0 3.5 -7.87">
+      <a-plane width="10" height="1.2" color="#00361F" material="opacity: 0.95"></a-plane>
+      <a-plane width="9.6" height="0.15" color="#D4AF37" position="0 0.525 0.01"></a-plane>
+      <a-plane width="9.6" height="0.15" color="#D4AF37" position="0 -0.525 0.01"></a-plane>
+      <a-text value="IDENTIDAD INSTITUCIONAL" align="center" position="0 0.15 0.02" width="12" color="#D4AF37"></a-text>
+      <a-text value="INSTITUTO POLITÉCNICO NACIONAL" align="center" position="0 -0.25 0.02" width="11" color="#ffffff"></a-text>
+    </a-entity>
+
+    <!-- Lema -->
+    <a-text id="lema-text" value="" align="center" position="0 1.8 -7.7" width="8" color="#D4AF37"></a-text>
+
+    <!-- Cámara con controles -->
+    <a-entity id="cameraRig" position="0 0 5.5">
+      <a-camera look-controls wasd-controls="acceleration: 75" cursor="rayOrigin: mouse">
+        <a-cursor id="cursor" fuse="false" raycaster="objects: .interactive" geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.025" material="color: #D4AF37; shader: flat"></a-cursor>
+      </a-camera>
+      <a-entity laser-controls="hand: right" raycaster="objects: .interactive" blink-controls="cameraRig: #cameraRig; teleportOrigin: #cameraRig; collisionEntities: #floor, #wall-back, #wall-front, #wall-left, #wall-right"></a-entity>
+      <a-entity laser-controls="hand: left" raycaster="objects: .interactive" blink-controls="cameraRig: #cameraRig; teleportOrigin: #cameraRig; collisionEntities: #floor, #wall-back, #wall-front, #wall-left, #wall-right"></a-entity>
+    </a-entity>
+  </a-scene>
+
+  <script src="sala-identidad.js"></script>
+</body>
+</html>
