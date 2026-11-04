@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
   <meta name="theme-color" content="#00643A">
   <title>Sala de Identidad Institucional IPN - Realidad Virtual</title>
+  <link rel="preload" href="../api/identidad-vr.json" as="fetch" crossorigin>
+  <link rel="preload" href="/blog-upiicsa/rv/ipn-logo.png" as="image">
+  <link rel="preload" href="fonts/sala-sdf.json" as="fetch" crossorigin>
+  <link rel="preload" href="fonts/sala-sdf.png" as="image">
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
   <style>
@@ -108,13 +112,14 @@
   <a-scene 
     vr-mode-ui="enabled: true" 
     device-orientation-permission-ui="enabled: true"
-    renderer="antialias: true; colorManagement: true; highRefreshRate: true;"
+    renderer="antialias: true; colorManagement: true;"
     loading-screen="enabled: false">
     
-    <a-assets timeout="15000">
+    <a-assets timeout="4000">
       <img id="ipn-logo" src="/blog-upiicsa/rv/ipn-logo.png">
-      <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="auto"></audio>
     </a-assets>
+
+    <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="metadata"></audio>
 
     <!-- Entorno tipo salón IPN -->
     <a-plane id="floor" position="0 0 0" rotation="-90 0 0" width="16" height="16" color="#2f2f2f" material="roughness: 0.95; metalness: 0.05" blink-controls="cameraRig: #cameraRig; teleportOrigin: #cameraRig; collisionEntities: #floor, #wall-back, #wall-front, #wall-left, #wall-right"></a-plane>
@@ -198,15 +203,11 @@
       <a-box width="3.2" height="3.2" depth="0.14" color="#00361F" position="0 1.6 0.02"></a-box>
       <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
       <a-text font="fonts/sala-sdf.json" negate="false" id="porra-title" value="PORRA POLITÉCNICA" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
-      <a-entity id="porra-btn" class="interactive" position="0 2.3 0.12" geometry="primitive: plane; width: 1.5; height: 0.42" material="color: #D4AF37">
-        <a-text font="fonts/sala-sdf.json" negate="false" id="porra-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.4" color="#00361F"></a-text>
-      </a-entity>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-0" value="" align="center" position="0 1.95 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-1" value="" align="center" position="0 1.6 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-2" value="" align="center" position="0 1.25 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-3" value="" align="center" position="0 0.9 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-4" value="" align="center" position="0 0.55 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
-      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-status" value="" align="center" position="0 0.18 0.12" width="2.8" color="#D4AF37"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-0" value="" align="center" position="0 2.2 0.12" width="3.1" wrap-count="36" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-1" value="" align="center" position="0 1.75 0.12" width="3.1" wrap-count="36" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-2" value="" align="center" position="0 1.3 0.12" width="3.1" wrap-count="36" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-3" value="" align="center" position="0 0.85 0.12" width="3.1" wrap-count="36" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-4" value="" align="center" position="0 0.4 0.12" width="3.1" wrap-count="36" color="#ffffff"></a-text>
     </a-entity>
 
     <!-- Banner colgante con el título -->
@@ -225,7 +226,9 @@
 
     <!-- Cámara con controles -->
     <a-entity id="cameraRig" position="0 0 3.8">
-      <a-camera look-controls wasd-controls="acceleration: 75" cursor="rayOrigin: mouse">
+      <a-camera look-controls="mouseEnabled: false" wasd-controls="acceleration: 75" cursor="rayOrigin: mouse">
+        <a-cursor id="cursor" fuse="false" raycaster="objects: .interactive" geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.025" material="color: #D4AF37; shader: flat"></a-cursor>
+      </a-camera>
         <a-cursor id="cursor" fuse="false" raycaster="objects: .interactive" geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.025" material="color: #D4AF37; shader: flat"></a-cursor>
       </a-camera>
       <a-entity laser-controls="hand: right" raycaster="objects: .interactive" blink-controls="cameraRig: #cameraRig; teleportOrigin: #cameraRig; collisionEntities: #floor, #wall-back, #wall-front, #wall-left, #wall-right"></a-entity>

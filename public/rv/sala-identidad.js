@@ -21,7 +21,10 @@ const identidadUI = {
   cheer: { es: "PORRA POLITÉCNICA", en: "POLYTECHNIC CHEER" },
   approach: { es: "Acércate para leer", en: "Approach to read" },
   center: { es: "Escudo IPN", en: "IPN Shield" },
-  moveHelp: { es: "Muévete con el joystick o WASD", en: "Move with the joystick or WASD" },
+  moveHelp: {
+    es: "Mueve el ratón para mirar • WASD o joystick para caminar",
+    en: "Move mouse to look • WASD or joystick to walk"
+  },
   vrHelp: { es: "Teletransporte con el thumbstick", en: "Teleport with the thumbstick" },
   hudHimnoPlay: { es: "Reproducir himno", en: "Play hymn" },
   hudHimnoPause: { es: "Pausar himno", en: "Pause hymn" },
@@ -174,10 +177,8 @@ function applyContent(content) {
 
   // Estación Porra
   setText('porra-title', t(identidadUI.cheer));
-  setText('porra-btn-text', t(identidadUI.play));
   const porraLines = content.porra[lang] || content.porra.es;
   porraLines.forEach((line, index) => setText(`porra-line-${index}`, line));
-  setText('porra-status', '');
 
   // Banner, escudo y lema
   setText('banner-title', t(identidadUI.bannerTitle));
@@ -477,76 +478,14 @@ function setupJoystick() {
 }
 
 function setupPorra(content) {
-  const button = document.getElementById('porra-btn');
-  const buttonText = document.getElementById('porra-btn-text');
-  const status = document.getElementById('porra-status');
   const lines = content.porra[lang] || content.porra.es;
-  const lineEls = lines.map((_, index) => document.getElementById(`porra-line-${index}`));
-  let playing = false;
-  let runId = 0;
-
-  function paint(activeIndex) {
-    lineEls.forEach((el, index) => {
-      el?.setAttribute('color', index === activeIndex ? '#D4AF37' : '#ffffff');
-    });
-  }
-
-  function reset() {
-    runId++;
-    playing = false;
-    buttonText?.setAttribute('value', t(identidadUI.play));
-    paint(-1);
-    status?.setAttribute('value', '');
-  }
-
-  addClickOnce(button, () => {
-    if (playing) {
-      window.speechSynthesis?.cancel();
-      reset();
-      return;
+  lines.forEach((line, index) => {
+    const el = document.getElementById(`porra-line-${index}`);
+    if (el) {
+      el.setAttribute('value', line);
+      el.setAttribute('color', '#ffffff');
     }
-
-    if (!window.speechSynthesis) {
-      status?.setAttribute('value', t(identidadUI.ttsUnavailable));
-      window.setTimeout(() => status?.setAttribute('value', ''), 2200);
-      return;
-    }
-
-    window.speechSynthesis.cancel();
-    const currentRun = ++runId;
-    playing = true;
-    buttonText?.setAttribute('value', t(identidadUI.pause));
-    paint(-1);
-    status?.setAttribute('value', '');
-
-    lines.forEach((line, index) => {
-      const utterance = new SpeechSynthesisUtterance(line);
-      utterance.lang = lang === 'es' ? 'es-MX' : 'en-US';
-      utterance.rate = 0.95;
-      utterance.pitch = 1.0;
-      utterance.onstart = () => {
-        if (currentRun !== runId) return;
-        paint(index);
-      };
-      utterance.onend = () => {
-        if (currentRun !== runId) return;
-        if (index === lines.length - 1) {
-          playing = false;
-          buttonText?.setAttribute('value', t(identidadUI.play));
-          window.setTimeout(() => {
-            if (currentRun === runId) paint(-1);
-          }, 1200);
-        }
-      };
-      utterance.onerror = () => {
-        if (currentRun !== runId) return;
-        reset();
-      };
-      window.speechSynthesis.speak(utterance);
-    });
   });
-
-  paint(-1);
 }
 
 function setupQuiz() {
@@ -709,6 +648,140 @@ function setupUI() {
   });
 }
 
+function setupDesktopMouseLook() {
+  // Solo en dispositivos con puntero fino (mouse o touchpad de computadora)
+  if (!window.matchMedia('(pointer: fine)').matches) return;
+
+  const scene = document.querySelector('a-scene');
+  const cameraEl = document.querySelector('[camera]');
+  if (!scene || !cameraEl) return;
+
+  const sensitivity = 0.0022;
+  const PITCH_LIMIT = Math.PI / 2.25; // ~80 grados arriba y abajo
+
+  let prevX = null;
+  let prevY = null;
+
+  function onMouseMove(e) {
+    if (scene.is('vr-mode')) return;
+
+    // Si el puntero está interactuando sobre elementos HTML (HUD, modales, botones)
+    const target = e.target;
+    if (target && target.closest && target.closest('#hud, #decalogue-panel, #lyrics-panel, #quiz-panel, #station-info, #joystick, button, input')) {
+      prevX = null;
+      prevY = null;
+      return;
+    }
+
+    const controls = cameraEl.components['look-controls'];
+    if (!controls || !controls.yawObject || !controls.pitchObject) {
+      prevX = null;
+      prevY = null;
+      return;
+    }
+
+    let dx = 0;
+    let dy = 0;
+
+    if (typeof e.movementX === 'number' && typeof e.movementY === 'number') {
+      if (Math.abs(e.movementX) < 250 && Math.abs(e.movementY) < 250) {
+        dx = e.movementX;
+        dy = e.movementY;
+      }
+    } else {
+      if (prevX !== null && prevY !== null) {
+        dx = e.clientX - prevX;
+        dy = e.clientY - prevY;
+      }
+      prevX = e.clientX;
+      prevY = e.clientY;
+    }
+
+    if (dx !== 0 || dy !== 0) {
+      controls.yawObject.rotation.y -= dx * sensitivity;
+      controls.pitchObject.rotation.x -= dy * sensitivity;
+      controls.pitchObject.rotation.x = Math.max(-PITCH_LIMIT, Math.min(PITCH_LIMIT, controls.pitchObject.rotation.x));
+    }
+  }
+
+  window.addEventListener('mousemove', onMouseMove, { passive: true });
+  window.addEventListener('mouseleave', () => {
+    prevX = null;
+    prevY = null;
+  });
+  window.addEventListener('blur', () => {
+    prevX = null;
+    prevY = null;
+  });
+}
+
+function setupRoomLimits() {
+  const scene = document.querySelector('a-scene');
+  const rig = document.getElementById('cameraRig');
+  const cameraEl = document.querySelector('[camera]');
+  if (!scene || !rig || !cameraEl) return;
+
+  const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
+  const ROOM_LIMIT = 7.1; // Paredes perimetrales a 8.0m
+  const PLINTH_RADIUS = 1.45; // Plinto central del escudo
+
+  function enforceBounds() {
+    const rigPos = rig.object3D.position;
+    const camPos = cameraEl.object3D.position;
+
+    // Si controles de teclado (WASD) desplazaron la cámara localmente,
+    // consolidar el desplazamiento en rigPos y centrar la cámara local en X/Z
+    if (camPos.x !== 0 || camPos.z !== 0) {
+      rigPos.x += camPos.x;
+      rigPos.z += camPos.z;
+      camPos.x = 0;
+      camPos.z = 0;
+    }
+
+    // Límites de las 4 paredes principales de la sala
+    rigPos.x = clamp(rigPos.x, -ROOM_LIMIT, ROOM_LIMIT);
+    rigPos.z = clamp(rigPos.z, -ROOM_LIMIT, ROOM_LIMIT);
+
+    // Pared y mural de la Porra (en z = 6.5, ancho = 3.4)
+    if (rigPos.z > 6.15 && Math.abs(rigPos.x) < 1.9) {
+      rigPos.z = 6.15;
+    }
+
+    // Estación Himno (en x = -4.2, z = -2.6)
+    const distHimno = Math.hypot(rigPos.x - (-4.2), rigPos.z - (-2.6));
+    if (distHimno < 1.5) {
+      const angle = Math.atan2(rigPos.z - (-2.6), rigPos.x - (-4.2));
+      rigPos.x = -4.2 + Math.cos(angle) * 1.5;
+      rigPos.z = -2.6 + Math.sin(angle) * 1.5;
+    }
+
+    // Estación Decálogo (en x = 4.2, z = -2.6)
+    const distDecalogo = Math.hypot(rigPos.x - 4.2, rigPos.z - (-2.6));
+    if (distDecalogo < 1.5) {
+      const angle = Math.atan2(rigPos.z - (-2.6), rigPos.x - 4.2);
+      rigPos.x = 4.2 + Math.cos(angle) * 1.5;
+      rigPos.z = -2.6 + Math.sin(angle) * 1.5;
+    }
+
+    // Plinto central del escudo IPN (evita atravesar el pedestal)
+    const distCenter = Math.hypot(rigPos.x, rigPos.z);
+    if (distCenter < PLINTH_RADIUS) {
+      if (distCenter > 0.001) {
+        rigPos.x = (rigPos.x / distCenter) * PLINTH_RADIUS;
+        rigPos.z = (rigPos.z / distCenter) * PLINTH_RADIUS;
+      } else {
+        rigPos.z = PLINTH_RADIUS;
+      }
+    }
+  }
+
+  function loop() {
+    enforceBounds();
+    window.requestAnimationFrame(loop);
+  }
+  window.requestAnimationFrame(loop);
+}
+
 async function init() {
   if (!checkWebGL()) return;
 
@@ -727,6 +800,8 @@ async function init() {
     setupUI();
     setupResponsiveCamera();
     setupJoystick();
+    setupDesktopMouseLook();
+    setupRoomLimits();
     pausePageAudio();
 
     const hud = document.getElementById('hud');
@@ -735,7 +810,7 @@ async function init() {
     const loading = document.getElementById('loading');
     if (loading) {
       loading.classList.add('hidden');
-      window.setTimeout(() => loading.remove(), 500);
+      window.setTimeout(() => loading.remove(), 400);
     }
   } catch (error) {
     console.error('[Sala Identidad]', error);
