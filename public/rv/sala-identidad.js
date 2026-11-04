@@ -21,7 +21,17 @@ const identidadUI = {
   cheer: { es: "PORRA POLITÉCNICA", en: "POLYTECHNIC CHEER" },
   approach: { es: "Acércate para leer", en: "Approach to read" },
   center: { es: "Escudo IPN", en: "IPN Shield" },
-  teleport: { es: "Teletransporte: toca el piso para moverte", en: "Teleport: tap the floor to move" },
+  moveHelp: { es: "Muévete con el joystick o WASD", en: "Move with the joystick or WASD" },
+  vrHelp: { es: "Teletransporte con el thumbstick", en: "Teleport with the thumbstick" },
+  hudHimnoPlay: { es: "Reproducir himno", en: "Play hymn" },
+  hudHimnoPause: { es: "Pausar himno", en: "Pause hymn" },
+  quiz: { es: "Quiz Identidad", en: "Identity Quiz" },
+  bannerTitle: { es: "IDENTIDAD INSTITUCIONAL", en: "INSTITUTIONAL IDENTITY" },
+  bannerSubtitle: {
+    es: "INSTITUTO POLITÉCNICO NACIONAL",
+    en: "NATIONAL POLYTECHNIC INSTITUTE"
+  },
+  joystick: { es: "Mover", en: "Move" },
   lookAround: {
     es: "Mira a tu alrededor para explorar las estaciones",
     en: "Look around to explore the stations"
@@ -129,6 +139,19 @@ function setText(id, value) {
   if (el) el.setAttribute('value', value);
 }
 
+// A-Frame emite click por touch y por el mouse sintetizado; sin este filtro
+// un toque en móvil abre/cierra o reproduce/pausa dos veces seguidas.
+function addClickOnce(el, handler) {
+  if (!el) return;
+  let lastClick = 0;
+  el.addEventListener('click', (event) => {
+    const now = performance.now();
+    if (now - lastClick < 350) return;
+    lastClick = now;
+    handler(event);
+  });
+}
+
 function applyContent(content) {
   document.documentElement.lang = lang;
 
@@ -152,9 +175,13 @@ function applyContent(content) {
   // Estación Porra
   setText('porra-title', t(identidadUI.cheer));
   setText('porra-btn-text', t(identidadUI.play));
-  setText('porra-tagline', content.porra[lang]?.[0] || content.porra.es[0]);
+  const porraLines = content.porra[lang] || content.porra.es;
+  porraLines.forEach((line, index) => setText(`porra-line-${index}`, line));
+  setText('porra-status', '');
 
-  // Escudo y lema
+  // Banner, escudo y lema
+  setText('banner-title', t(identidadUI.bannerTitle));
+  setText('banner-subtitle', t(identidadUI.bannerSubtitle));
   setText('escudo-label', t(identidadUI.center));
   setText('lema-text', t(content.lema));
 
@@ -193,64 +220,79 @@ function applyContent(content) {
   }
 }
 
+function pausePageAudio() {
+  try {
+    if (window.parent && window.parent !== window) {
+      window.parent.document.querySelectorAll('audio').forEach((audio) => {
+        if (!audio.paused) audio.pause();
+      });
+    }
+  } catch (error) {
+    // El iframe puede estar aislado; no es un fallo de la escena.
+  }
+}
+
 function setupHimno(content) {
   const button = document.getElementById('himno-btn');
   const buttonText = document.getElementById('himno-btn-text');
+  const hudButton = document.getElementById('btn-himno');
   const audio = document.getElementById('himno-audio');
   const info = document.getElementById('himno-info');
   const lyricsToggle = document.getElementById('himno-lyrics-toggle');
   const lyricsText = document.getElementById('himno-lyrics-text');
   const lyricsPanel = document.getElementById('lyrics-panel');
   const lyricsClose = document.getElementById('lyrics-close');
-  let playing = false;
+  let infoTimer = null;
 
-  function updateButton() {
-    buttonText?.setAttribute('value', t(playing ? identidadUI.pause : identidadUI.play));
+  function defaultInfo() {
+    return `${t(content.himno.autorLetra)}\n${t(content.himno.autorMusica)}`;
   }
 
-  audio?.addEventListener('ended', () => {
-    playing = false;
-    updateButton();
-  });
+  function updateButton() {
+    const playing = !!audio && !audio.paused;
+    buttonText?.setAttribute('value', t(playing ? identidadUI.pause : identidadUI.play));
+    if (hudButton) {
+      hudButton.textContent = t(playing ? identidadUI.hudHimnoPause : identidadUI.hudHimnoPlay);
+      hudButton.setAttribute('aria-pressed', String(playing));
+    }
+  }
 
-  audio?.addEventListener('pause', () => {
-    playing = false;
-    updateButton();
-  });
+  function showInfo(message) {
+    if (!info) return;
+    info.setAttribute('value', message);
+    if (infoTimer) window.clearTimeout(infoTimer);
+    infoTimer = window.setTimeout(() => {
+      info.setAttribute('value', defaultInfo());
+    }, 2600);
+  }
 
-  button?.addEventListener('click', () => {
+  async function toggle() {
     if (!audio) return;
-    if (playing) {
+    if (!audio.paused) {
       audio.pause();
-      playing = false;
-      updateButton();
       return;
     }
 
-    const playPromise = audio.play();
-    if (playPromise && typeof playPromise.then === 'function') {
-      playPromise
-        .then(() => {
-          playing = true;
-          updateButton();
-        })
-        .catch(() => {
-          playing = false;
-          updateButton();
-          if (info) {
-            info.setAttribute('value', t(identidadUI.audioError));
-            window.setTimeout(() => {
-              info.setAttribute('value', `${t(content.himno.autorLetra)}\n${t(content.himno.autorMusica)}`);
-            }, 2200);
-          }
-        });
-    } else {
-      playing = true;
-      updateButton();
-    }
-  });
+    pausePageAudio();
+    if (audio.ended) audio.currentTime = 0;
 
-  lyricsToggle?.addEventListener('click', () => {
+    try {
+      await audio.play();
+    } catch (error) {
+      updateButton();
+      showInfo(t(identidadUI.audioError));
+    }
+  }
+
+  audio?.addEventListener('play', updateButton);
+  audio?.addEventListener('pause', updateButton);
+  audio?.addEventListener('ended', updateButton);
+  audio?.addEventListener('error', () => showInfo(t(identidadUI.audioError)));
+
+  addClickOnce(button, toggle);
+  hudButton?.addEventListener('click', toggle);
+
+  addClickOnce(lyricsToggle, () => {
     if (!lyricsPanel) return;
     const visible = lyricsPanel.classList.toggle('visible');
     if (lyricsText) {
@@ -263,6 +305,10 @@ function setupHimno(content) {
     if (lyricsText) lyricsText.setAttribute('value', t(identidadUI.lyrics));
   });
 
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && audio && !audio.paused) audio.pause();
+  });
+
   updateButton();
 }
 
@@ -271,24 +317,189 @@ function setupDecalogo() {
   const panel = document.getElementById('decalogue-panel');
   const close = document.getElementById('decalogue-close');
 
-  button?.addEventListener('click', () => panel?.classList.add('visible'));
+  addClickOnce(button, () => panel?.classList.add('visible'));
   close?.addEventListener('click', () => panel?.classList.remove('visible'));
+}
+
+function setupResponsiveCamera() {
+  const cameraEl = document.querySelector('[camera]');
+  const rig = document.getElementById('cameraRig');
+  if (!cameraEl || !rig) return;
+
+  let initialPositionSet = false;
+
+  function apply() {
+    const aspect = window.innerWidth / window.innerHeight;
+    let fov = 60;
+
+    if (aspect < 1) {
+      // En vertical el FOV horizontal se estrecha mucho; abrimos la cámara
+      // para que las estaciones laterales sigan entrando en pantalla.
+      const targetHorizontal = (64 * Math.PI) / 180;
+      const vertical = 2 * Math.atan(Math.tan(targetHorizontal / 2) / aspect);
+      fov = Math.min(102, Math.max(60, (vertical * 180) / Math.PI));
+    } else if (aspect < 1.3) {
+      fov = 75;
+    }
+
+    cameraEl.setAttribute('camera', 'fov', fov);
+
+    if (!initialPositionSet && aspect < 1) {
+      rig.setAttribute('position', '0 0 5.2');
+      initialPositionSet = true;
+    }
+  }
+
+  apply();
+  window.addEventListener('resize', apply);
+  window.addEventListener('orientationchange', () => window.setTimeout(apply, 250));
+}
+
+function setupJoystick() {
+  const joystick = document.getElementById('joystick');
+  const base = document.getElementById('joystick-base');
+  const knob = document.getElementById('joystick-knob');
+  const scene = document.querySelector('a-scene');
+  const rig = document.getElementById('cameraRig');
+  if (!joystick || !base || !knob || !scene || !rig) return;
+
+  const maxRadius = 38;
+  const speed = 2.4;
+  const limit = 7.35;
+  const minRadius = 1.5;
+  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+  const forward = new AFRAME.THREE.Vector3();
+  const right = new AFRAME.THREE.Vector3();
+  const movement = new AFRAME.THREE.Vector3();
+
+  let pointerId = null;
+  let center = { x: 0, y: 0 };
+  const vector = { x: 0, y: 0 };
+
+  function setKnob(dx, dy) {
+    knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
+  }
+
+  function update(clientX, clientY) {
+    let dx = clientX - center.x;
+    let dy = clientY - center.y;
+    const distance = Math.hypot(dx, dy);
+    if (distance > maxRadius) {
+      dx = (dx / distance) * maxRadius;
+      dy = (dy / distance) * maxRadius;
+    }
+    setKnob(dx, dy);
+    vector.x = dx / maxRadius;
+    vector.y = dy / maxRadius;
+  }
+
+  function start(event) {
+    if (scene.is('vr-mode') || pointerId !== null) return;
+    pointerId = event.pointerId;
+    base.setPointerCapture?.(pointerId);
+    const rect = base.getBoundingClientRect();
+    center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+    update(event.clientX, event.clientY);
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function move(event) {
+    if (pointerId === null || event.pointerId !== pointerId) return;
+    update(event.clientX, event.clientY);
+    event.preventDefault();
+    event.stopPropagation();
+  }
+
+  function end(event) {
+    if (pointerId === null || (event && event.pointerId !== pointerId)) return;
+    pointerId = null;
+    vector.x = 0;
+    vector.y = 0;
+    setKnob(0, 0);
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  }
+
+  base.addEventListener('pointerdown', start);
+  base.addEventListener('pointermove', move);
+  base.addEventListener('pointerup', end);
+  base.addEventListener('pointercancel', end);
+  base.addEventListener('lostpointercapture', end);
+
+  let previous = performance.now();
+
+  function animate(now) {
+    const delta = Math.min((now - previous) / 1000, 0.05);
+    previous = now;
+
+    if (!scene.is('vr-mode') && (vector.x || vector.y)) {
+      const camera = scene.camera;
+      if (camera) {
+        camera.getWorldDirection(forward);
+        forward.y = 0;
+        if (forward.lengthSq() >= 0.0001) {
+          forward.normalize();
+          right.set(-forward.z, 0, forward.x);
+
+          movement.set(0, 0, 0);
+          movement.addScaledVector(forward, -vector.y);
+          movement.addScaledVector(right, vector.x);
+          if (movement.lengthSq() > 1) movement.normalize();
+
+          const position = rig.object3D.position;
+          let nextX = clamp(position.x + movement.x * speed * delta, -limit, limit);
+          let nextZ = clamp(position.z + movement.z * speed * delta, -limit, limit);
+          const radius = Math.hypot(nextX, nextZ);
+
+          if (radius < minRadius) {
+            if (radius > 0.0001) {
+              nextX = (nextX / radius) * minRadius;
+              nextZ = (nextZ / radius) * minRadius;
+            } else {
+              nextZ = minRadius;
+            }
+          }
+
+          position.x = nextX;
+          position.z = nextZ;
+        }
+      }
+    }
+
+    window.requestAnimationFrame(animate);
+  }
+
+  window.requestAnimationFrame(animate);
+  joystick.classList.add('visible');
 }
 
 function setupPorra(content) {
   const button = document.getElementById('porra-btn');
   const buttonText = document.getElementById('porra-btn-text');
-  const current = document.getElementById('porra-current');
+  const status = document.getElementById('porra-status');
   const lines = content.porra[lang] || content.porra.es;
+  const lineEls = lines.map((_, index) => document.getElementById(`porra-line-${index}`));
   let playing = false;
+  let runId = 0;
 
-  function reset() {
-    playing = false;
-    buttonText?.setAttribute('value', t(identidadUI.play));
-    current?.setAttribute('value', '');
+  function paint(activeIndex) {
+    lineEls.forEach((el, index) => {
+      el?.setAttribute('color', index === activeIndex ? '#D4AF37' : '#ffffff');
+    });
   }
 
-  button?.addEventListener('click', () => {
+  function reset() {
+    runId++;
+    playing = false;
+    buttonText?.setAttribute('value', t(identidadUI.play));
+    paint(-1);
+    status?.setAttribute('value', '');
+  }
+
+  addClickOnce(button, () => {
     if (playing) {
       window.speechSynthesis?.cancel();
       reset();
@@ -296,31 +507,46 @@ function setupPorra(content) {
     }
 
     if (!window.speechSynthesis) {
-      current?.setAttribute('value', t(identidadUI.ttsUnavailable));
-      window.setTimeout(() => current?.setAttribute('value', ''), 2000);
+      status?.setAttribute('value', t(identidadUI.ttsUnavailable));
+      window.setTimeout(() => status?.setAttribute('value', ''), 2200);
       return;
     }
 
+    window.speechSynthesis.cancel();
+    const currentRun = ++runId;
     playing = true;
     buttonText?.setAttribute('value', t(identidadUI.pause));
-    window.speechSynthesis.cancel();
+    paint(-1);
+    status?.setAttribute('value', '');
 
     lines.forEach((line, index) => {
       const utterance = new SpeechSynthesisUtterance(line);
       utterance.lang = lang === 'es' ? 'es-MX' : 'en-US';
       utterance.rate = 0.95;
       utterance.pitch = 1.0;
-      utterance.onstart = () => current?.setAttribute('value', line);
+      utterance.onstart = () => {
+        if (currentRun !== runId) return;
+        paint(index);
+      };
       utterance.onend = () => {
+        if (currentRun !== runId) return;
         if (index === lines.length - 1) {
           playing = false;
           buttonText?.setAttribute('value', t(identidadUI.play));
-          window.setTimeout(() => current?.setAttribute('value', ''), 1000);
+          window.setTimeout(() => {
+            if (currentRun === runId) paint(-1);
+          }, 1200);
         }
+      };
+      utterance.onerror = () => {
+        if (currentRun !== runId) return;
+        reset();
       };
       window.speechSynthesis.speak(utterance);
     });
   });
+
+  paint(-1);
 }
 
 function setupQuiz() {
@@ -436,19 +662,50 @@ function setupQuiz() {
 }
 
 function setupUI() {
+  const scene = document.querySelector('a-scene');
+  const joystick = document.getElementById('joystick');
+  const help = document.getElementById('hud-help');
+
   const fullscreen = document.getElementById('btn-fullscreen');
-  fullscreen?.addEventListener('click', () => {
-    if (document.documentElement.requestFullscreen) {
-      document.documentElement.requestFullscreen();
-    } else if (document.documentElement.webkitRequestFullscreen) {
-      document.documentElement.webkitRequestFullscreen();
-    }
-  });
+  if (fullscreen) {
+    fullscreen.textContent = t(identidadUI.fullscreen);
+    fullscreen.addEventListener('click', () => {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      } else if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+      } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+      }
+    });
+  }
 
   const vr = document.getElementById('btn-vr');
-  vr?.addEventListener('click', () => {
-    const scene = document.querySelector('a-scene');
-    if (scene && scene.enterVR) scene.enterVR();
+  if (vr) {
+    vr.textContent = t(identidadUI.vrMode);
+    vr.addEventListener('click', () => {
+      if (!scene || !scene.enterVR) return;
+      const result = scene.enterVR();
+      if (result && typeof result.catch === 'function') result.catch(() => {});
+    });
+  }
+
+  const quizButton = document.getElementById('btn-quiz');
+  if (quizButton) quizButton.textContent = t(identidadUI.quiz);
+
+  const joystickLabel = document.getElementById('joystick-label');
+  if (joystickLabel) joystickLabel.textContent = t(identidadUI.joystick);
+
+  if (help) help.textContent = t(identidadUI.moveHelp);
+
+  scene?.addEventListener('enter-vr', () => {
+    if (help) help.textContent = t(identidadUI.vrHelp);
+    joystick?.classList.remove('visible');
+  });
+  scene?.addEventListener('exit-vr', () => {
+    if (help) help.textContent = t(identidadUI.moveHelp);
+    joystick?.classList.add('visible');
   });
 }
 
@@ -468,13 +725,12 @@ async function init() {
     setupPorra(content);
     setupQuiz();
     setupUI();
+    setupResponsiveCamera();
+    setupJoystick();
+    pausePageAudio();
 
     const hud = document.getElementById('hud');
-    if (hud) {
-      const help = document.getElementById('hud-help');
-      if (help) help.textContent = t(identidadUI.teleport);
-      hud.classList.remove('hidden');
-    }
+    if (hud) hud.classList.remove('hidden');
 
     const loading = document.getElementById('loading');
     if (loading) {

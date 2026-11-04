@@ -8,6 +8,10 @@ node_modules/
 # Documentación y fuentes de referencia
 fonts/
 
+# Atlas SDF propio de la sala de identidad (sí se publica con la escena)
+!public/rv/fonts/
+!public/rv/fonts/**
+
 # Variables de entorno
 .env
 .env.*

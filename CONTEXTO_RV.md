@@ -19,6 +19,15 @@
 - **Contenido:** Decálogo, lema, letra y porra salen de `src/content/docs/es/identidad-ipn.md`; no duplicar el texto a mano.
 - **Inglés:** Google Translate en vivo. La escena tiene su propio diccionario ES/EN y lee `?lang=`, la cookie `googtrans` o `localStorage.upiicsa_gt_lang`.
 
+## Correcciones de la sesión actual (2026-11-03)
+
+- **Acentos en 3D:** A-Frame usa por defecto un atlas Roboto MSDF solo ASCII, por eso `DECÁLOGO`, `Símbolo` y `Acércate` salían con glifos faltantes. Se generó `public/rv/fonts/sala-sdf.{json,png}` con Noto Sans Medium (ASCII + Latin-1) y todos los `a-text` usan `font="fonts/sala-sdf.json" negate="false"`.
+- **Pausa del himno:** el botón 3D recibía dos `click` en móvil (touch + mouse sintetizado), así que reproducía y pausaba en el mismo toque. Se añadió un filtro antirrebote de 350 ms para los botones 3D. Además hay un botón **Reproducir/Pausar himno** en el HUD, el estado se sincroniza con los eventos `play`/`pause`/`ended` del audio y al entrar a la sala se pausa el audio de la página padre.
+- **Porra en el mural:** la estación de la porra muestra las 5 líneas completas de la API, con la línea que se está leyendo resaltada en dorado durante el TTS.
+- **Movimiento en móvil:** joystick virtual abajo a la izquierda (touch y ratón), movimiento relativo a la cámara, límites de sala y colisión con el plinto central. Se oculta en VR y se mantiene `blink-controls` para lentes. WASD sigue funcionando en escritorio.
+- **Cámara móvil:** en vertical se amplía el FOV y la cámara arranca en `z=5.2` para que las estaciones laterales entren en pantalla.
+- **Extras:** banner principal sin solapamiento y traducido; logo con ruta absoluta `/blog-upiicsa/rv/ipn-logo.png`; textos del HUD traducidos; copia de navegación de la página actualizada; `title` del iframe añadido.
+
 ## Estado actual
 
 ### Hecho
@@ -33,13 +42,13 @@
 
 ### Pendiente / conocido
 
-1. **Decálogo:** hoy es un botón + modal HTML con los 10 puntos, no 10 paneles 3D que se lean al acercarse. Es la mayor diferencia con el brief.
-2. **ES/EN incompleto:** en inglés siguen en español los botones del HUD (“Pantalla completa”, “Entrar en modo VR”, “Quiz Identidad”) y el banner principal (“IDENTIDAD INSTITUCIONAL” / “INSTITUTO POLITÉCNICO NACIONAL”). `identidadUI.fullscreen` y `vrMode` existen pero no se aplican; `lookAround` no se usa.
-3. **Teletransporte móvil:** no existe. `blink-controls` solo reacciona a eventos de mandos/thumbstick; no hay handler de touch/click. En escritorio solo funciona WASD. El texto “toca el piso para moverte” (HUD y sección) promete algo que hoy no pasa en móvil/escritorio. En lentes el código está puesto, pero sin prueba real.
-4. **Rendimiento:** no hay revisión ni medición. Pendientes claros: `aframe-environment-component` se carga pero no se usa; 5 luces point + ambient; `antialias: true` y `highRefreshRate: true`; render continuo por el escudo; MP3 de 4.1 MB (preload metadata, ok); A-Frame 1.5.0; sin límite de canvas/pixel ratio para móvil.
-5. **Pulir palabras:** el subtítulo del himno ya se acortó, pero el banner principal tiene las dos líneas superpuestas y la inferior toca el borde dorado; se ve doble. La etiqueta “Escudo IPN” está sobre el tallo, con poco contraste; la info de autores y “Acércate para leer” son muy pequeñas; no hay aviso de girar para ver el lema/porra (`lookAround` sin usar). El título principal es un banner colgante, no un mural en pared; si “mural” implicaba pared, hay que cambiarlo.
-6. **Logo:** el HTML actual usa `ipn-logo.png` relativo. La decisión es pasarlo a ruta absoluta `/blog-upiicsa/rv/ipn-logo.png` y commitear el PNG. En la prueba anterior el SVG no se texturizó en A-Frame (salió en blanco), por eso existe el PNG.
-7. **Detalles de la sección:** el `meta[name="base-url"]` no existe; el script cae en `/blog-upiicsa` hardcodeado (funciona con el base actual, pero no es portable). El iframe no tiene `title`, mide 600 px fijos y no hay botón para descargar/salir de la escena.
+1. **Decálogo:** sigue siendo un botón + modal HTML con los 10 puntos, no 10 paneles 3D que se lean al acercarse. Es la mayor diferencia con el brief y queda para la Fase 3.
+2. **ES/EN:** HUD, banner y navegación ya se traducen. Siguen pendientes `lookAround` (sin usar) y la unificación del quiz con `src/data/identidad-quiz.ts`.
+3. **Navegación:** joystick y WASD funcionan en móvil/escritorio. En lentes el código de `blink-controls` está puesto, pero sigue sin probarse en hardware.
+4. **Rendimiento:** no hay revisión ni medición. Pendientes claros: 5 luces point + ambient; `antialias: true` y `highRefreshRate: true`; render continuo por el escudo; MP3 de 4.1 MB (preload `auto`, ok); A-Frame 1.5.0; sin límite de canvas/pixel ratio para móvil.
+5. **Pulir palabras:** el banner ya no se solapa y “Acércate para leer” es legible. La etiqueta “Escudo IPN” sigue sobre el tallo con poco contraste; no hay aviso de girar para ver el lema/porra (`lookAround` sin usar). El título principal es un banner colgante, no un mural en pared.
+6. **Logo:** ya usa la ruta absoluta `/blog-upiicsa/rv/ipn-logo.png`. El SVG original no se usa porque A-Frame no lo texturizó.
+7. **Detalles de la sección:** el `meta[name="base-url"]` no existe; el script cae en `/blog-upiicsa` hardcodeado (funciona con el base actual, pero no es portable). El iframe ya tiene `title`; sigue midiendo 600 px fijos y no hay botón para descargar/salir de la escena.
 8. **Archivos sueltos:** `FASE1_REVISION_IDENTIDAD_VR.md` está desactualizado y `src/data/identidad-quiz.ts` todavía no se importa. El quiz está hardcodeado en `sala-identidad.js` y duplica ese TS.
 
 ## Plan de fases (un commit local por fase, sin push salvo petición)

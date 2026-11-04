@@ -6,7 +6,6 @@
   <meta name="theme-color" content="#00643A">
   <title>Sala de Identidad Institucional IPN - Realidad Virtual</title>
   <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-environment-component@1.3.7/dist/aframe-environment-component.min.js"></script>
   <script src="https://unpkg.com/aframe-blink-controls/dist/aframe-blink-controls.min.js"></script>
   <style>
     html, body { margin: 0; padding: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; touch-action: none; }
@@ -34,8 +33,17 @@
     #lyrics-panel .lyrics-stanza p { margin: 4px 0; line-height: 1.55; font-size: clamp(13px, 3vw, 15px); }
     #lyrics-close { position: absolute; top: 10px; right: 12px; background: rgba(0, 100, 58, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s ease; }
     #lyrics-close:hover, #lyrics-close:active { background: #D4AF37; color: #00361F; }
-    @media (max-width: 600px) {
-      #hud { bottom: max(10px, env(safe-area-inset-bottom)); gap: 6px; padding: 8px 10px; }
+    #joystick { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom)); width: 118px; height: 118px; z-index: 160; touch-action: none; user-select: none; -webkit-user-select: none; display: none; }
+    #joystick.visible { display: block; }
+    #joystick-base { position: relative; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(0, 100, 58, 0.78), rgba(0, 54, 31, 0.9)); border: 2px solid rgba(212, 175, 55, 0.82); box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 0 18px rgba(0,0,0,0.35); touch-action: none; }
+    #joystick-knob { position: absolute; left: 50%; top: 50%; width: 50px; height: 50px; border-radius: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); border: 2px solid #fff3d6; box-shadow: 0 3px 10px rgba(0,0,0,0.45); pointer-events: none; }
+    #joystick-label { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); color: #D4AF37; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; text-shadow: 0 1px 3px #000; }
+    @media (max-width: 820px) {
+      #hud { left: auto; right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); transform: none; flex-direction: column; align-items: stretch; max-width: 148px; padding: 8px; gap: 6px; }
+      #hud-help { display: none; }
+      .hud-btn { font-size: 11px; padding: 6px 8px; white-space: normal; line-height: 1.2; }
+      #joystick { width: 106px; height: 106px; left: max(12px, env(safe-area-inset-left)); bottom: max(14px, env(safe-area-inset-bottom)); }
+      #joystick-knob { width: 44px; height: 44px; }
       #decalogue-panel, #lyrics-panel { padding: 20px 16px; max-height: 80vh; }
     }
   </style>
@@ -51,10 +59,17 @@
   </div>
   <div id="station-info"></div>
   <div id="hud" class="hidden">
-    <span id="hud-help">Teletransporte: toca el piso para moverte</span>
+    <span id="hud-help">Muévete con el joystick o WASD</span>
+    <button class="hud-btn" id="btn-himno">Reproducir himno</button>
     <button class="hud-btn" id="btn-fullscreen">Pantalla completa</button>
     <button class="hud-btn" id="btn-vr">Entrar en modo VR</button>
     <button class="hud-btn" id="btn-quiz">Quiz Identidad</button>
+  </div>
+  <div id="joystick" aria-label="Joystick de movimiento">
+    <div id="joystick-base">
+      <div id="joystick-knob"></div>
+      <span id="joystick-label">Mover</span>
+    </div>
   </div>
   <div id="quiz-panel" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(520px, 92vw); max-height: min(80vh, 650px); overflow-y: auto; overflow-x: hidden; z-index: 2000; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9);">
     <button id="quiz-close" aria-label="Cerrar" style="position: absolute; top: 10px; right: 12px; background: rgba(128, 0, 64, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
@@ -93,12 +108,12 @@
   <a-scene 
     vr-mode-ui="enabled: true" 
     device-orientation-permission-ui="enabled: true"
-    renderer="antialias: true; colorManagement: true; sortObjects: true; highRefreshRate: true;"
+    renderer="antialias: true; colorManagement: true; highRefreshRate: true;"
     loading-screen="enabled: false">
     
     <a-assets timeout="15000">
-      <img id="ipn-logo" src="ipn-logo.png">
-      <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="metadata"></audio>
+      <img id="ipn-logo" src="/blog-upiicsa/rv/ipn-logo.png">
+      <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="auto"></audio>
     </a-assets>
 
     <!-- Entorno tipo salón IPN -->
@@ -141,7 +156,7 @@
       <a-cylinder radius="0.75" height="0.12" color="#00643A" position="0 0.2 0"></a-cylinder>
       <a-cylinder radius="0.18" height="0.7" color="#00361F" position="0 0.55 0"></a-cylinder>
       <a-cylinder radius="0.26" height="0.08" color="#D4AF37" position="0 0.9 0"></a-cylinder>
-      <a-text id="escudo-label" value="ESCUDO IPN" align="center" position="0 0.55 0.2" width="1.8" color="#D4AF37"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="escudo-label" value="ESCUDO IPN" align="center" position="0 0.55 0.2" width="1.8" color="#D4AF37"></a-text>
       <a-entity id="escudo-rotor" position="0 1.55 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 28000; easing: linear">
         <a-cylinder radius="0.62" height="0.12" rotation="90 0 0" color="#D4AF37" material="metalness: 0.7; roughness: 0.3"></a-cylinder>
         <a-image width="1.32" height="1.32" position="0 0 0.075" material="src: #ipn-logo; transparent: true; alpha-test: 0.1; side: double"></a-image>
@@ -154,15 +169,15 @@
       <a-box width="3.4" height="3.4" depth="0.14" color="#D4AF37" position="0 1.6 0"></a-box>
       <a-box width="3.2" height="3.2" depth="0.14" color="#00361F" position="0 1.6 0.02"></a-box>
       <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
-      <a-text id="himno-title" value="HIMNO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
-      <a-text id="himno-subtitle" value="" align="center" position="0 2.4 0.12" width="2.6" color="#ffffff" wrap-count="24"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="himno-title" value="HIMNO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="himno-subtitle" value="" align="center" position="0 2.4 0.12" width="2.6" color="#ffffff" wrap-count="24"></a-text>
       <a-entity id="himno-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
-        <a-text id="himno-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+        <a-text font="fonts/sala-sdf.json" negate="false" id="himno-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
       </a-entity>
       <a-entity id="himno-lyrics-toggle" class="interactive" position="0 1.15 0.12" geometry="primitive: plane; width: 1.6; height: 0.42" material="color: #00643A">
-        <a-text id="himno-lyrics-text" value="Mostrar letra" align="center" position="0 0 0.01" width="2.4" color="#ffffff"></a-text>
+        <a-text font="fonts/sala-sdf.json" negate="false" id="himno-lyrics-text" value="Mostrar letra" align="center" position="0 0 0.01" width="2.4" color="#ffffff"></a-text>
       </a-entity>
-      <a-text id="himno-info" value="" align="center" position="0 0.65 0.12" width="2.8" color="#ffffff" wrap-count="40"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="himno-info" value="" align="center" position="0 0.65 0.12" width="2.8" color="#ffffff" wrap-count="40"></a-text>
     </a-entity>
 
     <!-- Estación Decálogo -->
@@ -170,11 +185,11 @@
       <a-box width="3.4" height="3.4" depth="0.14" color="#D4AF37" position="0 1.6 0"></a-box>
       <a-box width="3.2" height="3.2" depth="0.14" color="#00361F" position="0 1.6 0.02"></a-box>
       <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
-      <a-text id="decalogo-title" value="DECÁLOGO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="decalogo-title" value="DECÁLOGO POLITÉCNICO" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
       <a-entity id="decalogo-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
-        <a-text id="decalogo-btn-text" value="Ver Decálogo" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+        <a-text font="fonts/sala-sdf.json" negate="false" id="decalogo-btn-text" value="Ver Decálogo" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
       </a-entity>
-      <a-text id="decalogo-approach" value="Mural con los 10 puntos" align="center" position="0 0.9 0.12" width="2.8" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="decalogo-approach" value="Mural con los 10 puntos" align="center" position="0 0.9 0.12" width="2.8" color="#ffffff"></a-text>
     </a-entity>
 
     <!-- Estación Porra -->
@@ -182,27 +197,31 @@
       <a-box width="3.4" height="3.4" depth="0.14" color="#D4AF37" position="0 1.6 0"></a-box>
       <a-box width="3.2" height="3.2" depth="0.14" color="#00361F" position="0 1.6 0.02"></a-box>
       <a-plane width="2.8" height="0.5" color="#D4AF37" position="0 2.85 0.11"></a-plane>
-      <a-text id="porra-title" value="PORRA POLITÉCNICA" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
-      <a-entity id="porra-btn" class="interactive" position="0 1.8 0.12" geometry="primitive: plane; width: 1.6; height: 0.52" material="color: #D4AF37">
-        <a-text id="porra-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.6" color="#00361F"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-title" value="PORRA POLITÉCNICA" align="center" position="0 2.85 0.12" width="4" color="#00361F"></a-text>
+      <a-entity id="porra-btn" class="interactive" position="0 2.3 0.12" geometry="primitive: plane; width: 1.5; height: 0.42" material="color: #D4AF37">
+        <a-text font="fonts/sala-sdf.json" negate="false" id="porra-btn-text" value="Reproducir" align="center" position="0 0 0.01" width="2.4" color="#00361F"></a-text>
       </a-entity>
-      <a-text id="porra-current" value="" align="center" position="0 0.6 0.12" width="3.0" color="#D4AF37" wrap-count="35"></a-text>
-      <a-text id="porra-tagline" value="" align="center" position="0 0.25 0.12" width="2.8" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-0" value="" align="center" position="0 1.95 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-1" value="" align="center" position="0 1.6 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-2" value="" align="center" position="0 1.25 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-3" value="" align="center" position="0 0.9 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-line-4" value="" align="center" position="0 0.55 0.12" width="2.9" wrap-count="38" color="#ffffff"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="porra-status" value="" align="center" position="0 0.18 0.12" width="2.8" color="#D4AF37"></a-text>
     </a-entity>
 
     <!-- Banner colgante con el título -->
-    <a-entity id="main-banner" position="0 3.55 -1.5">
-      <a-plane width="5.4" height="0.75" color="#00361F"></a-plane>
-      <a-plane width="5.2" height="0.05" color="#D4AF37" position="0 0.35 0.01"></a-plane>
-      <a-plane width="5.2" height="0.05" color="#D4AF37" position="0 -0.35 0.01"></a-plane>
-      <a-text value="IDENTIDAD INSTITUCIONAL" align="center" position="0 0.13 0.02" width="5" color="#D4AF37"></a-text>
-      <a-text value="INSTITUTO POLITÉCNICO NACIONAL" align="center" position="0 -0.16 0.02" width="4.8" color="#ffffff"></a-text>
-      <a-cylinder radius="0.015" height="0.3" color="#D4AF37" position="-2.2 0.52 0"></a-cylinder>
-      <a-cylinder radius="0.015" height="0.3" color="#D4AF37" position="2.2 0.52 0"></a-cylinder>
+    <a-entity id="main-banner" position="0 3.45 -1.5">
+      <a-plane width="5.4" height="1.05" color="#00361F"></a-plane>
+      <a-plane width="5.2" height="0.05" color="#D4AF37" position="0 0.47 0.01"></a-plane>
+      <a-plane width="5.2" height="0.05" color="#D4AF37" position="0 -0.47 0.01"></a-plane>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="banner-title" value="IDENTIDAD INSTITUCIONAL" align="center" position="0 0.22 0.02" width="4.8" wrap-count="40" color="#D4AF37"></a-text>
+      <a-text font="fonts/sala-sdf.json" negate="false" id="banner-subtitle" value="INSTITUTO POLITÉCNICO NACIONAL" align="center" position="0 -0.18 0.02" width="4.6" wrap-count="44" color="#ffffff"></a-text>
+      <a-cylinder radius="0.015" height="0.3" color="#D4AF37" position="-2.2 0.62 0"></a-cylinder>
+      <a-cylinder radius="0.015" height="0.3" color="#D4AF37" position="2.2 0.62 0"></a-cylinder>
     </a-entity>
 
     <!-- Lema -->
-    <a-text id="lema-text" value="" align="center" position="0 3.4 7.7" rotation="0 180 0" width="8" color="#D4AF37"></a-text>
+    <a-text font="fonts/sala-sdf.json" negate="false" id="lema-text" value="" align="center" position="0 3.4 7.7" rotation="0 180 0" width="8" color="#D4AF37"></a-text>
 
     <!-- Cámara con controles -->
     <a-entity id="cameraRig" position="0 0 3.8">

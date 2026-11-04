@@ -130,13 +130,13 @@ El Decálogo reúne los preceptos éticos y de responsabilidad cívica redactado
 
 ## 🥽 Sala de Realidad Virtual - Identidad Institucional
 
-Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando), **Himno Politécnico** (reproducir/pausar), **Decálogo del Politécnico** (10 paneles interactivos) y **Porra Politécnica "El Huélum"** (con síntesis de voz).
+Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando), **Himno Politécnico** (reproducir/pausar), **Decálogo del Politécnico** (10 principios) y **Porra Politécnica "El Huélum"** (con síntesis de voz).
 
 <div class="rv-room-container" style="margin: 2rem 0;">
   <div class="rv-intro" style="background: linear-gradient(135deg, rgba(0, 100, 58, 0.1) 0%, rgba(128, 0, 64, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.4); margin-bottom: 1rem;">
     <p style="margin: 0 0 1rem 0; font-weight: 600;">🏛️ Recorrido Virtual Interactivo</p>
     <ul style="margin: 0 0 1rem 1.5rem; padding: 0;">
-      <li><span class="lang-es">Navegación con teletransporte (toca el piso para moverte)</span><span class="lang-en" style="display: none;">Teleport navigation (tap the floor to move)</span></li>
+      <li><span class="lang-es">Navegación con joystick virtual o teclado WASD (en lentes, thumbstick)</span><span class="lang-en" style="display: none;">Navigation with virtual joystick or WASD keyboard (thumbstick on headsets)</span></li>
       <li><span class="lang-es">Compatible con escritorio, móvil y lentes VR</span><span class="lang-en" style="display: none;">Compatible with desktop, mobile and VR headsets</span></li>
       <li><span class="lang-es">Usa auriculares para mejor experiencia</span><span class="lang-en" style="display: none;">Use headphones for better experience</span></li>
     </ul>
@@ -155,6 +155,7 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
 
   <div id="vr-container" style="display: none; width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid #00643A; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
     <iframe id="vr-iframe"
+            title="Sala de Identidad Institucional IPN en realidad virtual"
             style="width: 100%; height: 100%; border: none;"
             allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen; camera; microphone"
             allowfullscreen
