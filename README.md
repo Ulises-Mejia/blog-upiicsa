@@ -8,24 +8,78 @@ Construida con **[Astro](https://astro.build/)** y **[Starlight](https://starlig
 
 ## 📋 Tabla de Contenidos
 
-1. [Características Principales](#-características-principales)
-2. [Estructura del Proyecto](#-estructura-del-proyecto)
-3. [Comandos de Ejecución](#-comandos-de-ejecución)
-4. [Guía de Modificación y Personalización del Proyecto](#-guía-de-modificación-y-personalización-del-proyecto)
+1. [¿Cómo funciona este proyecto? (Explicado para principiantes)](#-cómo-funciona-este-proyecto-explicado-para-principiantes)
+2. [Características Principales](#-características-principales)
+3. [Estructura del Proyecto](#-estructura-del-proyecto)
+4. [Comandos de Ejecución](#-comandos-de-ejecución)
+5. [Guía de Modificación y Personalización del Proyecto](#-guía-de-modificación-y-personalización-del-proyecto)
    - [1. Identidad, Textos Globales y Logos](#1-identidad-textos-globales-y-logos)
    - [2. Paleta de Colores y Estilos Visuales](#2-paleta-de-colores-y-estilos-visuales)
    - [3. Barra Lateral, Menús y Nuevas Unidades](#3-barra-lateral-menús-y-nuevas-unidades)
    - [4. Componentes Institucionales de Cabecera y Pie](#4-componentes-institucionales-de-cabecera-y-pie)
    - [5. Autores y Perfiles Estudiantiles](#5-autores-y-perfiles-estudiantiles)
    - [6. Identidad Institucional IPN](#6-identidad-institucional-ipn)
-5. [Guía Rápida de Markdown para Redacción de Temas](#-guía-rápida-de-markdown-para-redacción-de-temas)
+6. [Guía Rápida de Markdown para Redacción de Temas](#-guía-rápida-de-markdown-para-redacción-de-temas)
    - [Sintaxis Básica](#sintaxis-básica)
    - [Bloques de Aviso (Callouts de Starlight)](#bloques-de-aviso-callouts-de-starlight)
    - [Pestañas Interactivas (Tabs)](#pestañas-interactivas-tabs)
    - [Tablas Comparativas](#tablas-comparativas)
    - [Inserción de Recursos Multimedia (Imágenes, Audio y Video)](#inserción-de-recursos-multimedia)
-6. [Flujo de Trabajo para Añadir Nuevos Temas](#-flujo-de-trabajo-para-añadir-nuevos-temas)
-7. [Despliegue Automático en GitHub Pages](#-despliegue-automático-en-github-pages)
+7. [Flujo de Trabajo para Añadir Nuevos Temas](#-flujo-de-trabajo-para-añadir-nuevos-temas)
+8. [Despliegue Automático en GitHub Pages](#-despliegue-automático-en-github-pages)
+
+---
+
+## 💡 ¿Cómo funciona este proyecto? (Explicado para principiantes)
+
+Si vas en tus primeros semestres de **Informática** o **Ciencias de la Computación**, ¡bienvenido! Este proyecto puede parecer grande al inicio porque combina varias tecnologías modernas, pero en realidad funciona bajo un principio muy simple: **separar el contenido del diseño y potenciarlo con multimedia interactiva**.
+
+Imagina este sistema como una revista digital interactiva de la UPIICSA que funciona en cuatro partes clave:
+
+```
+           ┌────────────────────────┐
+           │  1. El Redactor (Tú)   │  Escribe apuntes en Markdown (.md)
+           └───────────┬────────────┘
+                       │
+                       ▼
+           ┌────────────────────────┐
+           │ 2. La Fábrica (Astro)  │  Junta tu texto + diseño + menús
+           └───────────┬────────────┘
+                       │
+                       ▼
+    ┌──────────────────────────────────────────────┐
+    │          3. La Experiencia Final             │
+    ├──────────────────────┬───────────────────────┤
+    │  📖 Artículos Web    │  🥽 Realidad Virtual  │  🎮 Cuestionarios en
+    │  Rápidos y limpios   │  (Sala 3D en el       │     Realidad Aumentada
+    │  (con modo oscuro)   │   navegador WebGL)    │     (WebXR en celular)
+    └──────────────────────┴───────────────────────┘
+                       │
+                       ▼
+           ┌────────────────────────┐
+           │ 4. La Nube (GitHub)    │  Compila y publica la web gratis
+           └────────────────────────┘
+```
+
+### 1. El motor web: ¿Qué es Astro y por qué lo usamos?
+Tradicionalmente, para hacer una página web escribirías archivos `.html` a mano repitiendo la misma cabecera, pie de página y menús en cada archivo. Si tenías 30 temas y querías cambiar el logotipo, ¡tenías que editar 30 archivos!
+* **Astro** resuelve esto: es un **generador de sitios estáticos**. Funciona como una plantilla maestra inteligente: tú diseñas la barra superior, el pie de página y el menú lateral una sola vez en componentes reutilizables (`.astro`), y Astro se encarga de estamparlos en cada página.
+* **Starlight** es una extensión de Astro especializada en documentación y blogs académicos: nos da gratis la barra lateral ordenada por unidades, el buscador, el modo oscuro y el diseño adaptable a teléfonos móviles.
+
+### 2. El contenido: Escribir sin complicaciones con Markdown (.md)
+Para redactar un nuevo tema de la materia, no necesitas programar HTML ni CSS complejo:
+* Todo el texto vive en la carpeta `src/content/docs/es/` dentro de archivos con extensión `.md` (**Markdown**).
+* Markdown te permite dar formato escribiendo de forma natural: `#` para títulos, `**` para negritas y `-` para listas. Astro lee estos archivos y los transforma automáticamente en páginas web atractivas y bien estructuradas.
+
+### 3. El laboratorio multimedia: Audio, Realidad Virtual (RV) y Aumentada (RA)
+Como este repositorio es para la asignatura de **Herramientas Multimedia**, no se queda solo en texto plano:
+* **Audio y Video:** Integramos grabaciones institucionales (como el Himno del IPN) y videos de YouTube con reproductores responsivos.
+* **Realidad Virtual en la Web (WebXR / A-Frame):** En la sección de Identidad Politécnica, creamos una **Sala Virtual 3D interactiva** (`public/rv/sala-identidad.html`). Usa **A-Frame** y **WebGL**, lo que significa que corre directo en Google Chrome o cualquier navegador moderno sin instalar aplicaciones pesadas: puedes moverte con el teclado (WASD) o ratón en tu PC, o usar un visor VR para caminar alrededor del escudo del IPN.
+* **Cuestionarios con Realidad Aumentada:** Al final de las unidades académicas, hay cuestionarios dinámicos que se pueden responder normalmente en pantalla o activar en **Realidad Aumentada** en celulares compatibles: las preguntas flotan en tu entorno físico a través de la cámara del dispositivo mediante la API de **WebXR**.
+
+### 4. ¿Cómo llega a internet? (Git y GitHub Pages)
+* **Git:** Nos permite llevar el historial de cada cambio, trabajar en equipo y experimentar sin miedo a perder código anterior.
+* **GitHub Actions (CI/CD):** Cuando subes tus cambios con `git push`, un servidor automático de GitHub descarga el código, ejecuta `npm run build` (que compila y "cocina" la web final) y la publica en **GitHub Pages** para que cualquier estudiante con internet pueda consultarla al instante sin configurar un servidor propio.
 
 ---
 
