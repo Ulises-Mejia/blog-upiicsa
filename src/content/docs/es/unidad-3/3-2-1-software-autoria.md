@@ -1,66 +1,34 @@
 ---
 title: "Software de Autoría Multimedia"
-description: "Plantilla académica para 3.2.1: Software de Autoría Multimedia"
+description: "Definición, papel frente a los lenguajes de programación y clasificación arquitectónica de los sistemas de autoría multimedia según sus metáforas de organización."
 ---
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Imagina que tienes en una carpeta todas las piezas sueltas de un proyecto multimedia: veinte fotografías en `PNG`, diez pistas de locución en `MP3`, tres videos en `MP4`, dos modelos `3D` y las preguntas de un examen interactivo. Por sí solos, esos archivos no constituyen una aplicación; necesitas un entorno que los ensamble, defina qué ocurre cuando el usuario presiona un botón, controle el orden de las pantallas y evalúe las respuestas. Ese entorno integrador es el **software o sistema de autoría multimedia (*Multimedia Authoring System*)** (García Sánchez et al., 2016; Ojeda Linares, 2012).
 
-## Desarrollo del Contenido
+## Definición y Rol de los Sistemas de Autoría frente a los Lenguajes de Programación
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+Como analizan García Sánchez et al. (2016) en el marco de la metodología `MEDESME` (citando a Razquin, 1998) y Ojeda Linares (2012, Unidad 6), el desarrollo de aplicaciones multimedia interactivas puede abordarse mediante dos vías complementarias:
 
-### Conceptos Clave
+* **1. Lenguajes de programación de propósito general:** Como `C++`, `Java`, `Python` o `JavaScript` puro. Ofrecen flexibilidad absoluta, pero exigen codificar manualmente la gestión de pantallas, eventos y sincronización de medios.
+* **2. Sistemas de Autoría Multimedia:** Proporcionan un entorno visual preestructurado —con menús, plantillas, inspectores de propiedades y líneas de tiempo o diagramas de flujo— diseñado específicamente para integrar activos multimedia, definir reglas de navegación e interactividad y exportar el producto final en una fracción del tiempo, permitiendo además extender su comportamiento mediante un lenguaje de *scripting* integrado.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Clasificación Arquitectónica de las Herramientas de Autoría Multimedia (Metáforas de Organización)
+
+En la literatura clásica y contemporánea de ingeniería multimedia (Ojeda Linares, 2012, Unidad 6; García Sánchez et al., 2016), el software de autoría se clasifica en cinco grandes paradigmas según la **metáfora estructural** con la que organiza los elementos y el tiempo:
+
+* **1. Sistemas Basados en Tarjetas o Páginas (*Card / Page-Based*):** Organizan el contenido como un libro o una pila de tarjetas indexadas donde cada pantalla es una página estática que contiene textos, imágenes, audios y botones con hipervínculos hacia otras páginas (por ejemplo, los históricos *Apple HyperCard* y *ToolBook*, y actualmente plataformas de presentaciones interactivas avanzadas como **Genially** o herramientas de prototipado interactivo como **Figma**).
+* **2. Sistemas Basados en Iconos o Diagramas de Flujo de Eventos (*Icon / Flow-Based*):** El autor construye visualmente la lógica de la aplicación arrastrando iconos funcionales (mostrar imagen, reproducir sonido, esperar respuesta, bifurcación condicional `if/else`, bucle) sobre un diagrama de flujo o árbol de decisiones (por ejemplo, el clásico *Macromedia Authorware*, **Twine** para narrativas interactivas ramificadas y los sistemas de programación visual por nodos como **Blueprints en Unreal Engine** o *Visual Scripting* en **Unity**).
+* **3. Sistemas Basados en Líneas de Tiempo y Fotogramas (*Time-Based*):** Organizan los elementos a lo largo de un eje temporal horizontal con pistas paralelas y un cabezal de reproducción que dispara eventos o *scripts* al llegar a determinados fotogramas (por ejemplo, el histórico *Macromedia Director*, **Adobe Animate** y **Tumult Hype** para `HTML5`).
+* **4. Sistemas de Autoría *E-Learning* y Estándares Educativos (`SCORM` / `xAPI`):** Herramientas especializadas en crear Objetos Virtuales de Aprendizaje (`OVA`), simulaciones de software y evaluaciones interactivas que se comunican automáticamente con el libro de calificaciones de plataformas `LMS` (como **Moodle**, **Canvas** o **Blackboard**) mediante los estándares **`SCORM`** o **`xAPI` (*Tin Can API*)**. Destacan **Adobe Captivate** (incluido en los recursos digitales del programa oficial), **Articulate Storyline**, **eXeLearning** y **H5P** (código abierto para `HTML5`).
+* **5. Motores de Autoría `3D` y Espaciales Basados en Escenas y Componentes:** Representados por **Unity**, **Unreal Engine** y **Godot**, que actúan como los sistemas de autoría estándar actuales para entornos tridimensionales, Realidad Virtual y Realidad Aumentada.
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+> Como subraya la metodología `MEDESME` (García Sánchez et al., 2016), ninguna herramienta de autoría sustituye al diseño previo: elegir entre un sistema basado en páginas, flujo, línea de tiempo, *e-learning* (`SCORM`/`xAPI`) o motor `3D` debe responder directamente al **Mapa de Navegación** y a las **Fichas Técnicas** definidas en la fase de diseño del proyecto.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* García Sánchez, E., et al. (2016). Metodología para el desarrollo de software multimedia educativo MEDESME. *CPU-e, Revista de Investigación Educativa*, (23), 216-226.
+* Ojeda Linares, N. D. (2012). *Introducción a la multimedia* (Unidad 6: Herramientas de Autoría). Red Tercer Milenio.

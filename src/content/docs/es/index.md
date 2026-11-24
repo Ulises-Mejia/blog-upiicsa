@@ -19,6 +19,7 @@ Bienvenido al **Repositorio Digital de Herramientas Multimedia** de la **UPIICSA
 
 * **[Unidad III: Integración y Autoría Multimedia](/blog-upiicsa/es/unidad-3/3-1-1-edicion-video/)**
   * Edición y posproducción de video no lineal, arquitecturas de software de autoría, algoritmos de verificación de originalidad, registro de derechos de autor (`INDAUTOR` / `Creative Commons`) y planeación de proyectos multimedia disruptivos.
+  * Incluye el **[Cuestionario Interactivo de la Unidad III (2D y Realidad Aumentada)](/blog-upiicsa/es/unidad-3/cuestionario/)**.
 
 ## Secciones Institucionales
 

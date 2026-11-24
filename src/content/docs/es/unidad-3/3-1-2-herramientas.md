@@ -1,66 +1,35 @@
 ---
 title: "Herramientas de Edición de Video"
-description: "Plantilla académica para 3.1.2: Herramientas de Edición de Video"
+description: "Arquitectura y clasificación de herramientas de edición de video: sistemas NLE interactivos, compositores de VFX por capas o nodos y automatización con FFmpeg."
 ---
 
 ## Introducción
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Desde el creador educativo que monta un tutorial en su laptop con software libre hasta el estudio cinematográfico que coordina efectos visuales de cientos de capas y la plataforma de *streaming* tipo YouTube o Netflix que transcodifica automáticamente miles de videos por minuto en servidores Linux sin interfaz gráfica, existe una herramienta de edición diseñada para cada escala de trabajo. Conocer la **arquitectura y clasificación de las herramientas de edición de video** permite elegir entre sistemas interactivos de línea de tiempo, compositores nodales de efectos visuales y motores de automatización por línea de comandos (Ojeda Linares, 2012; Ruiz, 2018).
 
-## Desarrollo del Contenido
+## Sistemas de Edición No Lineal (NLE) Interactivos y Compositores de Efectos Visuales (Capas vs. Nodos)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa. Morbi in dui quis est pulvinar ullamcorper.
+En el trabajo interactivo de producción y posproducción audiovisual se distinguen dos grandes familias de aplicaciones gráficas (Ruiz, 2018; de Vega, 2017):
 
-### Conceptos Clave
+* **1. Sistemas de Edición No Lineal (`NLE`) de Montaje Horizontal:** Orientados a ensamblar secuencias narrativas largas en el tiempo combinando múltiples pistas de video y audio.
+  * **Sector comercial:** Destacan **DaVinci Resolve** (referente mundial en corrección de color profesional que además integra edición `NLE`, composición nodal *Fusion* y consola de audio *Fairlight*, con una versión gratuita sumamente completa), **Adobe Premiere Pro** (integrado con el ecosistema *Creative Cloud*) y **Apple Final Cut Pro** (con línea de tiempo magnética optimizada para procesadores *Apple Silicon*).
+  * **Código abierto (*Open Source*):** Destacan **Kdenlive**, **Shotcut**, **Olive** y el editor de secuencias integrado en **Blender (`VSE`)**, gratuitos, multiplataforma (Linux, Windows, macOS) y libres de restricciones de licenciamiento.
+* **2. Software de Composición Digital y Efectos Visuales (`VFX`) — Capas vs. Nodos:** Mientras que un `NLE` organiza los clips horizontalmente a lo largo del tiempo, un compositor digital se enfoca en apilar y combinar decenas de elementos visuales **dentro de una misma toma** (recorte de pantalla verde *Chroma Key*, rastreo de cámara 3D *Matchmoving*, rotoscopía, integración de modelos `CGI` y partículas). Se dividen en dos paradigmas arquitectónicos:
+  * **Composición basada en capas (*Layer-based*):** Representada por **Adobe After Effects**, donde cada elemento es una pista apilada verticalmente con su propia línea de tiempo; resulta muy intuitiva para *Motion Graphics* y animación tipográfica.
+  * **Composición basada en nodos o Grafos Acíclicos Dirigidos (*Node-based `DAG`*):** Representada por **Foundry Nuke**, **Blackmagic Fusion** (integrado en DaVinci Resolve), **Natron** (código abierto) y el **Compositor de Blender**. Aquí el flujo de procesamiento de la imagen se visualiza como un diagrama algorítmico donde cada nodo ejecuta una operación matemática sobre la matriz de píxeles (lector de imagen, máscara, corrección de color, desenfoque, mezcla *Merge*), permitiendo reutilizar ramas completas sin duplicar capas.
 
-* **Concepto Principal:** Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-* **Aspecto Técnico:** Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-* **Aplicación Práctica:** Sed nisi. Nulla quis sem at nibh elementum imperdiet.
+## Herramientas de Procesamiento Automatizado y Línea de Comandos para Sistemas Informáticos (FFmpeg)
+
+Cuando un ingeniero en ciencias de la informática construye una plataforma web o empresarial que recibe videos subidos por los usuarios, no puede depender de una persona abriendo Premiere o DaVinci Resolve manualmente para comprimir cada archivo. Aquí entra la herramienta más importante de la ingeniería de video en el *backend*: **`FFmpeg`** (junto con sus bibliotecas en C subyacentes `libavcodec`, `libavformat` y `libavfilter`, y soluciones derivadas como **HandBrake** o **GStreamer**).
+
+**`FFmpeg`** es un motor libre y de código abierto ejecutable por línea de comandos o invocable desde scripts de `Python`, `PHP` o `Node.js` que permite automatizar en servidores la conversión de formatos, la extracción de miniaturas, la normalización de audio, la inserción de marcas de agua y la generación de listas de reproducción de *streaming* adaptativo `HLS` (`.m3u8`) y `MPEG-DASH` (`.mpd`).
 
 ## Conclusiones
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Nulla facilisi. Praesent congue erat at massa.
+> Un profesional de la informática domina tanto las herramientas interactivas de edición y composición (**DaVinci Resolve**, **Kdenlive**, **After Effects** o **Fusion**) para crear activos audiovisuales de alto impacto, como los motores programáticos de servidor (`FFmpeg`) para integrar el procesamiento automatizado de video dentro de sistemas informáticos a gran escala.
 
----
+## Fuentes Documentales
 
-## 📖 Guía de Carga de Recursos Multimedia
-
-<!-- Esta sección describe cómo insertar recursos multimedia al redactar el tema definitivo. -->
-
-### 1. Inserción de Imágenes
-Guarda tus imágenes en la carpeta `public/images/` y agrégalas mediante:
-```markdown
-![Descripción de la imagen](/images/nombre-imagen.png)
-*Figura 1: Pie explicativo o fuente de la imagen.*
-```
-
-### 2. Inserción de Video de YouTube
-Para incrustar un reproductor de video adaptable (16:9):
-```html
-<div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-    allowfullscreen>
-  </iframe>
-</div>
-```
-
-### 3. Inserción de Video Local (MP4 / WebM)
-Guarda el archivo de video en `public/videos/`:
-```html
-<video controls style="width: 100%; border-radius: 6px;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
-  Tu navegador no soporta video HTML5.
-</video>
-```
-
-### 4. Inserción de Audio Local (MP3 / WAV)
-Guarda el archivo de audio en `public/audios/`:
-```html
-<audio controls style="width: 100%;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
-  Tu navegador no soporta audio HTML5.
-</audio>
-```
+* de Vega, A. (2017). *Animación de elementos*. Alfaomega.
+* Ojeda Linares, N. D. (2012). *Introducción a la multimedia* (Unidad 4). Red Tercer Milenio.
+* Ruiz, D. (2018). *Manual de Producción Multimedia: De la idea al remake*. Ediciones Promonet.
