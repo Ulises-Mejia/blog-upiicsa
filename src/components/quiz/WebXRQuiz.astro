@@ -492,7 +492,7 @@ const unitBackHref = `${base}/es/${lastTopicByUnit[unit] ?? ''}/`;
     --quiz-border: rgba(0, 100, 58, 0.22);
     width: 100%;
     max-width: 900px;
-    margin: 1.5rem auto 3rem auto;
+    margin: 0.25rem auto 0.5rem auto;
     font-family: inherit;
   }
 
@@ -599,7 +599,7 @@ const unitBackHref = `${base}/es/${lastTopicByUnit[unit] ?? ''}/`;
   /* ---------------- Selección de modo ---------------- */
   .quiz-modes {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
     gap: 1.25rem;
     margin-bottom: 1.5rem;
   }

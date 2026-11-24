@@ -15,7 +15,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
   <div class="author-header">
     <div class="author-photo-wrapper">
       <img
-        src="/images/autor_ulises.jpg"
+        src="/blog-upiicsa/images/autor_ulises.jpg"
         alt="Fotografía de Ulises Mejía Ortega"
         class="author-photo"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -84,7 +84,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
   <div class="author-header">
     <div class="author-photo-wrapper">
       <img
-        src="/images/autor_marco.jpg"
+        src="/blog-upiicsa/images/autor_marco.jpg"
         alt="Fotografía de Marco Antonio Linares Zurita"
         class="author-photo"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
@@ -150,5 +150,3 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
 </article>
 
 </div>
-
----

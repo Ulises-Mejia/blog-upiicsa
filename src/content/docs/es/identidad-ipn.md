@@ -17,14 +17,14 @@ El Himno Oficial del IPN fue creado con motivo del XXV Aniversario de la fundaci
 * **Letra:** Maestra y poetisa Carmen de la Fuente.
 * **Música:** Profesor Armando González Domínguez.
 
-<div class="media-container" style="max-width: 620px; margin: 1.5rem auto; padding: 1.25rem; border-radius: 12px; background: rgba(0, 100, 58, 0.08); border: 1px solid rgba(212, 175, 55, 0.3); text-align: center;">
+<div class="media-container" style="max-width: 620px; margin-inline: auto;">
   <p style="margin-top: 0; font-weight: 700; color: var(--sl-color-accent-high);">🔊 Grabación Oficial del Himno Politécnico</p>
   <audio controls style="width: 100%; border-radius: 8px; outline: none;">
     <source src="../../audios/himno_ipn.mp3" type="audio/mpeg" />
     <source src="../../audios/himno_ipn.ogg" type="audio/ogg" />
     Tu navegador no soporta el elemento de audio HTML5.
   </audio>
-  <p class="media-caption" style="margin-top: 0.6rem; font-size: 0.8rem; margin-bottom: 0;">
+  <p class="media-caption">
     Audio del Himno Oficial del IPN (Grabación: Carmen de la Fuente / Armando González Domínguez).
   </p>
 </div>
@@ -153,7 +153,7 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
     <span class="lang-es">Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.</span><span class="lang-en" style="display: none;">This browser does not support WebGL. The virtual reality room cannot be displayed.</span>
   </div>
 
-  <div id="vr-container" style="display: none; width: 100%; height: 600px; border-radius: 12px; overflow: hidden; border: 2px solid #00643A; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+  <div id="vr-container" style="display: none; width: 100%; height: clamp(340px, 65vh, 600px); border-radius: 12px; overflow: hidden; border: 2px solid #00643A; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
     <iframe id="vr-iframe"
             title="Sala de Identidad Institucional IPN en realidad virtual"
             style="width: 100%; height: 100%; border: none;"

@@ -2,22 +2,33 @@
 import EditLink from 'virtual:starlight/components/EditLink';
 import LastUpdated from 'virtual:starlight/components/LastUpdated';
 import Pagination from 'virtual:starlight/components/Pagination';
+
+const { editUrl, lastUpdated, pagination } = Astro.locals.starlightRoute;
+const hasMeta = Boolean(editUrl || lastUpdated);
+const hasPagination = Boolean(pagination.prev || pagination.next);
+const hasFooterContent = hasMeta || hasPagination;
 ---
 
-<footer class="sl-flex">
-  <div class="meta sl-flex">
-    <EditLink />
-    <LastUpdated />
-  </div>
-  <Pagination />
-</footer>
+{
+  hasFooterContent && (
+    <footer class="sl-flex">
+      {hasMeta && (
+        <div class="meta sl-flex">
+          <EditLink />
+          <LastUpdated />
+        </div>
+      )}
+      {hasPagination && <Pagination />}
+    </footer>
+  )
+}
 
 <style>
   footer {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 3rem;
+    gap: 1.25rem;
+    margin-top: 2rem;
   }
 
   .meta {
