@@ -435,7 +435,8 @@ export class ARQuizController {
     const lang = getCurrentLang();
     this.updateHUD(lang);
 
-    if (this.session.isFinished) {
+    const finished = this.session.isFinished && !this.session.lastAnswer;
+    if (finished) {
       this.drawResultsCard(lang);
       return;
     }
@@ -706,6 +707,7 @@ export class ARQuizController {
   }
 
   private finish() {
+    this.session.lastAnswer = null;
     this.isLocked = false;
     this.soundFX.playFanfare();
     vibrate(HAPTIC_FINISH);

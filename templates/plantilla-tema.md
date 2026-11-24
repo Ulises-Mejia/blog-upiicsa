@@ -1,16 +1,17 @@
 ---
 title: "Título del Tema (Ej. 1.X.X Nombre)"
-description: "Breve resumen descriptivo del tema en una o dos oraciones."
+description: "Resumen conciso del tema en una o dos oraciones para SEO y metadatos."
 ---
 
-import { Tabs, TabItem } from '@astrojs/starlight/components';
-
-<!-- 
+<!--
   GUÍA RÁPIDA DE USO:
-  1. Duplica este archivo y cámbiale el nombre al código de tu tema (ej. 1-2-5-nuevo-tema.md).
-  2. Muévelo a la carpeta de su unidad correspondiente (unidad-1, unidad-2 o unidad-3).
-  3. Modifica el frontmatter superior ('title' y 'description').
-  4. Redacta el contenido reemplazando las secciones de este archivo.
+  1. Copia este archivo desde `templates/plantilla-tema.md` a la carpeta de su unidad:
+     `src/content/docs/es/unidad-1/`, `unidad-2/` o `unidad-3/`
+     usando la nomenclatura del temario (ej. `1-2-5-nuevo-tema.md`).
+  2. Actualiza el frontmatter superior (`title` y `description` real, no dejes texto de plantilla).
+  3. Redacta el contenido reemplazando las secciones de ejemplo y elimina las que no uses.
+  4. Si necesitas componentes interactivos de Starlight (como `<Tabs>`), guarda el archivo
+     con extensión `.mdx` en lugar de `.md`.
 -->
 
 ## 📌 Introducción al Tema
@@ -36,12 +37,15 @@ Explica los conceptos base utilizando listas y tipografía enriquecida:
 * **Concepto C:** Casos de uso típicos en la industria informática.
 
 :::tip[Consejo Práctico / Buena Práctica]
-Utiliza este bloque dorado para destacar recomendaciones, estándares de la industria o consejos técnicos de producción.
+Utiliza este bloque para destacar recomendaciones, estándares de la industria o consejos técnicos de producción.
 :::
 
-### 2. Pestañas Interactivas de Ejemplo
+### 2. Pestañas Interactivas (requiere extensión `.mdx`)
 
-Puedes estructurar comparativas o código en pestañas interactivas:
+Si necesitas alternar comparativas o código en pestañas interactivas, renombra el tema a `.mdx` y coloca el `import` justo después del frontmatter:
+
+```mdx
+import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 <Tabs>
   <TabItem label="Enfoque A">
@@ -51,6 +55,7 @@ Puedes estructurar comparativas o código en pestañas interactivas:
     Explicación detallada del enfoque o metodología B.
   </TabItem>
 </Tabs>
+```
 
 ### 3. Tabla Comparativa de Tecnologías / Formatos
 
@@ -69,13 +74,14 @@ Usa este bloque para advertir sobre incompatibilidades de navegadores, formatos 
 ## 🎬 Zona de Recursos Multimedia
 
 <!-- Elimina los bloques multimedia que no utilices en tu redacción final. -->
+<!-- Nota: incluye el prefijo base `/blog-upiicsa` en rutas absolutas a `public/`. -->
 
 ### 1. Imagen Ilustrativa o Diagrama
 Guarda tu imagen en `public/images/nombre-imagen.png` y úsala así:
 
 ```html
 <div class="media-container">
-  <img src="/images/nombre-imagen.png" alt="Diagrama explicativo" />
+  <img src="/blog-upiicsa/images/nombre-imagen.png" alt="Diagrama explicativo" />
   <div class="media-caption">📷 Figura 1: Descripción representativa de la imagen o diagrama.</div>
 </div>
 ```
@@ -83,10 +89,10 @@ Guarda tu imagen en `public/images/nombre-imagen.png` y úsala así:
 ### 2. Video de YouTube (16:9 Adaptable)
 ```html
 <div class="video-wrapper">
-  <iframe 
-    src="https://www.youtube.com/embed/ID_DEL_VIDEO" 
-    title="Título descriptivo del video" 
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+  <iframe
+    src="https://www.youtube.com/embed/ID_DEL_VIDEO"
+    title="Título descriptivo del video"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
     allowfullscreen>
   </iframe>
 </div>
@@ -97,7 +103,7 @@ Guarda el video en `public/videos/nombre-video.mp4`:
 
 ```html
 <video controls style="width: 100%; border-radius: 8px; margin: 1rem 0;">
-  <source src="/videos/nombre-video.mp4" type="video/mp4" />
+  <source src="/blog-upiicsa/videos/nombre-video.mp4" type="video/mp4" />
   Tu navegador no soporta video HTML5.
 </video>
 ```
@@ -107,7 +113,7 @@ Guarda el audio en `public/audios/nombre-audio.mp3`:
 
 ```html
 <audio controls style="width: 100%; margin: 1rem 0;">
-  <source src="/audios/nombre-audio.mp3" type="audio/mpeg" />
+  <source src="/blog-upiicsa/audios/nombre-audio.mp3" type="audio/mpeg" />
   Tu navegador no soporta audio HTML5.
 </audio>
 ```
@@ -116,11 +122,11 @@ Guarda el audio en `public/audios/nombre-audio.mp3`:
 
 ## 📝 Conclusiones y Resumen
 
-Sintetiza las conclusiones principales del tema, su impacto en el desarrollo de software multimedia y el aprendizaje adquirido.
+> Sintetiza las conclusiones principales del tema, su impacto en el desarrollo de software multimedia y el aprendizaje adquirido.
 
 ---
 
-## 🔗 Referencias y Enlaces Recomendados
+## 🔗 Fuentes Documentales
 
-1. [W3C - Estándares Web Multimedia](https://www.w3.org/)
-2. [MDN Web Docs - Multimedia y Embebidos](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding)
+* Autor, A. (Año). *Título de la obra*. Editorial.
+* [MDN Web Docs — Multimedia y Embebidos](https://developer.mozilla.org/es/docs/Learn/HTML/Multimedia_and_embedding)

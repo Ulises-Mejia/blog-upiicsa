@@ -198,36 +198,42 @@ if (topicMatch) {
 </div>
 
 <script>
+  let cleanupMenuToggle: (() => void) | null = null;
   let cleanupScrollEffects: (() => void) | null = null;
 
   function setupMenuToggle() {
+    if (cleanupMenuToggle) {
+      cleanupMenuToggle();
+      cleanupMenuToggle = null;
+    }
+
     const menuToggle = document.getElementById('menuToggle');
     if (!menuToggle) return;
 
-    // Asegurar que cada carga de página comience con el menú cerrado
-    document.documentElement.removeAttribute('data-sidebar-open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-    menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
-    menuToggle.setAttribute('title', 'Abrir menú lateral');
+    const closeDesktopSidebar = () => {
+      document.documentElement.removeAttribute('data-sidebar-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
+      menuToggle.setAttribute('title', 'Abrir menú lateral');
+    };
 
-    menuToggle.onclick = (e) => {
+    // Asegurar que cada carga de página comience con el menú cerrado
+    closeDesktopSidebar();
+
+    const onToggleClick = (e: MouseEvent) => {
       const isDesktop = window.innerWidth >= 800;
       if (isDesktop) {
         e.preventDefault();
         e.stopPropagation();
         const isOpen = document.documentElement.getAttribute('data-sidebar-open') === 'true';
-        const willOpen = !isOpen;
-        
-        if (willOpen) {
+
+        if (!isOpen) {
           document.documentElement.setAttribute('data-sidebar-open', 'true');
           menuToggle.setAttribute('aria-expanded', 'true');
           menuToggle.setAttribute('aria-label', 'Cerrar menú lateral');
           menuToggle.setAttribute('title', 'Cerrar menú lateral');
         } else {
-          document.documentElement.removeAttribute('data-sidebar-open');
-          menuToggle.setAttribute('aria-expanded', 'false');
-          menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
-          menuToggle.setAttribute('title', 'Abrir menú lateral');
+          closeDesktopSidebar();
         }
       } else {
         const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
@@ -236,37 +242,43 @@ if (topicMatch) {
     };
 
     // Cerrar al hacer clic fuera del sidebar en escritorio
-    document.addEventListener('click', (e) => {
+    const onDocumentClick = (e: MouseEvent) => {
       if (window.innerWidth >= 800 && document.documentElement.getAttribute('data-sidebar-open') === 'true') {
         const sidebarPane = document.getElementById('starlight__sidebar');
         const target = e.target as HTMLElement;
         if (sidebarPane && !sidebarPane.contains(target) && !menuToggle.contains(target)) {
-          document.documentElement.removeAttribute('data-sidebar-open');
-          menuToggle.setAttribute('aria-expanded', 'false');
-          menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
-          menuToggle.setAttribute('title', 'Abrir menú lateral');
+          closeDesktopSidebar();
         }
       }
-    });
+    };
 
     // Cerrar al presionar la tecla Escape en escritorio
-    window.addEventListener('keydown', (e) => {
+    const onWindowKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && document.documentElement.getAttribute('data-sidebar-open') === 'true') {
-        document.documentElement.removeAttribute('data-sidebar-open');
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.setAttribute('aria-label', 'Abrir menú lateral');
-        menuToggle.setAttribute('title', 'Abrir menú lateral');
+        closeDesktopSidebar();
       }
-    });
+    };
 
-    window.addEventListener('resize', () => {
+    const onWindowResize = () => {
       if (window.innerWidth >= 800) {
         const sidebarPane = document.getElementById('starlight__sidebar');
         if (sidebarPane && typeof (sidebarPane as any).hidePopover === 'function') {
           try { (sidebarPane as any).hidePopover(); } catch(err) {}
         }
       }
-    });
+    };
+
+    menuToggle.addEventListener('click', onToggleClick);
+    document.addEventListener('click', onDocumentClick);
+    window.addEventListener('keydown', onWindowKeyDown);
+    window.addEventListener('resize', onWindowResize);
+
+    cleanupMenuToggle = () => {
+      menuToggle.removeEventListener('click', onToggleClick);
+      document.removeEventListener('click', onDocumentClick);
+      window.removeEventListener('keydown', onWindowKeyDown);
+      window.removeEventListener('resize', onWindowResize);
+    };
   }
 
   function setupScrollHeaderTitle() {

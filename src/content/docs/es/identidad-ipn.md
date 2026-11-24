@@ -21,7 +21,6 @@ El Himno Oficial del IPN fue creado con motivo del XXV Aniversario de la fundaci
   <p style="margin-top: 0; font-weight: 700; color: var(--sl-color-accent-high);">🔊 Grabación Oficial del Himno Politécnico</p>
   <audio controls style="width: 100%; border-radius: 8px; outline: none;">
     <source src="../../audios/himno_ipn.mp3" type="audio/mpeg" />
-    <source src="../../audios/himno_ipn.ogg" type="audio/ogg" />
     Tu navegador no soporta el elemento de audio HTML5.
   </audio>
   <p class="media-caption">

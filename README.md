@@ -108,6 +108,8 @@ Como este repositorio es para la asignatura de **Herramientas Multimedia**, no s
 ├── tsconfig.json                  # Configuración de TypeScript
 ├── README.md                      # Documentación maestra y manual del proyecto
 │
+├── templates/
+│   └── plantilla-tema.md          # Plantilla base lista para clonar y crear temas (no se publica)
 ├── public/                        # Archivos estáticos servidos directamente en la raíz web
 │   ├── ipn_logo.svg               # Escudo oficial vectorial del IPN
 │   ├── upiicsa_logo.svg           # Escudo oficial vectorial de la UPIICSA
@@ -128,7 +130,6 @@ Como este repositorio es para la asignatura de **Herramientas Multimedia**, no s
     │   ├── docs/
     │   │   ├── 404.md             # Página institucional de error 404
     │   │   └── es/                # Contenido académico temático en Español (Markdown)
-    │   │       ├── plantilla-tema.md # Plantilla base lista para clonar y crear temas
     │   │       ├── autores.md     # Ficha y tarjetas de créditos del equipo
     │   │       ├── identidad-ipn.md # Himno oficial con reproductor, decálogo y símbolos
     │   │       ├── index.md       # Página principal de inicio y bienvenida
@@ -267,8 +268,8 @@ Archivo: `src/content/docs/es/autores.md`
 
 Para actualizar las fotografías y datos de los desarrolladores o colaboradores:
 1. Guarda la fotografía en `public/images/autor_tunombre.jpg`.
-2. Abre `autores.md` y edita la tarjeta correspondiente (`<article class="author-card">`), actualizando nombre, rol, correo institucional, carrera y experiencia.
-3. Si la foto no existe, la tarjeta muestra automáticamente un avatar de respaldo.
+2. Abre `autores.md` y edita la tarjeta correspondiente (`<article class="author-card">`), descomentando la etiqueta `<img>` (y ocultando el avatar de iniciales `.author-avatar-fallback`) y actualizando nombre, rol, correo institucional, carrera y experiencia.
+3. Mientras no existan fotografías locales, cada tarjeta muestra un avatar tipográfico con iniciales sin generar peticiones 404.
 
 ---
 
@@ -340,9 +341,9 @@ Acciones que pueden provocar pérdida de información o fallos en ejecución.
 ---
 
 ### Pestañas Interactivas (Tabs)
-Para alternar entre comparaciones, lenguajes o metodologías:
+Para alternar entre comparaciones, lenguajes o metodologías *(requiere guardar el tema con extensión `.mdx` en lugar de `.md`)*:
 
-```markdown
+```mdx
 import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 <Tabs>
@@ -422,7 +423,7 @@ Guarda el archivo de audio en `public/audios/pista-sonora.mp3`:
 Cuando te corresponda redactar o actualizar un tema de la materia:
 
 1. **Duplica la plantilla oficial:** Haz una copia del archivo:
-   `src/content/docs/es/plantilla-tema.md`
+   `templates/plantilla-tema.md`
 2. **Nómbralo según la nomenclatura oficial:** Por ejemplo:
    `src/content/docs/es/unidad-1/1-2-5-nuevo-subtema.md`
 3. **Actualiza el frontmatter:**

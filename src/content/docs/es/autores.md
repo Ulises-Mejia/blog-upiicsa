@@ -14,13 +14,15 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
 <article class="author-card">
   <div class="author-header">
     <div class="author-photo-wrapper">
+      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_ulises.jpg,
+           descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
       <img
         src="/blog-upiicsa/images/autor_ulises.jpg"
         alt="Fotografía de Ulises Mejía Ortega"
         class="author-photo"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
-      <div class="author-avatar-fallback" style="display: none;">👨‍💻</div>
+      -->
+      <div class="author-avatar-fallback" role="img" aria-label="Avatar de Ulises Mejía Ortega">UM</div>
     </div>
     <div class="author-meta">
       <h3 class="author-name">Ulises Mejía Ortega</h3>
@@ -83,13 +85,15 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
 <article class="author-card">
   <div class="author-header">
     <div class="author-photo-wrapper">
+      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_marco.jpg,
+           descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
       <img
         src="/blog-upiicsa/images/autor_marco.jpg"
         alt="Fotografía de Marco Antonio Linares Zurita"
         class="author-photo"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
       />
-      <div class="author-avatar-fallback" style="display: none;">👨‍🏫</div>
+      -->
+      <div class="author-avatar-fallback" role="img" aria-label="Avatar de Marco Antonio Linares Zurita">ML</div>
     </div>
     <div class="author-meta">
       <h3 class="author-name">Marco Antonio Linares Zurita</h3>

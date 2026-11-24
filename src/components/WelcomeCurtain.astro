@@ -111,7 +111,14 @@ const copyrightText = isEn
 </div>
 
 <script>
+  let cleanupWelcomeCurtain: (() => void) | null = null;
+
   function setupWelcomeCurtain() {
+    if (cleanupWelcomeCurtain) {
+      cleanupWelcomeCurtain();
+      cleanupWelcomeCurtain = null;
+    }
+
     const curtain = document.getElementById('welcomeCurtain');
     const enterBtn = document.getElementById('enterRepoBtn');
     const overlay = document.getElementById('curtainOverlay');
@@ -132,39 +139,42 @@ const copyrightText = isEn
 
     let isClosing = false;
 
+    const cleanup = () => {
+      enterBtn?.removeEventListener('click', closeCurtain);
+      overlay?.removeEventListener('click', closeCurtain);
+      window.removeEventListener('keydown', onKeyDown);
+      cleanupWelcomeCurtain = null;
+    };
+
     function closeCurtain() {
       if (isClosing) return;
       isClosing = true;
+      cleanup();
 
       try {
         sessionStorage.setItem('upiicsa_welcome_seen', 'true');
       } catch (e) {}
 
       document.documentElement.setAttribute('data-welcome-seen', 'true');
-      curtain.classList.add('is-closing');
+      curtain?.classList.add('is-closing');
 
       // Remover del DOM tras concluir la transición física
       setTimeout(() => {
-        curtain.remove();
+        curtain?.remove();
       }, 550);
-    }
-
-    if (enterBtn) {
-      enterBtn.addEventListener('click', closeCurtain);
-    }
-
-    if (overlay) {
-      overlay.addEventListener('click', closeCurtain);
     }
 
     // Teclas rápidas para accesibilidad (Escape o Enter)
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' || e.key === 'Enter') {
-        window.removeEventListener('keydown', onKeyDown);
         closeCurtain();
       }
     };
+
+    enterBtn?.addEventListener('click', closeCurtain);
+    overlay?.addEventListener('click', closeCurtain);
     window.addEventListener('keydown', onKeyDown);
+    cleanupWelcomeCurtain = cleanup;
   }
 
   // Inicializar en carga y en transiciones de Astro
