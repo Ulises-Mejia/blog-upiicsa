@@ -11,7 +11,14 @@
   --sl-color-gray-6: #242734;
   --sl-color-black: #0B1410;
   --sl-content-width: 60rem;
-  --sl-toc-width: 15rem;
+  --sl-toc-width: 16rem;
+  --sl-mobile-toc-height: 2.55rem;
+}
+
+@media (min-width: 72rem) {
+  :root {
+    --sl-mobile-toc-height: 0rem;
+  }
 }
 
 :root[data-theme='light'] {
@@ -581,22 +588,124 @@ header.header {
   border: 0;
 }
 /* ==========================================================================
-   OPTIMIZACIÓN DEL ESPACIO Y PANEL DERECHO (OPCIÓN 1)
+   BARRA DE SECCIONES INTERNAS EN MÓVIL Y TABLET (OPCIÓN A — COMPACTA GLASSMORPHISM)
+   ========================================================================== */
+@media (max-width: 71.99rem) {
+  mobile-starlight-toc nav {
+    top: var(--sl-nav-height) !important;
+    border-top: none !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc nav {
+    background: rgba(248, 250, 252, 0.94) !important;
+    border-bottom: 1px solid rgba(0, 100, 58, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc nav {
+    background: rgba(6, 23, 14, 0.92) !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.28) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35) !important;
+  }
+
+  mobile-starlight-toc summary {
+    height: var(--sl-mobile-toc-height) !important;
+    padding: 0.3rem 0.75rem !important;
+    gap: 0.6rem !important;
+    border-bottom: none !important;
+  }
+
+  mobile-starlight-toc .toggle {
+    padding: 0.28rem 0.55rem 0.28rem 0.68rem !important;
+    gap: 0.4rem !important;
+    border-radius: 999px !important;
+    font-size: 0.76rem !important;
+    font-weight: 750 !important;
+    transition: all 0.2s ease !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .toggle {
+    background: rgba(0, 100, 58, 0.08) !important;
+    border-color: rgba(0, 100, 58, 0.28) !important;
+    color: #004D2C !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .toggle {
+    background: rgba(212, 175, 55, 0.12) !important;
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    color: #F4E8C1 !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .caret {
+    color: #00643A !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .caret {
+    color: #D4AF37 !important;
+  }
+
+  mobile-starlight-toc .display-current {
+    font-size: 0.84rem !important;
+    font-weight: 700 !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .display-current {
+    color: #004D2C !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .display-current {
+    color: #F4E8C1 !important;
+  }
+
+  mobile-starlight-toc .dropdown {
+    border-radius: 0 0 14px 14px !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .dropdown {
+    background: rgba(255, 255, 255, 0.97) !important;
+    border-color: rgba(0, 100, 58, 0.2) !important;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .dropdown {
+    background: rgba(6, 23, 14, 0.96) !important;
+    border-color: rgba(212, 175, 55, 0.28) !important;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45) !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .isMobile a[aria-current='true'] {
+    background: rgba(0, 100, 58, 0.08) !important;
+    color: #004D2C !important;
+    font-weight: 700 !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .isMobile a[aria-current='true'] {
+    background: rgba(212, 175, 55, 0.12) !important;
+    color: #D4AF37 !important;
+    font-weight: 700 !important;
+  }
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN DEL ESPACIO Y PANEL DERECHO (SECCIONES INTERNAS EN ESCRITORIO)
    ========================================================================== */
 @media (min-width: 72rem) {
-  /* Ajuste inferior para la tabla de contenidos con la barra institucional de pie de página */
-  .right-sidebar-panel,
+  /* Ajuste inferior en el contenedor exterior para librar la barra institucional fija de 40px */
   .right-sidebar {
-    padding-bottom: 48px !important;
+    padding-bottom: 44px !important;
   }
 
-  /* Ancho compacto y fijo para el panel de la tabla de contenidos nativa */
+  /* Ancho cómodo y fijo para el panel de secciones internas */
   .right-sidebar-container {
-    width: var(--sl-toc-width, 15rem) !important;
+    width: var(--sl-toc-width, 16rem) !important;
   }
 
   .right-sidebar {
-    width: var(--sl-toc-width, 15rem) !important;
+    width: var(--sl-toc-width, 16rem) !important;
     border-left: 1px solid rgba(212, 175, 55, 0.2) !important;
   }
 
@@ -607,25 +716,6 @@ header.header {
     border-left: 1px solid rgba(212, 175, 55, 0.22) !important;
   }
 
-  :root[data-theme='dark'] starlight-toc a,
-  :root[data-theme='dark'] .sl-toc a,
-  :root[data-theme='dark'] .right-sidebar a {
-    color: #B2C5BC !important;
-  }
-
-  :root[data-theme='dark'] starlight-toc a:hover,
-  :root[data-theme='dark'] .sl-toc a:hover,
-  :root[data-theme='dark'] .right-sidebar a:hover {
-    color: #F4E8C1 !important;
-  }
-
-  :root[data-theme='dark'] starlight-toc a[aria-current='true'],
-  :root[data-theme='dark'] .sl-toc a[aria-current='true'],
-  :root[data-theme='dark'] .right-sidebar a[aria-current='true'] {
-    color: #D4AF37 !important;
-    font-weight: 700 !important;
-  }
-
   :root[data-theme='light'] .right-sidebar {
     background: rgba(248, 250, 252, 0.92) !important;
     backdrop-filter: blur(14px) !important;
@@ -633,23 +723,87 @@ header.header {
     border-left: 1px solid rgba(0, 100, 58, 0.15) !important;
   }
 
-  :root[data-theme='light'] starlight-toc a,
-  :root[data-theme='light'] .sl-toc a,
-  :root[data-theme='light'] .right-sidebar a {
-    color: #64748B !important;
+  /* Riel vertical continuo y píldora activa para las secciones internas */
+  .right-sidebar starlight-toc h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #004D2C !important;
   }
 
-  :root[data-theme='light'] starlight-toc a:hover,
-  :root[data-theme='light'] .sl-toc a:hover,
-  :root[data-theme='light'] .right-sidebar a:hover {
-    color: #00874E !important;
+  :root[data-theme='dark'] .right-sidebar starlight-toc h2 {
+    color: #D4AF37 !important;
   }
 
-  :root[data-theme='light'] starlight-toc a[aria-current='true'],
-  :root[data-theme='light'] .sl-toc a[aria-current='true'],
-  :root[data-theme='light'] .right-sidebar a[aria-current='true'] {
+  .right-sidebar starlight-toc h2::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00643A;
+    flex-shrink: 0;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc h2::before {
+    background: #D4AF37;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  }
+
+  .right-sidebar starlight-toc nav > ul {
+    border-left: 2px solid rgba(0, 100, 58, 0.16);
+    padding-left: 0 !important;
+    margin-left: 0.2rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc nav > ul {
+    border-left-color: rgba(212, 175, 55, 0.2);
+  }
+
+  .right-sidebar starlight-toc a {
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    padding: 0.4rem 0.6rem 0.4rem 0.75rem !important;
+    border-radius: 0 8px 8px 0 !important;
+    font-size: 0.83rem !important;
+    line-height: 1.36 !important;
+    transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a {
+    color: #B2C5BC !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a:hover {
+    color: #F4E8C1 !important;
+    background: rgba(212, 175, 55, 0.08) !important;
+    border-left-color: rgba(212, 175, 55, 0.5) !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a[aria-current='true'] {
+    color: #F4E8C1 !important;
+    font-weight: 750 !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    border-left-color: #D4AF37 !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a {
+    color: #475569 !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a:hover {
     color: #00643A !important;
-    font-weight: 700 !important;
+    background: rgba(0, 100, 58, 0.06) !important;
+    border-left-color: rgba(0, 100, 58, 0.45) !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a[aria-current='true'] {
+    color: #004D2C !important;
+    font-weight: 750 !important;
+    background: rgba(0, 100, 58, 0.11) !important;
+    border-left-color: #00643A !important;
   }
 
   .right-sidebar-panel .sl-container {
@@ -659,12 +813,12 @@ header.header {
 
   /* El contenido central ocupa todo el ancho restante y se centra con amplitud */
   [data-has-sidebar][data-has-toc] .main-pane {
-    width: calc(100% - var(--sl-toc-width, 15rem)) !important;
+    width: calc(100% - var(--sl-toc-width, 16rem)) !important;
     --sl-content-margin-inline: auto !important;
   }
 
   :root[data-sidebar-open="true"][data-has-toc] .main-pane {
-    width: calc(100% - var(--sl-toc-width, 15rem)) !important;
+    width: calc(100% - var(--sl-toc-width, 16rem)) !important;
     --sl-content-margin-inline: auto !important;
   }
 
