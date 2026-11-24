@@ -54,17 +54,17 @@
   color: #E2E8F0;
 }
 
-/* Starlight header institucional */
+/* Starlight header institucional (borde inferior sutil como carril de la barra dorada de progreso) */
 header.header {
   background-color: #00643A !important;
-  border-bottom: 3px solid #D4AF37 !important;
+  border-bottom: 3px solid rgba(212, 175, 55, 0.28) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   padding-inline-end: var(--sl-nav-pad-x) !important;
 }
 
 :root[data-theme='dark'] header.header {
   background: linear-gradient(180deg, #092215 0%, #06170E 100%) !important;
-  border-bottom: 3px solid #D4AF37 !important;
+  border-bottom: 3px solid rgba(212, 175, 55, 0.25) !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -723,6 +723,18 @@ main[data-pagefind-body] h1#_top {
   margin-top: 0 !important;
   line-height: 1.22 !important;
   font-size: clamp(1.65rem, 3.2vw, 2.45rem) !important;
+  transition: opacity 0.26s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html[data-header-title='visible'] main[data-pagefind-body] h1#_top {
+  opacity: 0.2;
+  transform: translateY(-6px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main[data-pagefind-body] h1#_top {
+    transition: none !important;
+  }
 }
 
 /* Cuestionarios WebXR: evitar doble tarjeta y doble H1 */

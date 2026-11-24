@@ -5,10 +5,35 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const homeHref = `${base}/es/`;
 const homeLabel = 'Inicio';
 const subtitle = siteBrand.subtitle.es;
+
+const route = Astro.locals.starlightRoute;
+const pageTitle = route?.entry?.data?.title || siteBrand.title;
+const pathname = Astro.url.pathname;
+
+// Insignia contextual corta para la cabecera al hacer scroll
+let contextBadge = '';
+const topicMatch = pathname.match(/\/unidad-(\d+)\/(\d+)-(\d+)-(\d+|bis)-/);
+if (topicMatch) {
+  const [, unitNum, major, minor, sub] = topicMatch;
+  const roman = unitNum === '1' ? 'U-I' : unitNum === '2' ? 'U-II' : 'U-III';
+  contextBadge = sub === 'bis' ? roman : `${major}.${minor}.${sub}`;
+} else if (pathname.includes('/unidad-1/cuestionario')) {
+  contextBadge = 'Quiz U-I';
+} else if (pathname.includes('/unidad-2/cuestionario')) {
+  contextBadge = 'Quiz U-II';
+} else if (pathname.includes('/unidad-3/cuestionario')) {
+  contextBadge = 'Quiz U-III';
+} else if (pathname.includes('/identidad-ipn')) {
+  contextBadge = 'IPN';
+} else if (pathname.includes('/autores')) {
+  contextBadge = 'Autores';
+} else {
+  contextBadge = 'Inicio';
+}
 ---
 
 <div class="header-custom sl-flex">
-  <!-- GRUPO IZQUIERDO: MENÚ SANDWICH + LOGOS + TÍTULO -->
+  <!-- GRUPO IZQUIERDO: MENÚ SANDWICH + LOGOS + MARCA (Y TÍTULO ANIMADO EN MÓVIL) -->
   <div class="header-brand-group sl-flex">
     <button
       id="menuToggle"
@@ -24,19 +49,51 @@ const subtitle = siteBrand.subtitle.es;
       <span class="hamburger-bar"></span>
     </button>
 
-    <a href={homeHref} class="header-brand sl-flex" title="Ir al Inicio">
-      <div class="header-logos sl-flex">
-        <img src={siteBrand.ipnLogoUrl} alt={siteBrand.ipnLogoAlt} width="44" height="44" />
-        <img src={siteBrand.upiicsaLogoUrl} alt={siteBrand.upiicsaLogoAlt} width="44" height="44" />
-      </div>
-      <div class="brand-text">
-        <div class="brand-title">
-          {siteBrand.title}
-          <span class="brand-badge">{siteBrand.badge}</span>
-        </div>
-        <span class="brand-subtitle">{subtitle}</span>
-      </div>
+    <a href={homeHref} class="header-logos sl-flex" title="Ir al Inicio" aria-label="Ir al Inicio">
+      <img src={siteBrand.ipnLogoUrl} alt={siteBrand.ipnLogoAlt} width="44" height="44" />
+      <img src={siteBrand.upiicsaLogoUrl} alt={siteBrand.upiicsaLogoAlt} width="44" height="44" />
     </a>
+
+    <div class="brand-swap-slot">
+      <a href={homeHref} class="header-brand brand-default-layer" title="Ir al Inicio">
+        <div class="brand-text">
+          <div class="brand-title">
+            {siteBrand.title}
+            <span class="brand-badge">{siteBrand.badge}</span>
+          </div>
+          <span class="brand-subtitle">{subtitle}</span>
+        </div>
+      </a>
+
+      <!-- En móvil (≤ 768px): el título de la página entra suavemente ocupando el lugar de la marca -->
+      <button
+        id="headerMobileTitleBtn"
+        class="brand-mobile-title-btn"
+        type="button"
+        aria-hidden="true"
+        tabindex="-1"
+        title="Volver al inicio de la página"
+      >
+        {contextBadge && <span class="context-pill-badge context-pill-badge--sm">{contextBadge}</span>}
+        <span class="brand-mobile-title-text">{pageTitle}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CENTRO (ESCRITORIO Y TABLET > 768px): PÍLDORA ANIMADA CON EL TÍTULO DE LA PÁGINA -->
+  <div class="header-scroll-context">
+    <button
+      id="headerCenterTitleBtn"
+      class="header-scroll-pill"
+      type="button"
+      aria-hidden="true"
+      tabindex="-1"
+      title="Volver al inicio de la página"
+    >
+      {contextBadge && <span class="context-pill-badge">{contextBadge}</span>}
+      <span class="header-scroll-pill__title">{pageTitle}</span>
+      <span class="header-scroll-pill__up" aria-hidden="true">↑</span>
+    </button>
   </div>
 
   <!-- GRUPO DERECHO: INICIO + TEMA + IDIOMA (ESTILO UNIFICADO Y CONSISTENTE) -->
@@ -73,7 +130,14 @@ const subtitle = siteBrand.subtitle.es;
   </div>
 </div>
 
+<!-- BARRA DE PROGRESO DE LECTURA EN EL BORDE INFERIOR DE LA CABECERA -->
+<div class="header-progress-track" aria-hidden="true">
+  <div id="headerProgressBar" class="header-progress-fill"></div>
+</div>
+
 <script>
+  let cleanupScrollEffects: (() => void) | null = null;
+
   function setupMenuToggle() {
     const menuToggle = document.getElementById('menuToggle');
     if (!menuToggle) return;
@@ -141,6 +205,117 @@ const subtitle = siteBrand.subtitle.es;
         }
       }
     });
+  }
+
+  function setupScrollHeaderTitle() {
+    if (cleanupScrollEffects) {
+      cleanupScrollEffects();
+      cleanupScrollEffects = null;
+    }
+
+    const root = document.documentElement;
+    const centerBtn = document.getElementById('headerCenterTitleBtn');
+    const mobileBtn = document.getElementById('headerMobileTitleBtn');
+    const progressBar = document.getElementById('headerProgressBar');
+
+    // Detectar el H1 visible real (en cuestionarios el #_top se oculta y el visible es .quiz-title)
+    const getActiveHeading = (): HTMLElement | null => {
+      const topH1 = document.getElementById('_top');
+      if (topH1 && topH1.offsetParent !== null) return topH1;
+      const quizH1 = document.querySelector<HTMLElement>('.quiz-title');
+      if (quizH1 && quizH1.offsetParent !== null) return quizH1;
+      return document.querySelector<HTMLElement>('main h1');
+    };
+
+    let isDocked = false;
+    let rafId = 0;
+
+    const setDockedState = (visible: boolean) => {
+      if (visible === isDocked) return;
+      isDocked = visible;
+      if (visible) {
+        root.setAttribute('data-header-title', 'visible');
+      } else {
+        root.removeAttribute('data-header-title');
+      }
+      const ariaVal = visible ? 'false' : 'true';
+      const tabVal = visible ? '0' : '-1';
+      centerBtn?.setAttribute('aria-hidden', ariaVal);
+      centerBtn?.setAttribute('tabindex', tabVal);
+      mobileBtn?.setAttribute('aria-hidden', ariaVal);
+      mobileBtn?.setAttribute('tabindex', tabVal);
+    };
+
+    const getStickyTopOffset = (): number => {
+      const headerEl = document.querySelector<HTMLElement>('header.header');
+      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 64;
+      const mobileToc = document.querySelector<HTMLElement>('mobile-starlight-toc nav');
+      const tocH =
+        mobileToc && window.getComputedStyle(mobileToc).display !== 'none'
+          ? mobileToc.getBoundingClientRect().height
+          : 0;
+      return headerH + tocH;
+    };
+
+    const updateOnScroll = () => {
+      rafId = 0;
+
+      // 1. Barra de progreso de lectura (GPU transform: scaleX)
+      if (progressBar) {
+        const doc = document.documentElement;
+        const maxScroll = doc.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 20 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+        progressBar.style.transform = `scaleX(${ratio.toFixed(4)})`;
+      }
+
+      // 2. Transición del título hacia la cabecera con histéresis para evitar parpadeos
+      const heading = getActiveHeading();
+      if (!heading) {
+        setDockedState(false);
+        return;
+      }
+
+      const rect = heading.getBoundingClientRect();
+      const triggerY = getStickyTopOffset() + 4;
+
+      if (!isDocked) {
+        if (rect.bottom <= triggerY && window.scrollY > 36) {
+          setDockedState(true);
+        }
+      } else {
+        if (rect.bottom > triggerY + 14 || window.scrollY <= 20) {
+          setDockedState(false);
+        }
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(updateOnScroll);
+      }
+    };
+
+    const scrollToTop = () => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
+    };
+
+    centerBtn?.addEventListener('click', scrollToTop);
+    mobileBtn?.addEventListener('click', scrollToTop);
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
+    window.addEventListener('resize', scheduleUpdate, { passive: true });
+
+    // Estado inicial limpio
+    root.removeAttribute('data-header-title');
+    updateOnScroll();
+
+    cleanupScrollEffects = () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      centerBtn?.removeEventListener('click', scrollToTop);
+      mobileBtn?.removeEventListener('click', scrollToTop);
+      window.removeEventListener('scroll', scheduleUpdate);
+      window.removeEventListener('resize', scheduleUpdate);
+    };
   }
 
   function setupThemeToggle() {
@@ -260,6 +435,7 @@ const subtitle = siteBrand.subtitle.es;
 
   function initHeader() {
     setupMenuToggle();
+    setupScrollHeaderTitle();
     setupThemeToggle();
     setupLangToggle();
     setupScrollRestoration();
@@ -282,7 +458,8 @@ const subtitle = siteBrand.subtitle.es;
   .header-brand-group {
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    flex-shrink: 0;
   }
 
   .header-brand {
@@ -297,6 +474,8 @@ const subtitle = siteBrand.subtitle.es;
     display: flex;
     align-items: center;
     gap: 8px;
+    text-decoration: none;
+    flex-shrink: 0;
   }
 
   .header-logos img {
@@ -312,6 +491,21 @@ const subtitle = siteBrand.subtitle.es;
 
   .header-logos img:hover {
     transform: scale(1.08);
+  }
+
+  .brand-swap-slot {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-width: 0;
+  }
+
+  .brand-default-layer {
+    transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
+  }
+
+  .brand-mobile-title-btn {
+    display: none;
   }
 
   .brand-text {
@@ -345,6 +539,136 @@ const subtitle = siteBrand.subtitle.es;
     color: #D4AF37;
     font-weight: 600;
     letter-spacing: 0.8px;
+  }
+
+  /* ==========================================================================
+     PÍLDORA CENTRAL ANIMADA CON EL TÍTULO DE LA PÁGINA (ESCRITORIO / TABLET)
+     ========================================================================== */
+  .header-scroll-context {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding-inline: 0.25rem;
+  }
+
+  .header-scroll-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    max-width: min(100%, 34rem);
+    min-width: 0;
+    padding: 5px 12px 5px 7px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(212, 175, 55, 0.42);
+    color: #FFFFFF;
+    font-family: inherit;
+    font-size: 0.84rem;
+    font-weight: 700;
+    line-height: 1.2;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+    opacity: 0;
+    transform: translateY(14px) scale(0.96);
+    pointer-events: none;
+    transition:
+      opacity 0.28s ease,
+      transform 0.36s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  :global(:root[data-theme='dark']) .header-scroll-pill {
+    background: rgba(212, 175, 55, 0.12);
+    border-color: rgba(212, 175, 55, 0.42);
+    color: #F4E8C1;
+  }
+
+  :global(html[data-header-title='visible']) .header-scroll-pill {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+
+  .header-scroll-pill:hover {
+    background: rgba(212, 175, 55, 0.22);
+    border-color: #D4AF37;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.28);
+  }
+
+  .header-scroll-pill:focus-visible {
+    outline: 2px solid #D4AF37;
+    outline-offset: 2px;
+  }
+
+  .context-pill-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    background: #D4AF37;
+    color: #00361F;
+    font-size: 0.68rem;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    padding: 2px 7px;
+    border-radius: 999px;
+    line-height: 1.2;
+  }
+
+  .context-pill-badge--sm {
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    border-radius: 5px;
+  }
+
+  .header-scroll-pill__title {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .header-scroll-pill__up {
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: #D4AF37;
+    opacity: 0.85;
+    transition: transform 0.2s ease;
+  }
+
+  .header-scroll-pill:hover .header-scroll-pill__up {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+
+  /* ==========================================================================
+     BARRA DORADA DE PROGRESO DE LECTURA EN EL BORDE INFERIOR DE LA CABECERA
+     ========================================================================== */
+  .header-progress-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 3px;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 2;
+  }
+
+  .header-progress-fill {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, #D4AF37 0%, #F4E8C1 55%, #D4AF37 100%);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
+    transform: scaleX(0);
+    transform-origin: left center;
+    will-change: transform;
   }
 
   /* Botón de Menú Sandwich / Hamburguesa */
@@ -389,6 +713,7 @@ const subtitle = siteBrand.subtitle.es;
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
   }
 
   .header-link-btn {
@@ -448,18 +773,33 @@ const subtitle = siteBrand.subtitle.es;
     transform: scale(1.15);
   }
 
+  /* En pantallas medianas (769px - 1040px), ocultar subtítulo para dar más aire al título central */
+  @media (max-width: 1040px) and (min-width: 769px) {
+    .brand-subtitle {
+      display: none;
+    }
+
+    .header-custom {
+      gap: 0.65rem;
+    }
+
+    .header-link-btn {
+      padding: 0 10px;
+    }
+  }
+
   @media (max-width: 768px) {
     .header-custom {
       gap: 6px;
     }
+    .header-scroll-context {
+      display: none;
+    }
     .header-brand-group {
       gap: 8px;
       min-width: 0;
-      flex-shrink: 1;
-    }
-    .header-brand {
-      gap: 8px;
-      min-width: 0;
+      flex: 1 1 auto;
+      overflow: hidden;
     }
     .header-logos {
       gap: 5px;
@@ -469,6 +809,58 @@ const subtitle = siteBrand.subtitle.es;
       width: 34px;
       height: 34px;
       padding: 1px;
+    }
+    .brand-swap-slot {
+      flex: 1 1 auto;
+      min-width: 0;
+      height: 38px;
+      overflow: hidden;
+    }
+    .brand-default-layer {
+      width: 100%;
+    }
+    .brand-mobile-title-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background: transparent;
+      color: #FFFFFF;
+      font-family: inherit;
+      text-align: left;
+      cursor: pointer;
+      outline: none;
+      opacity: 0;
+      transform: translateY(105%);
+      pointer-events: none;
+      transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
+    }
+    :global(:root[data-theme='dark']) .brand-mobile-title-btn {
+      color: #F4E8C1;
+    }
+    .brand-mobile-title-text {
+      min-width: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      line-height: 1.18;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    :global(html[data-header-title='visible']) .brand-default-layer {
+      transform: translateY(-105%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    :global(html[data-header-title='visible']) .brand-mobile-title-btn {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
     }
     .brand-title {
       font-size: 0.95rem;
@@ -507,9 +899,6 @@ const subtitle = siteBrand.subtitle.es;
     .header-brand-group {
       gap: 6px;
     }
-    .header-brand {
-      gap: 6px;
-    }
     .header-logos {
       gap: 4px;
     }
@@ -521,7 +910,13 @@ const subtitle = siteBrand.subtitle.es;
       font-size: 0.88rem;
     }
     .brand-badge {
-      display: none; /* Como ya están los dos escudos IPN y UPIICSA, ocultamos el badge de texto en móviles estrechos */
+      display: none;
+    }
+    .context-pill-badge--sm {
+      display: none;
+    }
+    .brand-mobile-title-text {
+      font-size: 0.76rem;
     }
     .header-actions {
       gap: 4px;
@@ -534,6 +929,15 @@ const subtitle = siteBrand.subtitle.es;
       width: 32px;
       height: 32px;
       padding: 5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand-default-layer,
+    .brand-mobile-title-btn,
+    .header-scroll-pill,
+    .header-scroll-pill__up {
+      transition: none !important;
     }
   }
 </style>
