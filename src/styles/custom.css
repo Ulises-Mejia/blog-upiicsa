@@ -57,14 +57,15 @@
 /* Starlight header institucional (borde inferior sutil como carril de la barra dorada de progreso) */
 header.header {
   background-color: #00643A !important;
-  border-bottom: 3px solid rgba(212, 175, 55, 0.28) !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.28) !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding-block: 0.45rem !important;
   padding-inline-end: var(--sl-nav-pad-x) !important;
 }
 
 :root[data-theme='dark'] header.header {
   background: linear-gradient(180deg, #092215 0%, #06170E 100%) !important;
-  border-bottom: 3px solid rgba(212, 175, 55, 0.25) !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.25) !important;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
@@ -107,6 +108,7 @@ header.header {
   header.header,
   [data-has-sidebar] header.header,
   [data-has-sidebar] .header {
+    padding-block: 0.3rem !important;
     padding-inline: 0.5rem !important;
     padding-inline-start: 0.5rem !important;
     padding-inline-end: 0.5rem !important;

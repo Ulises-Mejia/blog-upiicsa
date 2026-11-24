@@ -476,6 +476,7 @@ if (topicMatch) {
     gap: 8px;
     text-decoration: none;
     flex-shrink: 0;
+    transition: max-width 0.32s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.22s ease, transform 0.3s ease;
   }
 
   .header-logos img {
@@ -551,27 +552,29 @@ if (topicMatch) {
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding-inline: 0.25rem;
+    padding-inline: 0.35rem;
   }
 
   .header-scroll-pill {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    max-width: min(100%, 34rem);
+    gap: 10px;
+    max-width: min(100%, 44rem);
     min-width: 0;
-    padding: 5px 12px 5px 7px;
+    min-height: 40px;
+    padding: 6px 16px 6px 10px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12);
-    border: 1px solid rgba(212, 175, 55, 0.42);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1.5px solid rgba(212, 175, 55, 0.5);
     color: #FFFFFF;
     font-family: inherit;
-    font-size: 0.84rem;
+    font-size: clamp(0.95rem, 1.2vw, 1.06rem);
     font-weight: 700;
-    line-height: 1.2;
+    letter-spacing: 0.1px;
+    line-height: 1.25;
     cursor: pointer;
     outline: none;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.14);
     opacity: 0;
     transform: translateY(14px) scale(0.96);
     pointer-events: none;
@@ -584,8 +587,8 @@ if (topicMatch) {
   }
 
   :global(:root[data-theme='dark']) .header-scroll-pill {
-    background: rgba(212, 175, 55, 0.12);
-    border-color: rgba(212, 175, 55, 0.42);
+    background: rgba(212, 175, 55, 0.14);
+    border-color: rgba(212, 175, 55, 0.5);
     color: #F4E8C1;
   }
 
@@ -596,9 +599,9 @@ if (topicMatch) {
   }
 
   .header-scroll-pill:hover {
-    background: rgba(212, 175, 55, 0.22);
+    background: rgba(212, 175, 55, 0.24);
     border-color: #D4AF37;
-    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.28);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.3);
   }
 
   .header-scroll-pill:focus-visible {
@@ -613,18 +616,19 @@ if (topicMatch) {
     flex-shrink: 0;
     background: #D4AF37;
     color: #00361F;
-    font-size: 0.68rem;
+    font-size: 0.78rem;
     font-weight: 900;
     letter-spacing: 0.4px;
-    padding: 2px 7px;
+    padding: 3px 9px;
     border-radius: 999px;
     line-height: 1.2;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   }
 
   .context-pill-badge--sm {
-    font-size: 0.6rem;
-    padding: 1px 5px;
-    border-radius: 5px;
+    font-size: 0.7rem;
+    padding: 2px 7px;
+    border-radius: 6px;
   }
 
   .header-scroll-pill__title {
@@ -636,9 +640,10 @@ if (topicMatch) {
 
   .header-scroll-pill__up {
     flex-shrink: 0;
-    font-size: 0.8rem;
+    font-size: 0.95rem;
+    font-weight: 800;
     color: #D4AF37;
-    opacity: 0.85;
+    opacity: 0.9;
     transition: transform 0.2s ease;
   }
 
@@ -654,8 +659,8 @@ if (topicMatch) {
     position: absolute;
     left: 0;
     right: 0;
-    bottom: -3px;
-    height: 3px;
+    bottom: -4px;
+    height: 4px;
     pointer-events: none;
     overflow: hidden;
     z-index: 2;
@@ -804,16 +809,26 @@ if (topicMatch) {
     .header-logos {
       gap: 5px;
       flex-shrink: 0;
+      max-width: 78px;
+      overflow: hidden;
     }
     .header-logos img {
       width: 34px;
       height: 34px;
       padding: 1px;
     }
+    /* Al hacer scroll en móvil, los escudos se repliegan suavemente para dar ancho completo y legibilidad al título */
+    :global(html[data-header-title='visible']) .header-logos {
+      max-width: 0;
+      opacity: 0;
+      transform: scale(0.8);
+      pointer-events: none;
+      margin-inline-end: -8px;
+    }
     .brand-swap-slot {
       flex: 1 1 auto;
       min-width: 0;
-      height: 38px;
+      height: 42px;
       overflow: hidden;
     }
     .brand-default-layer {
@@ -824,11 +839,13 @@ if (topicMatch) {
       inset: 0;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       width: 100%;
-      padding: 0;
-      border: none;
-      background: transparent;
+      padding: 4px 10px 4px 7px;
+      box-sizing: border-box;
+      border-radius: 10px;
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      background: rgba(255, 255, 255, 0.12);
       color: #FFFFFF;
       font-family: inherit;
       text-align: left;
@@ -840,12 +857,14 @@ if (topicMatch) {
       transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
     }
     :global(:root[data-theme='dark']) .brand-mobile-title-btn {
+      background: rgba(212, 175, 55, 0.13);
+      border-color: rgba(212, 175, 55, 0.45);
       color: #F4E8C1;
     }
     .brand-mobile-title-text {
       min-width: 0;
-      font-size: 0.8rem;
-      font-weight: 700;
+      font-size: 0.92rem;
+      font-weight: 750;
       line-height: 1.18;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -894,17 +913,21 @@ if (topicMatch) {
 
   @media (max-width: 480px) {
     .header-custom {
-      gap: 4px;
+      gap: 5px;
     }
     .header-brand-group {
       gap: 6px;
     }
     .header-logos {
       gap: 4px;
+      max-width: 68px;
     }
     .header-logos img {
       width: 30px;
       height: 30px;
+    }
+    :global(html[data-header-title='visible']) .header-logos {
+      margin-inline-end: -6px;
     }
     .brand-title {
       font-size: 0.88rem;
@@ -912,11 +935,17 @@ if (topicMatch) {
     .brand-badge {
       display: none;
     }
+    .brand-mobile-title-btn {
+      padding: 3px 8px 3px 6px;
+      gap: 6px;
+    }
     .context-pill-badge--sm {
-      display: none;
+      font-size: 0.66rem;
+      padding: 2px 6px;
     }
     .brand-mobile-title-text {
-      font-size: 0.76rem;
+      font-size: 0.88rem;
+      line-height: 1.16;
     }
     .header-actions {
       gap: 4px;
@@ -933,6 +962,7 @@ if (topicMatch) {
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .header-logos,
     .brand-default-layer,
     .brand-mobile-title-btn,
     .header-scroll-pill,
