@@ -70,6 +70,29 @@ const nextLink = pagination?.next;
     <>
       <div class="lg:sl-hidden">
         <MobileTableOfContents />
+
+        <!-- Pie contextual inyectado dentro del desplegable móvil/tablet (Opción B) -->
+        <div id="mobileTocFooterSource" class="mobile-toc-footer" hidden>
+          <div class="mobile-toc-footer__meta">
+            <span>⏱ ~{readingMinutes} min</span>
+            {unitLabel && topicTotal > 0 && (
+              <span>
+                {unitShort} · {topicIndex}/{topicTotal}
+              </span>
+            )}
+            <span class="js-toc-pct-mirror">0 %</span>
+          </div>
+          <div class="mobile-toc-footer__actions">
+            {quizHref && (
+              <a href={quizHref} class="mobile-toc-quiz-btn">
+                🥽 Cuestionario {unitShort}
+              </a>
+            )}
+            <button type="button" class="mobile-toc-top-btn js-mobile-toc-top">
+              ↑ Volver arriba
+            </button>
+          </div>
+        </div>
       </div>
 
       <div class="right-sidebar-panel sl-hidden lg:sl-flex">
@@ -155,6 +178,18 @@ const nextLink = pagination?.next;
     const barEl = document.getElementById('tocReadingBar');
     const topBtn = document.getElementById('tocBackToTop');
 
+    // Inyectar el pie contextual dentro del desplegable móvil/tablet (Opción B)
+    const mobileFooterSource = document.getElementById('mobileTocFooterSource');
+    const mobileDropdown = document.querySelector('mobile-starlight-toc .dropdown');
+    if (mobileFooterSource && mobileDropdown && mobileFooterSource.parentElement !== mobileDropdown) {
+      mobileFooterSource.hidden = false;
+      mobileDropdown.appendChild(mobileFooterSource);
+    }
+
+    const mirrorPctEls = Array.from(document.querySelectorAll<HTMLElement>('.js-toc-pct-mirror'));
+    const mobileTopBtn = document.querySelector<HTMLElement>('.js-mobile-toc-top');
+    const mobileDetails = document.getElementById('starlight__mobile-toc') as HTMLDetailsElement | null;
+
     let rafId = 0;
 
     const update = () => {
@@ -164,6 +199,9 @@ const nextLink = pagination?.next;
       const ratio = maxScroll > 20 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
       const pct = Math.round(ratio * 100);
       if (pctEl) pctEl.textContent = `${pct} %`;
+      mirrorPctEls.forEach((el) => {
+        el.textContent = `${pct} %`;
+      });
       if (barEl) barEl.style.transform = `scaleX(${ratio.toFixed(4)})`;
     };
 
@@ -172,6 +210,7 @@ const nextLink = pagination?.next;
     };
 
     const scrollTop = () => {
+      if (mobileDetails) mobileDetails.open = false;
       const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
     };
@@ -179,6 +218,7 @@ const nextLink = pagination?.next;
     window.addEventListener('scroll', schedule, { passive: true });
     window.addEventListener('resize', schedule, { passive: true });
     topBtn?.addEventListener('click', scrollTop);
+    mobileTopBtn?.addEventListener('click', scrollTop);
     update();
 
     cleanupTocSync = () => {
@@ -186,6 +226,7 @@ const nextLink = pagination?.next;
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       topBtn?.removeEventListener('click', scrollTop);
+      mobileTopBtn?.removeEventListener('click', scrollTop);
     };
   }
 

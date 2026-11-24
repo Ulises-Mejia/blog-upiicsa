@@ -8,6 +8,9 @@ const subtitle = siteBrand.subtitle.es;
 
 const route = Astro.locals.starlightRoute;
 const pageTitle = route?.entry?.data?.title || siteBrand.title;
+const hasToc = Boolean(route?.toc);
+const firstSectionLabel =
+  route?.toc?.items?.[1]?.text || route?.toc?.items?.[0]?.text || 'Resumen';
 const pathname = Astro.url.pathname;
 
 // Insignia contextual corta para la cabecera al hacer scroll
@@ -32,8 +35,8 @@ if (topicMatch) {
 }
 ---
 
-<div class="header-custom sl-flex">
-  <!-- GRUPO IZQUIERDO: MENÚ SANDWICH + LOGOS + MARCA (Y TÍTULO ANIMADO EN MÓVIL) -->
+<div class="header-custom sl-flex" data-has-page-toc={hasToc ? 'true' : 'false'}>
+  <!-- GRUPO IZQUIERDO: MENÚ SANDWICH + LOGOS + MARCA (Y PÍLDORA 2 LÍNEAS EN MÓVIL) -->
   <div class="header-brand-group sl-flex">
     <button
       id="menuToggle"
@@ -55,44 +58,103 @@ if (topicMatch) {
     </a>
 
     <div class="brand-swap-slot">
-      <a href={homeHref} class="header-brand brand-default-layer" title="Ir al Inicio">
-        <div class="brand-text">
-          <div class="brand-title">
-            {siteBrand.title}
-            <span class="brand-badge">{siteBrand.badge}</span>
+      <div class="brand-default-layer">
+        <a href={homeHref} class="header-brand" title="Ir al Inicio">
+          <div class="brand-text">
+            <div class="brand-title">
+              {siteBrand.title}
+              <span class="brand-badge">{siteBrand.badge}</span>
+            </div>
+            <span class="brand-subtitle">{subtitle}</span>
           </div>
-          <span class="brand-subtitle">{subtitle}</span>
-        </div>
-      </a>
+        </a>
 
-      <!-- En móvil (≤ 768px): el título de la página entra suavemente ocupando el lugar de la marca -->
+        <!-- Acceso compacto al índice en móvil cuando estamos arriba de la página -->
+        {hasToc && (
+          <button
+            id="headerMobileTopTocBtn"
+            class="mobile-top-toc-trigger"
+            type="button"
+            aria-label="Ver secciones de esta página"
+            aria-expanded="false"
+            title="Secciones de esta página"
+          >
+            <span class="mobile-top-toc-trigger__label">Índice</span>
+            <span class="toc-chevron" aria-hidden="true">▾</span>
+          </button>
+        )}
+      </div>
+
+      <!-- En móvil (≤ 768px): píldora interactiva de 2 líneas (Título + Sección activa + desplegable) -->
       <button
         id="headerMobileTitleBtn"
         class="brand-mobile-title-btn"
         type="button"
         aria-hidden="true"
+        aria-expanded="false"
         tabindex="-1"
-        title="Volver al inicio de la página"
+        title={hasToc ? 'Ver secciones de esta página' : 'Volver al inicio de la página'}
       >
         {contextBadge && <span class="context-pill-badge context-pill-badge--sm">{contextBadge}</span>}
-        <span class="brand-mobile-title-text">{pageTitle}</span>
+        <span class="brand-mobile-title-stack">
+          <span class="brand-mobile-title-text">{pageTitle}</span>
+          {hasToc && (
+            <span class="brand-mobile-section-line">
+              <span class="section-arrow" aria-hidden="true">▸</span>
+              <span class="js-header-active-section">{firstSectionLabel}</span>
+            </span>
+          )}
+        </span>
+        <span class="brand-mobile-title-action" aria-hidden="true">
+          {hasToc ? <span class="toc-chevron">▾</span> : <span>↑</span>}
+        </span>
       </button>
     </div>
   </div>
 
-  <!-- CENTRO (ESCRITORIO Y TABLET > 768px): PÍLDORA ANIMADA CON EL TÍTULO DE LA PÁGINA -->
+  <!-- CENTRO (ESCRITORIO Y TABLET > 768px) -->
   <div class="header-scroll-context">
+    <!-- En tablet (769px - 1151px) al estar arriba de la página: acceso directo a las secciones -->
+    {hasToc && (
+      <button
+        id="headerTabletTopTocBtn"
+        class="header-tablet-toc-btn"
+        type="button"
+        aria-expanded="false"
+        title="Secciones de esta página"
+      >
+        <span aria-hidden="true">📑</span>
+        <span>En esta página</span>
+        <span class="header-tablet-toc-btn__sep" aria-hidden="true">·</span>
+        <span class="header-tablet-toc-btn__current js-header-active-section">{firstSectionLabel}</span>
+        <span class="toc-chevron" aria-hidden="true">▾</span>
+      </button>
+    )}
+
+    <!-- Barra animada del título al bajar (en escritorio sube arriba; en tablet abre secciones) -->
     <button
       id="headerCenterTitleBtn"
       class="header-scroll-pill"
       type="button"
       aria-hidden="true"
+      aria-expanded="false"
       tabindex="-1"
       title="Volver al inicio de la página"
     >
       {contextBadge && <span class="context-pill-badge">{contextBadge}</span>}
-      <span class="header-scroll-pill__title">{pageTitle}</span>
-      <span class="header-scroll-pill__up" aria-hidden="true">↑</span>
+      <span class="header-scroll-pill__stack">
+        <span class="header-scroll-pill__title">{pageTitle}</span>
+        {hasToc && (
+          <span class="header-scroll-pill__section">
+            <span class="section-arrow" aria-hidden="true">▸</span>
+            <span class="js-header-active-section">{firstSectionLabel}</span>
+          </span>
+        )}
+      </span>
+      <span class="header-scroll-pill__up" aria-hidden="true">
+        <span class="pill-icon-desktop">↑</span>
+        <span class="pill-icon-tablet toc-chevron">{hasToc ? '▾' : '↑'}</span>
+      </span>
     </button>
   </div>
 
@@ -216,7 +278,14 @@ if (topicMatch) {
     const root = document.documentElement;
     const centerBtn = document.getElementById('headerCenterTitleBtn');
     const mobileBtn = document.getElementById('headerMobileTitleBtn');
+    const mobileTopTocBtn = document.getElementById('headerMobileTopTocBtn');
+    const tabletTopTocBtn = document.getElementById('headerTabletTopTocBtn');
     const progressBar = document.getElementById('headerProgressBar');
+    const mobileTocDetails = document.getElementById('starlight__mobile-toc') as HTMLDetailsElement | null;
+    const displayCurrent = document.querySelector<HTMLElement>('mobile-starlight-toc .display-current');
+    const sectionLabels = Array.from(document.querySelectorAll<HTMLElement>('.js-header-active-section'));
+
+    const isCompactTocMode = () => window.innerWidth < 1152 && Boolean(mobileTocDetails);
 
     // Detectar el H1 visible real (en cuestionarios el #_top se oculta y el visible es .quiz-title)
     const getActiveHeading = (): HTMLElement | null => {
@@ -226,6 +295,53 @@ if (topicMatch) {
       if (quizH1 && quizH1.offsetParent !== null) return quizH1;
       return document.querySelector<HTMLElement>('main h1');
     };
+
+    // Sincronizar en vivo el nombre de la sección activa en la cabecera (Opción B)
+    const syncActiveSectionText = () => {
+      const text = displayCurrent?.textContent?.trim();
+      if (!text) return;
+      sectionLabels.forEach((el) => {
+        el.textContent = text;
+      });
+    };
+
+    let sectionObserver: MutationObserver | null = null;
+    if (displayCurrent && sectionLabels.length > 0) {
+      syncActiveSectionText();
+      sectionObserver = new MutationObserver(syncActiveSectionText);
+      sectionObserver.observe(displayCurrent, {
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+    }
+
+    // Sincronizar estado abierto/cerrado del desplegable de secciones (flecha ▾ + aria-expanded)
+    const syncTocOpenState = () => {
+      const open = Boolean(mobileTocDetails?.open);
+      if (open) {
+        root.setAttribute('data-mobile-toc-open', 'true');
+      } else {
+        root.removeAttribute('data-mobile-toc-open');
+      }
+      const expanded = open ? 'true' : 'false';
+      mobileTopTocBtn?.setAttribute('aria-expanded', expanded);
+      tabletTopTocBtn?.setAttribute('aria-expanded', expanded);
+      if (isCompactTocMode()) {
+        centerBtn?.setAttribute('aria-expanded', expanded);
+        mobileBtn?.setAttribute('aria-expanded', expanded);
+      }
+    };
+
+    const toggleMobileToc = (e: Event) => {
+      if (!mobileTocDetails) return;
+      e.preventDefault();
+      e.stopPropagation();
+      mobileTocDetails.open = !mobileTocDetails.open;
+      syncTocOpenState();
+    };
+
+    mobileTocDetails?.addEventListener('toggle', syncTocOpenState);
 
     let isDocked = false;
     let rafId = 0;
@@ -246,17 +362,6 @@ if (topicMatch) {
       mobileBtn?.setAttribute('tabindex', tabVal);
     };
 
-    const getStickyTopOffset = (): number => {
-      const headerEl = document.querySelector<HTMLElement>('header.header');
-      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 64;
-      const mobileToc = document.querySelector<HTMLElement>('mobile-starlight-toc nav');
-      const tocH =
-        mobileToc && window.getComputedStyle(mobileToc).display !== 'none'
-          ? mobileToc.getBoundingClientRect().height
-          : 0;
-      return headerH + tocH;
-    };
-
     const updateOnScroll = () => {
       rafId = 0;
 
@@ -268,15 +373,17 @@ if (topicMatch) {
         progressBar.style.transform = `scaleX(${ratio.toFixed(4)})`;
       }
 
-      // 2. Transición del título hacia la cabecera con histéresis para evitar parpadeos
+      // 2. Transición del título hacia la cabecera con histéresis
       const heading = getActiveHeading();
       if (!heading) {
         setDockedState(false);
         return;
       }
 
+      const headerEl = document.querySelector<HTMLElement>('header.header');
+      const headerH = headerEl ? headerEl.getBoundingClientRect().height : 64;
       const rect = heading.getBoundingClientRect();
-      const triggerY = getStickyTopOffset() + 4;
+      const triggerY = headerH + 6;
 
       if (!isDocked) {
         if (rect.bottom <= triggerY && window.scrollY > 36) {
@@ -300,19 +407,43 @@ if (topicMatch) {
       window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
     };
 
-    centerBtn?.addEventListener('click', scrollToTop);
-    mobileBtn?.addEventListener('click', scrollToTop);
+    // En móvil y tablet (< 72rem) con índice: tocar la píldora despliega secciones. En escritorio: sube al inicio.
+    const onCenterClick = (e: Event) => {
+      if (isCompactTocMode()) {
+        toggleMobileToc(e);
+      } else {
+        scrollToTop();
+      }
+    };
+
+    const onMobileClick = (e: Event) => {
+      if (isCompactTocMode()) {
+        toggleMobileToc(e);
+      } else {
+        scrollToTop();
+      }
+    };
+
+    centerBtn?.addEventListener('click', onCenterClick);
+    mobileBtn?.addEventListener('click', onMobileClick);
+    mobileTopTocBtn?.addEventListener('click', toggleMobileToc);
+    tabletTopTocBtn?.addEventListener('click', toggleMobileToc);
     window.addEventListener('scroll', scheduleUpdate, { passive: true });
     window.addEventListener('resize', scheduleUpdate, { passive: true });
 
     // Estado inicial limpio
     root.removeAttribute('data-header-title');
+    root.removeAttribute('data-mobile-toc-open');
     updateOnScroll();
 
     cleanupScrollEffects = () => {
       if (rafId) window.cancelAnimationFrame(rafId);
-      centerBtn?.removeEventListener('click', scrollToTop);
-      mobileBtn?.removeEventListener('click', scrollToTop);
+      sectionObserver?.disconnect();
+      mobileTocDetails?.removeEventListener('toggle', syncTocOpenState);
+      centerBtn?.removeEventListener('click', onCenterClick);
+      mobileBtn?.removeEventListener('click', onMobileClick);
+      mobileTopTocBtn?.removeEventListener('click', toggleMobileToc);
+      tabletTopTocBtn?.removeEventListener('click', toggleMobileToc);
       window.removeEventListener('scroll', scheduleUpdate);
       window.removeEventListener('resize', scheduleUpdate);
     };
@@ -468,6 +599,7 @@ if (topicMatch) {
     gap: 12px;
     text-decoration: none;
     color: inherit;
+    min-width: 0;
   }
 
   .header-logos {
@@ -502,11 +634,25 @@ if (topicMatch) {
   }
 
   .brand-default-layer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
   }
 
-  .brand-mobile-title-btn {
+  .mobile-top-toc-trigger,
+  .brand-mobile-title-btn,
+  .header-tablet-toc-btn {
     display: none;
+  }
+
+  .toc-chevron {
+    display: inline-block;
+    transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  :global(html[data-mobile-toc-open='true']) .toc-chevron {
+    transform: rotate(180deg);
   }
 
   .brand-text {
@@ -546,8 +692,10 @@ if (topicMatch) {
      BARRA CENTRAL ANIMADA CON EL TÍTULO DE LA PÁGINA (ESCRITORIO / TABLET)
      ========================================================================== */
   .header-scroll-context {
+    position: relative;
     flex: 1 1 auto;
     min-width: 0;
+    height: 46px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -564,7 +712,7 @@ if (topicMatch) {
     max-width: 58rem;
     min-width: 0;
     height: 46px;
-    padding: 6px 10px 6px 10px;
+    padding: 6px 10px;
     box-sizing: border-box;
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.14);
@@ -629,18 +777,37 @@ if (topicMatch) {
   }
 
   .context-pill-badge--sm {
-    font-size: 0.74rem;
+    font-size: 0.72rem;
     padding: 3px 7px;
     border-radius: 6px;
   }
 
-  .header-scroll-pill__title {
+  .header-scroll-pill__stack {
     flex: 1 1 auto;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .header-scroll-pill__title {
+    max-width: 100%;
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  /* En escritorio (≥ 72rem), la sección activa vive en el panel derecho, así que aquí solo mostramos el título grande */
+  .header-scroll-pill__section {
+    display: none;
+  }
+
+  .section-arrow {
+    color: #D4AF37;
+    font-weight: 900;
+    flex-shrink: 0;
   }
 
   .header-scroll-pill__up {
@@ -657,6 +824,10 @@ if (topicMatch) {
     font-weight: 900;
     color: #F4E8C1;
     transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .pill-icon-tablet {
+    display: none;
   }
 
   .header-scroll-pill:hover .header-scroll-pill__up {
@@ -772,7 +943,6 @@ if (topicMatch) {
     line-height: 1;
   }
 
-  /* Animación exclusiva en el icono del sol/luna (sin mover el botón) */
   .theme-icon {
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
@@ -791,8 +961,10 @@ if (topicMatch) {
     transform: scale(1.15);
   }
 
-  /* En pantallas medianas (769px - 1120px), ocultar subtítulo para maximizar ancho del título central */
-  @media (max-width: 1120px) and (min-width: 769px) {
+  /* ==========================================================================
+     TABLET (769px - 1151px): OPCIÓN B INTEGRADA EN LA BARRA CENTRAL
+     ========================================================================== */
+  @media (max-width: 71.99rem) and (min-width: 769px) {
     .brand-subtitle {
       display: none;
     }
@@ -801,17 +973,114 @@ if (topicMatch) {
       gap: 0.65rem;
     }
 
-    .header-scroll-pill {
-      height: 44px;
-      gap: 10px;
-      font-size: clamp(1rem, 1.45vw, 1.18rem);
-    }
-
     .header-link-btn {
       padding: 0 10px;
     }
+
+    /* Pill superior antes del scroll para acceder al índice sin ocupar segunda barra */
+    .header-tablet-toc-btn {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      max-width: 100%;
+      height: 38px;
+      padding: 0 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      color: #FFFFFF;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.25s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
+    }
+
+    :global(:root[data-theme='dark']) .header-tablet-toc-btn {
+      background: rgba(212, 175, 55, 0.12);
+      color: #F4E8C1;
+    }
+
+    .header-tablet-toc-btn:hover {
+      background: rgba(212, 175, 55, 0.22);
+      border-color: #D4AF37;
+    }
+
+    .header-tablet-toc-btn__sep {
+      color: #D4AF37;
+    }
+
+    .header-tablet-toc-btn__current {
+      max-width: 18ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #F4E8C1;
+      font-weight: 600;
+    }
+
+    :global(html[data-header-title='visible']) .header-tablet-toc-btn {
+      opacity: 0;
+      transform: translateY(-16px);
+      pointer-events: none;
+    }
+
+    /* En tablet al bajar: 2 líneas (Título + ▸ Sección activa) y botón ▾ */
+    .header-scroll-pill {
+      height: 46px;
+      gap: 10px;
+      padding: 4px 10px;
+      font-size: clamp(0.92rem, 1.35vw, 1.05rem);
+    }
+
+    .header-scroll-pill__stack {
+      align-items: flex-start;
+      gap: 1px;
+    }
+
+    .header-scroll-pill__title {
+      text-align: left;
+      line-height: 1.15;
+    }
+
+    .header-scroll-pill__section {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      max-width: 100%;
+      font-size: 0.74rem;
+      font-weight: 600;
+      color: #F4E8C1;
+      opacity: 0.92;
+      line-height: 1.15;
+    }
+
+    .header-scroll-pill__section .js-header-active-section {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .pill-icon-desktop {
+      display: none;
+    }
+
+    .pill-icon-tablet {
+      display: inline-block;
+    }
+
+    .header-scroll-pill:hover .header-scroll-pill__up {
+      transform: none;
+    }
   }
 
+  /* ==========================================================================
+     MÓVIL (≤ 768px): OPCIÓN B INTEGRADA EN LA CABECERA (RECUPERA 48 PX)
+     ========================================================================== */
   @media (max-width: 768px) {
     .header-custom {
       gap: 6px;
@@ -836,7 +1105,7 @@ if (topicMatch) {
       height: 34px;
       padding: 1px;
     }
-    /* Al hacer scroll en móvil, los escudos se repliegan suavemente para dar ancho completo y legibilidad al título */
+    /* Al hacer scroll en móvil, los escudos se repliegan suavemente para dar ancho completo a la píldora de 2 líneas */
     :global(html[data-header-title='visible']) .header-logos {
       max-width: 0;
       opacity: 0;
@@ -847,11 +1116,29 @@ if (topicMatch) {
     .brand-swap-slot {
       flex: 1 1 auto;
       min-width: 0;
-      height: 44px;
+      height: 46px;
       overflow: hidden;
     }
     .brand-default-layer {
       width: 100%;
+      justify-content: space-between;
+    }
+    .mobile-top-toc-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+      height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      border: 1px solid rgba(212, 175, 55, 0.48);
+      color: #F4E8C1;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 750;
+      cursor: pointer;
+      outline: none;
     }
     .brand-mobile-title-btn {
       position: absolute;
@@ -860,10 +1147,10 @@ if (topicMatch) {
       align-items: center;
       gap: 8px;
       width: 100%;
-      padding: 4px 10px 4px 8px;
+      padding: 4px 8px;
       box-sizing: border-box;
       border-radius: 10px;
-      border: 1.5px solid rgba(212, 175, 55, 0.5);
+      border: 1.5px solid rgba(212, 175, 55, 0.52);
       background: rgba(255, 255, 255, 0.14);
       color: #FFFFFF;
       font-family: inherit;
@@ -880,15 +1167,53 @@ if (topicMatch) {
       border-color: rgba(212, 175, 55, 0.5);
       color: #F4E8C1;
     }
+    .brand-mobile-title-stack {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+    }
     .brand-mobile-title-text {
       min-width: 0;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 800;
       line-height: 1.15;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+      white-space: nowrap;
       overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-mobile-section-line {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      min-width: 0;
+      font-size: 0.74rem;
+      font-weight: 650;
+      line-height: 1.15;
+      color: #F4E8C1;
+      opacity: 0.92;
+    }
+    .brand-mobile-section-line .js-header-active-section {
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-mobile-title-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      background: rgba(212, 175, 55, 0.2);
+      border: 1px solid rgba(212, 175, 55, 0.38);
+      color: #F4E8C1;
+      font-size: 0.84rem;
+      font-weight: 900;
     }
     :global(html[data-header-title='visible']) .brand-default-layer {
       transform: translateY(-105%);
@@ -954,17 +1279,30 @@ if (topicMatch) {
     .brand-badge {
       display: none;
     }
+    .mobile-top-toc-trigger {
+      padding: 0 7px;
+      height: 26px;
+    }
+    .mobile-top-toc-trigger__label {
+      display: none;
+    }
     .brand-mobile-title-btn {
-      padding: 3px 9px 3px 7px;
+      padding: 3px 7px;
       gap: 6px;
     }
     .context-pill-badge--sm {
-      font-size: 0.72rem;
-      padding: 2px 6px;
+      font-size: 0.68rem;
+      padding: 2px 5px;
     }
     .brand-mobile-title-text {
-      font-size: 0.95rem;
-      line-height: 1.14;
+      font-size: 0.86rem;
+    }
+    .brand-mobile-section-line {
+      font-size: 0.71rem;
+    }
+    .brand-mobile-title-action {
+      width: 22px;
+      height: 22px;
     }
     .header-actions {
       gap: 4px;
@@ -984,8 +1322,10 @@ if (topicMatch) {
     .header-logos,
     .brand-default-layer,
     .brand-mobile-title-btn,
+    .header-tablet-toc-btn,
     .header-scroll-pill,
-    .header-scroll-pill__up {
+    .header-scroll-pill__up,
+    .toc-chevron {
       transition: none !important;
     }
   }
