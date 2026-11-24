@@ -1,4 +1,28 @@
-export const identidadQuiz = {
+export interface IdentidadQuizQuestion {
+  pregunta: string;
+  opciones: readonly string[];
+  correcta: number;
+}
+
+export interface IdentidadQuizLocale {
+  title: string;
+  subtitle: string;
+  start: string;
+  next: string;
+  finish: string;
+  restart: string;
+  score: string;
+  correct: string;
+  incorrect: string;
+  questions: readonly IdentidadQuizQuestion[];
+}
+
+export interface IdentidadQuizData {
+  es: IdentidadQuizLocale;
+  en: IdentidadQuizLocale;
+}
+
+export const identidadQuiz: IdentidadQuizData = {
   es: {
     title: "Quiz Identidad Institucional IPN",
     subtitle: "Pon a prueba tus conocimientos",
@@ -26,7 +50,7 @@ export const identidadQuiz = {
         correcta: 2
       },
       {
-        pregunta: "¿Qué colores representa la bandera/tradición politécnica?",
+        pregunta: "¿Qué colores representan la tradición politécnica?",
         opciones: ["Azul y Oro", "Guinda y Blanco", "Verde y Blanco", "Rojo y Negro"],
         correcta: 1
       },

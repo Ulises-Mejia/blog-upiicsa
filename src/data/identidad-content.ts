@@ -1,5 +1,6 @@
 import { getCollection } from 'astro:content';
 import { identidadEN } from './identidad-vr-en';
+import { identidadQuiz, type IdentidadQuizData } from './identidad-quiz';
 
 const CONTENT_ID = 'es/identidad-ipn';
 const CONTENT_FILE = '/src/content/docs/es/identidad-ipn.md';
@@ -29,6 +30,7 @@ export interface IdentidadContent {
     autorMusica: LocalizedText;
     secciones: HimnoSeccion[];
   };
+  quiz: IdentidadQuizData;
 }
 
 const LYRIC_SECTIONS = [
@@ -163,7 +165,8 @@ function buildContent(markdown: string): IdentidadContent {
       autorLetra: { es: autorLetraEs, en: identidadEN.himno.autorLetra },
       autorMusica: { es: autorMusicaEs, en: identidadEN.himno.autorMusica },
       secciones
-    }
+    },
+    quiz: identidadQuiz
   };
 }
 

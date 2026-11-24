@@ -12,10 +12,10 @@
 | Bloque | Prioridad | Pendientes | En progreso | Completados |
 | :--- | :---: | :---: | :---: | :---: |
 | **1. Bugs y correcciones críticas** | 🔴 Alta | 0 | 0 | 5 |
-| **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 5 | 0 | 0 |
+| **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 6 | 0 | 0 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 6 | 0 | 0 |
-| **Total** | — | **17** | **0** | **5** |
+| **Total** | — | **12** | **0** | **10** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión · `[x]` Completado
 
@@ -53,33 +53,25 @@
 
 ## 🟠 Bloque 2 — Deuda Técnica y Arquitectura
 
-- [ ] **ARQ-01 — Unificar datos del quiz de Identidad RV y eliminar código muerto**
-  - **Ubicación:** `src/data/identidad-quiz.ts`, `src/pages/api/identidad-vr.json.ts`, `public/rv/sala-identidad.js` (L44, L48–L85)
-  - **Problema:** `src/data/identidad-quiz.ts` no se importa en ningún archivo; el quiz está duplicado a mano en `sala-identidad.js` (con diferencias de redacción en la pregunta 4). Además `identidadUI.ttsUnavailable` quedó sin uso tras eliminar el TTS de la porra.
-  - **Acción:** Servir `identidadQuiz` desde `/api/identidad-vr.json`, consumirlo desde `sala-identidad.js` y limpiar textos/referencias obsoletas de TTS (incluido el texto en `src/content/docs/es/identidad-ipn.md` L133).
+- [x] **ARQ-01 — Unificar datos del quiz de Identidad RV y eliminar código muerto**
+  - **Ubicación:** `src/data/identidad-quiz.ts`, `src/data/identidad-content.ts`, `public/rv/sala-identidad.js`, `src/content/docs/es/identidad-ipn.md`
+  - **Resuelto:** `identidadQuiz` tipado y servido desde `/api/identidad-vr.json`; eliminado el objeto duplicado y `ttsUnavailable` de `sala-identidad.js`; actualizada la descripción de la Porra en `identidad-ipn.md`.
 
-- [ ] **ARQ-02 — Corregir bloques `.lang-es` / `.lang-en` inactivos en `identidad-ipn.md`**
-  - **Ubicación:** `src/content/docs/es/identidad-ipn.md` (L139–L154)
-  - **Problema:** La sección de la Sala RV usa `<span class="lang-es">` y `<span class="lang-en" style="display: none;">`, pero ningún script alterna esa visibilidad en esta página.
-  - **Acción:** Decidir estrategia única: dejar texto plano en español para que Google Translate lo traduzca como el resto de la página, o aplicar `notranslate` + sincronización de idioma (como en `WebXRQuiz.astro`).
+- [x] **ARQ-02 — Corregir bloques `.lang-es` / `.lang-en` inactivos en `identidad-ipn.md`**
+  - **Ubicación:** `src/content/docs/es/identidad-ipn.md` (L135–L156)
+  - **Resuelto:** Eliminados los spans `.lang-en` ocultos sin script; la sección RV ahora usa texto limpio en español compatible con Google Translate como el resto de la página.
 
-- [ ] **ARQ-03 — Eliminar o parametrizar rutas `/blog-upiicsa` hardcodeadas**
-  - **Ubicación:**
-    - `public/rv/sala-identidad.html` (L9 y L119 → cambiar a ruta relativa `ipn-logo.png`)
-    - `src/content/docs/es/identidad-ipn.md` (L169 → inyectar `<meta name="base-url">` real desde `PageFrame.astro` o `Head`, o resolver vía ruta relativa)
-    - `src/content/docs/es/index.md` (L12–L25), `autores.md` (L18, L87) y CTAs finales de `1-4-2-base-rv.md`, `2-4-3-aplicaciones.md`, `3-2-bis-etapas-planeacion.md`
-  - **Acción:** Sustituir las rutas de la Sala RV por relativas, proveer `meta[name="base-url"]` real y evaluar rutas relativas o componente Astro reutilizable para los CTAs de cuestionario.
+- [x] **ARQ-03 — Eliminar o parametrizar rutas `/blog-upiicsa` hardcodeadas**
+  - **Ubicación:** `astro.config.mjs`, `public/rv/sala-identidad.html`, `src/content/docs/es/identidad-ipn.md`, `index.md`, `autores.md` y CTAs de `1-4-2-base-rv.md`, `2-4-3-aplicaciones.md`, `3-2-bis-etapas-planeacion.md`
+  - **Resuelto:** Inyectado `<meta name="base-url">` desde `astro.config.mjs` (`BASE_PATH`), cambiada `ipn-logo.png` a ruta relativa en la Sala RV y convertidos los enlaces internos de portada, CTAs de cuestionario y comentarios de autores a rutas relativas portables.
 
-- [ ] **ARQ-04 — Centralizar configuración de unidades y unificar rutas de cuestionario**
-  - **Ubicación:**
-    - Definiciones repetidas de unidades en `astro.config.mjs`, `src/components/Header.astro` (L18–L29), `src/components/PageSidebar.astro` (L25–L37) y `src/components/quiz/WebXRQuiz.astro` (L15–L19)
-    - Páginas clonadas: `src/pages/es/unidad-{1,2,3}/cuestionario.astro`
-  - **Acción:** Crear `src/config/units.ts` como fuente única de verdad (etiqueta, sigla `U-I..III`, carpeta, último tema, ruta de cuestionario) y consolidar las 3 páginas en una ruta dinámica `src/pages/es/unidad-[unit]/cuestionario.astro` con `getStaticPaths()`.
+- [x] **ARQ-04 — Centralizar configuración de unidades y unificar rutas de cuestionario**
+  - **Ubicación:** `src/config/units.ts`, `astro.config.mjs`, `Header.astro`, `PageSidebar.astro`, `WebXRQuiz.astro`, `src/pages/es/[unidad]/cuestionario.astro`
+  - **Resuelto:** Creado `src/config/units.ts` como fuente única de verdad para las 3 unidades y consolidadas las 3 páginas clonadas en una sola ruta dinámica `src/pages/es/[unidad]/cuestionario.astro` con `getStaticPaths()`.
 
-- [ ] **ARQ-05 — Actualizar `README.md` y `CONTEXTO_RV.md` para reflejar el estado real**
+- [x] **ARQ-05 — Actualizar `README.md` y `CONTEXTO_RV.md` para reflejar el estado real**
   - **Ubicación:** `README.md`, `CONTEXTO_RV.md`
-  - **Problema:** `README.md` aún lista `src/content/docs/404.md`, omite `PageSidebar.astro`, `quiz/`, `data/`, `api/` y `public/rv/`, afirma que hay buscador activo (`pagefind: false`) y muestra `import { Tabs }` dentro de `.md`. `CONTEXTO_RV.md` mantiene como pendientes tareas ya terminadas (joystick, `aframe-environment-component`, alto responsive del iframe).
-  - **Acción:** Sincronizar ambos documentos tras cerrar los bloques principales.
+  - **Resuelto:** Sincronizada la estructura del proyecto, componentes, rutas multimedia, estado de `pagefind` y el estado vigente de la Sala RV alineado con `PENDIENTES.md`.
 
 ---
 
@@ -169,9 +161,15 @@ Antes de ejecutar ciertos cambios, conviene definir:
 ### 2026-11-24
 - Auditoría integral de estructura, código, contenido, cuestionarios WebXR/2D y Sala RV sobre `main` (`7837689`).
 - Creación de `PENDIENTES.md` con el inventario completo priorizado en 4 bloques (22 pendientes identificados).
-- **Bloque 1 completado (5/5):**
+- **Bloque 1 completado (5/5 — commit `6e9119d`):**
   - `BUG-01`: eliminados `<a-cursor id="cursor">` y `</a-camera>` duplicados en `public/rv/sala-identidad.html`.
   - `BUG-02`: corregida la condición de finalización en `src/components/quiz/scripts/ar-quiz.ts` para mostrar la retroalimentación de la última pregunta antes de pasar a resultados.
   - `BUG-03`: movida `plantilla-tema.md` a `templates/plantilla-tema.md` (fuera de `src/content/docs/`), corregidos ejemplos `.mdx` y rutas con `/blog-upiicsa`, y actualizadas referencias en `README.md`.
   - `BUG-04`: agregada limpieza de listeners globales (`cleanupMenuToggle` en `Header.astro` y `cleanupWelcomeCurtain` en `WelcomeCurtain.astro`).
   - `BUG-05`: eliminada referencia inexistente `himno_ipn.ogg` en `identidad-ipn.md` y sustituidas las etiquetas `<img>` 404 de `autores.md` por avatares tipográficos con iniciales (`UM`/`ML`) y guía comentada para activar fotos reales.
+- **Bloque 2 completado (5/5):**
+  - `ARQ-01`: unificado `src/data/identidad-quiz.ts` en `/api/identidad-vr.json`, retirado el quiz duplicado y `ttsUnavailable` de `sala-identidad.js`, y corregida la descripción de la Porra en `identidad-ipn.md`.
+  - `ARQ-02`: limpiados los bloques `.lang-es`/`.lang-en` inactivos en `identidad-ipn.md` dejando texto en español compatible con Google Translate.
+  - `ARQ-03`: inyectado `<meta name="base-url">` desde `astro.config.mjs` y eliminadas las rutas `/blog-upiicsa` hardcodeadas en `src/` y `public/rv/`.
+  - `ARQ-04`: creada fuente única de unidades en `src/config/units.ts` y consolidados los cuestionarios en la ruta dinámica `src/pages/es/[unidad]/cuestionario.astro`.
+  - `ARQ-05`: actualizados `README.md` y `CONTEXTO_RV.md` al estado real del proyecto.

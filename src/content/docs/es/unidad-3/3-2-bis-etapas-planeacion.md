@@ -42,7 +42,7 @@ Como demuestran García Sánchez et al. (2016) en la metodología `MEDESME` y Mi
 Has concluido todos los temas de la **Unidad III: Integración y Autoría Multimedia**. Pon a prueba lo aprendido interactuando con preguntas en Realidad Aumentada o en modo clásico:
 
 <div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
-  <a href="/blog-upiicsa/es/unidad-3/cuestionario/" class="quiz-cta-btn">
+  <a href="../cuestionario/" class="quiz-cta-btn">
     🥽 Iniciar Cuestionario de Evaluación (Unidad III) →
   </a>
 </div>

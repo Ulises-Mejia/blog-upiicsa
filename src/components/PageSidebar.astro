@@ -1,6 +1,7 @@
 ---
 import MobileTableOfContents from 'virtual:starlight/components/MobileTableOfContents';
 import TableOfContents from 'virtual:starlight/components/TableOfContents';
+import { getUnitByPath, getUnitQuizHref } from '../config/units';
 
 const { toc, sidebar, pagination, entry } = Astro.locals.starlightRoute;
 const pathname = Astro.url.pathname;
@@ -18,23 +19,10 @@ const wordCount = rawBody
 const readingMinutes = Math.max(1, Math.round(wordCount / 200));
 
 // Contexto de unidad y progreso dentro de la unidad
-let unitLabel = '';
-let unitShort = '';
-let quizHref = '';
-
-if (pathname.includes('/unidad-1/')) {
-  unitLabel = 'Unidad I';
-  unitShort = 'U-I';
-  quizHref = `${base}/es/unidad-1/cuestionario/`;
-} else if (pathname.includes('/unidad-2/')) {
-  unitLabel = 'Unidad II';
-  unitShort = 'U-II';
-  quizHref = `${base}/es/unidad-2/cuestionario/`;
-} else if (pathname.includes('/unidad-3/')) {
-  unitLabel = 'Unidad III';
-  unitShort = 'U-III';
-  quizHref = `${base}/es/unidad-3/cuestionario/`;
-}
+const currentUnit = getUnitByPath(pathname);
+const unitLabel = currentUnit?.label ?? '';
+const unitShort = currentUnit?.short ?? '';
+const quizHref = currentUnit ? getUnitQuizHref(currentUnit, base) : '';
 
 type SidebarEntry = (typeof sidebar)[number];
 function collectLinks(entries: SidebarEntry[]): Array<Extract<SidebarEntry, { type: 'link' }>> {

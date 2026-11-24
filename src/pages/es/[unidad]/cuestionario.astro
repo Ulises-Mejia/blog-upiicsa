@@ -1,0 +1,30 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import WebXRQuiz from '../../../components/quiz/WebXRQuiz.astro';
+import { UNITS, type UnitConfig } from '../../../config/units';
+
+export function getStaticPaths() {
+  return UNITS.map((unit) => ({
+    params: { unidad: unit.directory },
+    props: { unit },
+  }));
+}
+
+interface Props {
+  unit: UnitConfig;
+}
+
+const { unit } = Astro.props;
+---
+
+<StarlightPage
+  frontmatter={{
+    title: `Cuestionario en Realidad Aumentada — ${unit.label}`,
+    description: `Evaluación interactiva inmersiva WebXR para la ${unit.label}.`,
+    template: 'splash',
+    prev: false,
+    next: false,
+  }}
+>
+  <WebXRQuiz unit={unit.id} />
+</StarlightPage>

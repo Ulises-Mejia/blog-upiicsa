@@ -1,5 +1,6 @@
 ---
 import { siteBrand } from '../config/site';
+import { getUnitById, getUnitByPath } from '../config/units';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const homeHref = `${base}/es/`;
@@ -16,16 +17,13 @@ const pathname = Astro.url.pathname;
 // Insignia contextual corta para la cabecera al hacer scroll
 let contextBadge = '';
 const topicMatch = pathname.match(/\/unidad-(\d+)\/(\d+)-(\d+)-(\d+|bis)-/);
+const matchedUnit = getUnitByPath(pathname);
 if (topicMatch) {
   const [, unitNum, major, minor, sub] = topicMatch;
-  const roman = unitNum === '1' ? 'U-I' : unitNum === '2' ? 'U-II' : 'U-III';
-  contextBadge = sub === 'bis' ? roman : `${major}.${minor}.${sub}`;
-} else if (pathname.includes('/unidad-1/cuestionario')) {
-  contextBadge = 'Quiz U-I';
-} else if (pathname.includes('/unidad-2/cuestionario')) {
-  contextBadge = 'Quiz U-II';
-} else if (pathname.includes('/unidad-3/cuestionario')) {
-  contextBadge = 'Quiz U-III';
+  const unitCfg = getUnitById(Number(unitNum));
+  contextBadge = sub === 'bis' ? (unitCfg?.short ?? `U-${unitNum}`) : `${major}.${minor}.${sub}`;
+} else if (matchedUnit && pathname.includes('/cuestionario')) {
+  contextBadge = `Quiz ${matchedUnit.short}`;
 } else if (pathname.includes('/identidad-ipn')) {
   contextBadge = 'IPN';
 } else if (pathname.includes('/autores')) {

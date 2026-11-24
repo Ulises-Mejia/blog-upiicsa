@@ -41,7 +41,7 @@ Por el contrario, cuando el producto de software o componente multimedia está d
 Has concluido todos los temas de la **Unidad II: Tecnologías Emergentes en las Herramientas Multimedias**. Pon a prueba lo aprendido interactuando con preguntas en Realidad Aumentada o en modo clásico:
 
 <div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
-  <a href="/blog-upiicsa/es/unidad-2/cuestionario/" class="quiz-cta-btn">
+  <a href="../cuestionario/" class="quiz-cta-btn">
     🥽 Iniciar Cuestionario de Evaluación (Unidad II) →
   </a>
 </div>

@@ -1,5 +1,6 @@
 ---
 import { getQuizByUnit } from '../../data/cuestionarios';
+import { getUnitById } from '../../config/units';
 
 interface Props {
   unit: number;
@@ -12,12 +13,8 @@ const totalQuestions = quiz?.preguntas.length ?? 0;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 // Último tema de cada unidad (donde vive el CTA que trae al cuestionario)
-const lastTopicByUnit: Record<number, string> = {
-  1: 'unidad-1/1-4-2-base-rv',
-  2: 'unidad-2/2-4-3-aplicaciones',
-  3: 'unidad-3/3-2-bis-etapas-planeacion',
-};
-const unitBackHref = `${base}/es/${lastTopicByUnit[unit] ?? ''}/`;
+const lastTopicSlug = getUnitById(unit)?.lastTopicSlug ?? '';
+const unitBackHref = lastTopicSlug ? `${base}/es/${lastTopicSlug}/` : `${base}/es/`;
 ---
 
 <div

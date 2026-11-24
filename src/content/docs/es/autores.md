@@ -17,7 +17,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
       <!-- Para activar fotografía real: guarda la imagen en public/images/autor_ulises.jpg,
            descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
       <img
-        src="/blog-upiicsa/images/autor_ulises.jpg"
+        src="../../images/autor_ulises.jpg"
         alt="Fotografía de Ulises Mejía Ortega"
         class="author-photo"
       />
@@ -88,7 +88,7 @@ Conoce al equipo responsable del diseño, desarrollo tecnológico y curaduría d
       <!-- Para activar fotografía real: guarda la imagen en public/images/autor_marco.jpg,
            descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
       <img
-        src="/blog-upiicsa/images/autor_marco.jpg"
+        src="../../images/autor_marco.jpg"
         alt="Fotografía de Marco Antonio Linares Zurita"
         class="author-photo"
       />

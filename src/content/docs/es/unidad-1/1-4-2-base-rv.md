@@ -41,7 +41,7 @@ Para que la animación sostenga la ilusión psicológica de **presencia** («est
 Has concluido todos los temas de la **Unidad I: Contexto y Fundamentos de la Multimedia**. Pon a prueba lo aprendido interactuando con preguntas en Realidad Aumentada o en modo clásico:
 
 <div style="text-align: center; margin: 1.5rem 0 0.5rem 0;">
-  <a href="/blog-upiicsa/es/unidad-1/cuestionario/" class="quiz-cta-btn">
+  <a href="../cuestionario/" class="quiz-cta-btn">
     🥽 Iniciar Cuestionario de Evaluación (Unidad I) →
   </a>
 </div>

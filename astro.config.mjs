@@ -1,9 +1,12 @@
 import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
+import { UNITS } from './src/config/units';
+
+const BASE_PATH = '/blog-upiicsa';
 
 export default defineConfig({
   site: 'https://ulises-mejia.github.io',
-  base: '/blog-upiicsa',
+  base: BASE_PATH,
   vite: {
     build: {
       chunkSizeWarningLimit: 650,
@@ -14,6 +17,15 @@ export default defineConfig({
       title: 'Multimedia UPIICSA',
       pagefind: false,
       disable404Route: true,
+      head: [
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'base-url',
+            content: BASE_PATH,
+          },
+        },
+      ],
       components: {
         Header: './src/components/Header.astro',
         Footer: './src/components/Footer.astro',
@@ -31,24 +43,12 @@ export default defineConfig({
         './src/styles/custom.css',
       ],
       sidebar: [
-        {
-          label: 'Unidad I: Contexto y Fundamentos',
+        ...UNITS.map((unit) => ({
+          label: unit.sidebarLabel,
           items: [
-            { autogenerate: { directory: 'unidad-1' } },
+            { autogenerate: { directory: unit.directory } },
           ],
-        },
-        {
-          label: 'Unidad II: Tecnologías Emergentes',
-          items: [
-            { autogenerate: { directory: 'unidad-2' } },
-          ],
-        },
-        {
-          label: 'Unidad III: Integración y Autoría',
-          items: [
-            { autogenerate: { directory: 'unidad-3' } },
-          ],
-        },
+        })),
         {
           label: 'Identidad Institucional IPN',
           slug: 'identidad-ipn',

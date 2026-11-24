@@ -129,27 +129,27 @@ El Decálogo reúne los preceptos éticos y de responsabilidad cívica redactado
 
 ## 🥽 Sala de Realidad Virtual - Identidad Institucional
 
-Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando), **Himno Politécnico** (reproducir/pausar), **Decálogo del Politécnico** (10 principios) y **Porra Politécnica "El Huélum"** (con síntesis de voz).
+Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando), **Himno Politécnico** (reproducir/pausar y letra completa), **Decálogo del Politécnico** (10 principios) y **Porra Politécnica "El Huélum"** (mural completo).
 
 <div class="rv-room-container" style="margin: 2rem 0;">
   <div class="rv-intro" style="background: linear-gradient(135deg, rgba(0, 100, 58, 0.1) 0%, rgba(128, 0, 64, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.4); margin-bottom: 1rem;">
     <p style="margin: 0 0 1rem 0; font-weight: 600;">🏛️ Recorrido Virtual Interactivo</p>
     <ul style="margin: 0 0 1rem 1.5rem; padding: 0;">
-      <li><span class="lang-es">Navegación con joystick virtual o teclado WASD (en lentes, thumbstick)</span><span class="lang-en" style="display: none;">Navigation with virtual joystick or WASD keyboard (thumbstick on headsets)</span></li>
-      <li><span class="lang-es">Compatible con escritorio, móvil y lentes VR</span><span class="lang-en" style="display: none;">Compatible with desktop, mobile and VR headsets</span></li>
-      <li><span class="lang-es">Usa auriculares para mejor experiencia</span><span class="lang-en" style="display: none;">Use headphones for better experience</span></li>
+      <li>Navegación con joystick virtual o teclado WASD (en lentes, thumbstick)</li>
+      <li>Compatible con escritorio, móvil y lentes VR</li>
+      <li>Usa auriculares para mejor experiencia</li>
     </ul>
     <button id="btn-enter-vr" class="rv-enter-btn" style="background: linear-gradient(135deg, #00643A 0%, #00361F 100%); color: white; border: 2px solid #D4AF37; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-      🥽 <span class="lang-es">Entrar a la sala</span><span class="lang-en" style="display: none;">Enter the room</span>
+      🥽 Entrar a la sala
     </button>
     <button id="btn-vr-fullscreen" class="rv-fullscreen-btn" style="display: none; margin-left: 10px; background: #D4AF37; color: #00361F; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-      ⛶ <span class="lang-es">Pantalla completa</span><span class="lang-en" style="display: none;">Fullscreen</span>
+      ⛶ Pantalla completa
     </button>
   </div>
 
   <div id="vr-webgl-warning" style="display: none; background: rgba(128, 0, 64, 0.1); border: 2px solid #800040; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; color: #800040;">
-    <strong>⚠️ <span class="lang-es">WebGL no soportado</span><span class="lang-en" style="display: none;">WebGL not supported</span></strong><br>
-    <span class="lang-es">Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.</span><span class="lang-en" style="display: none;">This browser does not support WebGL. The virtual reality room cannot be displayed.</span>
+    <strong>⚠️ WebGL no soportado</strong><br>
+    Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.
   </div>
 
   <div id="vr-container" style="display: none; width: 100%; height: clamp(340px, 65vh, 600px); border-radius: 12px; overflow: hidden; border: 2px solid #00643A; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
@@ -165,7 +165,7 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
 
 <script>
 (function() {
-  const base = document.querySelector('meta[name="base-url"]')?.content || '/blog-upiicsa';
+  const metaBase = document.querySelector('meta[name="base-url"]')?.getAttribute('content')?.replace(/\/$/, '') || '';
   const btnEnter = document.getElementById('btn-enter-vr');
   const btnFullscreen = document.getElementById('btn-vr-fullscreen');
   const vrContainer = document.getElementById('vr-container');
@@ -203,7 +203,9 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
     }
 
     const lang = getCurrentLang();
-    const vrUrl = `${base}/rv/sala-identidad.html?lang=${lang}`;
+    const vrUrl = metaBase
+      ? `${metaBase}/rv/sala-identidad.html?lang=${lang}`
+      : new URL(`../../rv/sala-identidad.html?lang=${lang}`, window.location.href).href;
 
     vrIframe.src = vrUrl;
     vrContainer.style.display = 'block';

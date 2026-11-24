@@ -64,7 +64,7 @@ Imagina este sistema como una revista digital interactiva de la UPIICSA que func
 ### 1. El motor web: ¿Qué es Astro y por qué lo usamos?
 Tradicionalmente, para hacer una página web escribirías archivos `.html` a mano repitiendo la misma cabecera, pie de página y menús en cada archivo. Si tenías 30 temas y querías cambiar el logotipo, ¡tenías que editar 30 archivos!
 * **Astro** resuelve esto: es un **generador de sitios estáticos**. Funciona como una plantilla maestra inteligente: tú diseñas la barra superior, el pie de página y el menú lateral una sola vez en componentes reutilizables (`.astro`), y Astro se encarga de estamparlos en cada página.
-* **Starlight** es una extensión de Astro especializada en documentación y blogs académicos: nos da gratis la barra lateral ordenada por unidades, el buscador, el modo oscuro y el diseño adaptable a teléfonos móviles.
+* **Starlight** es una extensión de Astro especializada en documentación y blogs académicos: nos da gratis la barra lateral ordenada por unidades, el índice de secciones internas, el modo oscuro y el diseño adaptable a teléfonos móviles *(el buscador Pagefind está desactivado actualmente en `astro.config.mjs`)*.
 
 ### 2. El contenido: Escribir sin complicaciones con Markdown (.md)
 Para redactar un nuevo tema de la materia, no necesitas programar HTML ni CSS complejo:
@@ -97,49 +97,71 @@ Como este repositorio es para la asignatura de **Herramientas Multimedia**, no s
 ## 📁 Estructura del Proyecto
 
 ```
-/blog_upiicsa
+/blog-upiicsa
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml             # Automatización CI/CD para GitHub Pages
 ├── .gitignore                     # Exclusión de dependencias y temporales
-├── astro.config.mjs               # Configuración central de Astro y Starlight
+├── astro.config.mjs               # Configuración central de Astro, Starlight, meta base-url y sidebar
 ├── package.json                   # Dependencias y scripts de NPM
 ├── package-lock.json              # Registro de versiones exactas
 ├── tsconfig.json                  # Configuración de TypeScript
 ├── README.md                      # Documentación maestra y manual del proyecto
+├── PENDIENTES.md                  # Tablero vivo de seguimiento, bugs y mejoras
+├── CONTEXTO_RV.md                 # Referencia técnica y fases de la Sala RV de Identidad IPN
 │
 ├── templates/
 │   └── plantilla-tema.md          # Plantilla base lista para clonar y crear temas (no se publica)
-├── public/                        # Archivos estáticos servidos directamente en la raíz web
+├── public/                        # Archivos estáticos servidos directamente bajo /blog-upiicsa/
 │   ├── ipn_logo.svg               # Escudo oficial vectorial del IPN
 │   ├── upiicsa_logo.svg           # Escudo oficial vectorial de la UPIICSA
-│   ├── audios/                    # Carpeta para archivos de sonido (.mp3, .wav)
+│   ├── audios/                    # Grabaciones de audio (himno_ipn.mp3)
 │   ├── images/                    # Carpeta para fotografías e ilustraciones (.png, .jpg, .svg)
-│   └── videos/                    # Carpeta para archivos de video (.mp4, .webm)
+│   ├── videos/                    # Carpeta para archivos de video (.mp4, .webm)
+│   └── rv/                        # Escena aislada A-Frame de la Sala de Identidad IPN
+│       ├── sala-identidad.html    # Marcado y escena 3D WebGL/WebXR
+│       ├── sala-identidad.js      # Lógica interactiva, audio, joystick, límites y quiz
+│       ├── ipn-logo.png           # Textura del escudo IPN para la escena 3D
+│       └── fonts/                 # Atlas tipográfico SDF (Noto Sans con soporte de acentos)
 │
 └── src/
     ├── components/                # Componentes institucionales desarrollados en Astro
-    │   ├── Header.astro           # Barra superior: menú sandwich, logo, modo oscuro y traducción
+    │   ├── Header.astro           # Cabecera: menú, logos, título animado, progreso, TOC móvil, tema e idioma
     │   ├── Footer.astro           # Paginación y metadatos de fin de tema
-    │   ├── PageFrame.astro        # Contenedor maestro y pie de página institucional fijo
-    │   └── WelcomeCurtain.astro   # Cortina de bienvenida institucional con memoria de sesión
+    │   ├── PageFrame.astro        # Contenedor maestro, Google Translate y barra inferior institucional
+    │   ├── PageSidebar.astro      # Índice lateral enriquecido (tiempo de lectura, progreso y accesos)
+    │   ├── WelcomeCurtain.astro   # Cortina de bienvenida institucional con memoria de sesión
+    │   └── quiz/                  # Sistema dual de cuestionarios (2D accesible + WebXR RA)
+    │       ├── WebXRQuiz.astro    # Interfaz principal y DOM overlay de Realidad Aumentada
+    │       └── scripts/           # quiz-core.ts, quiz-2d.ts y ar-quiz.ts (Three.js diferido)
     ├── config/
-    │   └── site.ts                # Configuración central de marcas, títulos y textos
+    │   ├── site.ts                # Configuración central de marcas, títulos y logos
+    │   └── units.ts               # Fuente única de verdad de unidades (sidebar, cabecera, TOC y quizzes)
     ├── content.config.ts          # Definición de colecciones Starlight (docs e i18n)
     ├── content/
     │   ├── docs/
-    │   │   ├── 404.md             # Página institucional de error 404
     │   │   └── es/                # Contenido académico temático en Español (Markdown)
     │   │       ├── autores.md     # Ficha y tarjetas de créditos del equipo
-    │   │       ├── identidad-ipn.md # Himno oficial con reproductor, decálogo y símbolos
+    │   │       ├── identidad-ipn.md # Himno oficial con reproductor, decálogo, símbolos y Sala RV
     │   │       ├── index.md       # Página principal de inicio y bienvenida
-    │   │       ├── unidad-1/      # Temas oficiales de la Unidad I
-    │   │       ├── unidad-2/      # Temas oficiales de la Unidad II
-    │   │       └── unidad-3/      # Temas oficiales de la Unidad III
+    │   │       ├── unidad-1/      # 13 temas oficiales de la Unidad I
+    │   │       ├── unidad-2/      # 13 temas oficiales de la Unidad II
+    │   │       └── unidad-3/      # 6 temas oficiales de la Unidad III
     │   └── i18n/
     │       └── es.json            # Sobrescritura de etiquetas de interfaz en español
+    ├── data/
+    │   ├── cuestionarios/         # schema.ts (Zod), index.ts y bancos JSON bilingües (unidad-1..3)
+    │   ├── identidad-content.ts   # Parser en build de identidad-ipn.md para la Sala RV
+    │   ├── identidad-vr-en.ts     # Traducciones EN del contenido de identidad
+    │   └── identidad-quiz.ts      # Banco bilingüe del quiz de la Sala RV (servido por la API)
     ├── pages/
-    │   └── index.astro            # Redirección estática de raíz (/) hacia (/es/)
+    │   ├── index.astro            # Redirección estática de raíz (/) hacia (/es/)
+    │   ├── 404.astro              # Página institucional de error 404
+    │   ├── api/
+    │   │   └── identidad-vr.json.ts # Endpoint estático prerenderizado para la Sala RV
+    │   └── es/
+    │       └── [unidad]/
+    │           └── cuestionario.astro # Ruta dinámica para los cuestionarios de cada unidad
     └── styles/
         └── custom.css             # Estilos globales, variables CSS y temas claro/oscuro
 ```
@@ -215,29 +237,17 @@ Los colores del tema están definidos mediante variables CSS al inicio del archi
 ---
 
 ### 3. Barra Lateral, Menús y Nuevas Unidades
-Archivo: `astro.config.mjs`
+Archivos: `src/config/units.ts` y `astro.config.mjs`
 
-La barra de navegación lateral se configura dentro del bloque `sidebar`:
+Las unidades temáticas están centralizadas en `src/config/units.ts`, que alimenta automáticamente el `sidebar` de `astro.config.mjs`, las insignias de `Header.astro`, el progreso de `PageSidebar.astro` y la ruta dinámica `src/pages/es/[unidad]/cuestionario.astro`:
 ```javascript
 sidebar: [
-  {
-    label: 'Unidad I: Contexto y Fundamentos',
+  ...UNITS.map((unit) => ({
+    label: unit.sidebarLabel,
     items: [
-      { autogenerate: { directory: 'unidad-1' } }, // Lee automáticamente src/content/docs/es/unidad-1/
+      { autogenerate: { directory: unit.directory } },
     ],
-  },
-  {
-    label: 'Unidad II: Tecnologías Emergentes',
-    items: [
-      { autogenerate: { directory: 'unidad-2' } },
-    ],
-  },
-  {
-    label: 'Unidad III: Integración y Autoría',
-    items: [
-      { autogenerate: { directory: 'unidad-3' } },
-    ],
-  },
+  })),
   {
     label: 'Identidad Institucional IPN',
     slug: 'identidad-ipn',
@@ -248,18 +258,20 @@ sidebar: [
   },
 ]
 ```
-* **Añadir una nueva Unidad temática:** Crea una carpeta dentro de `src/content/docs/es/unidad-4/` y agrega un nuevo objeto en `sidebar` con `{ autogenerate: { directory: 'unidad-4' } }`.
-* **Modificar el título o URL del sitio:** Edita la propiedad `site` o `title` al inicio de `astro.config.mjs`.
+* **Añadir una nueva Unidad temática:** Crea la carpeta `src/content/docs/es/unidad-4/`, agrégala en `src/config/units.ts` y añade su banco de preguntas en `src/data/cuestionarios/`.
+* **Modificar el título o URL base del sitio:** Edita `BASE_PATH`, `site` o `title` al inicio de `astro.config.mjs` (el valor de `BASE_PATH` también se inyecta automáticamente en `<meta name="base-url">`).
 
 ---
 
-### 4. Componentes Institucionales de Cabecera y Pie
+### 4. Componentes Institucionales de Cabecera, Índice, Pie y Cuestionarios
 Ubicación: `src/components/`
 
-* **`Header.astro`:** Controla la barra superior fija, el botón de menú hamburguesa (☰), el logo institucional, el botón de inicio, el conmutador de modo oscuro/claro y el botón de traducción de idioma con Google Translate.
-* **`PageFrame.astro`:** Envuelve cada página del sitio. Incorpora la barra inferior fija (`.shell-footer`) que muestra el copyright institucional y los accesos rápidos a *Identidad IPN* y *Autores*.
-* **`WelcomeCurtain.astro`:** Genera la cortina de bienvenida que aparece al entrar a la portada por primera vez en la sesión de navegación.
+* **`Header.astro`:** Controla la barra superior fija, el botón de menú hamburguesa (☰), los escudos IPN/UPIICSA, el título animado con barra de progreso de lectura, el acceso integrado al índice en móvil/tablet, el conmutador de tema y el botón de traducción con Google Translate.
+* **`PageFrame.astro`:** Envuelve cada página del sitio. Monta la cortina en portada, inicializa Google Translate e incorpora la barra inferior fija (`.shell-footer`).
+* **`PageSidebar.astro`:** Panel derecho enriquecido en escritorio (tiempo estimado de lectura, barra de progreso, avance de unidad, acceso al cuestionario y atajos rápidos) y pie contextual del desplegable móvil/tablet.
+* **`WelcomeCurtain.astro`:** Genera la cortina de bienvenida que aparece al entrar a la portada por primera vez en la sesión de navegación (`?welcome` fuerza su visualización).
 * **`Footer.astro`:** Renderiza los enlaces de paginación anterior/siguiente al pie de cada artículo académico.
+* **`quiz/WebXRQuiz.astro`:** Interfaz de evaluación con modo clásico 2D accesible (`quiz-2d.ts`) y modo Realidad Aumentada WebXR (`ar-quiz.ts`, con carga diferida de Three.js).
 
 ---
 
@@ -371,16 +383,18 @@ import { Tabs, TabItem } from '@astrojs/starlight/components';
 
 ### Inserción de Recursos Multimedia
 
+> **Nota sobre rutas:** Como el sitio se publica bajo `/blog-upiicsa`, usa el prefijo `/blog-upiicsa/...` en rutas absolutas hacia `public/` (o rutas relativas según la profundidad de la página).
+
 #### 1. Imágenes con Pie de Foto y Centrado Institucional
 Guarda la imagen en `public/images/mi-grafico.png`:
 
 ```html
 <div class="media-container">
-  <img src="/images/mi-grafico.png" alt="Esquema del proceso multimedia" />
+  <img src="/blog-upiicsa/images/mi-grafico.png" alt="Esquema del proceso multimedia" />
   <div class="media-caption">📷 Figura 1: Esquema de fases en la producción multimedia.</div>
 </div>
 ```
-*(También puedes usar la sintaxis estándar de Markdown: `![Descripción](/images/mi-grafico.png)`).*
+*(También puedes usar la sintaxis estándar de Markdown: `![Descripción](/blog-upiicsa/images/mi-grafico.png)`).*
 
 #### 2. Video de YouTube Adaptable (16:9)
 Para que el reproductor de YouTube se adapte automáticamente a pantallas móviles y de escritorio:
@@ -401,7 +415,7 @@ Guarda el archivo de video en `public/videos/clip-demostrativo.mp4`:
 
 ```html
 <video controls style="width: 100%; border-radius: 8px; margin: 1rem 0;">
-  <source src="/videos/clip-demostrativo.mp4" type="video/mp4" />
+  <source src="/blog-upiicsa/videos/clip-demostrativo.mp4" type="video/mp4" />
   Tu navegador no soporta video HTML5.
 </video>
 ```
@@ -411,7 +425,7 @@ Guarda el archivo de audio en `public/audios/pista-sonora.mp3`:
 
 ```html
 <audio controls style="width: 100%; margin: 1rem 0;">
-  <source src="/audios/pista-sonora.mp3" type="audio/mpeg" />
+  <source src="/blog-upiicsa/audios/pista-sonora.mp3" type="audio/mpeg" />
   Tu navegador no soporta audio HTML5.
 </audio>
 ```
