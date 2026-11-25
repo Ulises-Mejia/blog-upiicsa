@@ -10,29 +10,22 @@ next: false
   Equipo responsable del diseño, desarrollo tecnológico y curaduría académica del <strong>Repositorio Digital de Multimedia UPIICSA</strong>.
 </p>
 
+<!-- Nota: evita líneas en blanco dentro del bloque HTML de cada tarjeta para que Markdown no interprete la sangría como código. -->
 <div class="authors-grid">
-
 <article class="author-card">
   <div class="author-header">
     <div class="author-photo-wrapper">
-      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_ulises.jpg,
-           descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
-      <img
-        src="../../images/autor_ulises.jpg"
-        alt="Fotografía de Ulises Mejía Ortega"
-        class="author-photo"
-      />
+      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_ulises.jpg, descomenta <img> y oculta .author-avatar-fallback.
+      <img src="../../images/autor_ulises.jpg" alt="Fotografía de Ulises Mejía Ortega" class="author-photo" />
       -->
       <div class="author-avatar-fallback" role="img" aria-label="Avatar de Ulises Mejía Ortega">UM</div>
     </div>
-
     <div class="author-meta">
       <h2 class="author-name">Ulises Mejía Ortega</h2>
       <p class="author-school">🏛️ IPN — UPIICSA</p>
       <p class="author-program">🎓 Ingeniería / Licenciatura en Informática</p>
     </div>
   </div>
-
   <div class="author-contacts" aria-label="Medios de contacto de Ulises Mejía Ortega">
     <a class="author-contact-link" href="mailto:umeji2500@alumno.ipn.mx">
       <span aria-hidden="true">✉️</span>
@@ -45,16 +38,13 @@ next: false
     </a>
     -->
   </div>
-
   <details class="author-details">
     <summary class="author-details-summary">
       <span>Más información</span>
       <span class="author-details-chevron" aria-hidden="true">▾</span>
     </summary>
-
     <div class="author-details-body">
       <span class="author-role-badge">ARQUITECTURA, DESARROLLO Y CURADURÍA</span>
-
       <div class="author-section">
         <div class="author-section-title">📚 Contexto Académico</div>
         <div class="author-section-content">
@@ -68,7 +58,6 @@ next: false
           </div>
         </div>
       </div>
-
       <div class="author-section">
         <div class="author-section-title">💼 Perfil en el Proyecto</div>
         <div class="author-section-content">
@@ -79,13 +68,11 @@ next: false
           </ul>
         </div>
       </div>
-
       <!-- ESPACIOS RESERVADOS PARA DATOS FUTUROS (descomenta cuando se requieran):
       <div class="author-section">
         <div class="author-section-title">📝 Semblanza</div>
         <p class="author-section-content">Breve reseña académica o profesional del autor.</p>
       </div>
-
       <div class="author-section">
         <div class="author-section-title">🔗 Enlaces y Redes</div>
         <div class="author-extra-links">
@@ -97,28 +84,20 @@ next: false
     </div>
   </details>
 </article>
-
 <article class="author-card">
   <div class="author-header">
     <div class="author-photo-wrapper">
-      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_marco.jpg,
-           descomenta la etiqueta <img> y oculta el bloque .author-avatar-fallback.
-      <img
-        src="../../images/autor_marco.jpg"
-        alt="Fotografía de Marco Antonio Linares Zurita"
-        class="author-photo"
-      />
+      <!-- Para activar fotografía real: guarda la imagen en public/images/autor_marco.jpg, descomenta <img> y oculta .author-avatar-fallback.
+      <img src="../../images/autor_marco.jpg" alt="Fotografía de Marco Antonio Linares Zurita" class="author-photo" />
       -->
       <div class="author-avatar-fallback" role="img" aria-label="Avatar de Marco Antonio Linares Zurita">ML</div>
     </div>
-
     <div class="author-meta">
       <h2 class="author-name">Marco Antonio Linares Zurita</h2>
       <p class="author-school">🏛️ IPN — UPIICSA</p>
       <p class="author-program">🎓 Ingeniería / Licenciatura en Informática</p>
     </div>
   </div>
-
   <div class="author-contacts" aria-label="Medios de contacto de Marco Antonio Linares Zurita">
     <a class="author-contact-link" href="mailto:mlinaresz2500@alumno.ipn.mx">
       <span aria-hidden="true">✉️</span>
@@ -131,16 +110,13 @@ next: false
     </a>
     -->
   </div>
-
   <details class="author-details">
     <summary class="author-details-summary">
       <span>Más información</span>
       <span class="author-details-chevron" aria-hidden="true">▾</span>
     </summary>
-
     <div class="author-details-body">
       <span class="author-role-badge">ARQUITECTURA, DESARROLLO Y CURADURÍA</span>
-
       <div class="author-section">
         <div class="author-section-title">📚 Contexto Académico</div>
         <div class="author-section-content">
@@ -154,7 +130,6 @@ next: false
           </div>
         </div>
       </div>
-
       <div class="author-section">
         <div class="author-section-title">💼 Perfil en el Proyecto</div>
         <div class="author-section-content">
@@ -165,13 +140,11 @@ next: false
           </ul>
         </div>
       </div>
-
       <!-- ESPACIOS RESERVADOS PARA DATOS FUTUROS (descomenta cuando se requieran):
       <div class="author-section">
         <div class="author-section-title">📝 Semblanza</div>
         <p class="author-section-content">Breve reseña académica o profesional del autor.</p>
       </div>
-
       <div class="author-section">
         <div class="author-section-title">🔗 Enlaces y Redes</div>
         <div class="author-extra-links">
@@ -183,5 +156,4 @@ next: false
     </div>
   </details>
 </article>
-
 </div>

@@ -199,4 +199,7 @@ Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en
   - `CAL-04`: añadidos `@astrojs/check` y `typescript`, script `npm run check`, paso en CI (`deploy.yml`) y corregidos los 10 errores de tipos existentes.
   - `CAL-05`: activado Pagefind (`pagefind: true`), integrado `<Search />` en `Header.astro` con estilos UPIICSA y poblado `src/content/i18n/es.json`.
   - `CAL-06`: telemetría `ar-status-pill` oculta por defecto y activable vía `?debug=1`.
-- **Bloque 5 (`UX-01`):** rediseñada `src/content/docs/es/autores.md` y `src/styles/authors.css` con vista compacta sin scroll en escritorio (`tableOfContents: false`), información clave a primera vista (foto pendiente, nombre, escuela/carrera, contacto `mailto:` + slot web) y acordeón `<details>` con rol, perfil y bloques comentados para datos futuros.
+- **Bloque 5 (`UX-01` — commit `67cf0fa`):** rediseñada `src/content/docs/es/autores.md` y `src/styles/authors.css` con vista compacta sin scroll en escritorio (`tableOfContents: false`), información clave a primera vista (foto pendiente, nombre, escuela/carrera, contacto `mailto:` + slot web) y acordeón `<details>` con rol, perfil y bloques comentados para datos futuros.
+
+### 2026-11-25
+- **Hotfix `UX-01` (`autores.md`):** eliminadas líneas en blanco dentro del bloque HTML de las tarjetas para evitar que CommonMark convirtiera líneas con sangría de 4+ espacios en bloques de código (`expressive-code`) exponiendo HTML crudo en la página en vivo. Verificado `0` bloques `expressive-code` en todo `dist/`.
