@@ -129,22 +129,27 @@ El Decálogo reúne los preceptos éticos y de responsabilidad cívica redactado
 
 ## 🥽 Sala de Realidad Virtual - Identidad Institucional
 
-Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando), **Himno Politécnico** (reproducir/pausar y letra completa), **Decálogo del Politécnico** (10 principios) y **Porra Politécnica "El Huélum"** (mural completo).
+Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando sobre plinto), **Himno Politécnico** (reproducir/pausar y letra completa), **Galería 3D del Decálogo** (10 paneles con lectura al acercarse) y **Porra Politécnica "El Huélum"** (mural completo).
 
 <div class="rv-room-container" style="margin: 2rem 0;">
   <div class="rv-intro" style="background: linear-gradient(135deg, rgba(0, 100, 58, 0.1) 0%, rgba(128, 0, 64, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.4); margin-bottom: 1rem;">
     <p style="margin: 0 0 1rem 0; font-weight: 600;">🏛️ Recorrido Virtual Interactivo</p>
     <ul style="margin: 0 0 1rem 1.5rem; padding: 0;">
       <li>Navegación con joystick virtual o teclado WASD (en lentes, thumbstick)</li>
-      <li>Compatible con escritorio, móvil y lentes VR</li>
-      <li>Usa auriculares para mejor experiencia</li>
+      <li>Acércate o toca los 10 paneles 3D del Decálogo en la pared derecha para leer cada principio</li>
+      <li>Compatible con escritorio, móvil y lentes VR (usa auriculares para mejor experiencia)</li>
     </ul>
-    <button id="btn-enter-vr" class="rv-enter-btn" style="background: linear-gradient(135deg, #00643A 0%, #00361F 100%); color: white; border: 2px solid #D4AF37; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-      🥽 Entrar a la sala
-    </button>
-    <button id="btn-vr-fullscreen" class="rv-fullscreen-btn" style="display: none; margin-left: 10px; background: #D4AF37; color: #00361F; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-      ⛶ Pantalla completa
-    </button>
+    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
+      <button id="btn-enter-vr" class="rv-enter-btn" type="button" style="background: linear-gradient(135deg, #00643A 0%, #00361F 100%); color: white; border: 2px solid #D4AF37; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+        🥽 Entrar a la sala
+      </button>
+      <button id="btn-vr-fullscreen" class="rv-fullscreen-btn" type="button" style="display: none; background: #D4AF37; color: #00361F; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+        ⛶ Pantalla completa
+      </button>
+      <button id="btn-vr-close" class="rv-close-btn" type="button" style="display: none; background: rgba(128, 0, 64, 0.9); color: white; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
+        ✕ Cerrar sala
+      </button>
+    </div>
   </div>
 
   <div id="vr-webgl-warning" style="display: none; background: rgba(128, 0, 64, 0.1); border: 2px solid #800040; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; color: #800040;">
@@ -168,6 +173,7 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
   const metaBase = document.querySelector('meta[name="base-url"]')?.getAttribute('content')?.replace(/\/$/, '') || '';
   const btnEnter = document.getElementById('btn-enter-vr');
   const btnFullscreen = document.getElementById('btn-vr-fullscreen');
+  const btnClose = document.getElementById('btn-vr-close');
   const vrContainer = document.getElementById('vr-container');
   const vrIframe = document.getElementById('vr-iframe');
   const webglWarning = document.getElementById('vr-webgl-warning');
@@ -211,6 +217,7 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
     vrContainer.style.display = 'block';
     btnEnter.style.display = 'none';
     btnFullscreen.style.display = 'inline-block';
+    btnClose.style.display = 'inline-block';
 
     vrContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
@@ -221,6 +228,19 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
     } else if (vrContainer.webkitRequestFullscreen) {
       vrContainer.webkitRequestFullscreen();
     }
+  });
+
+  btnClose.addEventListener('click', () => {
+    if (document.fullscreenElement || document.webkitFullscreenElement) {
+      if (document.exitFullscreen) document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    }
+    vrIframe.removeAttribute('src');
+    vrIframe.src = 'about:blank';
+    vrContainer.style.display = 'none';
+    btnFullscreen.style.display = 'none';
+    btnClose.style.display = 'none';
+    btnEnter.style.display = 'inline-block';
   });
 
   // Estilo hover

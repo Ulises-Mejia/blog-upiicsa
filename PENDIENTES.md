@@ -13,9 +13,9 @@
 | :--- | :---: | :---: | :---: | :---: |
 | **1. Bugs y correcciones críticas** | 🔴 Alta | 0 | 0 | 5 |
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
-| **3. Sala RV — Identidad IPN** | 🥽 Media | 6 | 0 | 0 |
+| **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 6 | 0 | 0 |
-| **Total** | — | **12** | **0** | **10** |
+| **Total** | — | **7** | **0** | **15** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión · `[x]` Completado
 
@@ -77,39 +77,29 @@
 
 ## 🥽 Bloque 3 — Sala de Realidad Virtual (Continuación de `CONTEXTO_RV.md`)
 
-- [ ] **RV-01 — Fase 2: Pulido visual y textos ES/EN faltantes**
+- [x] **RV-01 — Fase 2: Pulido visual y textos ES/EN faltantes**
+  - **Ubicación:** `public/rv/sala-identidad.html`, `public/rv/sala-identidad.js`, `src/content/docs/es/identidad-ipn.md`
+  - **Resuelto:** Placa inclinada legible `"ESCUDO IPN"` en el plinto central, mayor tamaño/legibilidad de autores del himno, aviso inicial `lookAround` en `#station-info`, traducción dinámica de `document.title` según `?lang=` y botón `"✕ Cerrar sala"` en `identidad-ipn.md` que descarga el iframe y libera el contexto WebGL.
+
+- [x] **RV-02 — Fase 3: Decálogo en 10 paneles 3D con lectura por proximidad**
   - **Ubicación:** `public/rv/sala-identidad.html`, `public/rv/sala-identidad.js`
-  - **Pendiente:**
-    - Mover la etiqueta `"Escudo IPN"` a una placa legible sobre el plinto (actualmente sobre el tallo con bajo contraste).
-    - Mejorar tamaño/legibilidad de autores del himno y texto de ayuda.
-    - Integrar aviso `lookAround` (actualmente definido en `identidadUI` L38–L41 sin usarse) para orientar hacia el lema y la porra.
-    - Traducir el `<title>` del documento HTML según `?lang=`.
-    - Añadir botón en `identidad-ipn.md` para cerrar/descargar la escena y liberar memoria WebGL.
+  - **Resuelto:** Galería 3D en cuadrícula 2×5 sobre la pared derecha (`x = 7.72`) generada desde `/api/identidad-vr.json`; al acercarse (`< 2.35 m`) o tocar/clicar un panel, se ilumina en dorado y muestra el punto completo en `#station-info`. Conservado el modal accesible (`#decalogue-panel`) desde el botón bajo la galería y desde el HUD (`Ver Decálogo`), con cierre por `Escape`.
 
-- [ ] **RV-02 — Fase 3: Decálogo en 10 paneles 3D con lectura por proximidad**
-  - **Ubicación:** `public/rv/sala-identidad.html`, `public/rv/sala-identidad.js`
-  - **Pendiente:** Sustituir la estación actual (botón + modal) por una galería 3D de 10 paneles con los puntos servidos desde la API; iluminar el panel y mostrar HUD superior al acercarse a `< 2 m` (sin TTS). *(Pendiente confirmar disposición 2×5 vs semicírculo y si se conserva el modal como fallback accesible).*
+- [x] **RV-03 — Fase 5: Optimización de rendimiento gráfico y loops**
+  - **Ubicación:** `public/rv/sala-identidad.html` (L118, L151–L155), `public/rv/sala-identidad.js`
+  - **Resuelto:** Luces `point` reducidas de 5 a 3; unificados los dos bucles `requestAnimationFrame` en `startSceneLoop()` con pausa en `document.hidden` y vectores preasignados; renderer ajustado con `precision: medium`, `maxCanvasWidth/Height: 1920` y tope de `pixelRatio` (`1.5` en móvil / `2` en escritorio).
 
-- [ ] **RV-03 — Fase 5: Optimización de rendimiento gráfico y loops**
-  - **Ubicación:** `public/rv/sala-identidad.html` (L115, L150–L155), `public/rv/sala-identidad.js` (L435–L476, L778–L782)
-  - **Pendiente:**
-    - Reducir luces `point` de 5 a 3 (o combinar iluminación).
-    - Unificar los dos bucles `requestAnimationFrame` permanentes (`setupJoystick` y `setupRoomLimits`) en un único loop o componente A-Frame `tick` que evite trabajo innecesario en reposo.
-    - Ajustar opciones del renderer (`maxCanvasWidth/Height`, evaluar `precision: medium` y pixel ratio en móvil).
+- [x] **RV-04 — Fallback / timeout si falla el CDN de A-Frame**
+  - **Ubicación:** `public/rv/sala-identidad.html` (L12–L13, L61–L65), `public/rv/sala-identidad.js`
+  - **Resuelto:** Detección `onerror` del script de A-Frame + timeout de 12 s en `sceneReady()`, mostrando mensaje bilingüe de error de red y botón `Reintentar` / `Retry`.
 
-- [ ] **RV-04 — Fallback / timeout si falla el CDN de A-Frame**
-  - **Ubicación:** `public/rv/sala-identidad.html` (L12–L13), `public/rv/sala-identidad.js`
-  - **Problema:** Si el usuario tiene conexión lenta o el CDN (`aframe.io` / `unpkg.com`) falla, la pantalla `#loading` puede quedar congelada indefinidamente.
-  - **Acción:** Añadir timeout de carga y mensaje claro con botón de reintento.
+- [x] **RV-05 — Optimización de audio del Himno (`himno_ipn.mp3`)**
+  - **Ubicación:** `public/audios/himno_ipn.mp3`
+  - **Resuelto:** Re-codificado a 128 kbps estéreo (44.1 kHz) con `ffmpeg`: reducido de **4.26 MB** a **1.71 MB** (**60 % menos peso**, conservando duración íntegra de 106.6 s).
 
-- [ ] **RV-05 — Optimización de audio del Himno (`himno_ipn.mp3`)**
-  - **Ubicación:** `public/audios/himno_ipn.mp3` (4.26 MB)
-  - **Acción:** Evaluar re-codificación a 128 kbps (~1.5–2 MB) para mejorar la carga en redes móviles o conservar intacto por ser grabación oficial *(ver decisiones abiertas)*.
-
-- [ ] **RV-06 — QA en visor VR real (`blink-controls`)**
-  - **Ubicación:** `public/rv/sala-identidad.html` (L125, L234–L235)
-  - **Problema:** El código de teletransporte con `blink-controls` y `laser-controls` está implementado pero **sin validar en hardware VR**.
-  - **Acción:** Probar teletransporte, colisiones con paredes/plinto y clicks con láser en visor físico (Quest / Pico / etc.).
+- [!] **RV-06 — QA en visor VR real (`blink-controls`)**
+  - **Ubicación:** `public/rv/sala-identidad.html` (L128, L215–L216)
+  - **Estado:** Código revisado (paneles del Decálogo y botones marcados `.interactive` con `refreshRaycasters()`, colisión de `#wall-right` cubierta en `blink-controls`). **Pendiente de prueba en hardware VR físico** (Quest / Pico / etc.).
 
 ---
 
@@ -147,12 +137,10 @@
 
 ## ❓ Decisiones Abiertas por Confirmar
 
-Antes de ejecutar ciertos cambios, conviene definir:
+Antes de ejecutar el Bloque 4, conviene definir:
 
-1. **Galería del Decálogo en RV (`RV-02`):** ¿Pared derecha en cuadrícula 2×5 (recomendado) o semicírculo? ¿Se conserva el modal HTML como fallback accesible?
-2. **Audio del Himno (`RV-05`):** ¿Comprimimos `public/audios/himno_ipn.mp3` (4.26 MB) a 128 kbps o lo conservamos sin modificar?
-3. **Buscador (`CAL-05`):** ¿Se mantiene `pagefind: false` o quieres habilitar búsqueda de temas en la cabecera?
-4. **Telemetría RA (`CAL-06`):** ¿Dejamos la barra `Cam/Q` visible en producción o condicionada a `?debug=1`?
+1. **Buscador (`CAL-05`):** ¿Se mantiene `pagefind: false` o quieres habilitar búsqueda de temas en la cabecera?
+2. **Telemetría RA (`CAL-06`):** ¿Dejamos la barra `Cam/Q` visible en producción o condicionada a `?debug=1`?
 
 ---
 
@@ -167,9 +155,15 @@ Antes de ejecutar ciertos cambios, conviene definir:
   - `BUG-03`: movida `plantilla-tema.md` a `templates/plantilla-tema.md` (fuera de `src/content/docs/`), corregidos ejemplos `.mdx` y rutas con `/blog-upiicsa`, y actualizadas referencias en `README.md`.
   - `BUG-04`: agregada limpieza de listeners globales (`cleanupMenuToggle` en `Header.astro` y `cleanupWelcomeCurtain` en `WelcomeCurtain.astro`).
   - `BUG-05`: eliminada referencia inexistente `himno_ipn.ogg` en `identidad-ipn.md` y sustituidas las etiquetas `<img>` 404 de `autores.md` por avatares tipográficos con iniciales (`UM`/`ML`) y guía comentada para activar fotos reales.
-- **Bloque 2 completado (5/5):**
+- **Bloque 2 completado (5/5 — commit `ed04c70`):**
   - `ARQ-01`: unificado `src/data/identidad-quiz.ts` en `/api/identidad-vr.json`, retirado el quiz duplicado y `ttsUnavailable` de `sala-identidad.js`, y corregida la descripción de la Porra en `identidad-ipn.md`.
   - `ARQ-02`: limpiados los bloques `.lang-es`/`.lang-en` inactivos en `identidad-ipn.md` dejando texto en español compatible con Google Translate.
   - `ARQ-03`: inyectado `<meta name="base-url">` desde `astro.config.mjs` y eliminadas las rutas `/blog-upiicsa` hardcodeadas en `src/` y `public/rv/`.
   - `ARQ-04`: creada fuente única de unidades en `src/config/units.ts` y consolidados los cuestionarios en la ruta dinámica `src/pages/es/[unidad]/cuestionario.astro`.
   - `ARQ-05`: actualizados `README.md` y `CONTEXTO_RV.md` al estado real del proyecto.
+- **Bloque 3 completado en código (5/6 — `RV-06` pendiente solo de visor VR físico):**
+  - `RV-01`: placa inclinada `"ESCUDO IPN"` en plinto, mejora de legibilidad de autores del Himno, aviso `lookAround`, traducción de `<title>` y botón `"✕ Cerrar sala"` en `identidad-ipn.md` para liberar WebGL.
+  - `RV-02`: galería 3D del Decálogo en 10 paneles (2×5 en pared derecha) con iluminación y lectura por proximidad/clic + modal accesible de respaldo en HUD y bajo la galería.
+  - `RV-03`: reducción de luces `point` (5 → 3), bucle único `startSceneLoop()`, `precision: medium`, límite `1920` de canvas y tope de `pixelRatio` móvil.
+  - `RV-04`: manejo de fallo de CDN A-Frame + timeout de 12 s con botón `Reintentar`.
+  - `RV-05`: compresión de `public/audios/himno_ipn.mp3` a 128 kbps estéreo (4.26 MB → 1.71 MB, -60 %).

@@ -1,5 +1,9 @@
 // Textos de interfaz (no son contenido editorial).
 const identidadUI = {
+  pageTitle: {
+    es: "Sala de Identidad Institucional IPN — Realidad Virtual",
+    en: "IPN Institutional Identity Room — Virtual Reality"
+  },
   fullscreen: { es: "Pantalla completa", en: "Fullscreen" },
   vrMode: { es: "Entrar en modo VR", en: "Enter VR mode" },
   noWebGL: {
@@ -7,9 +11,14 @@ const identidadUI = {
     en: "This browser does not support WebGL. The virtual reality room cannot be displayed."
   },
   loadError: {
-    es: "No se pudo cargar el contenido de la sala. Recarga la página para intentarlo de nuevo.",
-    en: "The room content could not be loaded. Reload the page to try again."
+    es: "No se pudo cargar el contenido de la sala. Comprueba tu conexión e inténtalo de nuevo.",
+    en: "The room content could not be loaded. Check your connection and try again."
   },
+  cdnError: {
+    es: "No se pudo cargar el motor 3D (A-Frame) desde la red. Revisa tu conexión e inténtalo de nuevo.",
+    en: "Could not load the 3D engine (A-Frame) from the network. Check your connection and try again."
+  },
+  retry: { es: "Reintentar", en: "Retry" },
   hymn: { es: "HIMNO POLITÉCNICO", en: "POLYTECHNIC HYMN" },
   hymnSubtitle: { es: "Símbolo institucional", en: "Institutional symbol" },
   play: { es: "Reproducir", en: "Play" },
@@ -18,9 +27,13 @@ const identidadUI = {
   lyrics: { es: "Mostrar letra", en: "Show lyrics" },
   hideLyrics: { es: "Ocultar letra", en: "Hide lyrics" },
   decalogue: { es: "DECÁLOGO POLITÉCNICO", en: "POLYTECHNIC DECALOGUE" },
+  decaloguePointBadge: { es: "DECÁLOGO", en: "DECALOGUE" },
   cheer: { es: "PORRA POLITÉCNICA", en: "POLYTECHNIC CHEER" },
-  approach: { es: "Acércate para leer", en: "Approach to read" },
-  center: { es: "Escudo IPN", en: "IPN Shield" },
+  approach: {
+    es: "Acércate o toca un panel para leer",
+    en: "Approach or tap a panel to read"
+  },
+  center: { es: "ESCUDO IPN", en: "IPN SHIELD" },
   moveHelp: {
     es: "Mueve el ratón para mirar • WASD o joystick para caminar",
     en: "Move mouse to look • WASD or joystick to walk"
@@ -28,6 +41,7 @@ const identidadUI = {
   vrHelp: { es: "Teletransporte con el thumbstick", en: "Teleport with the thumbstick" },
   hudHimnoPlay: { es: "Reproducir himno", en: "Play hymn" },
   hudHimnoPause: { es: "Pausar himno", en: "Pause hymn" },
+  hudDecalogue: { es: "Ver Decálogo", en: "View Decalogue" },
   quiz: { es: "Quiz Identidad", en: "Identity Quiz" },
   bannerTitle: { es: "IDENTIDAD INSTITUCIONAL", en: "INSTITUTIONAL IDENTITY" },
   bannerSubtitle: {
@@ -35,13 +49,18 @@ const identidadUI = {
     en: "NATIONAL POLYTECHNIC INSTITUTE"
   },
   joystick: { es: "Mover", en: "Move" },
+  lookAroundBadge: { es: "RECORRIDO", en: "TOUR" },
   lookAround: {
-    es: "Mira a tu alrededor para explorar las estaciones",
-    en: "Look around to explore the stations"
+    es: "Explora la sala: Decálogo a tu derecha, Himno al frente-izquierda, y gira para ver el lema y la porra.",
+    en: "Explore the room: Decalogue on your right, Hymn front-left, and turn around for the motto and cheer."
   },
   loading: { es: "Cargando sala...", en: "Loading room..." },
-  viewDecalogue: { es: "Ver Decálogo", en: "View Decalogue" }
+  viewDecalogue: { es: "Ver Decálogo completo", en: "View full Decalogue" }
 };
+
+const SCENE_LOAD_TIMEOUT_MS = 12000;
+const DECALOGUE_PROXIMITY_DIST = 2.35;
+const DECALOGUE_RELEASE_DIST = 3.2;
 
 function getLang() {
   try {
@@ -87,12 +106,27 @@ async function loadContent() {
   return response.json();
 }
 
-function sceneReady() {
+function sceneReady(timeoutMs = SCENE_LOAD_TIMEOUT_MS) {
+  if (window.__aframeLoadError || typeof window.AFRAME === 'undefined') {
+    return Promise.reject(new Error('AFRAME_CDN_ERROR'));
+  }
   const scene = document.querySelector('a-scene');
-  if (!scene) return Promise.resolve();
+  if (!scene) return Promise.reject(new Error('AFRAME_NO_SCENE'));
   if (scene.hasLoaded) return Promise.resolve();
-  return new Promise((resolve) => {
-    scene.addEventListener('loaded', resolve, { once: true });
+
+  return new Promise((resolve, reject) => {
+    const timer = window.setTimeout(() => {
+      reject(new Error('AFRAME_CDN_ERROR'));
+    }, timeoutMs);
+
+    scene.addEventListener(
+      'loaded',
+      () => {
+        window.clearTimeout(timer);
+        resolve();
+      },
+      { once: true }
+    );
   });
 }
 
@@ -114,8 +148,64 @@ function addClickOnce(el, handler) {
   });
 }
 
+function refreshRaycasters() {
+  document.querySelectorAll('[raycaster]').forEach((el) => {
+    el.components?.raycaster?.refreshObjects?.();
+  });
+}
+
+// Controlador centralizado del banner superior (#station-info)
+let stationBannerTimer = null;
+let stationBannerSource = null;
+
+function showStationInfo(badgeText, bodyText, { source = 'info', autoHideMs = 0 } = {}) {
+  const box = document.getElementById('station-info');
+  if (!box) return;
+
+  if (stationBannerTimer) {
+    window.clearTimeout(stationBannerTimer);
+    stationBannerTimer = null;
+  }
+
+  stationBannerSource = source;
+  box.replaceChildren();
+
+  if (badgeText) {
+    const badge = document.createElement('div');
+    badge.className = 'station-badge';
+    badge.textContent = badgeText;
+    box.appendChild(badge);
+  }
+
+  const body = document.createElement('p');
+  body.className = 'station-body';
+  body.textContent = bodyText;
+  box.appendChild(body);
+  box.classList.add('visible');
+
+  if (autoHideMs > 0) {
+    stationBannerTimer = window.setTimeout(() => {
+      if (stationBannerSource === source) {
+        hideStationInfo(source);
+      }
+    }, autoHideMs);
+  }
+}
+
+function hideStationInfo(source) {
+  if (source && stationBannerSource !== source) return;
+  const box = document.getElementById('station-info');
+  if (stationBannerTimer) {
+    window.clearTimeout(stationBannerTimer);
+    stationBannerTimer = null;
+  }
+  stationBannerSource = null;
+  box?.classList.remove('visible');
+}
+
 function applyContent(content) {
   document.documentElement.lang = lang;
+  document.title = t(identidadUI.pageTitle);
 
   // Estación Himno
   setText('himno-title', t(identidadUI.hymn));
@@ -127,7 +217,7 @@ function applyContent(content) {
   setText('himno-btn-text', t(identidadUI.play));
   setText('himno-lyrics-text', t(identidadUI.lyrics));
 
-  // Estación Decálogo
+  // Galería Decálogo
   setText('decalogo-title', t(identidadUI.decalogue));
   setText('decalogo-btn-text', t(identidadUI.viewDecalogue));
   setText('decalogo-approach', t(identidadUI.approach));
@@ -145,7 +235,7 @@ function applyContent(content) {
   setText('escudo-label', t(identidadUI.center));
   setText('lema-text', t(content.lema));
 
-  // Panel del Decálogo
+  // Modal accesible del Decálogo (fallback completo)
   const decalogueContent = document.getElementById('decalogue-content');
   if (decalogueContent) {
     decalogueContent.innerHTML = '';
@@ -159,7 +249,7 @@ function applyContent(content) {
     });
   }
 
-  // Panel de letra completa del himno
+  // Modal de letra completa del himno
   const lyricsTitle = document.getElementById('lyrics-title');
   if (lyricsTitle) lyricsTitle.textContent = t(content.himno.titulo);
   const lyricsContent = document.getElementById('lyrics-content');
@@ -272,13 +362,223 @@ function setupHimno(content) {
   updateButton();
 }
 
-function setupDecalogo() {
-  const button = document.getElementById('decalogo-btn');
-  const panel = document.getElementById('decalogue-panel');
-  const close = document.getElementById('decalogue-close');
+function setupDecalogoGallery(content) {
+  const container = document.getElementById('decalogo-panels-container');
+  const wallButton = document.getElementById('decalogo-btn');
+  const hudButton = document.getElementById('btn-decalogo');
+  const modalPanel = document.getElementById('decalogue-panel');
+  const modalClose = document.getElementById('decalogue-close');
 
-  addClickOnce(button, () => panel?.classList.add('visible'));
-  close?.addEventListener('click', () => panel?.classList.remove('visible'));
+  const openModal = () => modalPanel?.classList.add('visible');
+  const closeModal = () => modalPanel?.classList.remove('visible');
+
+  addClickOnce(wallButton, openModal);
+  if (hudButton) {
+    hudButton.textContent = t(identidadUI.hudDecalogue);
+    hudButton.addEventListener('click', openModal);
+  }
+  modalClose?.addEventListener('click', closeModal);
+
+  const panels = [];
+  let activeIndex = -1;
+  let pinnedIndex = -1;
+
+  if (container && Array.isArray(content.decalogo)) {
+    const cols = 5;
+    const colSpacing = 2.08;
+    const startX = -((cols - 1) * colSpacing) / 2;
+    const rowY = [2.22, 1.14];
+
+    container.innerHTML = '';
+
+    content.decalogo.forEach((item, index) => {
+      const row = Math.floor(index / cols);
+      const col = index % cols;
+      const localX = startX + col * colSpacing;
+      const localY = rowY[row] ?? rowY[1];
+      const text = t(item);
+      const numLabel = String(index + 1).padStart(2, '0');
+
+      const root = document.createElement('a-entity');
+      root.setAttribute('id', `decalogo-panel-${index + 1}`);
+      root.setAttribute('position', `${localX.toFixed(2)} ${localY.toFixed(2)} 0`);
+
+      // Marco dorado
+      const frame = document.createElement('a-box');
+      frame.setAttribute('width', '1.92');
+      frame.setAttribute('height', '0.94');
+      frame.setAttribute('depth', '0.04');
+      frame.setAttribute('material', 'color: #B8941F; roughness: 0.55; emissive: #000000; emissiveIntensity: 0');
+      root.appendChild(frame);
+
+      // Cara interactiva
+      const bg = document.createElement('a-plane');
+      bg.setAttribute('class', 'interactive');
+      bg.setAttribute('width', '1.82');
+      bg.setAttribute('height', '0.84');
+      bg.setAttribute('position', '0 0 0.025');
+      bg.setAttribute('material', 'color: #00361F; shader: flat');
+      root.appendChild(bg);
+
+      // Etiqueta numérica superior
+      const badge = document.createElement('a-plane');
+      badge.setAttribute('width', '0.36');
+      badge.setAttribute('height', '0.16');
+      badge.setAttribute('position', '0 0.31 0.03');
+      badge.setAttribute('material', 'color: #D4AF37; shader: flat');
+      root.appendChild(badge);
+
+      const badgeText = document.createElement('a-text');
+      badgeText.setAttribute('font', 'fonts/sala-sdf.json');
+      badgeText.setAttribute('negate', 'false');
+      badgeText.setAttribute('value', numLabel);
+      badgeText.setAttribute('align', 'center');
+      badgeText.setAttribute('position', '0 0.31 0.036');
+      badgeText.setAttribute('width', '1.7');
+      badgeText.setAttribute('color', '#00361F');
+      root.appendChild(badgeText);
+
+      // Texto completo del punto
+      const bodyText = document.createElement('a-text');
+      bodyText.setAttribute('font', 'fonts/sala-sdf.json');
+      bodyText.setAttribute('negate', 'false');
+      bodyText.setAttribute('value', text);
+      bodyText.setAttribute('align', 'center');
+      bodyText.setAttribute('anchor', 'center');
+      bodyText.setAttribute('baseline', 'center');
+      bodyText.setAttribute('position', '0 -0.06 0.036');
+      bodyText.setAttribute('width', '1.66');
+      bodyText.setAttribute('wrap-count', '31');
+      bodyText.setAttribute('line-height', '50');
+      bodyText.setAttribute('color', '#FFFFFF');
+      root.appendChild(bodyText);
+
+      container.appendChild(root);
+
+      const panelEntry = {
+        index,
+        text,
+        root,
+        frame,
+        bg,
+        localX,
+        localY,
+        // Con gallery en (7.72, 0, 0) y rotación Y = -90°, local (x, y, 0) -> mundo (7.72, y, x)
+        worldX: 7.72,
+        worldY: localY,
+        worldZ: localX
+      };
+
+      addClickOnce(bg, () => {
+        pinnedIndex = pinnedIndex === index ? -1 : index;
+        if (pinnedIndex === -1) {
+          setActivePanel(-1);
+        } else {
+          setActivePanel(pinnedIndex);
+        }
+      });
+
+      panels.push(panelEntry);
+    });
+
+    refreshRaycasters();
+    window.setTimeout(refreshRaycasters, 350);
+  }
+
+  function stylePanel(panel, highlighted) {
+    if (!panel) return;
+    if (panel.root.object3D) {
+      panel.root.object3D.position.z = highlighted ? 0.05 : 0;
+    }
+    panel.frame.setAttribute(
+      'material',
+      highlighted
+        ? 'color: #FFD700; roughness: 0.35; emissive: #7A5C00; emissiveIntensity: 0.45'
+        : 'color: #B8941F; roughness: 0.55; emissive: #000000; emissiveIntensity: 0'
+    );
+    panel.bg.setAttribute(
+      'material',
+      highlighted ? 'color: #005832; shader: flat' : 'color: #00361F; shader: flat'
+    );
+  }
+
+  function setActivePanel(nextIndex) {
+    if (nextIndex === activeIndex) return;
+    if (activeIndex >= 0) stylePanel(panels[activeIndex], false);
+    activeIndex = nextIndex;
+    if (activeIndex >= 0) {
+      const panel = panels[activeIndex];
+      stylePanel(panel, true);
+      showStationInfo(
+        `${t(identidadUI.decaloguePointBadge)} · ${activeIndex + 1} / ${panels.length}`,
+        panel.text,
+        { source: 'decalogue' }
+      );
+    } else {
+      hideStationInfo('decalogue');
+    }
+  }
+
+  const camWorldPos = new AFRAME.THREE.Vector3();
+  const camWorldDir = new AFRAME.THREE.Vector3();
+
+  function updateProximity(rigPos, camera) {
+    if (panels.length === 0 || !camera) return;
+
+    // Si hay un panel fijado por clic, liberarlo al alejarse demasiado
+    if (pinnedIndex >= 0) {
+      const p = panels[pinnedIndex];
+      const distPinned = Math.hypot(rigPos.x - p.worldX, rigPos.z - p.worldZ);
+      if (distPinned > DECALOGUE_RELEASE_DIST) {
+        pinnedIndex = -1;
+      } else {
+        setActivePanel(pinnedIndex);
+        return;
+      }
+    }
+
+    // Salida rápida cuando el jugador está lejos de la pared derecha
+    if (rigPos.x < 7.72 - DECALOGUE_PROXIMITY_DIST - 0.25) {
+      if (activeIndex >= 0) setActivePanel(-1);
+      return;
+    }
+
+    camera.getWorldPosition(camWorldPos);
+    camera.getWorldDirection(camWorldDir);
+
+    // Proyectar mirada sobre el plano x = 7.72 para distinguir fila superior (1-5) vs inferior (6-10)
+    let aimY = 1.65;
+    let aimZ = rigPos.z;
+    const lookingAtWall = camWorldDir.x > 0.12;
+    if (lookingAtWall) {
+      const tHit = (7.72 - camWorldPos.x) / camWorldDir.x;
+      if (tHit > 0 && tHit < 5.5) {
+        aimY = Math.min(2.9, Math.max(0.6, camWorldPos.y + camWorldDir.y * tHit));
+        aimZ = camWorldPos.z + camWorldDir.z * tHit;
+      }
+    }
+
+    let bestIdx = -1;
+    let bestScore = Infinity;
+
+    for (let i = 0; i < panels.length; i++) {
+      const p = panels[i];
+      const horizDist = Math.hypot(rigPos.x - p.worldX, rigPos.z - p.worldZ);
+      if (horizDist > DECALOGUE_PROXIMITY_DIST) continue;
+
+      // Combinar distancia física horizontal + cercanía vertical/lateral al punto de mirada
+      const aimOffset = Math.hypot((p.worldZ - aimZ) * 0.75, (p.worldY - aimY) * 1.15);
+      const score = horizDist + (lookingAtWall ? aimOffset : Math.abs(p.worldY - 1.65));
+      if (score < bestScore) {
+        bestScore = score;
+        bestIdx = i;
+      }
+    }
+
+    setActivePanel(bestIdx);
+  }
+
+  return { updateProximity };
 }
 
 function setupResponsiveCamera() {
@@ -293,8 +593,6 @@ function setupResponsiveCamera() {
     let fov = 60;
 
     if (aspect < 1) {
-      // En vertical el FOV horizontal se estrecha mucho; abrimos la cámara
-      // para que las estaciones laterales sigan entrando en pantalla.
       const targetHorizontal = (64 * Math.PI) / 180;
       const vertical = 2 * Math.atan(Math.tan(targetHorizontal / 2) / aspect);
       fov = Math.min(102, Math.max(60, (vertical * 180) / Math.PI));
@@ -315,26 +613,28 @@ function setupResponsiveCamera() {
   window.addEventListener('orientationchange', () => window.setTimeout(apply, 250));
 }
 
+function setupRendererPerf() {
+  const scene = document.querySelector('a-scene');
+  const renderer = scene?.renderer;
+  if (!renderer) return;
+
+  const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+  const maxDpr = isCoarse ? 1.5 : 2;
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, maxDpr));
+}
+
 function setupJoystick() {
   const joystick = document.getElementById('joystick');
   const base = document.getElementById('joystick-base');
   const knob = document.getElementById('joystick-knob');
   const scene = document.querySelector('a-scene');
-  const rig = document.getElementById('cameraRig');
-  if (!joystick || !base || !knob || !scene || !rig) return;
+  const vector = { x: 0, y: 0 };
+
+  if (!joystick || !base || !knob || !scene) return vector;
 
   const maxRadius = 38;
-  const speed = 2.4;
-  const limit = 7.35;
-  const minRadius = 1.5;
-  const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
-  const forward = new AFRAME.THREE.Vector3();
-  const right = new AFRAME.THREE.Vector3();
-  const movement = new AFRAME.THREE.Vector3();
-
   let pointerId = null;
   let center = { x: 0, y: 0 };
-  const vector = { x: 0, y: 0 };
 
   function setKnob(dx, dy) {
     knob.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
@@ -389,51 +689,8 @@ function setupJoystick() {
   base.addEventListener('pointercancel', end);
   base.addEventListener('lostpointercapture', end);
 
-  let previous = performance.now();
-
-  function animate(now) {
-    const delta = Math.min((now - previous) / 1000, 0.05);
-    previous = now;
-
-    if (!scene.is('vr-mode') && (vector.x || vector.y)) {
-      const camera = scene.camera;
-      if (camera) {
-        camera.getWorldDirection(forward);
-        forward.y = 0;
-        if (forward.lengthSq() >= 0.0001) {
-          forward.normalize();
-          right.set(-forward.z, 0, forward.x);
-
-          movement.set(0, 0, 0);
-          movement.addScaledVector(forward, -vector.y);
-          movement.addScaledVector(right, vector.x);
-          if (movement.lengthSq() > 1) movement.normalize();
-
-          const position = rig.object3D.position;
-          let nextX = clamp(position.x + movement.x * speed * delta, -limit, limit);
-          let nextZ = clamp(position.z + movement.z * speed * delta, -limit, limit);
-          const radius = Math.hypot(nextX, nextZ);
-
-          if (radius < minRadius) {
-            if (radius > 0.0001) {
-              nextX = (nextX / radius) * minRadius;
-              nextZ = (nextZ / radius) * minRadius;
-            } else {
-              nextZ = minRadius;
-            }
-          }
-
-          position.x = nextX;
-          position.z = nextZ;
-        }
-      }
-    }
-
-    window.requestAnimationFrame(animate);
-  }
-
-  window.requestAnimationFrame(animate);
   joystick.classList.add('visible');
+  return vector;
 }
 
 function setupPorra(content) {
@@ -609,10 +866,22 @@ function setupUI() {
     if (help) help.textContent = t(identidadUI.moveHelp);
     joystick?.classList.add('visible');
   });
+
+  // Cerrar modales con Escape para accesibilidad de teclado
+  window.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    document.getElementById('decalogue-panel')?.classList.remove('visible');
+    const lyricsPanel = document.getElementById('lyrics-panel');
+    if (lyricsPanel?.classList.contains('visible')) {
+      lyricsPanel.classList.remove('visible');
+      setText('himno-lyrics-text', t(identidadUI.lyrics));
+    }
+    const quizPanel = document.getElementById('quiz-panel');
+    if (quizPanel) quizPanel.style.display = 'none';
+  });
 }
 
 function setupDesktopMouseLook() {
-  // Solo en dispositivos con puntero fino (mouse o touchpad de computadora)
   if (!window.matchMedia('(pointer: fine)').matches) return;
 
   const scene = document.querySelector('a-scene');
@@ -620,7 +889,7 @@ function setupDesktopMouseLook() {
   if (!scene || !cameraEl) return;
 
   const sensitivity = 0.0022;
-  const PITCH_LIMIT = Math.PI / 2.25; // ~80 grados arriba y abajo
+  const PITCH_LIMIT = Math.PI / 2.25;
 
   let prevX = null;
   let prevY = null;
@@ -628,7 +897,6 @@ function setupDesktopMouseLook() {
   function onMouseMove(e) {
     if (scene.is('vr-mode')) return;
 
-    // Si el puntero está interactuando sobre elementos HTML (HUD, modales, botones)
     const target = e.target;
     if (target && target.closest && target.closest('#hud, #decalogue-panel, #lyrics-panel, #quiz-panel, #station-info, #joystick, button, input')) {
       prevX = null;
@@ -678,93 +946,131 @@ function setupDesktopMouseLook() {
   });
 }
 
-function setupRoomLimits() {
+// Bucle único optimizado: joystick + consolidación WASD + colisiones + proximidad del Decálogo
+function startSceneLoop(joystickVector, decalogueGallery) {
   const scene = document.querySelector('a-scene');
   const rig = document.getElementById('cameraRig');
   const cameraEl = document.querySelector('[camera]');
   if (!scene || !rig || !cameraEl) return;
 
   const clamp = (val, min, max) => Math.min(max, Math.max(min, val));
-  const ROOM_LIMIT = 7.1; // Paredes perimetrales a 8.0m
-  const PLINTH_RADIUS = 1.45; // Plinto central del escudo
+  const SPEED = 2.4;
+  const ROOM_LIMIT = 7.1; // Paredes perimetrales a 8.0m (galería derecha en 7.72m)
+  const PLINTH_RADIUS = 1.48;
 
-  function enforceBounds() {
-    const rigPos = rig.object3D.position;
-    const camPos = cameraEl.object3D.position;
+  const forward = new AFRAME.THREE.Vector3();
+  const right = new AFRAME.THREE.Vector3();
+  const movement = new AFRAME.THREE.Vector3();
 
-    // Si controles de teclado (WASD) desplazaron la cámara localmente,
-    // consolidar el desplazamiento en rigPos y centrar la cámara local en X/Z
-    if (camPos.x !== 0 || camPos.z !== 0) {
-      rigPos.x += camPos.x;
-      rigPos.z += camPos.z;
-      camPos.x = 0;
-      camPos.z = 0;
-    }
+  let previous = performance.now();
 
-    // Límites de las 4 paredes principales de la sala
-    rigPos.x = clamp(rigPos.x, -ROOM_LIMIT, ROOM_LIMIT);
-    rigPos.z = clamp(rigPos.z, -ROOM_LIMIT, ROOM_LIMIT);
+  function tick(now) {
+    const delta = Math.min((now - previous) / 1000, 0.05);
+    previous = now;
 
-    // Pared y mural de la Porra (en z = 6.5, ancho = 3.4)
-    if (rigPos.z > 6.15 && Math.abs(rigPos.x) < 1.9) {
-      rigPos.z = 6.15;
-    }
+    if (!document.hidden) {
+      const rigPos = rig.object3D.position;
+      const camPos = cameraEl.object3D.position;
+      const camera = scene.camera;
 
-    // Estación Himno (en x = -4.2, z = -2.6)
-    const distHimno = Math.hypot(rigPos.x - (-4.2), rigPos.z - (-2.6));
-    if (distHimno < 1.5) {
-      const angle = Math.atan2(rigPos.z - (-2.6), rigPos.x - (-4.2));
-      rigPos.x = -4.2 + Math.cos(angle) * 1.5;
-      rigPos.z = -2.6 + Math.sin(angle) * 1.5;
-    }
+      // 1. Movimiento por joystick virtual (solo fuera de VR)
+      if (!scene.is('vr-mode') && camera && (joystickVector.x || joystickVector.y)) {
+        camera.getWorldDirection(forward);
+        forward.y = 0;
+        if (forward.lengthSq() >= 0.0001) {
+          forward.normalize();
+          right.set(-forward.z, 0, forward.x);
 
-    // Estación Decálogo (en x = 4.2, z = -2.6)
-    const distDecalogo = Math.hypot(rigPos.x - 4.2, rigPos.z - (-2.6));
-    if (distDecalogo < 1.5) {
-      const angle = Math.atan2(rigPos.z - (-2.6), rigPos.x - 4.2);
-      rigPos.x = 4.2 + Math.cos(angle) * 1.5;
-      rigPos.z = -2.6 + Math.sin(angle) * 1.5;
-    }
+          movement.set(0, 0, 0);
+          movement.addScaledVector(forward, -joystickVector.y);
+          movement.addScaledVector(right, joystickVector.x);
+          if (movement.lengthSq() > 1) movement.normalize();
 
-    // Plinto central del escudo IPN (evita atravesar el pedestal)
-    const distCenter = Math.hypot(rigPos.x, rigPos.z);
-    if (distCenter < PLINTH_RADIUS) {
-      if (distCenter > 0.001) {
-        rigPos.x = (rigPos.x / distCenter) * PLINTH_RADIUS;
-        rigPos.z = (rigPos.z / distCenter) * PLINTH_RADIUS;
-      } else {
-        rigPos.z = PLINTH_RADIUS;
+          rigPos.x += movement.x * SPEED * delta;
+          rigPos.z += movement.z * SPEED * delta;
+        }
       }
+
+      // 2. Consolidar desplazamiento WASD local de la cámara sobre el rig
+      if (camPos.x !== 0 || camPos.z !== 0) {
+        rigPos.x += camPos.x;
+        rigPos.z += camPos.z;
+        camPos.x = 0;
+        camPos.z = 0;
+      }
+
+      // 3. Límites de sala y colisiones con estaciones y plinto central
+      rigPos.x = clamp(rigPos.x, -ROOM_LIMIT, ROOM_LIMIT);
+      rigPos.z = clamp(rigPos.z, -ROOM_LIMIT, ROOM_LIMIT);
+
+      // Estación Porra (z = 6.5, ancho = 3.4)
+      if (rigPos.z > 6.15 && Math.abs(rigPos.x) < 1.9) {
+        rigPos.z = 6.15;
+      }
+
+      // Estación Himno (x = -4.2, z = -2.6)
+      const distHimno = Math.hypot(rigPos.x - (-4.2), rigPos.z - (-2.6));
+      if (distHimno < 1.5) {
+        const angle = Math.atan2(rigPos.z - (-2.6), rigPos.x - (-4.2));
+        rigPos.x = -4.2 + Math.cos(angle) * 1.5;
+        rigPos.z = -2.6 + Math.sin(angle) * 1.5;
+      }
+
+      // Plinto central del escudo IPN
+      const distCenter = Math.hypot(rigPos.x, rigPos.z);
+      if (distCenter < PLINTH_RADIUS) {
+        if (distCenter > 0.001) {
+          rigPos.x = (rigPos.x / distCenter) * PLINTH_RADIUS;
+          rigPos.z = (rigPos.z / distCenter) * PLINTH_RADIUS;
+        } else {
+          rigPos.z = PLINTH_RADIUS;
+        }
+      }
+
+      // 4. Lectura por proximidad de los 10 paneles 3D del Decálogo
+      decalogueGallery?.updateProximity(rigPos, camera);
     }
+
+    window.requestAnimationFrame(tick);
   }
 
-  function loop() {
-    enforceBounds();
-    window.requestAnimationFrame(loop);
+  window.requestAnimationFrame(tick);
+}
+
+function showLoadFailure(message) {
+  const loadingText = document.getElementById('loading-text');
+  const retryBtn = document.getElementById('loading-retry');
+  if (loadingText) loadingText.textContent = message;
+  if (retryBtn) {
+    retryBtn.textContent = t(identidadUI.retry);
+    retryBtn.classList.add('visible');
+    retryBtn.onclick = () => window.location.reload();
   }
-  window.requestAnimationFrame(loop);
 }
 
 async function init() {
+  document.documentElement.lang = lang;
+  document.title = t(identidadUI.pageTitle);
+
   if (!checkWebGL()) return;
 
   const loadingText = document.getElementById('loading-text');
   if (loadingText) loadingText.textContent = t(identidadUI.loading);
 
   try {
-    const content = await loadContent();
-    await sceneReady();
+    const [content] = await Promise.all([loadContent(), sceneReady()]);
 
     applyContent(content);
     setupHimno(content);
-    setupDecalogo();
+    const decalogueGallery = setupDecalogoGallery(content);
     setupPorra(content);
     setupQuiz(content.quiz);
     setupUI();
     setupResponsiveCamera();
-    setupJoystick();
+    setupRendererPerf();
+    const joystickVector = setupJoystick();
     setupDesktopMouseLook();
-    setupRoomLimits();
+    startSceneLoop(joystickVector, decalogueGallery);
     pausePageAudio();
 
     const hud = document.getElementById('hud');
@@ -775,9 +1081,16 @@ async function init() {
       loading.classList.add('hidden');
       window.setTimeout(() => loading.remove(), 400);
     }
+
+    // Aviso breve de orientación para descubrir la galería lateral, lema y porra
+    showStationInfo(t(identidadUI.lookAroundBadge), t(identidadUI.lookAround), {
+      source: 'tour',
+      autoHideMs: 6000
+    });
   } catch (error) {
     console.error('[Sala Identidad]', error);
-    if (loadingText) loadingText.textContent = t(identidadUI.loadError);
+    const isCdn = error?.message === 'AFRAME_CDN_ERROR' || error?.message === 'AFRAME_NO_SCENE';
+    showLoadFailure(t(isCdn ? identidadUI.cdnError : identidadUI.loadError));
   }
 }
 
