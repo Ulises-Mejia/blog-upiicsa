@@ -1,6 +1,6 @@
 ---
 title: "Lenguajes de Desarrollo Web: HTML5, CSS3, JavaScript y PHP"
-description: "Plantilla académica para 2.3.1: Lenguajes de Desarrollo Web: HTML5, CSS3, JavaScript y PHP"
+description: "Ecosistema de lenguajes web para multimedia: frontend con HTML5 semántico, CSS3 y JavaScript junto con backend en PHP, APIs REST y gestión de activos digitales."
 ---
 
 ## Introducción

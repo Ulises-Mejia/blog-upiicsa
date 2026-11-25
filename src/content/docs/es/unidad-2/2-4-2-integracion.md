@@ -1,6 +1,6 @@
 ---
 title: "Integración de las Tecnologías Emergentes"
-description: "Plantilla académica para 2.4.2: Integración de las Tecnologías Emergentes"
+description: "Patrones arquitectónicos de integración de tecnologías emergentes: acoplamiento modular de motores 3D, IA y medios con protocolos estándar (REST, WebSockets, glTF 2.0)."
 ---
 
 ## Introducción

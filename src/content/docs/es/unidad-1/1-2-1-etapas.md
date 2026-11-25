@@ -1,6 +1,6 @@
 ---
 title: "Descripción de los Elementos y Etapas de la Producción Multimedia"
-description: "Plantilla académica para 1.2.1: Descripción de los Elementos y Etapas de la Producción Multimedia"
+description: "Etapas clásicas de producción audiovisual y multimedia articuladas con la metodología académica MEDESME de ocho fases para software multimedia educativo."
 ---
 
 ## Introducción

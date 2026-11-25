@@ -1,6 +1,6 @@
 ---
 title: "Aplicaciones de Entornos Virtuales"
-description: "Plantilla académica para 2.2.4: Aplicaciones de Entornos Virtuales"
+description: "Aplicaciones reales de los entornos virtuales en educación inclusiva, rehabilitación cognitiva, patrimonio cultural, medicina, Industria 4.0 y comercio."
 ---
 
 ## Introducción

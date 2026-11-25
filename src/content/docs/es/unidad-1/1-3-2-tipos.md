@@ -1,6 +1,6 @@
 ---
 title: "Tipos y Características de la Animación"
-description: "Plantilla académica para 1.3.2: Tipos y Características de la Animación"
+description: "Clasificación técnica de la animación digital: animación 2D cuadro a cuadro y por huesos, Stop-Motion, CGI 3D y animación procedimental basada en física."
 ---
 
 ## Introducción

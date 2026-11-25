@@ -1,6 +1,6 @@
 ---
 title: "Características de la Realidad Virtual"
-description: "Plantilla académica para 2.1.1: Características de la Realidad Virtual"
+description: "Características esenciales de la Realidad Virtual: triángulo de las 3 'I', sentido de presencia, grados de libertad (3DoF vs. 6DoF) y modalidades de inmersión."
 ---
 
 ## Introducción

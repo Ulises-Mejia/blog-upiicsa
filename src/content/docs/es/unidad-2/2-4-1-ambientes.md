@@ -1,6 +1,6 @@
 ---
 title: "Ambientes de Desarrollo para Tecnologías Emergentes"
-description: "Plantilla académica para 2.4.1: Ambientes de Desarrollo para Tecnologías Emergentes"
+description: "Configuración de cadenas de herramientas (toolchains) para proyectos multimedia y XR: motor gráfico, IDE, simuladores, profiling de rendimiento y Git LFS."
 ---
 
 ## Introducción

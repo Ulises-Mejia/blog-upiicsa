@@ -1,6 +1,6 @@
 ---
 title: "Tecnologías Abiertas y Cerradas en la Animación"
-description: "Plantilla académica para 1.4.1: Tecnologías Abiertas y Cerradas en la Animación"
+description: "Análisis comparativo entre tecnologías abiertas (software libre y estándares de consorcio) y soluciones propietarias en la industria de la animación y multimedia."
 ---
 
 ## Introducción

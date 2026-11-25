@@ -1,0 +1,123 @@
+/* ==========================================================================
+   TOKENS INSTITUCIONALES (PALETA UPIICSA / IPN) Y CABECERA GLOBAL
+   ========================================================================== */
+:root {
+  --sl-color-accent-low: #00361F;
+  --sl-color-accent: #00643A;
+  --sl-color-accent-high: #D4AF37;
+  --sl-color-white: #FFFFFF;
+  --sl-color-gray-1: #ECEEF2;
+  --sl-color-gray-2: #C0C5D0;
+  --sl-color-gray-3: #8890A0;
+  --sl-color-gray-4: #545868;
+  --sl-color-gray-5: #353845;
+  --sl-color-gray-6: #242734;
+  --sl-color-black: #0B1410;
+  --sl-content-width: 60rem;
+  --sl-toc-width: 16rem;
+  /* Opción B: índice integrado en la cabecera en móvil/tablet (recupera 100 % del alto vertical) */
+  --sl-mobile-toc-height: 0rem !important;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #E8F5E9;
+  --sl-color-accent: #00643A;
+  --sl-color-accent-high: #004D2C;
+  --sl-color-white: #1E293B;
+  --sl-color-gray-1: #334155;
+  --sl-color-gray-2: #475569;
+  --sl-color-gray-3: #64748B;
+  --sl-color-gray-4: #94A3B8;
+  --sl-color-gray-5: #E2E8F0;
+  --sl-color-gray-6: #F1F5F9;
+  --sl-color-gray-7: #F8FAFC;
+  --sl-color-black: #FFFFFF;
+}
+
+:root[data-theme='dark'] {
+  /* Paleta Verde Obsidiana / UPIICSA / Dorado de la Cortina de Bienvenida */
+  --sl-color-black: #06170E;
+  --sl-color-accent: #D4AF37;
+  --sl-color-accent-high: #F4E8C1;
+  --sl-color-accent-low: #0D2B1B;
+  --sl-color-white: #FFFFFF;
+  --sl-color-gray-1: #E2E8F0;
+  --sl-color-gray-2: #B2C5BC;
+  --sl-color-gray-3: #759886;
+  --sl-color-gray-4: #244C36;
+  --sl-color-gray-5: #143523;
+  --sl-color-gray-6: #0A1E14;
+}
+
+:root[data-theme='dark'] body {
+  background: radial-gradient(
+    circle at 50% 35%,
+    rgba(0, 54, 31, 0.85) 0%,
+    #06170E 75%
+  ) fixed !important;
+  background-color: #06170E !important;
+  color: #E2E8F0;
+}
+
+/* Starlight header institucional (borde inferior sutil como carril de la barra dorada de progreso) */
+header.header {
+  background-color: #00643A !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.28) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  padding-block: 0.3rem !important;
+  padding-inline-end: var(--sl-nav-pad-x) !important;
+}
+
+:root[data-theme='dark'] header.header {
+  background: linear-gradient(180deg, #092215 0%, #06170E 100%) !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.25) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+}
+
+:root[data-theme='dark'] .header-link-btn,
+:root[data-theme='dark'] .menu-toggle,
+:root[data-theme='dark'] .header-search-slot button[data-open-modal] {
+  background: rgba(212, 175, 55, 0.1) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  color: #F4E8C1 !important;
+}
+
+:root[data-theme='dark'] .header-link-btn:hover,
+:root[data-theme='dark'] .menu-toggle:hover,
+:root[data-theme='dark'] .header-search-slot button[data-open-modal]:hover {
+  background: #D4AF37 !important;
+  color: #00361F !important;
+  border-color: #D4AF37 !important;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35) !important;
+}
+
+:root[data-theme='dark'] .header-logos img {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
+}
+
+/* Ocultar botón circular flotante de Starlight (reemplazado por nuestro menú sandwich en el header) */
+.sl-menu-button {
+  display: none !important;
+}
+
+/* Ocultar pie de página del drawer móvil de Starlight (los controles ya residen en el header superior) */
+.mobile-preferences {
+  display: none !important;
+}
+
+[data-has-sidebar] .header {
+  padding-inline-end: var(--sl-nav-pad-x) !important;
+}
+
+@media (max-width: 50rem) {
+  header.header,
+  [data-has-sidebar] header.header,
+  [data-has-sidebar] .header {
+    padding-block: 0.2rem !important;
+    padding-inline: 0.5rem !important;
+    padding-inline-start: 0.5rem !important;
+    padding-inline-end: 0.5rem !important;
+  }
+}

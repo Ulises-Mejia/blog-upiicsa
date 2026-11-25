@@ -1,6 +1,6 @@
 ---
 title: "Procesamiento Digital de Audio"
-description: "Plantilla académica para 1.2.4: Procesamiento Digital de Audio"
+description: "Fundamentos del procesamiento digital de audio: propiedades físicas del sonido, conversión analógico-digital bajo el Teorema de Nyquist, FFT y filtrado en frecuencia."
 ---
 
 ## Introducción

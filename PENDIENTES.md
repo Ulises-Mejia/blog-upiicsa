@@ -14,10 +14,33 @@
 | **1. Bugs y correcciones críticas** | 🔴 Alta | 0 | 0 | 5 |
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
-| **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 6 | 0 | 0 |
-| **Total** | — | **7** | **0** | **15** |
+| **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
+| **Total** | — | **1** | **0** | **21** |
 
-**Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión · `[x]` Completado
+**Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
+
+---
+
+## 🧭 Dinámica de Trabajo (Guía para Futuras Sesiones)
+
+Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir esta dinámica paso a paso:
+
+1. **Sincronización inicial:** Revisar `PENDIENTES.md`, `git status -sb` y `git log -n 5 --oneline` para confirmar el estado real del repositorio antes de tocar código.
+2. **Estructura por bloques e IDs:** Toda nueva auditoría o mejora se registra aquí agrupada por prioridad/frente con IDs trazables (`BUG-XX`, `ARQ-XX`, `RV-XX`, `CAL-XX`), indicando archivo(s), líneas afectadas y objetivo concreto.
+3. **Ejecución directa vs. decisiones abiertas:**
+   - Actuar directamente sobre correcciones técnicas inequívocas (bugs, tipado, limpieza de código muerto).
+   - Antes de cambios que impliquen decisiones de UX, diseño, contenido o arquitectura, preguntar al usuario con opciones breves y claras (indicando la opción recomendada).
+4. **Verificación obligatoria por bloque:** Antes de dar por cerrado un bloque, ejecutar y verificar:
+   - `npm run check` (`astro check` → 0 errores y 0 advertencias).
+   - `npm run clean && npm run build` (confirmando rutas generadas y construcción del índice Pagefind).
+   - Si se modifica `public/rv/`, validar además `node --check public/rv/sala-identidad.js` y balance de etiquetas/IDs en `public/rv/sala-identidad.html`.
+5. **Documento vivo siempre al día:** Al avanzar o cerrar cada bloque, actualizar en `PENDIENTES.md`:
+   - Los checkboxes y el detalle de **Resuelto** en cada ítem.
+   - Los contadores de la tabla **Resumen de Estado**.
+   - La sección **Decisiones Abiertas por Confirmar** (retirando lo ya definido y agregando nuevas dudas).
+   - La **Bitácora de Cambios** con fecha, bloque, resumen y hash del commit.
+   - Si aplica a la Sala RV o arquitectura pública, mantener sincronizados `CONTEXTO_RV.md` y `README.md`.
+6. **Control de versiones (Git):** No ejecutar `git commit` ni `git push` sin confirmación explícita del usuario. Cuando lo solicite, crear commits atómicos por bloque usando *Conventional Commits* en español (`fix:`, `refactor:`, `feat:`, `chore:`) listando los IDs resueltos.
 
 ---
 
@@ -105,42 +128,35 @@
 
 ## 🟡 Bloque 4 — Contenido, Rendimiento, Estilos y Calidad
 
-- [ ] **CAL-01 — Completar `description` SEO real en los 26 temas de Unidad I y Unidad II**
+- [x] **CAL-01 — Completar `description` SEO real en los 26 temas de Unidad I y Unidad II**
   - **Ubicación:** `src/content/docs/es/unidad-1/*.md` (13 archivos) y `src/content/docs/es/unidad-2/*.md` (13 archivos)
-  - **Problema:** Todos conservan `"Plantilla académica para X.X.X: ..."`, mientras que los 6 archivos de `unidad-3/` ya tienen resúmenes editoriales reales.
-  - **Acción:** Redactar descripciones concisas y precisas para los 26 temas.
+  - **Resuelto:** Reemplazadas las 26 cadenas `"Plantilla académica para..."` por resúmenes académicos concisos y específicos por tema.
 
-- [ ] **CAL-02 — Modularizar `custom.css` y eliminar selectores posicionales frágiles**
-  - **Ubicación:** `src/styles/custom.css` (1,720 líneas, L265–L329)
-  - **Problema:** Hoja monolítica con uso masivo de `!important` y badges de unidad acoplados a `li:nth-child(1..3)`.
-  - **Acción:** Dividir en parciales lógicos (`tokens.css`, `sidebar.css`, `markdown.css`, `toc.css`, `authors.css`) y desacoplar los badges del orden posicional.
+- [x] **CAL-02 — Modularizar `custom.css` y eliminar selectores posicionales frágiles**
+  - **Ubicación:** `src/styles/{custom,tokens,sidebar,toc,content,authors,integrations}.css`
+  - **Resuelto:** Dividido `custom.css` en 6 parciales temáticos importados en orden; sustituidos `li:nth-child(1..3)` por selectores semánticos `:has(a[href*="/unidad-N/"])` con una sola regla base compartida.
 
-- [ ] **CAL-03 — Evitar asignaciones de memoria por frame en `ar-quiz.ts`**
-  - **Ubicación:** `src/components/quiz/scripts/ar-quiz.ts` (L368–L392)
-  - **Problema:** `updateStabilizedAnchor()` crea instancias `new THREE.Quaternion()` / `new THREE.Vector3()` y `.clone()` en cada cuadro de renderizado (60–90 Hz en móvil).
-  - **Acción:** Preasignar objetos temporales como campos de la clase (`tmpInvQuat`, `tmpTremorQuat`, `tmpStabQuat`, `tmpOffset`) para reducir pausas de GC.
+- [x] **CAL-03 — Evitar asignaciones de memoria por frame en `ar-quiz.ts`**
+  - **Ubicación:** `src/components/quiz/scripts/ar-quiz.ts`
+  - **Resuelto:** Preasignados `Vector3`/`Vector2`/`Quaternion` reutilizables (`tmpForward`, `tmpOffset`, `tmpHoriz`, `tmpRayNdc`, `tmpInvSmoothed`, `tmpTremorQuat`, `tmpStabilizedQuat`) y retirado `THREE.Clock` deprecado sin uso.
 
-- [ ] **CAL-04 — Añadir verificación estática (`@astrojs/check` + TypeScript) al proyecto y CI**
-  - **Ubicación:** `package.json`, `.github/workflows/deploy.yml`
-  - **Problema:** No existen scripts `check` ni `typecheck` en `package.json` ni validación de tipos antes del despliegue.
-  - **Acción:** Instalar `@astrojs/check` y `typescript` en `devDependencies`, agregar `"check": "astro check"` en `package.json` y ejecutarlo en `deploy.yml` antes de `npm run build`.
+- [x] **CAL-04 — Añadir verificación estática (`@astrojs/check` + TypeScript) al proyecto y CI**
+  - **Ubicación:** `package.json`, `tsconfig.json`, `.github/workflows/deploy.yml`, `Footer.astro`, `PageFrame.astro`, `PageSidebar.astro`, `Header.astro`
+  - **Resuelto:** Instalados `@astrojs/check` y `typescript`, añadido script `npm run check`, integrado paso de verificación en `deploy.yml` antes de `npm run build` y resueltos los 10 errores de tipado detectados (0 errores, 0 warnings).
 
-- [ ] **CAL-05 — Evaluar buscador interno (`pagefind`) y limpieza de `i18n/es.json`**
-  - **Ubicación:** `astro.config.mjs` (L15), `src/content/i18n/es.json` (`{}`)
-  - **Acción:** Confirmar si `pagefind` permanecerá desactivado intencionalmente (y documentarlo) o si se integrará en `Header.astro`. Limpiar o poblar `src/content/i18n/es.json` según se requiera.
+- [x] **CAL-05 — Evaluar buscador interno (`pagefind`) y limpieza de `i18n/es.json`**
+  - **Ubicación:** `astro.config.mjs`, `src/components/Header.astro`, `src/styles/integrations.css`, `src/content/i18n/es.json`
+  - **Resuelto:** Activado `pagefind: true`, integrado `<Search />` compacto en `Header.astro` (con atajo `Ctrl+K` y modal estilizado en paleta verde/dorado) y poblado `src/content/i18n/es.json` con etiquetas de búsqueda en español.
 
-- [ ] **CAL-06 — Revisar telemetría de depuración en modo RA (`ar-status-pill`)**
-  - **Ubicación:** `src/components/quiz/WebXRQuiz.astro` (L83–L86), `src/components/quiz/scripts/ar-quiz.ts` (L345–L353)
-  - **Nota:** Actualmente la píldora muestra coordenadas en vivo `AR: Cam(...) | Q(...)` de forma permanente (conservada a petición previa). Evaluar si dejarla siempre visible o mostrarla solo con `?debug=1`.
+- [x] **CAL-06 — Revisar telemetría de depuración en modo RA (`ar-status-pill`)**
+  - **Ubicación:** `src/components/quiz/WebXRQuiz.astro`, `src/components/quiz/scripts/ar-quiz.ts`
+  - **Resuelto:** La píldora `AR: Cam(...) | Q(...)` queda oculta por defecto en producción y se activa únicamente al incluir `?debug=1` en la URL (o ante un error 3D en ejecución).
 
 ---
 
 ## ❓ Decisiones Abiertas por Confirmar
 
-Antes de ejecutar el Bloque 4, conviene definir:
-
-1. **Buscador (`CAL-05`):** ¿Se mantiene `pagefind: false` o quieres habilitar búsqueda de temas en la cabecera?
-2. **Telemetría RA (`CAL-06`):** ¿Dejamos la barra `Cam/Q` visible en producción o condicionada a `?debug=1`?
+Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
 
 ---
 
@@ -161,9 +177,16 @@ Antes de ejecutar el Bloque 4, conviene definir:
   - `ARQ-03`: inyectado `<meta name="base-url">` desde `astro.config.mjs` y eliminadas las rutas `/blog-upiicsa` hardcodeadas en `src/` y `public/rv/`.
   - `ARQ-04`: creada fuente única de unidades en `src/config/units.ts` y consolidados los cuestionarios en la ruta dinámica `src/pages/es/[unidad]/cuestionario.astro`.
   - `ARQ-05`: actualizados `README.md` y `CONTEXTO_RV.md` al estado real del proyecto.
-- **Bloque 3 completado en código (5/6 — `RV-06` pendiente solo de visor VR físico):**
+- **Bloque 3 completado en código (5/6 — commit `6a2fd48`; `RV-06` pendiente solo de visor VR físico):**
   - `RV-01`: placa inclinada `"ESCUDO IPN"` en plinto, mejora de legibilidad de autores del Himno, aviso `lookAround`, traducción de `<title>` y botón `"✕ Cerrar sala"` en `identidad-ipn.md` para liberar WebGL.
   - `RV-02`: galería 3D del Decálogo en 10 paneles (2×5 en pared derecha) con iluminación y lectura por proximidad/clic + modal accesible de respaldo en HUD y bajo la galería.
   - `RV-03`: reducción de luces `point` (5 → 3), bucle único `startSceneLoop()`, `precision: medium`, límite `1920` de canvas y tope de `pixelRatio` móvil.
   - `RV-04`: manejo de fallo de CDN A-Frame + timeout de 12 s con botón `Reintentar`.
   - `RV-05`: compresión de `public/audios/himno_ipn.mp3` a 128 kbps estéreo (4.26 MB → 1.71 MB, -60 %).
+- **Bloque 4 completado (6/6):**
+  - `CAL-01`: actualizadas las 26 `description` SEO de Unidad I y Unidad II con resúmenes académicos reales.
+  - `CAL-02`: modularizado `src/styles/custom.css` en 6 parciales (`tokens`, `sidebar`, `toc`, `content`, `authors`, `integrations`) y reemplazados selectores `nth-child` por `:has(a[href*="/unidad-N/"])`.
+  - `CAL-03`: reutilización de vectores y cuaterniones temporales en `ar-quiz.ts` (cero asignaciones por frame) y eliminación de `THREE.Clock` deprecado.
+  - `CAL-04`: añadidos `@astrojs/check` y `typescript`, script `npm run check`, paso en CI (`deploy.yml`) y corregidos los 10 errores de tipos existentes.
+  - `CAL-05`: activado Pagefind (`pagefind: true`), integrado `<Search />` en `Header.astro` con estilos UPIICSA y poblado `src/content/i18n/es.json`.
+  - `CAL-06`: telemetría `ar-status-pill` oculta por defecto y activable vía `?debug=1`.

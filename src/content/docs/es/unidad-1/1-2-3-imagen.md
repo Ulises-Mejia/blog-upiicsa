@@ -1,6 +1,6 @@
 ---
 title: "Procesamiento Digital de la Imagen: Lenguaje Visual y Semiótica"
-description: "Plantilla académica para 1.2.3: Procesamiento Digital de la Imagen: Lenguaje Visual y Semiótica"
+description: "Procesamiento digital de imágenes: digitalización, muestreo, cuantificación y espacios de color (RGB, HSV), integrados con lenguaje visual, composición y semiótica."
 ---
 
 ## Introducción

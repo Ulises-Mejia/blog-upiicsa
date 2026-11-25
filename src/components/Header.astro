@@ -1,4 +1,5 @@
 ---
+import Search from '@astrojs/starlight/components/Search.astro';
 import { siteBrand } from '../config/site';
 import { getUnitById, getUnitByPath } from '../config/units';
 
@@ -156,8 +157,13 @@ if (topicMatch) {
     </button>
   </div>
 
-  <!-- GRUPO DERECHO: INICIO + TEMA + IDIOMA (ESTILO UNIFICADO Y CONSISTENTE) -->
+  <!-- GRUPO DERECHO: BÚSQUEDA + INICIO + TEMA + IDIOMA (ESTILO UNIFICADO Y CONSISTENTE) -->
   <div class="header-actions sl-flex">
+    <!-- Buscador Pagefind (Ctrl+K) -->
+    <div class="header-search-slot">
+      <Search />
+    </div>
+
     <!-- Botón Inicio -->
     <a href={homeHref} class="header-link-btn" title={homeLabel} aria-label={homeLabel}>
       <span class="btn-icon home-icon">🏠</span>
@@ -474,8 +480,8 @@ if (topicMatch) {
       const title = isDark
         ? (isEn ? 'Switch to Light mode' : 'Cambiar a Modo Claro')
         : (isEn ? 'Switch to Dark mode' : 'Cambiar a Modo Oscuro');
-      themeBtn.setAttribute('title', title);
-      themeBtn.setAttribute('aria-label', title);
+      themeBtn?.setAttribute('title', title);
+      themeBtn?.setAttribute('aria-label', title);
     }
 
     // Obtener tema actual
@@ -515,8 +521,8 @@ if (topicMatch) {
     function updateBtnUI(isEn: boolean) {
       if (langBtnText) langBtnText.textContent = isEn ? 'Español' : 'English';
       const title = isEn ? 'Restaurar a Español' : 'Traducir al Inglés';
-      langBtn.setAttribute('title', title);
-      langBtn.setAttribute('aria-label', title);
+      langBtn?.setAttribute('title', title);
+      langBtn?.setAttribute('aria-label', title);
     }
 
     updateBtnUI(isEnglishActive());

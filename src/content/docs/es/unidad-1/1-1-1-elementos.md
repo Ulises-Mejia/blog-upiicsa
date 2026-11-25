@@ -1,6 +1,6 @@
 ---
 title: "Elementos de la Multimedia"
-description: "Plantilla académica para 1.1.1: Elementos de la Multimedia"
+description: "Fundamentos de la multimedia informática: pilares de digitalización, interactividad e hipermedia y sus cinco elementos constitutivos (texto, imagen, audio, video y animación)."
 ---
 
 ## Introducción

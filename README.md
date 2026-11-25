@@ -64,7 +64,7 @@ Imagina este sistema como una revista digital interactiva de la UPIICSA que func
 ### 1. El motor web: ¿Qué es Astro y por qué lo usamos?
 Tradicionalmente, para hacer una página web escribirías archivos `.html` a mano repitiendo la misma cabecera, pie de página y menús en cada archivo. Si tenías 30 temas y querías cambiar el logotipo, ¡tenías que editar 30 archivos!
 * **Astro** resuelve esto: es un **generador de sitios estáticos**. Funciona como una plantilla maestra inteligente: tú diseñas la barra superior, el pie de página y el menú lateral una sola vez en componentes reutilizables (`.astro`), y Astro se encarga de estamparlos en cada página.
-* **Starlight** es una extensión de Astro especializada en documentación y blogs académicos: nos da gratis la barra lateral ordenada por unidades, el índice de secciones internas, el modo oscuro y el diseño adaptable a teléfonos móviles *(el buscador Pagefind está desactivado actualmente en `astro.config.mjs`)*.
+* **Starlight** es una extensión de Astro especializada en documentación y blogs académicos: nos da gratis la barra lateral ordenada por unidades, el buscador rápido con Pagefind (`Ctrl+K`), el índice de secciones internas, el modo oscuro y el diseño adaptable a teléfonos móviles.
 
 ### 2. El contenido: Escribir sin complicaciones con Markdown (.md)
 Para redactar un nuevo tema de la materia, no necesitas programar HTML ni CSS complejo:
@@ -163,7 +163,13 @@ Como este repositorio es para la asignatura de **Herramientas Multimedia**, no s
     │       └── [unidad]/
     │           └── cuestionario.astro # Ruta dinámica para los cuestionarios de cada unidad
     └── styles/
-        └── custom.css             # Estilos globales, variables CSS y temas claro/oscuro
+        ├── custom.css             # Punto de entrada modular que importa los parciales
+        ├── tokens.css             # Variables cromáticas institucionales y cabecera global
+        ├── sidebar.css            # Menú lateral colapsable, tarjetas glassmorphism y badges
+        ├── toc.css                # Índice lateral de escritorio y desplegable móvil/tablet
+        ├── content.css            # Lámina de lectura, tipografía editorial, media y CTAs
+        ├── authors.css            # Tarjetas de autores y avatares
+        └── integrations.css       # Integración limpia de Google Translate y modal Pagefind
 ```
 
 ---
@@ -179,13 +185,16 @@ npm install
 # 2. Iniciar el servidor local de desarrollo con recarga en vivo (HMR)
 npm run dev
 
-# 3. Compilar el proyecto para producción (genera la carpeta estática /dist)
+# 3. Verificar tipos de TypeScript y plantillas Astro
+npm run check
+
+# 4. Compilar el proyecto para producción (genera la carpeta estática /dist + índice Pagefind)
 npm run build
 
-# 4. Previsualizar localmente el sitio compilado en producción
+# 5. Previsualizar localmente el sitio compilado en producción (incluye buscador Pagefind)
 npm run preview
 
-# 5. Limpiar caché de compilación (.astro y dist) si algún cambio no se refleja
+# 6. Limpiar caché de compilación (.astro y dist) si algún cambio no se refleja
 npm run clean
 ```
 

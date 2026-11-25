@@ -1,0 +1,278 @@
+/* ==========================================================================
+   SECCIONES INTERNAS EN MÓVIL Y TABLET (OPCIÓN B — INTEGRADO EN CABECERA)
+   Oculta la segunda barra fija superior y despliega el índice directo bajo la cabecera.
+   ========================================================================== */
+@media (max-width: 71.99rem) {
+  mobile-starlight-toc nav {
+    top: var(--sl-nav-height) !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+  }
+
+  mobile-starlight-toc summary {
+    display: none !important;
+  }
+
+  mobile-starlight-toc .dropdown {
+    pointer-events: auto !important;
+    margin-top: 0 !important;
+    border-top: none !important;
+    border-radius: 0 0 16px 16px !important;
+    max-width: 34rem;
+    margin-inline: auto;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    animation: mobileTocDropIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes mobileTocDropIn {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .dropdown {
+    background: rgba(255, 255, 255, 0.97) !important;
+    border: 1px solid rgba(0, 100, 58, 0.22) !important;
+    border-top: none !important;
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.14) !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .dropdown {
+    background: rgba(6, 23, 14, 0.96) !important;
+    border: 1px solid rgba(212, 175, 55, 0.32) !important;
+    border-top: none !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55) !important;
+  }
+
+  mobile-starlight-toc .isMobile a {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.88rem !important;
+    font-weight: 500;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .isMobile a {
+    color: #334155 !important;
+    border-top-color: rgba(0, 100, 58, 0.1) !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .isMobile a {
+    color: #CBD5E1 !important;
+    border-top-color: rgba(212, 175, 55, 0.12) !important;
+  }
+
+  :root[data-theme='light'] mobile-starlight-toc .isMobile a[aria-current='true'] {
+    background: rgba(0, 100, 58, 0.09) !important;
+    color: #004D2C !important;
+    font-weight: 750 !important;
+  }
+
+  :root[data-theme='dark'] mobile-starlight-toc .isMobile a[aria-current='true'] {
+    background: rgba(212, 175, 55, 0.14) !important;
+    color: #D4AF37 !important;
+    font-weight: 750 !important;
+  }
+
+  /* Pie contextual dentro del desplegable móvil/tablet */
+  .mobile-toc-footer {
+    padding: 0.7rem 0.95rem 0.85rem;
+    border-top: 1px solid rgba(0, 100, 58, 0.16);
+    background: rgba(0, 100, 58, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  :root[data-theme='dark'] .mobile-toc-footer {
+    border-top-color: rgba(212, 175, 55, 0.22);
+    background: rgba(212, 175, 55, 0.06);
+  }
+
+  .mobile-toc-footer__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  :root[data-theme='dark'] .mobile-toc-footer__meta {
+    color: #B2C5BC;
+  }
+
+  .mobile-toc-footer__actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .mobile-toc-quiz-btn,
+  .mobile-toc-top-btn {
+    flex: 1 1 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.48rem 0.75rem;
+    border-radius: 9px;
+    font-size: 0.8rem;
+    font-weight: 750;
+    font-family: inherit;
+    text-decoration: none !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .mobile-toc-quiz-btn {
+    background: linear-gradient(135deg, #00643A 0%, #004D2C 100%);
+    border: 1.5px solid #D4AF37;
+    color: #FFFFFF !important;
+  }
+
+  .mobile-toc-top-btn {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid rgba(0, 100, 58, 0.25);
+    color: #004D2C;
+  }
+
+  :root[data-theme='dark'] .mobile-toc-top-btn {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(212, 175, 55, 0.32);
+    color: #F4E8C1;
+  }
+}
+
+/* ==========================================================================
+   OPTIMIZACIÓN DEL ESPACIO Y PANEL DERECHO (SECCIONES INTERNAS EN ESCRITORIO)
+   ========================================================================== */
+@media (min-width: 72rem) {
+  .right-sidebar {
+    padding-bottom: 44px !important;
+    width: var(--sl-toc-width, 16rem) !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.2) !important;
+  }
+
+  .right-sidebar-container {
+    width: var(--sl-toc-width, 16rem) !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar {
+    background: rgba(6, 23, 14, 0.85) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border-left: 1px solid rgba(212, 175, 55, 0.22) !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar {
+    background: rgba(248, 250, 252, 0.92) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
+    border-left: 1px solid rgba(0, 100, 58, 0.15) !important;
+  }
+
+  .right-sidebar starlight-toc h2 {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #004D2C !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc h2 {
+    color: #D4AF37 !important;
+  }
+
+  .right-sidebar starlight-toc h2::before {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #00643A;
+    flex-shrink: 0;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc h2::before {
+    background: #D4AF37;
+    box-shadow: 0 0 8px rgba(212, 175, 55, 0.6);
+  }
+
+  .right-sidebar starlight-toc nav > ul {
+    border-left: 2px solid rgba(0, 100, 58, 0.16);
+    padding-left: 0 !important;
+    margin-left: 0.2rem !important;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc nav > ul {
+    border-left-color: rgba(212, 175, 55, 0.2);
+  }
+
+  .right-sidebar starlight-toc a {
+    border-left: 2px solid transparent;
+    margin-left: -2px;
+    padding: 0.4rem 0.6rem 0.4rem 0.75rem !important;
+    border-radius: 0 8px 8px 0 !important;
+    font-size: 0.83rem !important;
+    line-height: 1.36 !important;
+    transition: color 0.18s ease, background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a {
+    color: #B2C5BC !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a:hover {
+    color: #F4E8C1 !important;
+    background: rgba(212, 175, 55, 0.08) !important;
+    border-left-color: rgba(212, 175, 55, 0.5) !important;
+  }
+
+  :root[data-theme='dark'] .right-sidebar starlight-toc a[aria-current='true'] {
+    color: #F4E8C1 !important;
+    font-weight: 750 !important;
+    background: rgba(212, 175, 55, 0.15) !important;
+    border-left-color: #D4AF37 !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a {
+    color: #475569 !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a:hover {
+    color: #00643A !important;
+    background: rgba(0, 100, 58, 0.06) !important;
+    border-left-color: rgba(0, 100, 58, 0.45) !important;
+  }
+
+  :root[data-theme='light'] .right-sidebar starlight-toc a[aria-current='true'] {
+    color: #004D2C !important;
+    font-weight: 750 !important;
+    background: rgba(0, 100, 58, 0.11) !important;
+    border-left-color: #00643A !important;
+  }
+
+  .right-sidebar-panel .sl-container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  [data-has-sidebar][data-has-toc] .main-pane,
+  :root[data-sidebar-open="true"][data-has-toc] .main-pane {
+    width: calc(100% - var(--sl-toc-width, 16rem)) !important;
+    --sl-content-margin-inline: auto !important;
+  }
+
+  .content-panel .sl-container {
+    max-width: var(--sl-content-width, 60rem) !important;
+    margin-inline: auto !important;
+  }
+}

@@ -1,6 +1,6 @@
 ---
 title: "Diferencias entre Realidad Virtual, Aumentada y Mixta"
-description: "Plantilla académica para 2.1.2: Diferencias entre Realidad Virtual, Aumentada y Mixta"
+description: "Diferencias técnicas entre Realidad Virtual, Aumentada y Mixta en el Continuo de Virtualidad de Milgram y Kishino, el marco XR y los niveles evolutivos de la RA."
 ---
 
 ## Introducción

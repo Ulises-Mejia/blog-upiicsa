@@ -1,6 +1,6 @@
 ---
 title: "El Proceso en los Diferentes Tipos de Animación"
-description: "Plantilla académica para 1.3.3: El Proceso en los Diferentes Tipos de Animación"
+description: "Pipeline de producción animada: preproducción visual (guion, storyboard, animatic), modelado, texturizado, rigging y skinning (FK/IK), interpolación y renderizado."
 ---
 
 ## Introducción

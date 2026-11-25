@@ -1,6 +1,6 @@
 ---
 title: "Motores de Videojuegos: Unity, Unreal Engine y Godot"
-description: "Plantilla académica para 2.2.5: Motores de Videojuegos: Unity, Unreal Engine y Godot"
+description: "Arquitectura interna de motores de videojuegos y análisis comparativo entre Unity, Unreal Engine y Godot para el desarrollo de experiencias 3D y XR."
 ---
 
 ## Introducción

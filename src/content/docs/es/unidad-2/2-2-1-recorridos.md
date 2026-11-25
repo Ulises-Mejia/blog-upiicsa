@@ -1,6 +1,6 @@
 ---
 title: "Tecnología de Recorridos Virtuales"
-description: "Plantilla académica para 2.2.1: Tecnología de Recorridos Virtuales"
+description: "Arquitectura de recorridos virtuales panorámicos 360° frente a entornos 3D geométricos en tiempo real, hotspots hipermedia, orientación espacial (wayfinding) y optimización."
 ---
 
 ## Introducción

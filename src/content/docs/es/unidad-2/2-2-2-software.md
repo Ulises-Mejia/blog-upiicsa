@@ -1,6 +1,6 @@
 ---
 title: "Software de Entornos Virtuales"
-description: "Plantilla académica para 2.2.2: Software de Entornos Virtuales"
+description: "Clasificación funcional del software para entornos virtuales, interoperabilidad de formatos 3D, optimización de mallas y draw calls en flujos de producción modular."
 ---
 
 ## Introducción

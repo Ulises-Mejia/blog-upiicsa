@@ -154,9 +154,22 @@ export class ARQuizController {
   private smoothedCamQuat = new THREE.Quaternion();
   private lastInteractionTime = 0;
   private advanceTimer: number | null = null;
+  private readonly debugMode =
+    typeof window !== 'undefined' &&
+    new URLSearchParams(window.location.search).get('debug') === '1';
+
+  // Objetos temporales reutilizables para evitar asignaciones por frame (GC en móvil)
+  private readonly tmpForward = new THREE.Vector3();
+  private readonly tmpOffset = new THREE.Vector3();
+  private readonly tmpHoriz = new THREE.Vector2();
+  private readonly tmpRayNdc = new THREE.Vector2();
+  private readonly tmpInvSmoothed = new THREE.Quaternion();
+  private readonly tmpTremorQuat = new THREE.Quaternion();
+  private readonly tmpStabilizedQuat = new THREE.Quaternion();
 
   // Elementos del overlay DOM
   private overlay = document.getElementById('ar-dom-overlay');
+  private statusPill = document.getElementById('ar-status-pill');
   private statusText = document.getElementById('ar-status-text');
   private hudProgressText = document.getElementById('hud-progress-text');
   private hudScoreText = document.getElementById('hud-score-text');
@@ -276,7 +289,7 @@ export class ARQuizController {
     return renderer;
   }
 
-  private tick(_elapsed: number, frame?: XRFrame) {
+  private tick(frame?: XRFrame) {
     try {
       if (!this.isARActive || !this.renderer) return;
       this.frameCount++;
@@ -325,8 +338,8 @@ export class ARQuizController {
         } else if (this.hasInitialAnchor) {
           // Auto-rescate durante los primeros 2 s si ARCore recalibra bruscamente el rumbo inicial
           if (this.validPoseFrames <= 90 && !this.hasUserInteracted) {
-            const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
-            const horizDot = forward.x * this.anchorHoriz.x + forward.z * this.anchorHoriz.y;
+            this.tmpForward.set(0, 0, -1).applyQuaternion(this.camera.quaternion);
+            const horizDot = this.tmpForward.x * this.anchorHoriz.x + this.tmpForward.z * this.anchorHoriz.y;
             if (horizDot < 0.65) {
               this.recenter();
             }
@@ -342,8 +355,8 @@ export class ARQuizController {
 
       this.renderer.render(this.scene, this.camera);
 
-      // Telemetría de depuración en el HUD (se conserva visible a petición del usuario)
-      if (this.frameCount % 10 === 0 && this.statusText) {
+      // Telemetría de depuración en el HUD (solo visible con ?debug=1)
+      if (this.debugMode && this.frameCount % 10 === 0 && this.statusText) {
         const p = this.objectAnchor.position;
         const c = this.camera.position;
         const modeTag = this.usingViewerFallback ? 'AR(3DoF)' : 'AR';
@@ -352,6 +365,7 @@ export class ARQuizController {
           `Q(${p.x.toFixed(1)}, ${p.y.toFixed(1)}, ${p.z.toFixed(1)})`;
       }
     } catch (err: any) {
+      if (this.statusPill) this.statusPill.hidden = false;
       if (this.statusText) {
         this.statusText.textContent = `Error 3D: ${err?.message || err}`;
         this.statusText.style.color = '#EF4444';
@@ -370,23 +384,21 @@ export class ARQuizController {
     this.smoothedCamQuat.slerp(this.camera.quaternion, 0.09);
 
     // Calcular el micro-temblor instantáneo de alta frecuencia: tremor = camQuat * inv(smoothedCamQuat)
-    const invSmoothed = this.smoothedCamQuat.clone().invert();
-    const tremorQuat = this.camera.quaternion.clone().multiply(invSmoothed);
+    this.tmpInvSmoothed.copy(this.smoothedCamQuat).invert();
+    this.tmpTremorQuat.copy(this.camera.quaternion).multiply(this.tmpInvSmoothed);
 
     // Amortiguar el 82 % del micro-temblor (limitado a ~3.5° para no afectar giros voluntarios)
-    const angle = 2 * Math.acos( Math.min(1, Math.abs(tremorQuat.w)) );
+    const angle = 2 * Math.acos(Math.min(1, Math.abs(this.tmpTremorQuat.w)));
     const dampingFactor = angle < 0.065 ? 0.82 : Math.max(0, 0.82 * (1 - (angle - 0.065) / 0.12));
-    const stabilizedQuat = new THREE.Quaternion().slerp(tremorQuat, dampingFactor);
+    this.tmpStabilizedQuat.identity().slerp(this.tmpTremorQuat, dampingFactor);
 
-    const offset = new THREE.Vector3(
-      this.anchorHoriz.x * distance,
-      this.anchorYOffset,
-      this.anchorHoriz.y * distance
-    ).applyQuaternion(stabilizedQuat);
+    this.tmpOffset
+      .set(this.anchorHoriz.x * distance, this.anchorYOffset, this.anchorHoriz.y * distance)
+      .applyQuaternion(this.tmpStabilizedQuat);
 
-    this.objectAnchor.position.copy(this.camera.position).add(offset);
+    this.objectAnchor.position.copy(this.camera.position).add(this.tmpOffset);
 
-    const yaw = Math.atan2(-offset.x, -offset.z);
+    const yaw = Math.atan2(-this.tmpOffset.x, -this.tmpOffset.z);
     this.objectAnchor.rotation.set(0, yaw, 0);
     this.objectAnchor.updateMatrixWorld(true);
   }
@@ -409,16 +421,16 @@ export class ARQuizController {
       this.camera.quaternion.copy(xrCam.quaternion);
     }
 
-    const dir = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
-    if (Number.isFinite(dir.x) && Number.isFinite(dir.y) && Number.isFinite(dir.z)) {
-      const horiz = new THREE.Vector2(dir.x, dir.z);
-      if (horiz.lengthSq() > 1e-4) {
-        horiz.normalize();
+    this.tmpForward.set(0, 0, -1).applyQuaternion(this.camera.quaternion);
+    if (Number.isFinite(this.tmpForward.x) && Number.isFinite(this.tmpForward.y) && Number.isFinite(this.tmpForward.z)) {
+      this.tmpHoriz.set(this.tmpForward.x, this.tmpForward.z);
+      if (this.tmpHoriz.lengthSq() > 1e-4) {
+        this.tmpHoriz.normalize();
       } else {
-        horiz.set(0, -1);
+        this.tmpHoriz.set(0, -1);
       }
-      this.anchorHoriz.copy(horiz);
-      this.anchorYOffset = THREE.MathUtils.clamp(dir.y * distance * 0.35, -0.22, 0.22);
+      this.anchorHoriz.copy(this.tmpHoriz);
+      this.anchorYOffset = THREE.MathUtils.clamp(this.tmpForward.y * distance * 0.35, -0.22, 0.22);
       this.smoothedCamQuat.copy(this.camera.quaternion);
       this.updateStabilizedAnchor(distance);
     } else {
@@ -743,7 +755,8 @@ export class ARQuizController {
     this.lastInteractionTime = now;
     this.hasUserInteracted = true;
 
-    this.raycaster.setFromCamera(new THREE.Vector2(ndcX, ndcY), this.camera);
+    this.tmpRayNdc.set(ndcX, ndcY);
+    this.raycaster.setFromCamera(this.tmpRayNdc, this.camera);
 
     if (this.session.isFinished) {
       if (this.resultsMesh.visible && this.raycaster.intersectObject(this.resultsMesh).length > 0) {
@@ -878,10 +891,10 @@ export class ARQuizController {
           this.viewerRefSpace = null;
         }
 
-        const clock = new THREE.Clock();
-        renderer.setAnimationLoop((_time, frame) => this.tick(clock.getElapsedTime(), frame));
+        renderer.setAnimationLoop((_time, frame) => this.tick(frame));
 
         syncLanguageVisibility(this.overlay ?? document);
+        if (this.statusPill) this.statusPill.hidden = !this.debugMode;
         this.restart();
       })
       .catch((err: any) => {

@@ -15,7 +15,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Multimedia UPIICSA',
-      pagefind: false,
+      pagefind: true,
       disable404Route: true,
       head: [
         {

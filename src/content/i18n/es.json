@@ -1,1 +1,6 @@
-{}
+{
+  "search.label": "Buscar",
+  "search.shortcutLabel": "(Presiona / o Ctrl+K para buscar)",
+  "pagefind.placeholder": "Buscar temas, conceptos o unidades...",
+  "pagefind.zero_results": "No se encontraron resultados para [SEARCH_TERM]."
+}

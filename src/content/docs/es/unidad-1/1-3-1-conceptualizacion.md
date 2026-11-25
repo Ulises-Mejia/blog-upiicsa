@@ -1,6 +1,6 @@
 ---
 title: "La Animación y su Conceptualización"
-description: "Plantilla académica para 1.3.1: La Animación y su Conceptualización"
+description: "Bases psicofisiológicas del movimiento aparente, tasas de fotogramas (FPS) y aplicación de los doce principios fundamentales de la animación a sistemas digitales."
 ---
 
 ## Introducción

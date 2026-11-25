@@ -1,6 +1,6 @@
 ---
 title: "Hibridación de las Tecnologías Emergentes"
-description: "Plantilla académica para 2.1.3: Hibridación de las Tecnologías Emergentes"
+description: "Convergencia de tecnologías emergentes en multimedia: integración de Realidad Extendida (XR) con Inteligencia Artificial, visión por computadora, IoT, gemelos digitales y Edge/5G."
 ---
 
 ## Introducción

@@ -1,6 +1,6 @@
 ---
 title: "Manejo de la Cámara: Tomas, Movimientos y Planos"
-description: "Plantilla académica para 1.2.2: Manejo de la Cámara: Tomas, Movimientos y Planos"
+description: "Lenguaje audiovisual aplicado al manejo de cámara: unidades narrativas, escala de planos, angulaciones, movimientos físicos y ópticos y reglas de continuidad (raccord)."
 ---
 
 ## Introducción

@@ -1,6 +1,6 @@
 ---
 title: "La Animación: La Base de la Realidad Virtual"
-description: "Plantilla académica para 1.4.2: La Animación: La Base de la Realidad Virtual"
+description: "Por qué la animación en tiempo real sustenta la Realidad Virtual: bucle de simulación, proyección estereoscópica, presencia y control de latencia motion-to-photon."
 ---
 
 ## Introducción

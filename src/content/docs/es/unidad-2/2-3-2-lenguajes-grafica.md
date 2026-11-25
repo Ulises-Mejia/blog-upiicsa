@@ -1,6 +1,6 @@
 ---
 title: "Lenguajes y Librerías de Computación Gráfica: OpenGL, OpenCV y Python"
-description: "Plantilla académica para 2.3.2: Lenguajes y Librerías de Computación Gráfica: OpenGL, OpenCV y Python"
+description: "Computación gráfica y visión artificial en tiempo real: pipeline de renderizado en GPU con OpenGL y GLSL combinado con procesamiento de imágenes en OpenCV y Python."
 ---
 
 ## Introducción

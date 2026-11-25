@@ -1,6 +1,6 @@
 ---
 title: "Formatos de Imagen, Audio, Video y Texto"
-description: "Plantilla académica para 1.1.4: Formatos de Imagen, Audio, Video y Texto"
+description: "Teoría de compresión lossless y lossy junto con la anatomía técnica de formatos contenedores y códecs de imagen, audio, video y texto digital."
 ---
 
 ## Introducción

@@ -1,6 +1,6 @@
 ---
 title: "Herramientas de Realidad Virtual y Realidad Aumentada"
-description: "Plantilla académica para 2.2.3: Herramientas de Realidad Virtual y Realidad Aumentada"
+description: "Arquitectura y SDKs para Realidad Aumentada y Virtual: Vuforia, AR Foundation, WebAR, OpenXR y XR Interaction Toolkit para seguimiento espacial e interacción."
 ---
 
 ## Introducción

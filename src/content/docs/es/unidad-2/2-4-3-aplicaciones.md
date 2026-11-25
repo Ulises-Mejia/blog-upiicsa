@@ -1,6 +1,6 @@
 ---
 title: "Aplicaciones Multimedia: Perspectiva del Usuario Final vs. Desarrollador"
-description: "Plantilla académica para 2.4.3: Aplicaciones Multimedia: Perspectiva del Usuario Final vs. Desarrollador"
+description: "Diseño de aplicaciones multimedia desde dos perspectivas complementarias: usabilidad e inclusión ISO 9241-11 para el usuario final y arquitectura modular con Manual Técnico para desarrolladores."
 ---
 
 ## Introducción

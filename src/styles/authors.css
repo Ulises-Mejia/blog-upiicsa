@@ -1,0 +1,220 @@
+/* ==========================================================================
+   TARJETAS DE AUTORES Y COLABORADORES
+   ========================================================================== */
+.authors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+  gap: 1.5rem;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.author-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  padding: 1.75rem;
+  background: var(--sl-color-gray-6);
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+:root[data-theme='light'] .author-card {
+  background: #FFFFFF;
+  border: 1px solid rgba(0, 100, 58, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme='dark'] .author-card {
+  background: rgba(10, 30, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.28);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+:root[data-theme='dark'] .author-card:hover {
+  transform: translateY(-4px);
+  border-color: #D4AF37;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.author-card:hover {
+  transform: translateY(-4px);
+  border-color: #D4AF37;
+  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+}
+
+.author-header {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  margin-bottom: 1.25rem;
+}
+
+.author-photo-wrapper {
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 2.5px solid #D4AF37;
+  overflow: hidden;
+  background: rgba(0, 100, 58, 0.15);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='dark'] .author-photo-wrapper {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: #D4AF37;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+}
+
+.author-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.author-avatar-fallback {
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: var(--sl-color-accent-high);
+  line-height: 1;
+  user-select: none;
+}
+
+.author-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.author-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--sl-color-white);
+  margin: 0;
+  line-height: 1.2;
+}
+
+:root[data-theme='light'] .author-name {
+  color: #00361F;
+}
+
+.author-role-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: #00361F;
+  background: #D4AF37;
+  padding: 3px 8px;
+  border-radius: 4px;
+  width: fit-content;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.author-section {
+  margin-bottom: 1.15rem;
+  text-align: left;
+}
+
+.author-section:last-child {
+  margin-bottom: 0;
+}
+
+.author-section-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #D4AF37;
+  margin-bottom: 0.4rem;
+}
+
+:root[data-theme='light'] .author-section-title {
+  color: #00643A;
+}
+
+.author-section-content {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--sl-color-gray-2);
+  margin: 0;
+}
+
+:root[data-theme='light'] .author-section-content {
+  color: #334155;
+}
+
+.author-section-content ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.author-section-content li {
+  margin-bottom: 0.3rem;
+}
+
+.author-info-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 6px;
+  margin-bottom: 0.35rem;
+  overflow-wrap: anywhere;
+}
+
+.author-info-label {
+  font-weight: 700;
+  color: var(--sl-color-white);
+  flex-shrink: 0;
+}
+
+:root[data-theme='light'] .author-info-label {
+  color: #0F172A;
+}
+
+@media (max-width: 50rem) {
+  .author-card {
+    padding: 1.25rem;
+  }
+
+  .author-header {
+    gap: 1rem;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .author-photo-wrapper {
+    width: 72px;
+    height: 72px;
+  }
+
+  .author-name {
+    font-size: 1.08rem;
+  }
+}
+
+@media (max-width: 26rem) {
+  .author-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .author-meta {
+    align-items: center;
+    text-align: center;
+  }
+}

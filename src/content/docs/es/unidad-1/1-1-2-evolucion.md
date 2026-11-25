@@ -1,6 +1,6 @@
 ---
 title: "La Evolución de la Computación Gráfica en la Multimedia"
-description: "Plantilla académica para 1.1.2: La Evolución de la Computación Gráfica en la Multimedia"
+description: "Recorrido histórico de la computación gráfica en la multimedia, desde los precursores conceptuales y primeras interfaces gráficas hasta las GPU programables modernas."
 ---
 
 ## Introducción
