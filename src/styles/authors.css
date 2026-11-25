@@ -1,18 +1,67 @@
 /* ==========================================================================
+   PÁGINA DE AUTORES Y CRÉDITOS — VISTA COMPACTA SIN SCROLL EN ESCRITORIO
+   ========================================================================== */
+@media (min-width: 50rem) {
+  .main-frame:has(.authors-grid) {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 40px !important;
+    box-sizing: border-box;
+  }
+
+  .main-frame:has(.authors-grid) > .lg\:sl-flex {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .main-frame:has(.authors-grid) .main-pane {
+    width: 100%;
+  }
+
+  :root[data-theme='dark'] main[data-pagefind-body]:has(.authors-grid),
+  :root[data-theme='light'] main[data-pagefind-body]:has(.authors-grid) {
+    margin-block: 0.75rem !important;
+    padding: 0.5rem 0.75rem 1.35rem 0.75rem !important;
+  }
+
+  main[data-pagefind-body]:has(.authors-grid) > .content-panel:first-of-type {
+    padding-top: 0.65rem !important;
+    padding-bottom: 0.6rem !important;
+    text-align: center;
+  }
+
+  main[data-pagefind-body]:has(.authors-grid) > .content-panel:nth-of-type(2) {
+    padding-top: 0.9rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+}
+
+.authors-intro {
+  margin: 0 0 1.25rem 0 !important;
+  text-align: center;
+  font-size: 0.96rem;
+  color: var(--sl-color-gray-2);
+}
+
+/* ==========================================================================
    TARJETAS DE AUTORES Y COLABORADORES
    ========================================================================== */
 .authors-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
-  gap: 1.5rem;
-  margin: 1.5rem 0 0.5rem 0;
+  gap: 1.25rem;
+  align-items: start;
+  margin: 0;
 }
 
 .author-card {
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   border-radius: 14px;
-  padding: 1.75rem;
+  padding: 1.4rem;
   background: var(--sl-color-gray-6);
   border: 1px solid rgba(212, 175, 55, 0.3);
   box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
@@ -33,31 +82,28 @@
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-:root[data-theme='dark'] .author-card:hover {
-  transform: translateY(-4px);
-  border-color: #D4AF37;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 24px rgba(212, 175, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-}
-
 .author-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-3px);
   border-color: #D4AF37;
-  box-shadow: 0 12px 32px rgba(212, 175, 55, 0.2);
+  box-shadow: 0 12px 30px rgba(212, 175, 55, 0.18);
 }
 
+:root[data-theme='dark'] .author-card:hover {
+  border-color: #D4AF37;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.6), 0 0 22px rgba(212, 175, 55, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* Cabecera compacta: foto pendiente + nombre + escuela y carrera */
 .author-header {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--sl-color-gray-5);
-  margin-bottom: 1.25rem;
+  gap: 1.05rem;
 }
 
 .author-photo-wrapper {
   position: relative;
-  width: 88px;
-  height: 88px;
+  width: 78px;
+  height: 78px;
   border-radius: 50%;
   border: 2.5px solid #D4AF37;
   overflow: hidden;
@@ -72,7 +118,7 @@
 :root[data-theme='dark'] .author-photo-wrapper {
   background: rgba(255, 255, 255, 0.06);
   border-color: #D4AF37;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.35);
+  box-shadow: 0 0 18px rgba(212, 175, 55, 0.3);
 }
 
 .author-photo {
@@ -83,7 +129,7 @@
 }
 
 .author-avatar-fallback {
-  font-size: 1.85rem;
+  font-size: 1.7rem;
   font-weight: 800;
   letter-spacing: 0.04em;
   color: var(--sl-color-accent-high);
@@ -94,54 +140,184 @@
 .author-meta {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 3px;
   text-align: left;
+  min-width: 0;
 }
 
 .author-name {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--sl-color-white);
-  margin: 0;
-  line-height: 1.2;
+  font-size: 1.15rem !important;
+  font-weight: 800 !important;
+  color: var(--sl-color-white) !important;
+  margin: 0 0 2px 0 !important;
+  line-height: 1.2 !important;
 }
 
 :root[data-theme='light'] .author-name {
-  color: #00361F;
+  color: #00361F !important;
+}
+
+.author-school,
+.author-program {
+  margin: 0 !important;
+  font-size: 0.85rem;
+  line-height: 1.35;
+}
+
+.author-school {
+  font-weight: 700;
+  color: #D4AF37;
+}
+
+:root[data-theme='light'] .author-school {
+  color: #00643A;
+}
+
+.author-program {
+  color: var(--sl-color-gray-2);
+}
+
+:root[data-theme='light'] .author-program {
+  color: #334155;
+}
+
+/* Medios de contacto (email y/o enlace web) */
+.author-contacts,
+.author-extra-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.author-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.42rem 0.78rem;
+  border-radius: 8px;
+  font-size: 0.83rem;
+  font-weight: 600;
+  text-decoration: none !important;
+  color: #004D2C !important;
+  background: rgba(0, 100, 58, 0.08);
+  border: 1px solid rgba(0, 100, 58, 0.22);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  overflow-wrap: anywhere;
+}
+
+:root[data-theme='dark'] .author-contact-link {
+  color: #F4E8C1 !important;
+  background: rgba(212, 175, 55, 0.1);
+  border-color: rgba(212, 175, 55, 0.28);
+}
+
+.author-contact-link:hover {
+  background: #00643A;
+  color: #FFFFFF !important;
+  border-color: #00643A;
+  transform: translateY(-1px);
+}
+
+:root[data-theme='dark'] .author-contact-link:hover {
+  background: #D4AF37;
+  color: #00361F !important;
+  border-color: #D4AF37;
+}
+
+/* Acordeón desplegable (<details>) con información complementaria y futura */
+.author-details {
+  border-top: 1px solid rgba(0, 100, 58, 0.16);
+  padding-top: 0.75rem;
+  margin: 0 !important;
+}
+
+:root[data-theme='dark'] .author-details {
+  border-top-color: rgba(212, 175, 55, 0.22);
+}
+
+.author-details-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #004D2C;
+  background: rgba(0, 100, 58, 0.05);
+  border: 1px solid rgba(0, 100, 58, 0.16);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.author-details-summary::-webkit-details-marker {
+  display: none;
+}
+
+:root[data-theme='dark'] .author-details-summary {
+  color: #F4E8C1;
+  background: rgba(212, 175, 55, 0.07);
+  border-color: rgba(212, 175, 55, 0.24);
+}
+
+.author-details-summary:hover {
+  background: rgba(0, 100, 58, 0.1);
+  border-color: #00643A;
+}
+
+:root[data-theme='dark'] .author-details-summary:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: #D4AF37;
+}
+
+.author-details-chevron {
+  display: inline-block;
+  font-size: 0.9rem;
+  transition: transform 0.22s ease;
+}
+
+.author-details[open] .author-details-chevron {
+  transform: rotate(180deg);
+}
+
+.author-details-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  padding-top: 0.95rem;
 }
 
 .author-role-badge {
   display: inline-block;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   font-weight: 800;
   color: #00361F;
   background: #D4AF37;
-  padding: 3px 8px;
-  border-radius: 4px;
+  padding: 3px 9px;
+  border-radius: 5px;
   width: fit-content;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .author-section {
-  margin-bottom: 1.15rem;
   text-align: left;
-}
-
-.author-section:last-child {
-  margin-bottom: 0;
+  margin: 0;
 }
 
 .author-section-title {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.75px;
   color: #D4AF37;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
 }
 
 :root[data-theme='light'] .author-section-title {
@@ -149,7 +325,7 @@
 }
 
 .author-section-content {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   line-height: 1.55;
   color: var(--sl-color-gray-2);
   margin: 0;
@@ -161,7 +337,7 @@
 
 .author-section-content ul {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1.15rem;
 }
 
 .author-section-content li {
@@ -172,7 +348,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 2px 6px;
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.25rem;
   overflow-wrap: anywhere;
 }
 
@@ -188,22 +364,16 @@
 
 @media (max-width: 50rem) {
   .author-card {
-    padding: 1.25rem;
-  }
-
-  .author-header {
-    gap: 1rem;
-    padding-bottom: 1rem;
-    margin-bottom: 1rem;
+    padding: 1.15rem;
   }
 
   .author-photo-wrapper {
-    width: 72px;
-    height: 72px;
+    width: 68px;
+    height: 68px;
   }
 
   .author-name {
-    font-size: 1.08rem;
+    font-size: 1.06rem !important;
   }
 }
 
@@ -216,5 +386,9 @@
   .author-meta {
     align-items: center;
     text-align: center;
+  }
+
+  .author-contacts {
+    justify-content: center;
   }
 }

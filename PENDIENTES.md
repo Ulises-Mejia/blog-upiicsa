@@ -15,7 +15,8 @@
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
-| **Total** | — | **1** | **0** | **21** |
+| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 1 |
+| **Total** | — | **1** | **0** | **22** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -154,6 +155,14 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
 
 ---
 
+## ✨ Bloque 5 — Mejoras de UX y Secciones
+
+- [x] **UX-01 — Rediseño de Autores y Créditos (vista compacta sin scroll + desplegable)**
+  - **Ubicación:** `src/content/docs/es/autores.md`, `src/styles/authors.css`, `README.md`
+  - **Resuelto:** Desactivado TOC vacío (`tableOfContents: false`), centrado vertical sin scroll en escritorio (`min-height: 100dvh`), tarjetas compactas mostrando a primera vista solo foto/avatar pendiente, nombre, escuela/carrera y contacto clickeable (`mailto:` + slot web listo para descomentar), y acordeón `<details>` desplegable con rol, contexto académico, perfil y bloques comentados reservados para datos futuros.
+
+---
+
 ## ❓ Decisiones Abiertas por Confirmar
 
 Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
@@ -183,10 +192,11 @@ Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en
   - `RV-03`: reducción de luces `point` (5 → 3), bucle único `startSceneLoop()`, `precision: medium`, límite `1920` de canvas y tope de `pixelRatio` móvil.
   - `RV-04`: manejo de fallo de CDN A-Frame + timeout de 12 s con botón `Reintentar`.
   - `RV-05`: compresión de `public/audios/himno_ipn.mp3` a 128 kbps estéreo (4.26 MB → 1.71 MB, -60 %).
-- **Bloque 4 completado (6/6):**
+- **Bloque 4 completado (6/6 — commit `48f0615`):**
   - `CAL-01`: actualizadas las 26 `description` SEO de Unidad I y Unidad II con resúmenes académicos reales.
   - `CAL-02`: modularizado `src/styles/custom.css` en 6 parciales (`tokens`, `sidebar`, `toc`, `content`, `authors`, `integrations`) y reemplazados selectores `nth-child` por `:has(a[href*="/unidad-N/"])`.
   - `CAL-03`: reutilización de vectores y cuaterniones temporales en `ar-quiz.ts` (cero asignaciones por frame) y eliminación de `THREE.Clock` deprecado.
   - `CAL-04`: añadidos `@astrojs/check` y `typescript`, script `npm run check`, paso en CI (`deploy.yml`) y corregidos los 10 errores de tipos existentes.
   - `CAL-05`: activado Pagefind (`pagefind: true`), integrado `<Search />` en `Header.astro` con estilos UPIICSA y poblado `src/content/i18n/es.json`.
   - `CAL-06`: telemetría `ar-status-pill` oculta por defecto y activable vía `?debug=1`.
+- **Bloque 5 (`UX-01`):** rediseñada `src/content/docs/es/autores.md` y `src/styles/authors.css` con vista compacta sin scroll en escritorio (`tableOfContents: false`), información clave a primera vista (foto pendiente, nombre, escuela/carrera, contacto `mailto:` + slot web) y acordeón `<details>` con rol, perfil y bloques comentados para datos futuros.

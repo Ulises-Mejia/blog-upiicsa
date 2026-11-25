@@ -287,10 +287,12 @@ Ubicación: `src/components/`
 ### 5. Autores y Perfiles Estudiantiles
 Archivo: `src/content/docs/es/autores.md`
 
-Para actualizar las fotografías y datos de los desarrolladores o colaboradores:
-1. Guarda la fotografía en `public/images/autor_tunombre.jpg`.
-2. Abre `autores.md` y edita la tarjeta correspondiente (`<article class="author-card">`), descomentando la etiqueta `<img>` (y ocultando el avatar de iniciales `.author-avatar-fallback`) y actualizando nombre, rol, correo institucional, carrera y experiencia.
-3. Mientras no existan fotografías locales, cada tarjeta muestra un avatar tipográfico con iniciales sin generar peticiones 404.
+La página de autores usa un diseño compacto centrado sin scroll en escritorio (`tableOfContents: false`), mostrando a primera vista solo **avatar/foto**, **nombre**, **escuela y carrera** y **medios de contacto** (correo `mailto:` y enlace web opcional), con un acordeón `<details>` desplegable para el rol, perfil técnico y espacios futuros.
+
+Para actualizar fotografías, sitio web o datos extendidos:
+1. **Foto:** guarda la fotografía en `public/images/autor_tunombre.jpg` y descomenta la etiqueta `<img>` dentro de `.author-photo-wrapper` (ocultando `.author-avatar-fallback`).
+2. **Enlace web:** descomenta el enlace `.author-contact-link--web` dentro de `.author-contacts` y coloca la URL del sitio o portafolio.
+3. **Datos futuros:** descomenta las secciones reservadas (semblanza, GitHub, LinkedIn) dentro de `.author-details-body`.
 
 ---
 
