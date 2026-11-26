@@ -29,6 +29,11 @@ Para superar las carencias de los modelos puramente informáticos (que olvidan e
 * **Fase 7 — Producción:** Generación de la versión maestra validada, asignación de nombre representativo, etiquetado y reproducción/distribución.  
 * **Fase 8 — Elaboración del Material Complementario:** Redacción del **Manual de Usuario** (instalación, requisitos mínimos y controles) y del **Manual de Actividades Didácticas**.
 
+<figure class="media-container topic-figure">
+  <img src="../../../images/temas/u1/1-2-1-medesme-fases.svg" alt="Diagrama de flujo con las ocho fases de la metodología MEDESME (Concepto, Análisis, Diseño Integral, Desarrollo, Implementación, Evaluación QA con normas ISO 9241-11 e ISO/IEC 9126, Producción y Material Complementario) agrupadas bajo las cuatro macro-etapas de producción." width="960" height="540" loading="lazy" decoding="async" />
+  <figcaption><strong>Figura 1.5.</strong> Articulación de las ocho fases de la metodología <code>MEDESME</code> (García Sánchez et al., 2016) con las cuatro macro-etapas de producción multimedia.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+</figure>
+
 ## Conclusiones
 
 > La aplicación rigurosa de metodologías como `MEDESME` garantiza que un proyecto multimedia no sea una colección improvisada de archivos vistosos, sino un producto de ingeniería de software documentado, validado con estándares `ISO 9241-11` e `ISO/IEC 9126` y centrado en el usuario.

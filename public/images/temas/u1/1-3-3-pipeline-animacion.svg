@@ -1,0 +1,147 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-labelledby="t133 d133">
+  <title id="t133">Pipeline de Producción de Animación 3D: del Storyboard al Renderizado</title>
+  <desc id="d133">Diagrama técnico del flujo de producción de animación en seis etapas secuenciales: Preproducción visual (Guion, Storyboard, Animatic), Modelado y Topología, Mapeo UV y Texturizado PBR, Rigging y Skinning con cinemática FK e IK, Interpolación por curvas de Bézier y cuaterniones SLERP, y Renderizado y Composición.</desc>
+  <defs>
+    <linearGradient id="bg133" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B2E1E"/>
+      <stop offset="100%" stop-color="#06170E"/>
+    </linearGradient>
+    <marker id="arr133" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0 1 L9 5 L0 9 Z" fill="#D4AF37"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="540" rx="18" fill="url(#bg133)"/>
+  <rect x="10" y="10" width="940" height="520" rx="14" fill="none" stroke="#D4AF37" stroke-opacity="0.32" stroke-width="1.5"/>
+
+  <rect x="34" y="26" width="168" height="24" rx="12" fill="#D4AF37" fill-opacity="0.16" stroke="#D4AF37" stroke-opacity="0.5"/>
+  <text x="118" y="42" text-anchor="middle" fill="#D4AF37" font-family="system-ui,sans-serif" font-size="11" font-weight="800" letter-spacing="1">UNIDAD I · TEMA 1.3.3</text>
+  <text x="480" y="46" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="21" font-weight="800">Pipeline de Ingeniería en Producción de Animación 3D</text>
+  <text x="480" y="68" text-anchor="middle" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="13">Cadena secuencial desde el boceto conceptual hasta el cuadro final renderizado</text>
+
+  <!-- Fila 1: Estaciones 1, 2, 3 -->
+  <!-- 1. Preproducción -->
+  <g transform="translate(36,96)">
+    <rect width="276" height="174" rx="14" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#00643A"/>
+    <text x="58" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="11" font-weight="800">ETAPA 1</text>
+    <text x="112" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Preproducción</text>
+    <!-- Mini storyboard icon -->
+    <g transform="translate(18,52)" stroke="#6EE7B7" stroke-opacity="0.7" fill="#06170E">
+      <rect x="0" y="0" width="72" height="44" rx="4"/>
+      <rect x="82" y="0" width="72" height="44" rx="4"/>
+      <rect x="164" y="0" width="72" height="44" rx="4"/>
+      <circle cx="24" cy="20" r="8" fill="#D4AF37" stroke="none"/>
+      <circle cx="118" cy="20" r="8" fill="#D4AF37" stroke="none"/>
+      <circle cx="210" cy="20" r="8" fill="#D4AF37" stroke="none"/>
+    </g>
+    <text x="18" y="122" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Guion técnico y Storyboard</text>
+    <text x="18" y="142" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Animatic (Leica Reel) + audio guía</text>
+    <text x="18" y="160" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="11">Valida ritmo (timing) antes de modelar</text>
+  </g>
+  <line x1="316" y1="183" x2="338" y2="183" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#arr133)"/>
+
+  <!-- 2. Modelado y UV -->
+  <g transform="translate(342,96)">
+    <rect width="276" height="174" rx="14" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#00643A"/>
+    <text x="58" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="11" font-weight="800">ETAPA 2</text>
+    <text x="112" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Modelado y UV</text>
+    <!-- Cubo malla wireframe + UV unfold -->
+    <g transform="translate(30,50)" stroke="#6EE7B7" stroke-width="1.5" fill="none">
+      <polygon points="34,4 64,18 64,46 34,60 4,46 4,18"/>
+      <line x1="34" y1="4" x2="34" y2="32"/><line x1="34" y1="32" x2="64" y2="18"/><line x1="34" y1="32" x2="4" y2="18"/><line x1="34" y1="32" x2="34" y2="60"/>
+      <line x1="82" y1="32" x2="112" y2="32" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr133)"/>
+      <g transform="translate(126,12)" stroke="#D4AF37">
+        <rect x="18" y="0" width="18" height="18"/><rect x="0" y="18" width="18" height="18"/><rect x="18" y="18" width="18" height="18"/><rect x="36" y="18" width="18" height="18"/><rect x="54" y="18" width="18" height="18"/>
+      </g>
+    </g>
+    <text x="18" y="122" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Topología en cuadriláteros (quads)</text>
+    <text x="18" y="141" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Escultura digital + Retopología</text>
+    <text x="18" y="159" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="11">• Despliegue UV (u, v) sin distorsión</text>
+  </g>
+  <line x1="622" y1="183" x2="644" y2="183" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#arr133)"/>
+
+  <!-- 3. Texturizado PBR -->
+  <g transform="translate(648,96)">
+    <rect width="276" height="174" rx="14" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#00643A"/>
+    <text x="58" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="11" font-weight="800">ETAPA 3</text>
+    <text x="112" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Materiales PBR</text>
+    <!-- 4 canales PBR -->
+    <g transform="translate(18,52)">
+      <rect x="0" y="0" width="54" height="42" rx="6" fill="#00643A" stroke="#6EE7B7"/><text x="27" y="26" text-anchor="middle" fill="#FFF" font-family="monospace" font-size="10">Albedo</text>
+      <rect x="62" y="0" width="54" height="42" rx="6" fill="#334155" stroke="#94A3B8"/><text x="89" y="26" text-anchor="middle" fill="#FFF" font-family="monospace" font-size="10">Rough</text>
+      <rect x="124" y="0" width="54" height="42" rx="6" fill="#78611B" stroke="#D4AF37"/><text x="151" y="26" text-anchor="middle" fill="#FFF" font-family="monospace" font-size="10">Metal</text>
+      <rect x="186" y="0" width="54" height="42" rx="6" fill="#3B3A7A" stroke="#A5B4FC"/><text x="213" y="26" text-anchor="middle" fill="#FFF" font-family="monospace" font-size="10">Normal</text>
+    </g>
+    <text x="18" y="122" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Albedo (color) + Roughness</text>
+    <text x="18" y="142" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Metallic + Normal Map (relieve)</text>
+    <text x="18" y="160" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="11">Respuesta física realista a la luz</text>
+  </g>
+
+  <!-- Conector serpiente de Etapa 3 a Etapa 4 -->
+  <path d="M786 274 L786 294 L174 294 L174 316" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arr133)"/>
+
+  <!-- Fila 2: Estaciones 4, 5, 6 -->
+  <!-- 4. Rigging / FK-IK -->
+  <g transform="translate(36,320)">
+    <rect width="276" height="170" rx="14" fill="#0C2C1D" stroke="#D4AF37" stroke-opacity="0.75" stroke-width="1.8"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#D4AF37"/>
+    <text x="58" y="31" text-anchor="middle" fill="#00361F" font-family="system-ui,sans-serif" font-size="11" font-weight="900">ETAPA 4</text>
+    <text x="112" y="31" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Rigging y FK / IK</text>
+    <!-- Esqueleto cinemático -->
+    <g transform="translate(26,52)">
+      <line x1="16" y1="36" x2="72" y2="12" stroke="#D4AF37" stroke-width="4" stroke-linecap="round"/>
+      <line x1="72" y1="12" x2="146" y2="30" stroke="#6EE7B7" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="16" cy="36" r="6" fill="#F4E8C1"/><circle cx="72" cy="12" r="6" fill="#F4E8C1"/><circle cx="146" cy="30" r="7" fill="#10B981" stroke="#FFF" stroke-width="1.5"/>
+      <text x="162" y="24" fill="#6EE7B7" font-family="monospace" font-size="11" font-weight="700">End-effector</text>
+      <text x="162" y="40" fill="#D4AF37" font-family="monospace" font-size="10.5">θ₁ → θ₂ (IK)</text>
+    </g>
+    <text x="18" y="118" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Jerarquía de huesos y Skinning (wᵢ)</text>
+    <text x="18" y="138" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• FK (rotación padre→hijo) vs IK (FABRIK)</text>
+    <text x="18" y="156" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="11">• Blend Shapes para gestos faciales</text>
+  </g>
+  <line x1="316" y1="405" x2="338" y2="405" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#arr133)"/>
+
+  <!-- 5. Interpolación -->
+  <g transform="translate(342,320)">
+    <rect width="276" height="170" rx="14" fill="#0C2C1D" stroke="#D4AF37" stroke-opacity="0.75" stroke-width="1.8"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#D4AF37"/>
+    <text x="58" y="31" text-anchor="middle" fill="#00361F" font-family="system-ui,sans-serif" font-size="11" font-weight="900">ETAPA 5</text>
+    <text x="112" y="31" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Curvas y SLERP</text>
+    <!-- Curva de Bézier cúbica -->
+    <g transform="translate(22,48)">
+      <rect width="232" height="50" rx="6" fill="#06170E" stroke="#D4AF37" stroke-opacity="0.35"/>
+      <line x1="20" y1="40" x2="72" y2="10" stroke="#9EC2B0" stroke-dasharray="3 2"/>
+      <line x1="212" y1="12" x2="160" y2="40" stroke="#9EC2B0" stroke-dasharray="3 2"/>
+      <path d="M20 40 C 72 10, 160 40, 212 12" fill="none" stroke="#D4AF37" stroke-width="2.5"/>
+      <circle cx="20" cy="40" r="4.5" fill="#6EE7B7"/><circle cx="212" cy="12" r="4.5" fill="#6EE7B7"/>
+      <circle cx="72" cy="10" r="3.5" fill="#F4E8C1"/><circle cx="160" cy="40" r="3.5" fill="#F4E8C1"/>
+    </g>
+    <text x="18" y="120" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Splines cúbicas (Bézier / Hermite)</text>
+    <text x="18" y="140" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Cuaterniones SLERP (evita Gimbal Lock)</text>
+    <text x="18" y="158" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="11">Control fino en Graph Editor</text>
+  </g>
+  <line x1="622" y1="405" x2="644" y2="405" stroke="#D4AF37" stroke-width="2.5" marker-end="url(#arr133)"/>
+
+  <!-- 6. Renderizado -->
+  <g transform="translate(648,320)">
+    <rect width="276" height="170" rx="14" fill="#0C2C1D" stroke="#10B981" stroke-width="2"/>
+    <rect x="16" y="16" width="84" height="22" rx="6" fill="#00643A" stroke="#6EE7B7"/>
+    <text x="58" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="11" font-weight="800">ETAPA 6</text>
+    <text x="112" y="31" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="14" font-weight="800">Render y Salida</text>
+    <!-- Esfera iluminada -->
+    <g transform="translate(18,50)">
+      <circle cx="32" cy="24" r="20" fill="#D4AF37" fill-opacity="0.85"/>
+      <circle cx="25" cy="17" r="7" fill="#FFFFFF" fill-opacity="0.65"/>
+      <text x="68" y="20" fill="#6EE7B7" font-family="system-ui,sans-serif" font-size="12" font-weight="700">Rasterización (Tiempo Real)</text>
+      <text x="68" y="38" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="12" font-weight="700">Path Tracing (Cine Offline)</text>
+    </g>
+    <text x="18" y="120" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Iluminación global y sombras</text>
+    <text x="18" y="140" fill="#E2E8F0" font-family="system-ui,sans-serif" font-size="12">• Composición final y etalonaje</text>
+    <text x="18" y="158" fill="#6EE7B7" font-family="system-ui,sans-serif" font-size="11">Entrega a video o motor 3D/WebXR</text>
+  </g>
+
+  <text x="480" y="516" text-anchor="middle" fill="#7EA893" font-family="system-ui,sans-serif" font-size="11">Pipeline técnico de animación 3D · UPIICSA — IPN</text>
+</svg>

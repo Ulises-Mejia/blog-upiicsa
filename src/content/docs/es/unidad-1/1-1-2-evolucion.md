@@ -16,6 +16,15 @@ La genealogía de la computación gráfica y la multimedia interactiva se articu
 * **1965–1968 — Proyecto Xanadu (Ted Nelson) y el sistema NLS (Douglas Engelbart):** Nelson acuñó los términos *hipertexto* e *hipermedia*, mientras que Engelbart demostró en *The Mother of All Demos* (1968) el primer ratón (*mouse*), ventanas múltiples, videoconferencia en pantalla y edición colaborativa en tiempo real.  
 * **Década de 1970 — Del Display Vectorial al Framebuffer Raster (Xerox PARC y Universidad de Utah):** Se sustituyeron los monitores vectoriales por pantallas de barrido (*raster*) respaldadas por una memoria de cuadro (*framebuffer*) donde cada píxel correspondía a una dirección de memoria RAM. En esta etapa, pioneros como Gouraud, Phong, Catmull y Blinn formularon los algoritmos de sombreado suave, mapeo de texturas, curvas spline y el búfer de profundidad (*Z-Buffer*) (Marschner & Shirley, 2016).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-1-2-xerox-alto-480.avif 480w, ../../../images/temas/u1/1-1-2-xerox-alto-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-1-2-xerox-alto-480.webp 480w, ../../../images/temas/u1/1-1-2-xerox-alto-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-1-2-xerox-alto-960.webp" alt="Estación de trabajo histórica Xerox Alto I de 1973 con monitor raster vertical, teclado principal, teclado de acordes de cinco teclas y ratón de tres botones." width="960" height="768" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.2.</strong> Estación de trabajo <em>Xerox Alto I</em> (1973, Xerox PARC): hito en la transición hacia pantallas <em>raster</em> con <em>framebuffer</em>, interfaz gráfica y ratón.<span class="topic-figure__credit">Fotografía: The wub (Computer History Museum) / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## La Era de la Multimedia Personal y las GPUs Programables (1987–Actualidad)
 
 A partir de finales de los años ochenta, la evolución gráfica aceleró su llegada al usuario final a través de tres grandes etapas tecnológicas:

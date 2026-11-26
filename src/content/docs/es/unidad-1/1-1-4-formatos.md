@@ -14,6 +14,11 @@ Como demuestran González y Woods (2017, Cap. 8) y Stanković et al. (2016), los
 * **Compresión Sin Pérdida (*Lossless*):** Elimina únicamente la redundancia estadística y espacial mediante algoritmos como *Run-Length Encoding (RLE)*, diccionarios *LZ77 / LZW* y codificación de entropía de *Huffman* o *Aritmética* (por ejemplo, el algoritmo **DEFLATE** en PNG o **FLAC** en audio). Al descomprimir el archivo, se recupera bit a bit exactamente la misma matriz original. Es obligatoria para código fuente, texto, diagramas técnicos, logotipos con bordes duros e imágenes médicas.  
 * **Compresión Con Pérdida (*Lossy*):** Transforma la señal del dominio espacial/temporal al dominio de la frecuencia mediante transformadas ortogonales —como la **Transformada Discreta del Coseno (DCT)** en JPEG/H.264 o la **Transformada Discreta del Coseno Modificada (MDCT)** en MP3/AAC (Stanković et al., 2016)— y cuantifica (redondea a cero) los coeficientes de alta frecuencia o enmascarados psicoacústicamente, logrando reducciones de peso de **10:1 a 100:1** a cambio de una pérdida irreversible controlada.
 
+<figure class="media-container topic-figure">
+  <img src="../../../images/temas/u1/1-1-4-compresion-contenedor.svg" alt="Diagrama comparativo de compresión sin pérdida (Lossless: PNG, FLAC, SVG) frente a compresión con pérdida (Lossy: AVIF, WebP, JPEG, Opus, AV1) y esquema de un archivo contenedor empaquetando pistas de video, audio y subtítulos." width="960" height="540" loading="lazy" decoding="async" />
+  <figcaption><strong>Figura 1.4.</strong> Comparativa entre compresión <em>Lossless</em> y <em>Lossy</em>, junto con la separación arquitectónica entre archivo contenedor y códecs de pista.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+</figure>
+
 ## Anatomía de los Formatos de Imagen, Audio, Video (Contenedor vs. Códec) y Texto
 
 * **Formatos de Imagen:**

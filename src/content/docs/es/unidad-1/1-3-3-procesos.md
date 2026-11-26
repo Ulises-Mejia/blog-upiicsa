@@ -17,6 +17,11 @@ En la animación 3D, la construcción de activos (*Asset Creation*) comprende tr
 * **Mapeo UV (*UV Unwrapping*):** Proyección bidimensional (*u*, *v*) de la malla 3D —similar a desplegar un cubo de cartón sobre una mesa plana— para poder pintar texturas 2D sobre su superficie sin distorsión.  
 * **Texturizado y Materiales PBR (*Physically Based Rendering*):** Asignación de mapas de bits que definen el comportamiento óptico de la superficie ante la luz: mapa de color base (*Albedo*), rugosidad microscópica (*Roughness*), carácter metálico (*Metallic*) y mapa de normales (*Normal Map*, que simula relieves detallados alterando el vector normal por píxel sin añadir polígonos).
 
+<figure class="media-container topic-figure">
+  <img src="../../../images/temas/u1/1-3-3-pipeline-animacion.svg" alt="Diagrama de flujo del pipeline de producción de animación 3D que abarca seis etapas secuenciales: preproducción (guion, storyboard y animatic), modelado y UV, texturizado PBR, rigging y skinning con FK/IK, animación por curvas Bézier y SLERP, y renderizado final." width="960" height="540" loading="lazy" decoding="async" />
+  <figcaption><strong>Figura 1.11.</strong> Pipeline integral de producción de animación 3D: desde la preproducción visual y la construcción de activos hasta la cinemática <code>FK/IK</code>, interpolación y renderizado.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+</figure>
+
 ## Esqueletización (Rigging, Skinning, FK/IK), Interpolación por Curvas y Renderizado
 
 Para dotar de movimiento a la malla estática se ejecutan las fases de articulación y cálculo cinemático (Marschner & Shirley, 2016, Cap. 15 y 16):

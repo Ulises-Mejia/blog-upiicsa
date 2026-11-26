@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" width="960" height="540" role="img" aria-labelledby="t121 d121">
+  <title id="t121">Metodología MEDESME de 8 Fases articulada con las 4 Macro-Etapas de Producción Multimedia</title>
+  <desc id="d121">Diagrama de flujo que agrupa las ocho fases de la metodología MEDESME (Concepto, Análisis, Diseño, Desarrollo, Implementación, Evaluación ISO 9241-11/9126, Producción y Material Complementario) bajo las cuatro macro-etapas de producción multimedia.</desc>
+  <defs>
+    <linearGradient id="bg121" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B2E1E"/>
+      <stop offset="100%" stop-color="#06170E"/>
+    </linearGradient>
+    <marker id="arr121" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0 1 L9 5 L0 9 Z" fill="#D4AF37"/>
+    </marker>
+  </defs>
+
+  <rect width="960" height="540" rx="18" fill="url(#bg121)"/>
+  <rect x="10" y="10" width="940" height="520" rx="14" fill="none" stroke="#D4AF37" stroke-opacity="0.32" stroke-width="1.5"/>
+
+  <rect x="34" y="26" width="168" height="24" rx="12" fill="#D4AF37" fill-opacity="0.16" stroke="#D4AF37" stroke-opacity="0.5"/>
+  <text x="118" y="42" text-anchor="middle" fill="#D4AF37" font-family="system-ui,sans-serif" font-size="11" font-weight="800" letter-spacing="1">UNIDAD I · TEMA 1.2.1</text>
+  <text x="568" y="46" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="20" font-weight="800">Producción Multimedia y Metodología MEDESME (8 Fases)</text>
+  <text x="480" y="68" text-anchor="middle" fill="#9EC2B0" font-family="system-ui,sans-serif" font-size="13">Articulación de las cuatro macro-etapas clásicas con el marco académico de García Sánchez et al. (2016)</text>
+
+  <!-- 4 bandas de Macro-Etapas arriba -->
+  <rect x="36" y="92" width="440" height="30" rx="8" fill="#00643A" fill-opacity="0.55" stroke="#10B981" stroke-opacity="0.5"/>
+  <text x="256" y="112" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">MACRO-ETAPA 1: PREPRODUCCIÓN</text>
+
+  <rect x="492" y="92" width="432" height="30" rx="8" fill="#D4AF37" fill-opacity="0.22" stroke="#D4AF37" stroke-opacity="0.6"/>
+  <text x="708" y="112" text-anchor="middle" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="12" font-weight="800">MACRO-ETAPA 2: PRODUCCIÓN</text>
+
+  <!-- Fila 1: Fases 1 a 4 -->
+  <!-- F1 -->
+  <g transform="translate(36,136)">
+    <rect width="208" height="142" rx="12" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#00643A" stroke="#6EE7B7" stroke-width="1.5"/>
+    <text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">1</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Concepto</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Idea rectora y alcance</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Equipo multidisciplinario</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Viabilidad y justificación</text>
+    <text x="16" y="124" fill="#6EE7B7" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700">Pre-producción inicial</text>
+  </g>
+  <line x1="246" y1="207" x2="266" y2="207" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F2 -->
+  <g transform="translate(268,136)">
+    <rect width="208" height="142" rx="12" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#00643A" stroke="#6EE7B7" stroke-width="1.5"/>
+    <text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">2</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Análisis</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Perfil de usuario</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Objetivos y tareas</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Requerimientos técnicos</text>
+    <text x="16" y="124" fill="#6EE7B7" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700">Medios y despliegue</text>
+  </g>
+  <line x1="478" y1="207" x2="498" y2="207" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F3 -->
+  <g transform="translate(500,136)">
+    <rect width="208" height="142" rx="12" fill="#0A2418" stroke="#D4AF37" stroke-opacity="0.7" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#D4AF37"/>
+    <text x="26" y="31" text-anchor="middle" fill="#00361F" font-family="system-ui,sans-serif" font-size="12" font-weight="900">3</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Diseño Integral</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Mapa de navegación</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Storyboard y plantillas</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Casos de uso UML y E-R</text>
+    <text x="16" y="124" fill="#D4AF37" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700">6 diagramas estructurales</text>
+  </g>
+  <line x1="710" y1="207" x2="730" y2="207" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F4 -->
+  <g transform="translate(732,136)">
+    <rect width="192" height="142" rx="12" fill="#0A2418" stroke="#D4AF37" stroke-opacity="0.7" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#D4AF37"/>
+    <text x="26" y="31" text-anchor="middle" fill="#00361F" font-family="system-ui,sans-serif" font-size="12" font-weight="900">4</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Desarrollo</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Selección de software</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Captura y edición</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Manual Técnico</text>
+    <text x="16" y="124" fill="#D4AF37" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700">Activos + código base</text>
+  </g>
+
+  <!-- Conector serpiente de F4 a F5 -->
+  <path d="M828 280 L828 302 L140 302 L140 330" fill="none" stroke="#D4AF37" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arr121)"/>
+
+  <!-- Fila 2: Fases 5 a 8 -->
+  <!-- F5 -->
+  <g transform="translate(36,334)">
+    <rect width="208" height="134" rx="12" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#00643A" stroke="#6EE7B7" stroke-width="1.5"/>
+    <text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">5</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Implementación</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Ensamblaje de interfaz</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Integración de medios</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Prototipo funcional</text>
+  </g>
+  <line x1="246" y1="401" x2="266" y2="401" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F6 -->
+  <g transform="translate(268,334)">
+    <rect width="208" height="134" rx="12" fill="#0D2F20" stroke="#D4AF37" stroke-width="2"/>
+    <circle cx="26" cy="26" r="14" fill="#D4AF37"/>
+    <text x="26" y="31" text-anchor="middle" fill="#00361F" font-family="system-ui,sans-serif" font-size="12" font-weight="900">6</text>
+    <text x="48" y="31" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Evaluación (QA)</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Prueba piloto cíclica</text>
+    <text x="16" y="78" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700">• ISO 9241-11 (Usabilidad)</text>
+    <text x="16" y="98" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="11.5" font-weight="700">• ISO/IEC 9126 (Calidad)</text>
+  </g>
+  <line x1="478" y1="401" x2="498" y2="401" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F7 -->
+  <g transform="translate(500,334)">
+    <rect width="208" height="134" rx="12" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#00643A" stroke="#6EE7B7" stroke-width="1.5"/>
+    <text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">7</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Producción</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Versión maestra final</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Empaquetado y despliegue</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Publicación web / móvil</text>
+  </g>
+  <line x1="710" y1="401" x2="730" y2="401" stroke="#D4AF37" stroke-width="2" marker-end="url(#arr121)"/>
+
+  <!-- F8 -->
+  <g transform="translate(732,334)">
+    <rect width="192" height="134" rx="12" fill="#0A2418" stroke="#10B981" stroke-opacity="0.65" stroke-width="1.5"/>
+    <circle cx="26" cy="26" r="14" fill="#00643A" stroke="#6EE7B7" stroke-width="1.5"/>
+    <text x="26" y="31" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="12" font-weight="800">8</text>
+    <text x="48" y="31" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="13.5" font-weight="800">Complementario</text>
+    <text x="16" y="58" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Manual de Usuario</text>
+    <text x="16" y="78" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Guía didáctica</text>
+    <text x="16" y="98" fill="#D1E3DA" font-family="system-ui,sans-serif" font-size="11.5">• Soporte y operación</text>
+  </g>
+
+  <!-- 2 bandas inferiores -->
+  <rect x="36" y="480" width="440" height="28" rx="8" fill="#00643A" fill-opacity="0.55" stroke="#10B981" stroke-opacity="0.5"/>
+  <text x="256" y="499" text-anchor="middle" fill="#FFFFFF" font-family="system-ui,sans-serif" font-size="11.5" font-weight="800">MACRO-ETAPA 3: POSPRODUCCIÓN E INTEGRACIÓN</text>
+
+  <rect x="492" y="480" width="432" height="28" rx="8" fill="#D4AF37" fill-opacity="0.22" stroke="#D4AF37" stroke-opacity="0.6"/>
+  <text x="708" y="499" text-anchor="middle" fill="#F4E8C1" font-family="system-ui,sans-serif" font-size="11.5" font-weight="800">MACRO-ETAPA 4: DISTRIBUCIÓN Y DOCUMENTACIÓN</text>
+</svg>

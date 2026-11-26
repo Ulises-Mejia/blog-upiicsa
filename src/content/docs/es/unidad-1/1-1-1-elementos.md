@@ -17,6 +17,11 @@ Para que un sistema informático sea verdaderamente multimedia e interactivo, de
 2. **Interactividad:** Otorga al usuario el control sobre el flujo, el ritmo y la secuencia de presentación mediante eventos de entrada (clics, gestos táctiles, comandos de voz o seguimiento de movimiento).
 3. **Hipermedia:** Término acuñado a partir del concepto de hipertexto de Ted Nelson (1965), que estructura los nodos de información multimedial en una red o grafo no secuencial navegable según los intereses del usuario.
 
+<figure class="media-container topic-figure">
+  <img src="../../../images/temas/u1/1-1-1-elementos-multimedia.svg" alt="Diagrama radial que integra los tres pilares técnicos de la multimedia (digitalización, interactividad e hipermedia) rodeados por los cinco elementos constitutivos: texto, imagen, audio, video y animación." width="960" height="540" loading="lazy" decoding="async" />
+  <figcaption><strong>Figura 1.1.</strong> Integración de los tres pilares técnicos y los cinco elementos constitutivos en un sistema multimedia informático.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+</figure>
+
 ## Los Cinco Elementos Constitutivos: Texto, Imagen, Audio, Video y Animación
 
 Cada uno de los cinco bloques de construcción aporta una capa semántica y técnica específica dentro de la arquitectura del software (Ojeda Linares, 2012; Marschner & Shirley, 2016):

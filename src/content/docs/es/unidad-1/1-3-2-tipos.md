@@ -21,6 +21,15 @@ En el espacio bidimensional (*X*, *Y*) se distinguen tres vertientes principales
 * **Animación 3D Generada por Computadora (CGI):** Los objetos se construyen como mallas poligonales tridimensionales en un espacio cartesiano (*X*, *Y*, *Z*), dotadas de un esqueleto virtual (*rig*) y materiales que reaccionan a luces y cámaras virtuales (Marschner & Shirley, 2016). Una vez modelado y articulado el personaje, puede observarse desde cualquier ángulo de cámara y reutilizarse tanto en películas prerenderizadas como en motores en tiempo real.  
 * **Animación Procedimental y Basada en Simulación Física:** En lugar de ser animada manualmente por un artista cuadro por cuadro, el movimiento emerge automáticamente en tiempo de ejecución a partir de algoritmos matemáticos, ecuaciones diferenciales de la física (gravedad, colisiones de cuerpos rígidos, telas, fluidos de Navier-Stokes, sistemas de partículas para fuego/lluvia) o reglas de comportamiento autónomo de multitudes (*boids*) (Marschner & Shirley, 2016, Cap. 16).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-3-2-stop-motion-set-480.avif 480w, ../../../images/temas/u1/1-3-2-stop-motion-set-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-3-2-stop-motion-set-480.webp 480w, ../../../images/temas/u1/1-3-2-stop-motion-set-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-3-2-stop-motion-set-960.webp" alt="Escenario físico de producción en animación stop-motion con cámara DSLR montada sobre soporte, iluminación de estudio, marioneta en set a escala y computadora portátil ejecutando software de captura cuadro a cuadro Dragonframe." width="960" height="720" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.10.</strong> Producción en <em>stop-motion</em> sobre escenario físico iluminado con cámara fija y estación de captura cuadro a cuadro (<em>Dragonframe</em>).<span class="topic-figure__credit">Fotografía: CopperHerons35 / Wikimedia Commons (CC0).</span></figcaption>
+</figure>
+
 ## Conclusiones
 
 > Conocer las características técnicas de cada tipo de animación permite combinar lo mejor de cada enfoque: por ejemplo, usar *Motion Graphics* vectoriales ligeros para la interfaz de una aplicación, animación `3D` esquelética para su avatar principal y sistemas de partículas procedimentales para sus efectos ambientales.

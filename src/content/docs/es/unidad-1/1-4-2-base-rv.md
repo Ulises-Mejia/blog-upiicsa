@@ -18,6 +18,15 @@ Como analizan Otero y Flores (2011) y Marschner y Shirley (2016), la diferencia 
   3. **Transformación Matricial Modelo-Vista-Proyección (*M*<sub>MVP</sub> = *M*<sub>proj</sub> · *M*<sub>view</sub> · *M*<sub>model</sub>):** Proyección de los vértices 3D del mundo hacia dos cámaras virtuales separadas por la distancia interpupilar (`IPD` ≈ 63 mm) para generar visión estereoscópica.
   4. **Rasterización y Post-procesamiento en `GPU`:** Envío del par de imágenes renderizadas al visor.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-4-2-visor-rv-6dof-480.avif 480w, ../../../images/temas/u1/1-4-2-visor-rv-6dof-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-4-2-visor-rv-6dof-480.webp 480w, ../../../images/temas/u1/1-4-2-visor-rv-6dof-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-4-2-visor-rv-6dof-960.webp" alt="Visor de Realidad Virtual montado en la cabeza (HMD HTC Vive) acompañado de dos controladores manuales inalámbricos con sensores ópticos para seguimiento espacial de seis grados de libertad (6DoF)." width="960" height="643" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.13.</strong> Casco de Realidad Virtual (<em>HMD</em>) y controladores con seguimiento espacial de seis grados de libertad (<code>6DoF</code>) empleados para alimentar el bucle de simulación estereoscópica en tiempo real.<span class="topic-figure__credit">Fotografía: PB / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## Animación Reactiva, Presencia y Coherencia Sensoriomotriz (Latencia Motion-to-Photon)
 
 Para que la animación sostenga la ilusión psicológica de **presencia** («estar ahí» dentro del entorno sintético) y evite la **cinetosis** (mareo inducido por el conflicto entre lo que ven los ojos y lo que detecta el sistema vestibular del oído interno), el sistema de animación en RV debe cumplir dos requisitos estrictos (Otero & Flores, 2011; Glover & Linowes, 2019):

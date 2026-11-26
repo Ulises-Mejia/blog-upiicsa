@@ -17,6 +17,11 @@ Por su parte, el **plano cinematográfico** define la proporción de la figura h
 * **Planos Narrativos o de Acción:** El **Plano Entero (PE)** encuadra al personaje de pies a cabeza; el **Plano Americano (PA)** o tres cuartos corta a la altura de las rodillas; y el **Plano Medio (PM)** (abierto a la cintura o cerrado al pecho) es el estándar para diálogos, entrevistas, tutoriales y avatares interactivos porque equilibra la expresión facial con la gesticulación de las manos.  
 * **Planos Expresivos o Cerrados:** El **Primer Plano (PP)** (de los hombros a la cabeza), el **Primerísimo Primer Plano (PPP)** (del mentón a la frente) y el **Plano Detalle (PD)** (un objeto específico o parte del cuerpo, como un dedo presionando una tecla) concentran toda la atención psicológica y dramática del usuario.
 
+<figure class="media-container topic-figure">
+  <img src="../../../images/temas/u1/1-2-2-planos-angulos-camara.svg" alt="Diagrama de gramática audiovisual mostrando a la izquierda la escala de planos sobre la figura humana (Plano Entero, Plano Americano, Plano Medio, Primer Plano y Primerísimo Primer Plano) y a la derecha el arco de angulaciones verticales (Cenital, Picado, Normal, Contrapicado y Nadir) junto con los movimientos Pan, Tilt, Dolly y Zoom." width="960" height="540" loading="lazy" decoding="async" />
+  <figcaption><strong>Figura 1.6.</strong> Escala de planos sobre la figura humana, arco de angulación vertical y taxonomía de movimientos de cámara aplicables a rodaje y escenas 3D.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+</figure>
+
 ## Angulación de Cámara, Movimientos Físicos/Ópticos y Continuidad Visual (Raccord)
 
 La posición vertical e inclinación de la cámara respecto al sujeto (**angulación**) altera radicalmente la lectura semiótica de la imagen (Ruiz, 2018; de Vega, 2017):

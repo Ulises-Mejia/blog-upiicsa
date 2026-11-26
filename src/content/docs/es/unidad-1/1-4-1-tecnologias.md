@@ -16,6 +16,15 @@ Las **tecnologías abiertas** se dividen en dos categorías complementarias que 
   * **En el ámbito 3D e inmersivo:** `glTF 2.0` / `GLB` (*GL Transmission Format* de Khronos Group, considerado el «JPEG del 3D» por su eficiencia para transmitir mallas, materiales PBR, esqueletos y animaciones directo a la `GPU`), `OpenUSD` (*Universal Scene Description* para intercambio de escenas complejas), `WebGL` / `WebGPU` (aceleración 3D en el navegador) y `OpenXR` (estándar abierto para visores de realidad virtual y aumentada).  
 * **Software de Creación de Código Abierto (*Open Source*):** Herramientas cuyo código fuente es público y gratuito bajo licencias como GPL o MIT, encabezadas por **Blender** (suite integral de modelado, *rigging*, animación 2D *Grease Pencil*, animación 3D, simulación física, edición de video y renderizado *Cycles/Eevee*), **Godot Engine** (motor de videojuegos 2D/3D bajo licencia MIT), **Synfig Studio** y **OpenToonz** (animación 2D).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-4-1-blender-open-source-480.avif 480w, ../../../images/temas/u1/1-4-1-blender-open-source-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-4-1-blender-open-source-480.webp 480w, ../../../images/temas/u1/1-4-1-blender-open-source-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-4-1-blender-open-source-960.webp" alt="Interfaz de Blender 4.3.2 (software libre de creación 3D bajo licencia GPL) mostrando una malla poligonal en cuadriláteros en el visor 3D, editor de nodos PBR Principled BSDF y jerarquía de escena." width="960" height="540" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.12.</strong> Interfaz de <em>Blender</em> (software libre <em>open source</em>): modelado por malla poligonal, materiales <em>PBR</em> por nodos y soporte nativo para estándares abiertos como <code>glTF 2.0</code> y <code>OpenUSD</code>.<span class="topic-figure__credit">Captura: UnnecessaryDecision / Wikimedia Commons (CC0).</span></figcaption>
+</figure>
+
 ## Tecnologías Cerradas o Propietarias en la Industria Audiovisual y de Videojuegos
 
 Las **tecnologías cerradas** son desarrolladas y comercializadas por empresas privadas bajo licencias de suscripción o pago de regalías, manteniendo su código fuente y, en ocasiones, la especificación interna de sus formatos bajo secreto industrial:
