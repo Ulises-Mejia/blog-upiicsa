@@ -15,8 +15,12 @@ Como demuestran González y Woods (2017, Cap. 8) y Stanković et al. (2016), los
 * **Compresión Con Pérdida (*Lossy*):** Transforma la señal del dominio espacial/temporal al dominio de la frecuencia mediante transformadas ortogonales —como la **Transformada Discreta del Coseno (DCT)** en JPEG/H.264 o la **Transformada Discreta del Coseno Modificada (MDCT)** en MP3/AAC (Stanković et al., 2016)— y cuantifica (redondea a cero) los coeficientes de alta frecuencia o enmascarados psicoacústicamente, logrando reducciones de peso de **10:1 a 100:1** a cambio de una pérdida irreversible controlada.
 
 <figure class="media-container topic-figure">
-  <img src="../../../images/temas/u1/1-1-4-compresion-contenedor.svg" alt="Diagrama comparativo de compresión sin pérdida (Lossless: PNG, FLAC, SVG) frente a compresión con pérdida (Lossy: AVIF, WebP, JPEG, Opus, AV1) y esquema de un archivo contenedor empaquetando pistas de video, audio y subtítulos." width="960" height="540" loading="lazy" decoding="async" />
-  <figcaption><strong>Figura 1.4.</strong> Comparativa entre compresión <em>Lossless</em> y <em>Lossy</em>, junto con la separación arquitectónica entre archivo contenedor y códecs de pista.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-1-4-compresion-jpeg-480.avif 480w, ../../../images/temas/u1/1-1-4-compresion-jpeg-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-1-4-compresion-jpeg-480.webp 480w, ../../../images/temas/u1/1-1-4-compresion-jpeg-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-1-4-compresion-jpeg-960.webp" alt="Comparación fotográfica lado a lado de un ave verde sobre una rama: a la izquierda imagen de alta fidelidad con detalles finos en plumaje y corteza; a la derecha compresión con pérdida JPEG agresiva evidenciando artefactos en bloques DCT de 8 por 8 píxeles y degradación de bordes." width="960" height="720" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.4.</strong> Efecto visual de la cuantificación con pérdida (<em>Lossy</em>) por Transformada Discreta del Coseno (<code>DCT</code>): alta fidelidad original a la izquierda frente a artefactos de bloque y pérdida de detalle fino en compresión <code>JPEG</code> agresiva a la derecha.<span class="topic-figure__credit">Fotografía y comparativa: JJ Harrison e Ibrahim.ID / Wikimedia Commons (CC BY-SA 3.0).</span></figcaption>
 </figure>
 
 ## Anatomía de los Formatos de Imagen, Audio, Video (Contenedor vs. Códec) y Texto

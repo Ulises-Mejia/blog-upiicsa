@@ -18,8 +18,12 @@ Por su parte, el **plano cinematográfico** define la proporción de la figura h
 * **Planos Expresivos o Cerrados:** El **Primer Plano (PP)** (de los hombros a la cabeza), el **Primerísimo Primer Plano (PPP)** (del mentón a la frente) y el **Plano Detalle (PD)** (un objeto específico o parte del cuerpo, como un dedo presionando una tecla) concentran toda la atención psicológica y dramática del usuario.
 
 <figure class="media-container topic-figure">
-  <img src="../../../images/temas/u1/1-2-2-planos-angulos-camara.svg" alt="Diagrama de gramática audiovisual mostrando a la izquierda la escala de planos sobre la figura humana (Plano Entero, Plano Americano, Plano Medio, Primer Plano y Primerísimo Primer Plano) y a la derecha el arco de angulaciones verticales (Cenital, Picado, Normal, Contrapicado y Nadir) junto con los movimientos Pan, Tilt, Dolly y Zoom." width="960" height="540" loading="lazy" decoding="async" />
-  <figcaption><strong>Figura 1.6.</strong> Escala de planos sobre la figura humana, arco de angulación vertical y taxonomía de movimientos de cámara aplicables a rodaje y escenas 3D.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-2-2-camara-cine-set-480.avif 480w, ../../../images/temas/u1/1-2-2-camara-cine-set-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-2-2-camara-cine-set-480.webp 480w, ../../../images/temas/u1/1-2-2-camara-cine-set-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-2-2-camara-cine-set-960.webp" alt="Cámara digital de cine ARRI Alexa montada sobre cabezal fluido en un rodaje real, equipada con lente cinematográfica, parasoles matte box, motores de enfoque inalámbrico y monitor de campo." width="960" height="640" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.6.</strong> Cámara digital cinematográfica montada sobre cabezal fluido en rodaje real: la óptica determina la distancia focal y el encuadre mientras el cabezal amortigua los movimientos rotacionales (<em>Pan</em> y <em>Tilt</em>).<span class="topic-figure__credit">Fotografía: Elyot Boudart / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
 </figure>
 
 ## Angulación de Cámara, Movimientos Físicos/Ópticos y Continuidad Visual (Raccord)

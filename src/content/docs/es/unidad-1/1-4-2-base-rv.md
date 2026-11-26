@@ -18,7 +18,7 @@ Como analizan Otero y Flores (2011) y Marschner y Shirley (2016), la diferencia 
   3. **Transformación Matricial Modelo-Vista-Proyección (*M*<sub>MVP</sub> = *M*<sub>proj</sub> · *M*<sub>view</sub> · *M*<sub>model</sub>):** Proyección de los vértices 3D del mundo hacia dos cámaras virtuales separadas por la distancia interpupilar (`IPD` ≈ 63 mm) para generar visión estereoscópica.
   4. **Rasterización y Post-procesamiento en `GPU`:** Envío del par de imágenes renderizadas al visor.
 
-<figure class="media-container topic-figure">
+<figure class="media-container topic-figure topic-figure--bright-bg">
   <picture>
     <source type="image/avif" srcset="../../../images/temas/u1/1-4-2-visor-rv-6dof-480.avif 480w, ../../../images/temas/u1/1-4-2-visor-rv-6dof-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
     <source type="image/webp" srcset="../../../images/temas/u1/1-4-2-visor-rv-6dof-480.webp 480w, ../../../images/temas/u1/1-4-2-visor-rv-6dof-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />

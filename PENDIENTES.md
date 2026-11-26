@@ -204,16 +204,16 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
 ## 🖼️ Bloque 7 — Enriquecimiento Visual y Multimedia en Temas
 
 - [x] **VIS-01 — Enriquecimiento visual Unidad I (13 temas)**
-  - **Ubicación:** `src/styles/content.css`, `public/images/temas/u1/` (31 archivos: 7 diagramas SVG técnicos + 6 fotografías/capturas libres en AVIF/WebP responsivos), `src/content/docs/es/unidad-1/*.md` (13 temas)
-  - **Resuelto:** Integradas 13 figuras de alto impacto (Figuras 1.1–1.13) mediante enfoque híbrido (fotografías/capturas con licencia libre de Wikimedia Commons convertidas localmente con `sharp` a `<picture>` AVIF + WebP responsivos y diagramas vectoriales SVG en paleta UPIICSA), con rutas relativas portables, `loading="lazy"`, `decoding="async"`, dimensiones explícitas `width`/`height` y créditos académicos en `<figcaption>`.
+  - **Ubicación:** `src/styles/content.css`, `public/images/temas/u1/` (52 archivos: 13 fotografías/capturas reales libres en AVIF + WebP responsivos `480w`/`960w`), `src/content/docs/es/unidad-1/*.md` (13 temas)
+  - **Resuelto:** Integradas 13 fotografías/capturas reales con licencia libre verificada (Wikimedia Commons / Blender Studio / Comisión Europea / archivo histórico) convertidas con `sharp` a `<picture>` AVIF + WebP responsivos, con armonización visual clara/oscura en `.topic-figure` (incluyendo atenuación suave en modo oscuro para fondos claros `.topic-figure--bright-bg`) y líneas del tiempo editoriales sobrias y mínimamente interactivas (`<ol class="editorial-timeline">` con `<details>` nativo adaptable a modo claro/oscuro y `forced-colors`) en los 2 temas cronológicos (`1-1-2-evolucion` y `1-1-3-web`).
 
 - [ ] **VIS-02 — Enriquecimiento visual Unidad II (13 temas)**
   - **Ubicación:** `public/images/temas/u2/`, `src/content/docs/es/unidad-2/*.md`
-  - **Objetivo:** Integrar mínimo 1 figura por tema (enfoque híbrido: fotografías/capturas libres en AVIF/WebP responsivos + diagramas SVG técnicos UPIICSA) optimizada para máximo impacto didáctico y mínimo costo de rendimiento.
+  - **Objetivo:** Integrar mínimo 1 fotografía/captura real con licencia libre verificada por tema (AVIF/WebP responsivos con adaptación claro/oscuro) y componentes editoriales sobrios solo cuando el tema lo requiera (p. ej. líneas del tiempo o comparativas estrictamente necesarias).
 
 - [ ] **VIS-03 — Enriquecimiento visual Unidad III (6 temas)**
   - **Ubicación:** `public/images/temas/u3/`, `src/content/docs/es/unidad-3/*.md`
-  - **Objetivo:** Integrar mínimo 1 figura por tema (enfoque híbrido: fotografías/capturas libres en AVIF/WebP responsivos + diagramas SVG técnicos UPIICSA) manteniendo consistencia visual y presupuestaria con las Unidades I y II.
+  - **Objetivo:** Integrar mínimo 1 fotografía/captura real con licencia libre verificada por tema (AVIF/WebP responsivos con adaptación claro/oscuro) manteniendo coherencia editorial y presupuesto mínimo de red con las Unidades I y II.
 
 ---
 
@@ -268,6 +268,6 @@ Sin decisiones bloqueantes pendientes. Avance incremental unidad por unidad en *
   - `MOD-05`: barras de lectura con `animation-timeline: scroll(root block)` (en regla separada para preservar el CSS minificado) + fallback JS y `preload="metadata"` en el audio del Himno.
   - `MOD-06`: acordeones `<details>` animados con `::details-content` + `interpolate-size`, `aspect-ratio: 16/9`, `100dvh`, `text-wrap: balance/pretty`, `@view-transition` MPA y estilos inline extraídos de `identidad-ipn.md`.
   - `MOD-07`: `favicon: '/upiicsa_logo.svg'` en `astro.config.mjs` corrigiendo 39 peticiones 404 a `/blog-upiicsa/favicon.svg` detectadas en la auditoría final de `dist/`.
-- **Bloque 7 (`VIS-01` — Unidad I completada, 13/13 temas):**
-  - Añadidos estilos `.topic-figure` en `src/styles/content.css` y generados 31 activos optimizados en `public/images/temas/u1/` (7 diagramas SVG técnicos en paleta UPIICSA + 6 fotografías/capturas de Wikimedia Commons con licencia libre convertidas con `sharp` a `<picture>` AVIF + WebP responsivos).
-  - Integradas Figuras 1.1–1.13 en los 13 temas de `src/content/docs/es/unidad-1/*.md` con rutas relativas portables, `loading="lazy"`, `decoding="async"`, `width`/`height` explícitos y sin `fetchpriority="low"`. Verificado con `npm run check`, `npm run clean && npm run build` y auditoría de activos/HTML en `dist/`.
+- **Bloque 7 (`VIS-01` — Unidad I completada, commit base `33b47ec` + refinamiento 100 % imágenes reales y adaptación claro/oscuro):**
+  - Sustituidos los 7 diagramas SVG iniciales por fotografías/capturas reales con licencia libre verificada (`13/13` temas de Unidad I con `<picture>` AVIF + WebP responsivos en `public/images/temas/u1/`, 52 archivos).
+  - Armonizados `.topic-figure` (incluyendo `.topic-figure--bright-bg` para fondos claros en modo oscuro) y añadido componente `.editorial-timeline` sobrio y mínimamente interactivo (`<ol>` + `<details>` nativo adaptable a modo claro, oscuro y `forced-colors`) en los 2 temas cronológicos (`1-1-2-evolucion.md` y `1-1-3-web.md`). Verificado con `npm run check`, `npm run clean && npm run build` y auditoría de `dist/`.

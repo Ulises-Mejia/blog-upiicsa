@@ -18,8 +18,12 @@ Para que un sistema informático sea verdaderamente multimedia e interactivo, de
 3. **Hipermedia:** Término acuñado a partir del concepto de hipertexto de Ted Nelson (1965), que estructura los nodos de información multimedial en una red o grafo no secuencial navegable según los intereses del usuario.
 
 <figure class="media-container topic-figure">
-  <img src="../../../images/temas/u1/1-1-1-elementos-multimedia.svg" alt="Diagrama radial que integra los tres pilares técnicos de la multimedia (digitalización, interactividad e hipermedia) rodeados por los cinco elementos constitutivos: texto, imagen, audio, video y animación." width="960" height="540" loading="lazy" decoding="async" />
-  <figcaption><strong>Figura 1.1.</strong> Integración de los tres pilares técnicos y los cinco elementos constitutivos en un sistema multimedia informático.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-1-1-estudio-multimedia-480.avif 480w, ../../../images/temas/u1/1-1-1-estudio-multimedia-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-1-1-estudio-multimedia-480.webp 480w, ../../../images/temas/u1/1-1-1-estudio-multimedia-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-1-1-estudio-multimedia-960.webp" alt="Sala de control audiovisual moderna integrando consola de mezcla de audio digital, monitores multivista de video en vivo, sistema de texto en teleprompter y estación de cómputo interactiva." width="960" height="640" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.1.</strong> Integración sincronizada de texto (teleprompter), audio digital, gráficos y video multicanal en una sala de control audiovisual contemporánea.<span class="topic-figure__credit">Fotografía: Jennifer Jacquemart / Servicio Audiovisual de la Comisión Europea / Wikimedia Commons (CC BY 4.0).</span></figcaption>
 </figure>
 
 ## Los Cinco Elementos Constitutivos: Texto, Imagen, Audio, Video y Animación

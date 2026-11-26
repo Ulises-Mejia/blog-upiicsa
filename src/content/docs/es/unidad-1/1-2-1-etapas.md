@@ -30,8 +30,12 @@ Para superar las carencias de los modelos puramente informáticos (que olvidan e
 * **Fase 8 — Elaboración del Material Complementario:** Redacción del **Manual de Usuario** (instalación, requisitos mínimos y controles) y del **Manual de Actividades Didácticas**.
 
 <figure class="media-container topic-figure">
-  <img src="../../../images/temas/u1/1-2-1-medesme-fases.svg" alt="Diagrama de flujo con las ocho fases de la metodología MEDESME (Concepto, Análisis, Diseño Integral, Desarrollo, Implementación, Evaluación QA con normas ISO 9241-11 e ISO/IEC 9126, Producción y Material Complementario) agrupadas bajo las cuatro macro-etapas de producción." width="960" height="540" loading="lazy" decoding="async" />
-  <figcaption><strong>Figura 1.5.</strong> Articulación de las ocho fases de la metodología <code>MEDESME</code> (García Sánchez et al., 2016) con las cuatro macro-etapas de producción multimedia.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-2-1-storyboard-produccion-480.avif 480w, ../../../images/temas/u1/1-2-1-storyboard-produccion-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-2-1-storyboard-produccion-480.webp 480w, ../../../images/temas/u1/1-2-1-storyboard-produccion-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-2-1-storyboard-produccion-960.webp" alt="Hoja real de storyboard y arte conceptual de preproducción del cortometraje abierto Charge de Blender Studio, mostrando cuatro bocetos secuenciales de encuadre a la izquierda y dos paneles anotados de puesta en escena e intención visual a la derecha." width="960" height="679" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.5.</strong> <em>Storyboard</em> y anotaciones de diseño en etapa de preproducción (cortometraje abierto <em>Charge</em>, Blender Studio): artefacto esencial para validar encuadres, ritmo e intención visual antes del desarrollo.<span class="topic-figure__credit">Arte de preproducción: Andy Goralczyk / Blender Studio / Wikimedia Commons (CC BY 4.0).</span></figcaption>
 </figure>
 
 ## Conclusiones

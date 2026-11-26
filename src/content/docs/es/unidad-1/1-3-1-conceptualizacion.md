@@ -14,7 +14,7 @@ La percepción de movimiento continuo a partir de imágenes estáticas discretas
 * **El Fenómeno Phi y el Movimiento Beta:** Descubiertos por Max Wertheimer (1912), demuestran que cuando dos estímulos visuales cercanos se muestran en rápida sucesión espacial y temporal, el cerebro interpola automáticamente una trayectoria continua de movimiento entre ambos.  
 * **La Frecuencia Crítica de Fusión de Parpadeo (*Critical Flicker Fusion*) y los `FPS`:** Por debajo de `10` a `12 FPS`, el ojo humano distingue los saltos individuales entre imágenes. A partir de **`24 FPS`** (el estándar histórico del cine sonoro), el movimiento se percibe continuo; en televisión y video web se emplean **`30 FPS` o `60 FPS`** para lograr mayor nitidez temporal; y en sistemas interactivos de **Realidad Virtual** se exigen entre **`90 FPS` y `120 FPS`** constantes para que el movimiento de la escena coincida sin retraso con el sistema vestibular del oído interno del usuario (Otero & Flores, 2011; Marschner & Shirley, 2016).
 
-<figure class="media-container topic-figure">
+<figure class="media-container topic-figure topic-figure--bright-bg">
   <picture>
     <source type="image/avif" srcset="../../../images/temas/u1/1-3-1-muybridge-movimiento-480.avif 480w, ../../../images/temas/u1/1-3-1-muybridge-movimiento-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
     <source type="image/webp" srcset="../../../images/temas/u1/1-3-1-muybridge-movimiento-480.webp 480w, ../../../images/temas/u1/1-3-1-muybridge-movimiento-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />

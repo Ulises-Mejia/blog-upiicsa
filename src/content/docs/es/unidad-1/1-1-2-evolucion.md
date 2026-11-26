@@ -9,12 +9,34 @@ Hoy resulta natural que un teléfono inteligente renderice mundos tridimensional
 
 ## De los Precursores Conceptuales a las Primeras Interfaces Gráficas (1945–1980)
 
-La genealogía de la computación gráfica y la multimedia interactiva se articula en cinco hitos fundacionales (Ojeda Linares, 2012; Adell, 2021):
+La genealogía de la computación gráfica y la multimedia interactiva se articula en hitos fundacionales que pueden explorarse cronológicamente (Ojeda Linares, 2012; Adell, 2021):
 
-* **1945 — El Memex de Vannevar Bush:** En su ensayo *As We May Think*, Bush concibió un escritorio electromecánico capaz de almacenar libros, fotografías y notas enlazándolos por asociación de ideas en lugar de índices alfabéticos, sentando la base teórica de la hipermedia.  
-* **1963 — Sketchpad de Ivan Sutherland (MIT):** Considerado el nacimiento de la computación gráfica interactiva moderna y del diseño asistido por computadora (CAD). Utilizando un lápiz óptico sobre un monitor vectorial CRT, Sutherland introdujo estructuras de datos jerárquicas de objetos gráficos, restricciones geométricas y zoom interactivo.  
-* **1965–1968 — Proyecto Xanadu (Ted Nelson) y el sistema NLS (Douglas Engelbart):** Nelson acuñó los términos *hipertexto* e *hipermedia*, mientras que Engelbart demostró en *The Mother of All Demos* (1968) el primer ratón (*mouse*), ventanas múltiples, videoconferencia en pantalla y edición colaborativa en tiempo real.  
-* **Década de 1970 — Del Display Vectorial al Framebuffer Raster (Xerox PARC y Universidad de Utah):** Se sustituyeron los monitores vectoriales por pantallas de barrido (*raster*) respaldadas por una memoria de cuadro (*framebuffer*) donde cada píxel correspondía a una dirección de memoria RAM. En esta etapa, pioneros como Gouraud, Phong, Catmull y Blinn formularon los algoritmos de sombreado suave, mapeo de texturas, curvas spline y el búfer de profundidad (*Z-Buffer*) (Marschner & Shirley, 2016).
+<ol class="editorial-timeline" aria-label="Hitos fundacionales de la computación gráfica (1945–1980)">
+  <li>
+    <details class="editorial-timeline__item" open>
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1945</span><span class="editorial-timeline__title">El Memex de Vannevar Bush</span></summary>
+      <div class="editorial-timeline__body"><p>En su ensayo <em>As We May Think</em>, Bush concibió un escritorio electromecánico capaz de almacenar libros, fotografías y notas enlazándolos por asociación de ideas en lugar de índices alfabéticos, sentando la base teórica de la hipermedia.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1963</span><span class="editorial-timeline__title">Sketchpad de Ivan Sutherland (MIT)</span></summary>
+      <div class="editorial-timeline__body"><p>Considerado el nacimiento de la computación gráfica interactiva moderna y del diseño asistido por computadora (CAD). Utilizando un lápiz óptico sobre un monitor vectorial CRT, Sutherland introdujo estructuras de datos jerárquicas de objetos gráficos, restricciones geométricas y zoom interactivo.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1965–1968</span><span class="editorial-timeline__title">Proyecto Xanadu (Ted Nelson) y sistema NLS (Douglas Engelbart)</span></summary>
+      <div class="editorial-timeline__body"><p>Nelson acuñó los términos <em>hipertexto</em> e <em>hipermedia</em>, mientras que Engelbart demostró en <em>The Mother of All Demos</em> (1968) el primer ratón (<em>mouse</em>), ventanas múltiples, videoconferencia en pantalla y edición colaborativa en tiempo real.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Década de 1970</span><span class="editorial-timeline__title">Del display vectorial al framebuffer raster (Xerox PARC y Universidad de Utah)</span></summary>
+      <div class="editorial-timeline__body"><p>Se sustituyeron los monitores vectoriales por pantallas de barrido (<em>raster</em>) respaldadas por una memoria de cuadro (<em>framebuffer</em>) donde cada píxel correspondía a una dirección de memoria RAM. Pioneros como Gouraud, Phong, Catmull y Blinn formularon los algoritmos de sombreado suave, mapeo de texturas, curvas spline y el búfer de profundidad (<em>Z-Buffer</em>) (Marschner &amp; Shirley, 2016).</p></div>
+    </details>
+  </li>
+</ol>
 
 <figure class="media-container topic-figure">
   <picture>
@@ -29,9 +51,26 @@ La genealogía de la computación gráfica y la multimedia interactiva se articu
 
 A partir de finales de los años ochenta, la evolución gráfica aceleró su llegada al usuario final a través de tres grandes etapas tecnológicas:
 
-* **1987 — Autoría Hipermedia Personal:** Apple lanzó **HyperCard**, el primer sistema de autoría hipermedia masivo basado en la metáfora de pilas de tarjetas interactivas.
-* **1990 — El Estándar `MPC` (*Multimedia Personal Computer*):** Un consorcio liderado por Microsoft estableció la especificación `MPC`, que incorporó unidades de `CD-ROM` (650 MB) y tarjetas de sonido de 16 bits a las computadoras personales (Ojeda Linares, 2012).
-* **1999–Actualidad — GPUs Programables y Trazado de Rayos:** Con la introducción de la primera `GPU` dedicada (GeForce 256) y las especificaciones `OpenGL 2.0` / `DirectX 9`, el hardware gráfico abandonó el pipeline de función fija (*fixed-function pipeline*) para adoptar un **pipeline de sombreadores programables (*programmable shaders*)**, culminando en las arquitecturas actuales capaces de ejecutar trazado de rayos en tiempo real (*hardware-accelerated ray tracing*) y reconstrucción de imagen por inteligencia artificial (Marschner & Shirley, 2016).
+<ol class="editorial-timeline" aria-label="Evolución de la multimedia personal y las GPU programables (1987–Actualidad)">
+  <li>
+    <details class="editorial-timeline__item" open>
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1987</span><span class="editorial-timeline__title">Autoría Hipermedia Personal (Apple HyperCard)</span></summary>
+      <div class="editorial-timeline__body"><p>Apple lanzó <strong>HyperCard</strong>, el primer sistema de autoría hipermedia masivo basado en la metáfora de pilas de tarjetas interactivas enlazables mediante guiones.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1990</span><span class="editorial-timeline__title">El estándar MPC (Multimedia Personal Computer)</span></summary>
+      <div class="editorial-timeline__body"><p>Un consorcio liderado por Microsoft estableció la especificación <code>MPC</code>, que incorporó unidades de <code>CD-ROM</code> (650 MB) y tarjetas de sonido de 16 bits a las computadoras personales (Ojeda Linares, 2012).</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">1999–Actualidad</span><span class="editorial-timeline__title">GPUs programables y trazado de rayos en tiempo real</span></summary>
+      <div class="editorial-timeline__body"><p>Con la introducción de la primera <code>GPU</code> dedicada (GeForce 256) y las especificaciones <code>OpenGL 2.0</code> / <code>DirectX 9</code>, el hardware gráfico abandonó el pipeline de función fija para adoptar un <strong>pipeline de sombreadores programables (<em>programmable shaders</em>)</strong>, culminando en las arquitecturas actuales con trazado de rayos acelerado por hardware y reconstrucción por inteligencia artificial (Marschner &amp; Shirley, 2016).</p></div>
+    </details>
+  </li>
+</ol>
 
 ## Conclusiones
 

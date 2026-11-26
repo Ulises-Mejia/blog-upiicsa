@@ -17,8 +17,12 @@ La conversión de la señal eléctrica analógica del micrófono a datos binario
 * **Profundidad de Bits (*Bit Depth*) y Rango Dinámico:** Define cuántos bits se usan para cuantificar la amplitud de cada muestra. Cada bit adicional aporta aproximadamente **6.02 dB** de relación señal-ruido (SNR ≈ 6.02 · *N* + 1.76 dB): un audio de **16 bits** (65,536 niveles) ofrece un rango dinámico de **96 dB**, mientras que **24 bits** (16.7 millones de niveles) alcanza **144 dB**, evitando el ruido de cuantificación y la saturación o recorte (*clipping*) digital.
 
 <figure class="media-container topic-figure">
-  <img src="../../../images/temas/u1/1-2-4-nyquist-fft.svg" alt="Diagrama comparativo de procesamiento digital de audio: arriba, muestreo PCM y cumplimiento del Teorema de Nyquist-Shannon frente al aliasing; abajo, transformación mediante FFT del dominio del tiempo al espectro de frecuencia y filtrado pasa-altas y rechaza-banda." width="960" height="540" loading="lazy" decoding="async" />
-  <figcaption><strong>Figura 1.8.</strong> Conversión analógico-digital (<em>PCM</em> y criterio de Nyquist-Shannon) y descomposición espectral mediante <em>FFT</em> para filtrado de frecuencias.<span class="topic-figure__credit">Diagrama técnico: Repositorio Multimedia UPIICSA — IPN.</span></figcaption>
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u1/1-2-4-consola-mezcla-audio-480.avif 480w, ../../../images/temas/u1/1-2-4-consola-mezcla-audio-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u1/1-2-4-consola-mezcla-audio-480.webp 480w, ../../../images/temas/u1/1-2-4-consola-mezcla-audio-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u1/1-2-4-consola-mezcla-audio-960.webp" alt="Primer plano de una consola de mezcla de audio de estudio con atenuadores calibrados en decibelios, módulo de procesamiento digital DSP, perillas de ecualización paramétrica y vúmetro LED de nivel pico." width="960" height="639" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 1.8.</strong> Consola de mezcla de estudio con atenuadores en decibelios (<code>dB</code>), bus de procesamiento digital (<code>DSP</code>), controles de ecualización y medidor de picos para evitar el recorte (<em>clipping</em>) de señal.<span class="topic-figure__credit">Fotografía: Shixart1985 / Wikimedia Commons (CC BY 2.0).</span></figcaption>
 </figure>
 
 ## Procesamiento en el Dominio del Tiempo y de la Frecuencia (FFT y Filtros)
