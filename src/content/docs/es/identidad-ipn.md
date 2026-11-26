@@ -17,9 +17,9 @@ El Himno Oficial del IPN fue creado con motivo del XXV Aniversario de la fundaci
 * **Letra:** Maestra y poetisa Carmen de la Fuente.
 * **Música:** Profesor Armando González Domínguez.
 
-<div class="media-container" style="max-width: 620px; margin-inline: auto;">
-  <p style="margin-top: 0; font-weight: 700; color: var(--sl-color-accent-high);">🔊 Grabación Oficial del Himno Politécnico</p>
-  <audio controls style="width: 100%; border-radius: 8px; outline: none;">
+<div class="media-container himno-audio-card">
+  <p class="himno-audio-title">🔊 Grabación Oficial del Himno Politécnico</p>
+  <audio controls preload="metadata" class="himno-audio-player">
     <source src="../../audios/himno_ipn.mp3" type="audio/mpeg" />
     Tu navegador no soporta el elemento de audio HTML5.
   </audio>
@@ -131,40 +131,26 @@ El Decálogo reúne los preceptos éticos y de responsabilidad cívica redactado
 
 Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones interactivas: **Escudo Central** (girando sobre plinto), **Himno Politécnico** (reproducir/pausar y letra completa), **Galería 3D del Decálogo** (10 paneles con lectura al acercarse) y **Porra Politécnica "El Huélum"** (mural completo).
 
-<div class="rv-room-container" style="margin: 2rem 0;">
-  <div class="rv-intro" style="background: linear-gradient(135deg, rgba(0, 100, 58, 0.1) 0%, rgba(128, 0, 64, 0.1) 100%); padding: 1.5rem; border-radius: 12px; border: 1px solid rgba(212, 175, 55, 0.4); margin-bottom: 1rem;">
-    <p style="margin: 0 0 1rem 0; font-weight: 600;">🏛️ Recorrido Virtual Interactivo</p>
-    <ul style="margin: 0 0 1rem 1.5rem; padding: 0;">
+<div class="rv-room-container">
+  <div class="rv-intro">
+    <p class="rv-intro-title">🏛️ Recorrido Virtual Interactivo</p>
+    <ul class="rv-intro-list">
       <li>Navegación con joystick virtual o teclado WASD (en lentes, thumbstick)</li>
       <li>Acércate o toca los 10 paneles 3D del Decálogo en la pared derecha para leer cada principio</li>
       <li>Compatible con escritorio, móvil y lentes VR (usa auriculares para mejor experiencia)</li>
     </ul>
-    <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center;">
-      <button id="btn-enter-vr" class="rv-enter-btn" type="button" style="background: linear-gradient(135deg, #00643A 0%, #00361F 100%); color: white; border: 2px solid #D4AF37; padding: 12px 24px; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
-        🥽 Entrar a la sala
-      </button>
-      <button id="btn-vr-fullscreen" class="rv-fullscreen-btn" type="button" style="display: none; background: #D4AF37; color: #00361F; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-        ⛶ Pantalla completa
-      </button>
-      <button id="btn-vr-close" class="rv-close-btn" type="button" style="display: none; background: rgba(128, 0, 64, 0.9); color: white; border: 2px solid #D4AF37; padding: 12px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: 600; cursor: pointer;">
-        ✕ Cerrar sala
-      </button>
+    <div class="rv-actions">
+      <button id="btn-enter-vr" class="rv-enter-btn" type="button">🥽 Entrar a la sala</button>
+      <button id="btn-vr-fullscreen" class="rv-fullscreen-btn" type="button" hidden>⛶ Pantalla completa</button>
+      <button id="btn-vr-close" class="rv-close-btn" type="button" hidden>✕ Cerrar sala</button>
     </div>
   </div>
-
-  <div id="vr-webgl-warning" style="display: none; background: rgba(128, 0, 64, 0.1); border: 2px solid #800040; padding: 1rem; border-radius: 8px; margin-bottom: 1rem; color: #800040;">
-    <strong>⚠️ WebGL no soportado</strong><br>
+  <div id="vr-webgl-warning" class="rv-webgl-warning" role="alert" hidden>
+    <strong>⚠️ WebGL no soportado</strong><br />
     Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.
   </div>
-
-  <div id="vr-container" style="display: none; width: 100%; height: clamp(340px, 65vh, 600px); border-radius: 12px; overflow: hidden; border: 2px solid #00643A; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
-    <iframe id="vr-iframe"
-            title="Sala de Identidad Institucional IPN en realidad virtual"
-            style="width: 100%; height: 100%; border: none;"
-            allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen; camera; microphone"
-            allowfullscreen
-            loading="lazy">
-    </iframe>
+  <div id="vr-container" class="rv-stage" hidden>
+    <iframe id="vr-iframe" class="rv-iframe" title="Sala de Identidad Institucional IPN en realidad virtual" allow="xr-spatial-tracking; gyroscope; accelerometer; fullscreen; camera; microphone" allowfullscreen loading="lazy"></iframe>
   </div>
 </div>
 
@@ -177,6 +163,13 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
   const vrContainer = document.getElementById('vr-container');
   const vrIframe = document.getElementById('vr-iframe');
   const webglWarning = document.getElementById('vr-webgl-warning');
+
+  if (!btnEnter || !btnFullscreen || !btnClose || !vrContainer || !vrIframe || !webglWarning) return;
+
+  function scrollIntoViewSafely(el) {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'nearest' });
+  }
 
   function checkWebGL() {
     try {
@@ -203,8 +196,8 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
 
   btnEnter.addEventListener('click', () => {
     if (!checkWebGL()) {
-      webglWarning.style.display = 'block';
-      webglWarning.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      webglWarning.hidden = false;
+      scrollIntoViewSafely(webglWarning);
       return;
     }
 
@@ -214,12 +207,12 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
       : new URL(`../../rv/sala-identidad.html?lang=${lang}`, window.location.href).href;
 
     vrIframe.src = vrUrl;
-    vrContainer.style.display = 'block';
-    btnEnter.style.display = 'none';
-    btnFullscreen.style.display = 'inline-block';
-    btnClose.style.display = 'inline-block';
+    vrContainer.hidden = false;
+    btnEnter.hidden = true;
+    btnFullscreen.hidden = false;
+    btnClose.hidden = false;
 
-    vrContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    scrollIntoViewSafely(vrContainer);
   });
 
   btnFullscreen.addEventListener('click', () => {
@@ -237,20 +230,10 @@ Explora los símbolos del IPN en una sala inmersiva con cuatro estaciones intera
     }
     vrIframe.removeAttribute('src');
     vrIframe.src = 'about:blank';
-    vrContainer.style.display = 'none';
-    btnFullscreen.style.display = 'none';
-    btnClose.style.display = 'none';
-    btnEnter.style.display = 'inline-block';
-  });
-
-  // Estilo hover
-  btnEnter.addEventListener('mouseenter', () => {
-    btnEnter.style.transform = 'scale(1.05)';
-    btnEnter.style.boxShadow = '0 4px 15px rgba(0, 100, 58, 0.4)';
-  });
-  btnEnter.addEventListener('mouseleave', () => {
-    btnEnter.style.transform = 'scale(1)';
-    btnEnter.style.boxShadow = 'none';
+    vrContainer.hidden = true;
+    btnFullscreen.hidden = true;
+    btnClose.hidden = true;
+    btnEnter.hidden = false;
   });
 })();
 </script>

@@ -204,6 +204,7 @@ if (topicMatch) {
 <script>
   let cleanupMenuToggle: (() => void) | null = null;
   let cleanupScrollEffects: (() => void) | null = null;
+  let cleanupThemeToggle: (() => void) | null = null;
 
   function setupMenuToggle() {
     if (cleanupMenuToggle) {
@@ -361,6 +362,10 @@ if (topicMatch) {
 
     let isDocked = false;
     let rafId = 0;
+    const usesCssScrollTimeline =
+      typeof CSS !== 'undefined' &&
+      CSS.supports('animation-timeline', 'scroll()') &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const setDockedState = (visible: boolean) => {
       if (visible === isDocked) return;
@@ -381,8 +386,8 @@ if (topicMatch) {
     const updateOnScroll = () => {
       rafId = 0;
 
-      // 1. Barra de progreso de lectura (GPU transform: scaleX)
-      if (progressBar) {
+      // 1. Barra de progreso de lectura (fallback JS solo cuando el navegador no soporta Scroll-Driven Animations)
+      if (progressBar && !usesCssScrollTimeline) {
         const doc = document.documentElement;
         const maxScroll = doc.scrollHeight - window.innerHeight;
         const ratio = maxScroll > 20 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
@@ -466,14 +471,41 @@ if (topicMatch) {
   }
 
   function setupThemeToggle() {
+    if (cleanupThemeToggle) {
+      cleanupThemeToggle();
+      cleanupThemeToggle = null;
+    }
+
     const themeBtn = document.getElementById('themeToggleBtn');
     const themeIcon = document.getElementById('themeIcon');
     const themeLabel = document.getElementById('themeLabel');
     if (!themeBtn) return;
 
     const isEn = document.documentElement.lang === 'en';
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
-    function updateThemeUI(theme: string) {
+    const getSystemTheme = (): 'light' | 'dark' => (mediaQuery.matches ? 'dark' : 'light');
+
+    const getStoredTheme = (): 'light' | 'dark' | null => {
+      try {
+        const stored = localStorage.getItem('starlight-theme');
+        return stored === 'light' || stored === 'dark' ? stored : null;
+      } catch {
+        return null;
+      }
+    };
+
+    const syncColorSchemeMeta = (scheme: 'light' | 'dark' | 'light dark') => {
+      let meta = document.querySelector<HTMLMetaElement>('meta[name="color-scheme"]');
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.name = 'color-scheme';
+        document.head.appendChild(meta);
+      }
+      meta.content = scheme;
+    };
+
+    function updateThemeUI(theme: 'light' | 'dark') {
       const isDark = theme === 'dark';
       if (themeIcon) themeIcon.textContent = isDark ? '☀️' : '🌙';
       if (themeLabel) themeLabel.textContent = isDark ? (isEn ? 'Light' : 'Claro') : (isEn ? 'Dark' : 'Oscuro');
@@ -484,21 +516,59 @@ if (topicMatch) {
       themeBtn?.setAttribute('aria-label', title);
     }
 
-    // Obtener tema actual
-    const currentTheme = document.documentElement.dataset.theme || 
-      (typeof localStorage !== 'undefined' && localStorage.getItem('starlight-theme') === 'dark' ? 'dark' : 'light');
-    updateThemeUI(currentTheme);
+    const applyColorScheme = (stored: 'light' | 'dark' | null) => {
+      const effective: 'light' | 'dark' = stored ?? getSystemTheme();
+      syncColorSchemeMeta(stored ?? 'light dark');
+      document.documentElement.dataset.theme = effective;
+      updateThemeUI(effective);
+    };
 
-    // Alternar tema al hacer clic
-    themeBtn.onclick = (e) => {
+    applyColorScheme(getStoredTheme());
+
+    // Alternar en 2 estados: si el destino coincide con el SO, vuelve a seguir al sistema
+    const onThemeClick = (e: MouseEvent) => {
       e.preventDefault();
-      const current = document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
-      const nextTheme = current === 'dark' ? 'light' : 'dark';
-      document.documentElement.dataset.theme = nextTheme;
+      const currentRendered: 'light' | 'dark' =
+        document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light';
+      const target: 'light' | 'dark' = currentRendered === 'dark' ? 'light' : 'dark';
+      const system = getSystemTheme();
+      const nextStored: 'light' | 'dark' | null = target === system ? null : target;
+
       try {
-        localStorage.setItem('starlight-theme', nextTheme);
-      } catch (err) {}
-      updateThemeUI(nextTheme);
+        if (nextStored) {
+          localStorage.setItem('starlight-theme', nextStored);
+        } else {
+          localStorage.removeItem('starlight-theme');
+        }
+      } catch {
+        // Aplicar igualmente aunque el almacenamiento esté bloqueado
+      }
+
+      applyColorScheme(nextStored);
+    };
+
+    // Sincronizar cambios desde otras pestañas
+    const onStorageChange = (e: StorageEvent) => {
+      if (e.key === 'starlight-theme' || e.key === null) {
+        applyColorScheme(getStoredTheme());
+      }
+    };
+
+    // Reaccionar a cambios del SO solo cuando no hay override explícito almacenado
+    const onSystemSchemeChange = () => {
+      if (!getStoredTheme()) {
+        applyColorScheme(null);
+      }
+    };
+
+    themeBtn.addEventListener('click', onThemeClick);
+    window.addEventListener('storage', onStorageChange);
+    mediaQuery.addEventListener('change', onSystemSchemeChange);
+
+    cleanupThemeToggle = () => {
+      themeBtn.removeEventListener('click', onThemeClick);
+      window.removeEventListener('storage', onStorageChange);
+      mediaQuery.removeEventListener('change', onSystemSchemeChange);
     };
   }
 
@@ -528,6 +598,7 @@ if (topicMatch) {
     updateBtnUI(isEnglishActive());
 
     function triggerGoogleTranslate(targetLang: string) {
+      (window as any).__loadGoogleTranslate?.();
       const select = document.querySelector<HTMLSelectElement>('.goog-te-combo');
       if (select) {
         select.value = targetLang;
@@ -541,7 +612,7 @@ if (topicMatch) {
             clearInterval(interval);
             delayedSelect.value = targetLang;
             delayedSelect.dispatchEvent(new Event('change'));
-          } else if (retries > 8) {
+          } else if (retries > 20) {
             clearInterval(interval);
             window.location.reload();
           }
@@ -751,7 +822,6 @@ if (topicMatch) {
     letter-spacing: -0.01em;
     line-height: 1.2;
     cursor: pointer;
-    outline: none;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.16);
     opacity: 0;
     transform: translateY(16px) scale(0.98);
@@ -782,8 +852,17 @@ if (topicMatch) {
     box-shadow: 0 6px 24px rgba(212, 175, 55, 0.32);
   }
 
-  .header-scroll-pill:focus-visible {
-    outline: 2px solid #D4AF37;
+  :is(
+      .header-scroll-pill,
+      .menu-toggle,
+      .header-link-btn,
+      .header-tablet-toc-btn,
+      .mobile-top-toc-trigger,
+      .brand-mobile-title-btn,
+      .header-logos,
+      .header-brand
+    ):focus-visible {
+    outline: 2.5px solid #D4AF37;
     outline-offset: 2px;
   }
 
@@ -884,7 +963,31 @@ if (topicMatch) {
     box-shadow: 0 0 10px rgba(212, 175, 55, 0.7);
     transform: scaleX(0);
     transform-origin: left center;
-    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      @keyframes header-grow-progress {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      .header-progress-fill {
+        animation-name: header-grow-progress;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+      }
+
+      /* Regla separada para evitar que LightningCSS mezcle animation-timeline en el shorthand animation */
+      #headerProgressBar.header-progress-fill {
+        animation-timeline: scroll(root block);
+      }
+    }
   }
 
   /* Botón de Menú Sandwich / Hamburguesa */
@@ -904,7 +1007,6 @@ if (topicMatch) {
     cursor: pointer;
     transition: all 0.25s cubic-bezier(0.2, 0, 0, 1);
     flex-shrink: 0;
-    outline: none;
   }
 
   .menu-toggle:hover {
@@ -951,7 +1053,6 @@ if (topicMatch) {
     cursor: pointer;
     font-family: inherit;
     line-height: 1;
-    outline: none;
     user-select: none;
   }
 
@@ -1027,7 +1128,6 @@ if (topicMatch) {
       white-space: nowrap;
       overflow: hidden;
       cursor: pointer;
-      outline: none;
       opacity: 1;
       transform: translateY(0);
       transition: opacity 0.25s ease, transform 0.32s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.2s ease;
@@ -1221,7 +1321,6 @@ if (topicMatch) {
       font-size: 0.72rem;
       font-weight: 750;
       cursor: pointer;
-      outline: none;
     }
     .brand-mobile-title-btn {
       position: absolute;
@@ -1239,7 +1338,6 @@ if (topicMatch) {
       font-family: inherit;
       text-align: left;
       cursor: pointer;
-      outline: none;
       opacity: 0;
       transform: translateY(105%);
       pointer-events: none;

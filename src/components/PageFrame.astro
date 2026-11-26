@@ -57,10 +57,10 @@ const courseLabel = 'Repositorio Multimedia';
 	}
 	<div class="main-frame"><slot /></div>
 
-	<!-- ELEMENTO INVISIBLE DE GOOGLE TRANSLATE -->
-	<div id="google_translate_element" style="display:none;" aria-hidden="true"></div>
+	<!-- ELEMENTO INVISIBLE DE GOOGLE TRANSLATE (CARGA BAJO DEMANDA) -->
+	<div id="google_translate_element" hidden aria-hidden="true"></div>
 
-	<!-- INICIALIZADOR DE GOOGLE TRANSLATE -->
+	<!-- CARGADOR BAJO DEMANDA DE GOOGLE TRANSLATE (SOLO SI EL USUARIO TRADUCE O TIENE COOKIE /en) -->
 	<script is:inline>
 		window.googleTranslateElementInit = function() {
 			try {
@@ -71,11 +71,29 @@ const courseLabel = 'Repositorio Multimedia';
 				}, 'google_translate_element');
 			} catch (e) {}
 		};
+		window.__loadGoogleTranslate = function() {
+			if (window.__gtScriptRequested || document.querySelector('.goog-te-combo')) return;
+			window.__gtScriptRequested = true;
+			var s = document.createElement('script');
+			s.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+			s.async = true;
+			s.referrerPolicy = 'no-referrer';
+			document.body.appendChild(s);
+		};
+		(function() {
+			try {
+				var cookie = document.cookie || '';
+				var hasEnCookie = /(?:^|;\s*)googtrans=[^;]*\/en\b/i.test(decodeURIComponent(cookie));
+				var hasEnPref = localStorage.getItem('upiicsa_gt_lang') === 'en';
+				if (hasEnCookie || hasEnPref) {
+					window.__loadGoogleTranslate();
+				}
+			} catch (e) {}
+		})();
 	</script>
-	<script is:inline src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
 	<!-- BARRA INFERIOR INSTITUCIONAL EXCLUSIVA (ESTRUCTURA DE APLICACIÓN, COMO EL HEADER) -->
-	<footer class="shell-footer" role="contentinfo" aria-label="Derechos de autor, identidad y créditos">
+	<footer class="shell-footer" aria-label="Derechos de autor, identidad y créditos">
 		<div class="shell-footer-inner">
 			<div class="shell-footer-legal">
 				<span class="copyright-desktop">{copyrightDesktop}</span>
@@ -102,6 +120,7 @@ const courseLabel = 'Repositorio Multimedia';
 		.page {
 			flex-direction: column;
 			min-height: 100vh;
+			min-height: 100dvh;
 		}
 
 		.header {
@@ -259,6 +278,11 @@ const courseLabel = 'Repositorio Multimedia';
 			color: #00643A !important;
 			border-color: #FFFFFF;
 			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+		}
+
+		.footer-btn:focus-visible {
+			outline: 2.5px solid #FFFFFF;
+			outline-offset: 2px;
 		}
 
 		.btn-text-short {

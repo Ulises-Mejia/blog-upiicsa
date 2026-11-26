@@ -24,7 +24,12 @@
     margin-inline: auto;
     backdrop-filter: blur(18px) !important;
     -webkit-backdrop-filter: blur(18px) !important;
-    animation: mobileTocDropIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    mobile-starlight-toc .dropdown {
+      animation: mobileTocDropIn 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+    }
   }
 
   @keyframes mobileTocDropIn {

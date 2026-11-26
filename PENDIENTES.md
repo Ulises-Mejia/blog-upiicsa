@@ -1,8 +1,8 @@
 # 📋 Registro de Pendientes y Seguimiento — `blog-upiicsa`
 
 > Documento vivo de seguimiento técnico y editorial del **Repositorio Digital de Herramientas Multimedia (UPIICSA — IPN)**.  
-> **Última actualización:** 2026-11-25  
-> **Rama base:** `main` (commit de referencia: `7837689`)  
+> **Última actualización:** 2026-11-26  
+> **Rama base:** `main` (commit de referencia: `1f7c7d8`)  
 > **Relacionado:** Ver también `CONTEXTO_RV.md` para detalles históricos y decisiones específicas de la Sala RV.
 
 ---
@@ -16,7 +16,8 @@
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
 | **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 2 |
-| **Total** | — | **1** | **0** | **23** |
+| **6. Modernización Web (`modern-web-guidance`)** | 🌐 Estándares | 0 | 0 | 7 |
+| **Total** | — | **1** | **0** | **30** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -167,6 +168,38 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
 
 ---
 
+## 🌐 Bloque 6 — Modernización Web (`modern-web-guidance`)
+
+- [x] **MOD-01 — Esquema de color nativo y toggle de 2 estados conforme a estándares (`dark-mode-toggle`, `dark-mode`)**
+  - **Ubicación:** `astro.config.mjs`, `src/styles/tokens.css`, `src/components/Header.astro`
+  - **Resuelto:** Añadido `<meta name="color-scheme" content="light dark">` con script inline anti-FOUC inmediato, mapeo `:root:has(> head > meta[name="color-scheme"])` en CSS y toggle de 2 estados que vuelve al modo sistema (`removeItem`) cuando coincide con la preferencia del SO, sincroniza entre pestañas (`storage`) y reacciona a cambios del SO sin borrar overrides almacenados.
+
+- [x] **MOD-02 — Migración a `<dialog>` nativo con contención de scroll y top-layer (`dialog`, `prevent-page-scroll-under-modal-dialog`, `animate-to-from-top-layer`)**
+  - **Ubicación:** `src/components/WelcomeCurtain.astro`, `public/rv/sala-identidad.html`, `public/rv/sala-identidad.js`
+  - **Resuelto:** Migrados la Cortina de Bienvenida y los 3 modales de la Sala RV (`#quiz-panel`, `#decalogue-panel`, `#lyrics-panel`) a `<dialog closedby="any">` + `.showModal()`, con `overscroll-behavior: contain` en `:modal` y `::backdrop` (`overflow: hidden`), animaciones discretas con fallback `data-closing` para Firefox/Safari, respaldo light-dismiss para Safari y limpieza de `innerHTML = ''` → `replaceChildren()` (`js`).
+
+- [x] **MOD-03 — Accesibilidad de teclado, landmarks, zoom móvil y movimiento reducido (`accessibility`, `html`, `motion`)**
+  - **Ubicación:** `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/components/PageSidebar.astro`, `src/components/WelcomeCurtain.astro`, `src/content/docs/es/autores.md`, `src/styles/{integrations,authors,sidebar,toc,content}.css`, `public/rv/sala-identidad.html`
+  - **Resuelto:** Retirados `outline: none` sin reemplazo y añadidos anillos `:focus-visible` de alto contraste; eliminado el `<footer>` duplicado en portada y `role="contentinfo"` redundante; corregidos `aria-label` en `<div>` genéricos; habilitado zoom de accesibilidad en `sala-identidad.html` (`touch-action: none` acotado al lienzo 3D/joystick); y completada la cobertura de `prefers-reduced-motion`.
+
+- [x] **MOD-04 — Seguridad de subrecursos externos y carga bajo demanda de terceros (`secure-external-subresources`, `security`, `performance`)**
+  - **Ubicación:** `astro.config.mjs`, `src/components/PageFrame.astro`, `src/components/Header.astro`, `public/rv/sala-identidad.html`
+  - **Resuelto:** Fijada versión `aframe-blink-controls@0.4.3`, añadidos `integrity="sha384-..."`, `crossorigin="anonymous"` y `referrerpolicy="no-referrer"` en los 2 scripts CDN de la Sala RV; añadido `<meta name="referrer" content="strict-origin-when-cross-origin">`; sustituido `//translate.google.com/...` por carga bajo demanda vía `https://` (`__loadGoogleTranslate`) solo cuando se traduce o existe cookie `/en`.
+
+- [x] **MOD-05 — Barras de progreso con CSS Scroll-Driven Animations y optimización de audio (`scroll-progress-indicator`, `performance`)**
+  - **Ubicación:** `src/components/Header.astro`, `src/components/PageSidebar.astro`, `src/content/docs/es/identidad-ipn.md`
+  - **Resuelto:** `#headerProgressBar` y `#tocReadingBar` ahora usan `animation-timeline: scroll(root block)` en compositor dentro de `@supports (animation-timeline: scroll())` + `prefers-reduced-motion: no-preference` (en regla separada para que LightningCSS no lo mezcle en el shorthand `animation`), con fallback JS automático; añadido `preload="metadata"` al audio del Himno.
+
+- [x] **MOD-06 — CSS moderno, acordeones fluidos, tipografía y `@view-transition` (`accordion`, `responsive-design`, `typography`, `cross-document-transitions`, `html`)**
+  - **Ubicación:** `src/styles/{tokens,content,authors,sidebar}.css`, `src/components/PageFrame.astro`, `src/components/quiz/WebXRQuiz.astro`, `src/content/docs/es/identidad-ipn.md`, `src/pages/index.astro`
+  - **Resuelto:** Animación progresiva `::details-content` + `interpolate-size: allow-keywords` + `contain: layout` en acordeones; `.video-wrapper` migrado a `aspect-ratio: 16 / 9`; `100vh` → `100dvh`; `text-wrap: balance` en títulos/`th` y `pretty` en párrafos; extraídos estilos inline y hover JS de `identidad-ipn.md` a CSS; activado `@view-transition { navigation: auto; }` con `prefers-reduced-motion: no-preference`.
+
+- [x] **MOD-07 — Corrección de `favicon.svg` 404 en las 39 páginas de Starlight (detectado en auditoría exhaustiva de `dist/`)**
+  - **Ubicación:** `astro.config.mjs`
+  - **Resuelto:** Configurado `favicon: '/upiicsa_logo.svg'` en Starlight para eliminar el 404 de `/blog-upiicsa/favicon.svg` en todas las rutas generadas.
+
+---
+
 ## ❓ Decisiones Abiertas por Confirmar
 
 Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
@@ -207,4 +240,14 @@ Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en
 
 ### 2026-11-25
 - **Hotfix `UX-01` (`autores.md` — commit `030d3da`):** eliminadas líneas en blanco dentro del bloque HTML de las tarjetas para evitar que CommonMark convirtiera líneas con sangría de 4+ espacios en bloques de código (`expressive-code`) exponiendo HTML crudo en la página en vivo. Verificado `0` bloques `expressive-code` en todo `dist/`.
-- **Bloque 5 (`UX-02` — cabecera responsive):** corregidos los encimamientos en móvil (`320–540px`), móvil ancho (`541–620px`) y tablet (`769–1024px`) en `Header.astro`, `integrations.css` y `tokens.css`: truncado seguro en `brand-title-text`, alto ajustado de `brand-swap-slot` (`40px`), ocultado botón `🏠` redundante en `≤ 540px` y botones solo-icono en tablet `≤ 1024px`.
+- **Bloque 5 (`UX-02` — commit `1f7c7d8`):** corregidos los encimamientos en móvil (`320–540px`), móvil ancho (`541–620px`) y tablet (`769–1024px`) en `Header.astro`, `integrations.css` y `tokens.css`: truncado seguro en `brand-title-text`, alto ajustado de `brand-swap-slot` (`40px`), ocultado botón `🏠` redundante en `≤ 540px` y botones solo-icono en tablet `≤ 1024px`.
+
+### 2026-11-26
+- **Bloque 6 completado (`MOD-01`..`MOD-07` — modernización web con `modern-web-guidance`):**
+  - `MOD-01`: `<meta name="color-scheme" content="light dark">` + script anti-FOUC + mapeo `:root:has(...)` + toggle de 2 estados con retorno a sistema y sincronización `storage`/`matchMedia`.
+  - `MOD-02`: Cortina de bienvenida y los 3 modales de Sala RV migrados a `<dialog closedby="any">` + `showModal()`, `overscroll-behavior: contain` en `:modal`/`::backdrop`, transiciones top-layer con fallback y `replaceChildren()` en `sala-identidad.js` (0 hallazgos en `legacy-scan`).
+  - `MOD-03`: anillos `:focus-visible` en cabecera, cortina, pie, autores e identidad; landmarks sin duplicar `contentinfo`; zoom móvil habilitado en Sala RV; cobertura completa de `prefers-reduced-motion`.
+  - `MOD-04`: `aframe-blink-controls@0.4.3` fijado + SRI `sha384` + `crossorigin="anonymous"` + `referrerpolicy="no-referrer"`, `<meta name="referrer">`, y Google Translate cargado bajo demanda por `https://`.
+  - `MOD-05`: barras de lectura con `animation-timeline: scroll(root block)` (en regla separada para preservar el CSS minificado) + fallback JS y `preload="metadata"` en el audio del Himno.
+  - `MOD-06`: acordeones `<details>` animados con `::details-content` + `interpolate-size`, `aspect-ratio: 16/9`, `100dvh`, `text-wrap: balance/pretty`, `@view-transition` MPA y estilos inline extraídos de `identidad-ipn.md`.
+  - `MOD-07`: `favicon: '/upiicsa_logo.svg'` en `astro.config.mjs` corrigiendo 39 peticiones 404 a `/blog-upiicsa/favicon.svg` detectadas en la auditoría final de `dist/`.

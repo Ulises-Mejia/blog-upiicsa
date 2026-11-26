@@ -2,6 +2,7 @@
    TOKENS INSTITUCIONALES (PALETA UPIICSA / IPN) Y CABECERA GLOBAL
    ========================================================================== */
 :root {
+  color-scheme: light dark;
   --sl-color-accent-low: #00361F;
   --sl-color-accent: #00643A;
   --sl-color-accent-high: #D4AF37;
@@ -17,6 +18,22 @@
   --sl-toc-width: 16rem;
   /* Opción B: índice integrado en la cabecera en móvil/tablet (recupera 100 % del alto vertical) */
   --sl-mobile-toc-height: 0rem !important;
+}
+
+/* Mantener color-scheme CSS sincronizado con <meta name="color-scheme"> */
+:root:has(> head > meta[name='color-scheme'][content='dark']) {
+  color-scheme: dark;
+}
+
+:root:has(> head > meta[name='color-scheme'][content='light']) {
+  color-scheme: light;
+}
+
+/* Transiciones suaves entre documentos (MPA) respetando movimiento reducido */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition {
+    navigation: auto;
+  }
 }
 
 :root[data-theme='light'] {

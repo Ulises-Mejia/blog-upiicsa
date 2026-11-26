@@ -151,6 +151,7 @@
   color: var(--sl-color-white) !important;
   margin: 0 0 2px 0 !important;
   line-height: 1.2 !important;
+  text-wrap: balance;
 }
 
 :root[data-theme='light'] .author-name {
@@ -224,11 +225,45 @@
   border-color: #D4AF37;
 }
 
+.author-contact-link:focus-visible,
+.author-details-summary:focus-visible {
+  outline: 2.5px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+:root[data-theme='light'] .author-contact-link:focus-visible,
+:root[data-theme='light'] .author-details-summary:focus-visible {
+  outline-color: #00643A;
+}
+
 /* Acordeón desplegable (<details>) con información complementaria y futura */
 .author-details {
   border-top: 1px solid rgba(0, 100, 58, 0.16);
   padding-top: 0.75rem;
   margin: 0 !important;
+}
+
+.author-details::details-content {
+  interpolate-size: allow-keywords;
+  overflow: clip;
+  contain: layout;
+}
+
+.author-details:not([open])::details-content {
+  block-size: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .author-details::details-content {
+    transition-property: block-size, content-visibility, display;
+    transition-duration: 0.28s;
+    transition-timing-function: ease-in-out;
+  }
+
+  /* Regla separada para evitar que LightningCSS reordene transition-behavior antes del shorthand transition */
+  details.author-details::details-content {
+    transition-behavior: allow-discrete;
+  }
 }
 
 :root[data-theme='dark'] .author-details {

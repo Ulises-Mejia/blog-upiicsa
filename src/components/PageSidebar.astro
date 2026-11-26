@@ -87,7 +87,7 @@ const nextLink = pagination?.next;
         <div class="sl-container toc-enhanced-shell">
           <!-- BLOQUE SUPERIOR: PROGRESO DE LECTURA + ÍNDICE DE SECCIONES -->
           <div class="toc-top-group">
-            <div class="toc-reading-meta" aria-label="Información de lectura">
+            <div class="toc-reading-meta">
               <div class="toc-meta-row">
                 <span class="toc-read-time">⏱ ~{readingMinutes} min</span>
                 <span id="tocReadingPct" class="toc-read-pct">0 %</span>
@@ -179,6 +179,10 @@ const nextLink = pagination?.next;
     const mobileDetails = document.getElementById('starlight__mobile-toc') as HTMLDetailsElement | null;
 
     let rafId = 0;
+    const usesCssScrollTimeline =
+      typeof CSS !== 'undefined' &&
+      CSS.supports('animation-timeline', 'scroll()') &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     const update = () => {
       rafId = 0;
@@ -190,7 +194,9 @@ const nextLink = pagination?.next;
       mirrorPctEls.forEach((el) => {
         el.textContent = `${pct} %`;
       });
-      if (barEl) barEl.style.transform = `scaleX(${ratio.toFixed(4)})`;
+      if (barEl && !usesCssScrollTimeline) {
+        barEl.style.transform = `scaleX(${ratio.toFixed(4)})`;
+      }
     };
 
     const schedule = () => {
@@ -332,7 +338,31 @@ const nextLink = pagination?.next;
     background: linear-gradient(90deg, #00643A 0%, #D4AF37 100%);
     transform: scaleX(0);
     transform-origin: left center;
-    will-change: transform;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      @keyframes toc-grow-progress {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+
+      .toc-mini-fill {
+        animation-name: toc-grow-progress;
+        animation-duration: auto;
+        animation-timing-function: linear;
+        animation-fill-mode: both;
+      }
+
+      /* Regla separada para evitar que LightningCSS mezcle animation-timeline en el shorthand animation */
+      #tocReadingBar.toc-mini-fill {
+        animation-timeline: scroll(root block);
+      }
+    }
   }
 
   :global(:root[data-theme='dark']) .toc-mini-fill {
@@ -508,5 +538,11 @@ const nextLink = pagination?.next;
 
   .toc-quick-btn--top {
     grid-column: 1 / -1;
+  }
+
+  .toc-quiz-link:focus-visible,
+  .toc-quick-btn:focus-visible {
+    outline: 2.5px solid #D4AF37;
+    outline-offset: 2px;
   }
 </style>

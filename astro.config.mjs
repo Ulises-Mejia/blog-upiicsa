@@ -15,9 +15,29 @@ export default defineConfig({
   integrations: [
     starlight({
       title: 'Multimedia UPIICSA',
+      favicon: '/upiicsa_logo.svg',
       pagefind: true,
       disable404Route: true,
       head: [
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'color-scheme',
+            content: 'light dark',
+          },
+        },
+        {
+          tag: 'script',
+          content:
+            "(function(){try{var t=localStorage.getItem('starlight-theme');if(t==='light'||t==='dark'){var m=document.querySelector('meta[name=\"color-scheme\"]');if(m)m.content=t;}}catch(e){}})();",
+        },
+        {
+          tag: 'meta',
+          attrs: {
+            name: 'referrer',
+            content: 'strict-origin-when-cross-origin',
+          },
+        },
         {
           tag: 'meta',
           attrs: {

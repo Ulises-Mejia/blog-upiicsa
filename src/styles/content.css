@@ -90,8 +90,8 @@
 
 .video-wrapper {
   position: relative;
-  padding-bottom: 56.25%;
-  height: 0;
+  aspect-ratio: 16 / 9;
+  width: 100%;
   overflow: hidden;
   border-radius: 10px;
   margin: 1.25rem 0;
@@ -359,6 +359,12 @@ main[data-pagefind-body]:has(#webxr-quiz-root) > .content-panel:nth-of-type(2) {
 .sl-markdown-content h3,
 .sl-markdown-content .sl-heading-wrapper {
   line-height: 1.38 !important;
+  text-wrap: balance;
+}
+
+.sl-markdown-content > p,
+.sl-markdown-content blockquote p {
+  text-wrap: pretty;
 }
 
 .sl-markdown-content > p {
@@ -440,7 +446,10 @@ main[data-pagefind-body]:has(#webxr-quiz-root) > .content-panel:nth-of-type(2) {
   width: max-content;
   max-width: 100%;
   margin: 1.35rem 0;
-  -webkit-overflow-scrolling: touch;
+}
+
+.sl-markdown-content th {
+  text-wrap: balance;
 }
 
 .sl-markdown-content hr {
@@ -669,4 +678,151 @@ main[data-pagefind-body]:has(#webxr-quiz-root) > .content-panel:nth-of-type(2) {
   border-color: #00361F !important;
   transform: translateY(-3px) scale(1.02) !important;
   box-shadow: 0 10px 28px rgba(212, 175, 55, 0.5) !important;
+}
+
+.quiz-cta-btn:focus-visible {
+  outline: 3px solid #D4AF37 !important;
+  outline-offset: 3px !important;
+}
+
+/* ==========================================================================
+   IDENTIDAD IPN: REPRODUCTOR DE HIMNO Y SALA DE REALIDAD VIRTUAL EMBEBIDA
+   ========================================================================== */
+.himno-audio-card {
+  max-width: 620px;
+  margin-inline: auto;
+}
+
+.himno-audio-title {
+  margin-top: 0;
+  font-weight: 700;
+  color: var(--sl-color-accent-high);
+}
+
+.himno-audio-player {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.himno-audio-player:focus-visible {
+  outline: 2.5px solid #D4AF37;
+  outline-offset: 2px;
+}
+
+.rv-room-container {
+  margin: 2rem 0;
+}
+
+.rv-intro {
+  background: linear-gradient(135deg, rgba(0, 100, 58, 0.1) 0%, rgba(128, 0, 64, 0.1) 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  margin-bottom: 1rem;
+}
+
+.rv-intro-title {
+  margin: 0 0 1rem 0 !important;
+  font-weight: 600;
+}
+
+.rv-intro-list {
+  margin: 0 0 1rem 1.5rem;
+  padding: 0;
+}
+
+.rv-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.rv-enter-btn,
+.rv-fullscreen-btn,
+.rv-close-btn {
+  border: 2px solid #D4AF37;
+  border-radius: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.2s ease;
+}
+
+.rv-enter-btn {
+  background: linear-gradient(135deg, #00643A 0%, #00361F 100%);
+  color: #FFFFFF;
+  padding: 12px 24px;
+  font-size: 1rem;
+}
+
+.rv-enter-btn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 4px 15px rgba(0, 100, 58, 0.4);
+}
+
+.rv-fullscreen-btn {
+  background: #D4AF37;
+  color: #00361F;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+}
+
+.rv-fullscreen-btn:hover {
+  background: #F4E8C1;
+}
+
+.rv-close-btn {
+  background: rgba(128, 0, 64, 0.92);
+  color: #FFFFFF;
+  padding: 12px 20px;
+  font-size: 0.9rem;
+}
+
+.rv-close-btn:hover {
+  background: #9E0050;
+}
+
+:is(.rv-enter-btn, .rv-fullscreen-btn, .rv-close-btn):focus-visible {
+  outline: 3px solid #D4AF37;
+  outline-offset: 3px;
+}
+
+.rv-webgl-warning {
+  background: rgba(128, 0, 64, 0.1);
+  border: 2px solid #800040;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  color: #800040;
+}
+
+:root[data-theme='dark'] .rv-webgl-warning {
+  background: rgba(128, 0, 64, 0.28);
+  color: #FECDD3;
+  border-color: #FB7185;
+}
+
+.rv-stage {
+  width: 100%;
+  height: clamp(340px, 65dvh, 600px);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #00643A;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.rv-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rv-enter-btn,
+  .rv-fullscreen-btn,
+  .rv-close-btn,
+  .quiz-cta-btn {
+    transition: none !important;
+  }
 }

@@ -2,119 +2,275 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="color-scheme" content="dark">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="theme-color" content="#00643A">
   <title>Sala de Identidad Institucional IPN - Realidad Virtual</title>
   <link rel="preload" href="../api/identidad-vr.json" as="fetch" crossorigin>
   <link rel="preload" href="ipn-logo.png" as="image">
   <link rel="preload" href="fonts/sala-sdf.json" as="fetch" crossorigin>
   <link rel="preload" href="fonts/sala-sdf.png" as="image">
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js" onerror="window.__aframeLoadError = true"></script>
-  <script src="https://unpkg.com/aframe-blink-controls/dist/aframe-blink-controls.min.js" onerror="window.__blinkControlsError = true"></script>
+  <script
+    src="https://aframe.io/releases/1.5.0/aframe.min.js"
+    integrity="sha384-Q1xJxUu3g9dfxTQcxLUjh6fUzeztZikm/bryr9+vQ/OT6MIrfMvjxeYlvtA/B5ES"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    onerror="window.__aframeLoadError = true"
+  ></script>
+  <script
+    src="https://unpkg.com/aframe-blink-controls@0.4.3/dist/aframe-blink-controls.min.js"
+    integrity="sha384-037BK5AGIi6WSlOemuVYM7aQjqw6nidgP4Cni7R0gw3l1uoCm5lVV9s++onQP6ox"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+    onerror="window.__blinkControlsError = true"
+  ></script>
   <style>
-    html, body { margin: 0; padding: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; touch-action: none; }
-    #loading { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #00643A 0%, #00361F 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; z-index: 9999; transition: opacity 0.5s; padding: 20px; text-align: center; box-sizing: border-box; }
+    :root { color-scheme: dark; }
+    [hidden] { display: none !important; }
+    html, body { margin: 0; padding: 0; background: #000; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
+    a-scene, a-scene canvas { touch-action: none; }
+
+    button:focus-visible { outline: 2.5px solid #D4AF37; outline-offset: 2px; }
+
+    #loading { position: fixed; inset: 0; background: linear-gradient(135deg, #00643A 0%, #00361F 100%); display: flex; align-items: center; justify-content: center; flex-direction: column; color: #fff; z-index: 9999; transition: opacity 0.5s; padding: 20px; text-align: center; box-sizing: border-box; }
     #loading.hidden { opacity: 0; pointer-events: none; }
+    .loading-icon { font-size: clamp(40px, 12vw, 56px); }
     #loading-text { font-size: clamp(16px, 4vw, 20px); margin-top: 20px; text-align: center; line-height: 1.4; max-width: 460px; }
     #loading-retry { display: none; margin-top: 18px; background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 10px 22px; border-radius: 8px; font-weight: 700; font-size: 0.95rem; cursor: pointer; }
     #loading-retry.visible { display: inline-block; }
     #loading-retry:hover { background: #fff; }
+
     #no-webgl { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 30px) clamp(25px, 6vw, 40px); border-radius: 12px; max-width: min(400px, 90vw); text-align: center; z-index: 10000; border: 2px solid #D4AF37; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+    .no-webgl-icon { font-size: clamp(32px, 10vw, 42px); margin-bottom: 12px; }
+
     #hud { position: fixed; bottom: max(15px, env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); background: rgba(0, 54, 31, 0.95); color: #fff; padding: clamp(8px, 2vw, 12px) clamp(12px, 3vw, 20px); border-radius: 10px; font-size: clamp(11px, 2.5vw, 13px); z-index: 100; display: flex; gap: clamp(8px, 2vw, 14px); align-items: center; border: 1px solid #D4AF37; flex-wrap: wrap; justify-content: center; max-width: 95vw; box-shadow: 0 4px 20px rgba(0,0,0,0.6); }
     #hud.hidden { display: none; }
-    .hud-btn { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 1px solid #D4AF37; padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 14px); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: clamp(11px, 2.2vw, 12px); white-space: nowrap; transition: all 0.2s ease; }
+    .hud-btn { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 1px solid #D4AF37; padding: clamp(6px, 1.5vw, 8px) clamp(10px, 2.5vw, 14px); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: clamp(11px, 2.2vw, 12px); white-space: nowrap; transition: background-color 0.2s ease, transform 0.2s ease; }
     .hud-btn:hover, .hud-btn:active { background: #fff; transform: scale(1.05); }
+
     #station-info { position: fixed; top: max(14px, env(safe-area-inset-top)); left: 50%; transform: translateX(-50%); background: rgba(0, 42, 24, 0.95); color: #fff; padding: clamp(10px, 2.2vw, 14px) clamp(16px, 3.6vw, 24px); border-radius: 12px; font-size: clamp(13px, 2.8vw, 15px); z-index: 150; max-width: min(640px, 92vw); text-align: center; border: 1.5px solid #D4AF37; display: none; box-shadow: 0 8px 28px rgba(0,0,0,0.65); line-height: 1.45; backdrop-filter: blur(8px); }
     #station-info.visible { display: block; }
     #station-info .station-badge { display: inline-block; background: #D4AF37; color: #00361F; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; margin-bottom: 6px; }
     #station-info .station-body { margin: 0; font-weight: 500; }
-    #decalogue-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(520px, 92vw); max-height: min(75vh, 600px); overflow-y: auto; overflow-x: hidden; z-index: 1000; display: none; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9); }
-    #decalogue-panel.visible { display: block; }
-    #decalogue-panel h2 { color: #D4AF37; margin: 0 30px 20px 0; text-align: center; font-size: clamp(18px, 4vw, 24px); line-height: 1.3; }
-    #decalogue-panel .decalogue-item { margin: 12px 0; padding: clamp(10px, 2.5vw, 14px); background: linear-gradient(90deg, rgba(0, 100, 58, 0.45) 0%, rgba(0, 100, 58, 0.2) 100%); border-left: 4px solid #D4AF37; border-radius: 6px; line-height: 1.6; font-size: clamp(13px, 3vw, 15px); word-break: break-word; }
-    #decalogue-close { position: absolute; top: 10px; right: 12px; background: rgba(0, 100, 58, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s ease; }
-    #decalogue-close:hover, #decalogue-close:active { background: #D4AF37; color: #00361F; }
-    #lyrics-panel { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(560px, 92vw); max-height: min(78vh, 650px); overflow-y: auto; overflow-x: hidden; z-index: 1000; display: none; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9); }
-    #lyrics-panel.visible { display: block; }
-    #lyrics-panel h2 { color: #D4AF37; margin: 0 30px 18px 0; text-align: center; font-size: clamp(18px, 4vw, 24px); line-height: 1.3; }
-    #lyrics-panel h3 { color: #D4AF37; margin: 18px 0 8px 0; font-size: clamp(15px, 3vw, 18px); text-align: center; }
+
+    /* Modales nativos <dialog> (top-layer, trampa de foco, Esc/light-dismiss y contención de scroll) */
+    dialog.rv-dialog {
+      position: fixed;
+      inset: 0;
+      margin: auto;
+      background: rgba(0, 54, 31, 0.98);
+      color: #fff;
+      padding: clamp(20px, 5vw, 35px);
+      border-radius: 12px;
+      width: min(540px, 92vw);
+      max-width: 92vw;
+      max-height: min(80dvh, 650px);
+      overflow-y: auto;
+      overflow-x: hidden;
+      box-sizing: border-box;
+      border: 2px solid #D4AF37;
+      box-shadow: 0 15px 50px rgba(0,0,0,0.9);
+      opacity: 0;
+      transition-property: opacity, transform, display, overlay;
+      transition-duration: 0.24s;
+      transition-timing-function: ease-out;
+      transition-behavior: allow-discrete;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      dialog.rv-dialog {
+        transform: scale(0.95);
+      }
+    }
+
+    dialog.rv-dialog[open] {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    @starting-style {
+      dialog.rv-dialog[open] {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      @starting-style {
+        dialog.rv-dialog[open] {
+          transform: scale(0.95);
+        }
+      }
+    }
+
+    dialog.rv-dialog:modal {
+      overscroll-behavior: contain;
+    }
+
+    dialog.rv-dialog::backdrop {
+      background-color: rgba(0, 18, 10, 0);
+      overflow: hidden;
+      overscroll-behavior: contain;
+      transition-property: background-color, display, overlay;
+      transition-duration: 0.24s;
+      transition-timing-function: ease-out;
+      transition-behavior: allow-discrete;
+    }
+
+    dialog.rv-dialog[open]::backdrop {
+      background-color: rgba(0, 18, 10, 0.72);
+    }
+
+    @starting-style {
+      dialog.rv-dialog[open]::backdrop {
+        background-color: rgba(0, 18, 10, 0);
+      }
+    }
+
+    dialog.rv-dialog h1 {
+      color: #D4AF37;
+      margin: 0 34px 16px 0;
+      text-align: center;
+      font-size: clamp(18px, 4vw, 24px);
+      line-height: 1.3;
+      text-wrap: balance;
+    }
+
+    .rv-dialog-close {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      background: rgba(0, 100, 58, 0.6);
+      border: 1px solid #D4AF37;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .rv-dialog-close:hover,
+    .rv-dialog-close:active {
+      background: #D4AF37;
+      color: #00361F;
+    }
+
+    #quiz-close { background: rgba(128, 0, 64, 0.65); }
+    #quiz-close:hover, #quiz-close:active { background: #D4AF37; color: #00361F; }
+
+    #decalogue-panel .decalogue-item { margin: 12px 0; padding: clamp(10px, 2.5vw, 14px); background: linear-gradient(90deg, rgba(0, 100, 58, 0.45) 0%, rgba(0, 100, 58, 0.2) 100%); border-left: 4px solid #D4AF37; border-radius: 6px; line-height: 1.6; font-size: clamp(13px, 3vw, 15px); overflow-wrap: break-word; }
+
+    #lyrics-panel { width: min(560px, 92vw); }
+    #lyrics-panel h2 { color: #D4AF37; margin: 18px 0 8px 0; font-size: clamp(15px, 3vw, 18px); text-align: center; }
     #lyrics-panel .lyrics-stanza { margin: 0 0 14px 0; padding: clamp(10px, 2.5vw, 14px); background: linear-gradient(90deg, rgba(0, 100, 58, 0.4) 0%, rgba(0, 100, 58, 0.2) 100%); border-left: 4px solid #D4AF37; border-radius: 6px; }
     #lyrics-panel .lyrics-stanza p { margin: 4px 0; line-height: 1.55; font-size: clamp(13px, 3vw, 15px); }
-    #lyrics-close { position: absolute; top: 10px; right: 12px; background: rgba(0, 100, 58, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1; transition: all 0.2s ease; }
-    #lyrics-close:hover, #lyrics-close:active { background: #D4AF37; color: #00361F; }
+
+    /* Estilos del Quiz dentro del <dialog> */
+    .quiz-subtitle { text-align: center; margin: 0 0 20px 0; color: #fff; opacity: 0.9; }
+    .quiz-centered { text-align: center; }
+    .quiz-primary-btn { background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 12px 26px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; }
+    .quiz-primary-btn:hover { background: #fff; }
+    .quiz-meta { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; color: #D4AF37; gap: 8px; }
+    .quiz-question { font-size: 1.1rem; font-weight: 600; margin: 0 0 20px 0; line-height: 1.5; }
+    .quiz-options { display: flex; flex-direction: column; gap: 10px; }
+    .quiz-option-btn { padding: 12px; background: rgba(0, 100, 58, 0.4); color: #fff; border: 1px solid #D4AF37; border-radius: 6px; cursor: pointer; text-align: left; font-size: 0.95rem; font-family: inherit; transition: background-color 0.2s ease; }
+    .quiz-option-btn:hover:not(:disabled) { background: rgba(0, 100, 58, 0.72); }
+    .quiz-option-btn.is-correct { background: rgba(0, 150, 0, 0.65); border-color: #4ADE80; }
+    .quiz-option-btn.is-wrong { background: rgba(160, 20, 20, 0.65); border-color: #F87171; }
+    .quiz-next-btn { margin-top: 20px; width: 100%; background: #00643A; color: #fff; border: 1px solid #D4AF37; padding: 10px; border-radius: 6px; font-weight: 600; font-size: 0.95rem; cursor: pointer; }
+    .quiz-next-btn:hover { background: #D4AF37; color: #00361F; }
+    .quiz-trophy { font-size: 48px; margin-bottom: 10px; }
+    .quiz-result-title { color: #D4AF37; margin: 0 0 10px 0; font-size: 1.3rem; }
+    .quiz-result-score { font-size: 1.25rem; margin: 10px 0 15px; }
+
     #joystick { position: fixed; left: max(16px, env(safe-area-inset-left)); bottom: max(16px, env(safe-area-inset-bottom)); width: 118px; height: 118px; z-index: 160; touch-action: none; user-select: none; -webkit-user-select: none; display: none; }
     #joystick.visible { display: block; }
     #joystick-base { position: relative; width: 100%; height: 100%; border-radius: 50%; background: radial-gradient(circle at 35% 30%, rgba(0, 100, 58, 0.78), rgba(0, 54, 31, 0.9)); border: 2px solid rgba(212, 175, 55, 0.82); box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 0 18px rgba(0,0,0,0.35); touch-action: none; }
     #joystick-knob { position: absolute; left: 50%; top: 50%; width: 50px; height: 50px; border-radius: 50%; transform: translate(-50%, -50%); background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); border: 2px solid #fff3d6; box-shadow: 0 3px 10px rgba(0,0,0,0.45); pointer-events: none; }
     #joystick-label { position: absolute; left: 50%; bottom: calc(100% + 6px); transform: translateX(-50%); color: #D4AF37; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; text-shadow: 0 1px 3px #000; }
+
+    @media (prefers-reduced-motion: reduce) {
+      #loading, .hud-btn, dialog.rv-dialog, dialog.rv-dialog::backdrop { transition-duration: 0.1s; }
+      .hud-btn:hover, .hud-btn:active { transform: none; }
+    }
+
     @media (max-width: 820px) {
       #hud { left: auto; right: max(10px, env(safe-area-inset-right)); bottom: max(10px, env(safe-area-inset-bottom)); transform: none; flex-direction: column; align-items: stretch; max-width: 152px; padding: 8px; gap: 6px; }
       #hud-help { display: none; }
       .hud-btn { font-size: 11px; padding: 6px 8px; white-space: normal; line-height: 1.2; }
       #joystick { width: 106px; height: 106px; left: max(12px, env(safe-area-inset-left)); bottom: max(14px, env(safe-area-inset-bottom)); }
       #joystick-knob { width: 44px; height: 44px; }
-      #decalogue-panel, #lyrics-panel { padding: 20px 16px; max-height: 80vh; }
+      dialog.rv-dialog { padding: 20px 16px; max-height: 82dvh; }
     }
   </style>
 </head>
 <body>
   <div id="loading">
-    <div style="font-size: clamp(40px, 12vw, 56px);">🏛️</div>
+    <div class="loading-icon" aria-hidden="true">🏛️</div>
     <div id="loading-text">Cargando sala...</div>
     <button id="loading-retry" type="button">Reintentar</button>
   </div>
-  <div id="no-webgl">
-    <div style="font-size: clamp(32px, 10vw, 42px); margin-bottom: 12px;">⚠️</div>
+  <div id="no-webgl" role="alert">
+    <div class="no-webgl-icon" aria-hidden="true">⚠️</div>
     <div id="no-webgl-text">Este navegador no soporta WebGL. No es posible mostrar la sala de realidad virtual.</div>
   </div>
   <div id="station-info" role="status" aria-live="polite"></div>
   <div id="hud" class="hidden">
     <span id="hud-help">Muévete con el joystick o WASD</span>
-    <button class="hud-btn" id="btn-himno">Reproducir himno</button>
-    <button class="hud-btn" id="btn-decalogo">Ver Decálogo</button>
-    <button class="hud-btn" id="btn-fullscreen">Pantalla completa</button>
-    <button class="hud-btn" id="btn-vr">Entrar en modo VR</button>
-    <button class="hud-btn" id="btn-quiz">Quiz Identidad</button>
+    <button class="hud-btn" id="btn-himno" type="button">Reproducir himno</button>
+    <button class="hud-btn" id="btn-decalogo" type="button">Ver Decálogo</button>
+    <button class="hud-btn" id="btn-fullscreen" type="button">Pantalla completa</button>
+    <button class="hud-btn" id="btn-vr" type="button">Entrar en modo VR</button>
+    <button class="hud-btn" id="btn-quiz" type="button">Quiz Identidad</button>
   </div>
-  <div id="joystick" aria-label="Joystick de movimiento">
+  <div id="joystick" role="group" aria-label="Joystick de movimiento">
     <div id="joystick-base">
       <div id="joystick-knob"></div>
       <span id="joystick-label">Mover</span>
     </div>
   </div>
-  <div id="quiz-panel" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 54, 31, 0.98); color: #fff; padding: clamp(20px, 5vw, 35px); border-radius: 12px; width: min(520px, 92vw); max-height: min(80vh, 650px); overflow-y: auto; overflow-x: hidden; z-index: 2000; border: 2px solid #D4AF37; box-shadow: 0 15px 50px rgba(0,0,0,0.9);">
-    <button id="quiz-close" aria-label="Cerrar" style="position: absolute; top: 10px; right: 12px; background: rgba(128, 0, 64, 0.6); border: 1px solid #D4AF37; color: #fff; font-size: 28px; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; line-height: 1;">×</button>
-    <h2 id="quiz-title" style="color: #D4AF37; margin: 0 30px 10px 0; text-align: center; font-size: clamp(18px, 4vw, 24px);">Quiz Identidad Institucional IPN</h2>
-    <p id="quiz-subtitle" style="text-align: center; margin: 0 0 20px 0; color: #fff; opacity: 0.9;">Pon a prueba tus conocimientos</p>
-    <div id="quiz-start" style="text-align: center;">
-      <button id="quiz-start-btn" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 12px 28px; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer;">Iniciar Quiz</button>
+
+  <dialog id="quiz-panel" class="rv-dialog" closedby="any" aria-labelledby="quiz-title">
+    <button id="quiz-close" class="rv-dialog-close" type="button" aria-label="Cerrar">×</button>
+    <h1 id="quiz-title">Quiz Identidad Institucional IPN</h1>
+    <p id="quiz-subtitle" class="quiz-subtitle">Pon a prueba tus conocimientos</p>
+    <div id="quiz-start" class="quiz-centered">
+      <button id="quiz-start-btn" class="quiz-primary-btn" type="button" autofocus>Iniciar Quiz</button>
     </div>
-    <div id="quiz-content" style="display: none;">
-      <div style="display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 0.9rem; color: #D4AF37;">
+    <div id="quiz-content" hidden>
+      <div class="quiz-meta">
         <span id="quiz-progress">Pregunta 1 / 5</span>
         <span id="quiz-score">Puntuación: 0</span>
       </div>
-      <p id="quiz-question" style="font-size: 1.1rem; font-weight: 600; margin-bottom: 20px; line-height: 1.5;"></p>
-      <div id="quiz-options" style="display: flex; flex-direction: column; gap: 10px;"></div>
-      <button id="quiz-next" style="display: none; margin-top: 20px; width: 100%; background: #00643A; color: #fff; border: 1px solid #D4AF37; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">Siguiente</button>
+      <p id="quiz-question" class="quiz-question"></p>
+      <div id="quiz-options" class="quiz-options"></div>
+      <button id="quiz-next" class="quiz-next-btn" type="button" hidden>Siguiente</button>
     </div>
-    <div id="quiz-result" style="display: none; text-align: center;">
-      <div style="font-size: 48px; margin-bottom: 10px;">🏆</div>
-      <h3 id="quiz-result-title" style="color: #D4AF37; margin: 0 0 10px 0;"></h3>
-      <p id="quiz-result-score" style="font-size: 1.3rem; margin: 10px 0;"></p>
-      <button id="quiz-restart" style="background: linear-gradient(135deg, #D4AF37 0%, #B8941F 100%); color: #00361F; border: 2px solid #D4AF37; padding: 10px 24px; border-radius: 8px; font-weight: 700; cursor: pointer; margin-top: 15px;">Reintentar</button>
+    <div id="quiz-result" class="quiz-centered" hidden>
+      <div class="quiz-trophy" aria-hidden="true">🏆</div>
+      <h2 id="quiz-result-title" class="quiz-result-title"></h2>
+      <p id="quiz-result-score" class="quiz-result-score"></p>
+      <button id="quiz-restart" class="quiz-primary-btn" type="button">Reintentar</button>
     </div>
-  </div>
-  <div id="decalogue-panel" role="dialog" aria-modal="true" aria-labelledby="decalogue-title">
-    <button id="decalogue-close" aria-label="Cerrar">×</button>
-    <h2 id="decalogue-title">Decálogo del Politécnico</h2>
+  </dialog>
+
+  <dialog id="decalogue-panel" class="rv-dialog" closedby="any" aria-labelledby="decalogue-title">
+    <button id="decalogue-close" class="rv-dialog-close" type="button" aria-label="Cerrar" autofocus>×</button>
+    <h1 id="decalogue-title">Decálogo del Politécnico</h1>
     <div id="decalogue-content"></div>
-  </div>
-  <div id="lyrics-panel" role="dialog" aria-modal="true" aria-labelledby="lyrics-title">
-    <button id="lyrics-close" aria-label="Cerrar">×</button>
-    <h2 id="lyrics-title">Himno del Instituto Politécnico Nacional</h2>
+  </dialog>
+
+  <dialog id="lyrics-panel" class="rv-dialog" closedby="any" aria-labelledby="lyrics-title">
+    <button id="lyrics-close" class="rv-dialog-close" type="button" aria-label="Cerrar" autofocus>×</button>
+    <h1 id="lyrics-title">Himno del Instituto Politécnico Nacional</h1>
     <div id="lyrics-content"></div>
-  </div>
+  </dialog>
 
   <a-scene
     vr-mode-ui="enabled: true"
@@ -123,7 +279,7 @@
     loading-screen="enabled: false">
 
     <a-assets timeout="4000">
-      <img id="ipn-logo" src="ipn-logo.png">
+      <img id="ipn-logo" src="ipn-logo.png" alt="">
     </a-assets>
 
     <audio id="himno-audio" src="../audios/himno_ipn.mp3" preload="metadata"></audio>

@@ -238,15 +238,15 @@ function applyContent(content) {
   // Modal accesible del Decálogo (fallback completo)
   const decalogueContent = document.getElementById('decalogue-content');
   if (decalogueContent) {
-    decalogueContent.innerHTML = '';
-    content.decalogo.forEach((item, index) => {
+    const items = content.decalogo.map((item, index) => {
       const div = document.createElement('div');
       div.className = 'decalogue-item';
       const number = document.createElement('strong');
       number.textContent = `${index + 1}.`;
       div.append(number, document.createTextNode(` ${t(item)}`));
-      decalogueContent.appendChild(div);
+      return div;
     });
+    decalogueContent.replaceChildren(...items);
   }
 
   // Modal de letra completa del himno
@@ -254,9 +254,9 @@ function applyContent(content) {
   if (lyricsTitle) lyricsTitle.textContent = t(content.himno.titulo);
   const lyricsContent = document.getElementById('lyrics-content');
   if (lyricsContent) {
-    lyricsContent.innerHTML = '';
+    const nodes = [];
     content.himno.secciones.forEach((section) => {
-      const heading = document.createElement('h3');
+      const heading = document.createElement('h2');
       heading.textContent = t(section.titulo);
       const stanza = document.createElement('div');
       stanza.className = 'lyrics-stanza';
@@ -265,8 +265,9 @@ function applyContent(content) {
         p.textContent = t(line);
         stanza.appendChild(p);
       });
-      lyricsContent.append(heading, stanza);
+      nodes.push(heading, stanza);
     });
+    lyricsContent.replaceChildren(...nodes);
   }
 }
 
@@ -344,14 +345,20 @@ function setupHimno(content) {
 
   addClickOnce(lyricsToggle, () => {
     if (!lyricsPanel) return;
-    const visible = lyricsPanel.classList.toggle('visible');
-    if (lyricsText) {
-      lyricsText.setAttribute('value', t(visible ? identidadUI.hideLyrics : identidadUI.lyrics));
+    if (lyricsPanel.open) {
+      lyricsPanel.close();
+    } else {
+      lyricsPanel.showModal();
+      if (lyricsText) lyricsText.setAttribute('value', t(identidadUI.hideLyrics));
     }
   });
 
   lyricsClose?.addEventListener('click', () => {
-    lyricsPanel?.classList.remove('visible');
+    if (lyricsPanel?.open) lyricsPanel.close();
+  });
+
+  lyricsPanel?.addEventListener('close', () => {
+    lyricsPanel.returnValue = '';
     if (lyricsText) lyricsText.setAttribute('value', t(identidadUI.lyrics));
   });
 
@@ -369,8 +376,12 @@ function setupDecalogoGallery(content) {
   const modalPanel = document.getElementById('decalogue-panel');
   const modalClose = document.getElementById('decalogue-close');
 
-  const openModal = () => modalPanel?.classList.add('visible');
-  const closeModal = () => modalPanel?.classList.remove('visible');
+  const openModal = () => {
+    if (modalPanel && !modalPanel.open) modalPanel.showModal();
+  };
+  const closeModal = () => {
+    if (modalPanel?.open) modalPanel.close();
+  };
 
   addClickOnce(wallButton, openModal);
   if (hudButton) {
@@ -378,6 +389,9 @@ function setupDecalogoGallery(content) {
     hudButton.addEventListener('click', openModal);
   }
   modalClose?.addEventListener('click', closeModal);
+  modalPanel?.addEventListener('close', () => {
+    modalPanel.returnValue = '';
+  });
 
   const panels = [];
   let activeIndex = -1;
@@ -389,7 +403,7 @@ function setupDecalogoGallery(content) {
     const startX = -((cols - 1) * colSpacing) / 2;
     const rowY = [2.22, 1.14];
 
-    container.innerHTML = '';
+    container.replaceChildren();
 
     content.decalogo.forEach((item, index) => {
       const row = Math.floor(index / cols);
@@ -730,21 +744,24 @@ function setupQuiz(quiz) {
 
   btnQuiz?.addEventListener('click', () => {
     if (!quizPanel) return;
-    quizPanel.style.display = 'block';
-    if (quizStart) quizStart.style.display = 'block';
-    if (quizContent) quizContent.style.display = 'none';
-    if (quizResult) quizResult.style.display = 'none';
+    if (quizStart) quizStart.hidden = false;
+    if (quizContent) quizContent.hidden = true;
+    if (quizResult) quizResult.hidden = true;
+    if (!quizPanel.open) quizPanel.showModal();
   });
   quizClose?.addEventListener('click', () => {
-    if (quizPanel) quizPanel.style.display = 'none';
+    if (quizPanel?.open) quizPanel.close();
+  });
+  quizPanel?.addEventListener('close', () => {
+    quizPanel.returnValue = '';
   });
 
   let currentQuestion = 0;
   let score = 0;
 
   quizStartBtn?.addEventListener('click', () => {
-    if (quizStart) quizStart.style.display = 'none';
-    if (quizContent) quizContent.style.display = 'block';
+    if (quizStart) quizStart.hidden = true;
+    if (quizContent) quizContent.hidden = false;
     currentQuestion = 0;
     score = 0;
     showQuestion();
@@ -764,26 +781,26 @@ function setupQuiz(quiz) {
     if (scoreEl) scoreEl.textContent = `${quizData.score}: ${score}`;
     if (questionEl) questionEl.textContent = question.pregunta;
 
-    options.innerHTML = '';
-    question.opciones.forEach((option, index) => {
+    const optionButtons = question.opciones.map((option, index) => {
       const optionButton = document.createElement('button');
+      optionButton.type = 'button';
+      optionButton.className = 'quiz-option-btn';
       optionButton.textContent = option;
-      optionButton.style.cssText =
-        'padding: 12px; background: rgba(0,100,58,0.4); color: #fff; border: 1px solid #D4AF37; border-radius: 6px; cursor: pointer; text-align: left; font-size: 0.95rem;';
-      optionButton.onclick = () => {
+      optionButton.addEventListener('click', () => {
         const all = options.querySelectorAll('button');
         all.forEach((item, itemIndex) => {
           item.disabled = true;
-          if (itemIndex === question.correcta) item.style.background = 'rgba(0,150,0,0.6)';
-          else if (itemIndex === index) item.style.background = 'rgba(150,0,0,0.6)';
+          if (itemIndex === question.correcta) item.classList.add('is-correct');
+          else if (itemIndex === index) item.classList.add('is-wrong');
         });
         if (index === question.correcta) score++;
-        if (quizNext) quizNext.style.display = 'block';
+        if (quizNext) quizNext.hidden = false;
         if (scoreEl) scoreEl.textContent = `${quizData.score}: ${score}`;
-      };
-      options.appendChild(optionButton);
+      });
+      return optionButton;
     });
-    if (quizNext) quizNext.style.display = 'none';
+    options.replaceChildren(...optionButtons);
+    if (quizNext) quizNext.hidden = true;
   }
 
   quizNext?.addEventListener('click', () => {
@@ -796,8 +813,8 @@ function setupQuiz(quiz) {
   });
 
   function showResult() {
-    if (quizContent) quizContent.style.display = 'none';
-    if (quizResult) quizResult.style.display = 'block';
+    if (quizContent) quizContent.hidden = true;
+    if (quizResult) quizResult.hidden = false;
     const percent = Math.round((score / quizData.questions.length) * 100);
     const resultTitle = document.getElementById('quiz-result-title');
     const resultScore = document.getElementById('quiz-result-score');
@@ -815,8 +832,8 @@ function setupQuiz(quiz) {
   }
 
   quizRestart?.addEventListener('click', () => {
-    if (quizResult) quizResult.style.display = 'none';
-    if (quizStart) quizStart.style.display = 'block';
+    if (quizResult) quizResult.hidden = true;
+    if (quizStart) quizStart.hidden = false;
   });
 }
 
@@ -867,18 +884,25 @@ function setupUI() {
     joystick?.classList.add('visible');
   });
 
-  // Cerrar modales con Escape para accesibilidad de teclado
-  window.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    document.getElementById('decalogue-panel')?.classList.remove('visible');
-    const lyricsPanel = document.getElementById('lyrics-panel');
-    if (lyricsPanel?.classList.contains('visible')) {
-      lyricsPanel.classList.remove('visible');
-      setText('himno-lyrics-text', t(identidadUI.lyrics));
-    }
-    const quizPanel = document.getElementById('quiz-panel');
-    if (quizPanel) quizPanel.style.display = 'none';
-  });
+  // Fallback de light-dismiss para navegadores sin closedby="any" (p. ej. Safari)
+  if (!('closedBy' in HTMLDialogElement.prototype)) {
+    const isOutsideDialog = (e, dialog) => {
+      const r = dialog.getBoundingClientRect();
+      return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+    };
+    document.querySelectorAll('dialog[closedby="any"]').forEach((dialog) => {
+      let pressedOutside = false;
+      dialog.addEventListener('pointerdown', (e) => {
+        pressedOutside = isOutsideDialog(e, dialog);
+      });
+      dialog.addEventListener('pointerup', (e) => {
+        if (pressedOutside && isOutsideDialog(e, dialog) && dialog.open) {
+          dialog.close();
+        }
+        pressedOutside = false;
+      });
+    });
+  }
 }
 
 function setupDesktopMouseLook() {
@@ -895,7 +919,11 @@ function setupDesktopMouseLook() {
   let prevY = null;
 
   function onMouseMove(e) {
-    if (scene.is('vr-mode')) return;
+    if (scene.is('vr-mode') || document.querySelector('dialog[open]')) {
+      prevX = null;
+      prevY = null;
+      return;
+    }
 
     const target = e.target;
     if (target && target.closest && target.closest('#hud, #decalogue-panel, #lyrics-panel, #quiz-panel, #station-info, #joystick, button, input')) {

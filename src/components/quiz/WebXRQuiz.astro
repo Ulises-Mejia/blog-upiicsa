@@ -553,6 +553,7 @@ const unitBackHref = lastTopicSlug ? `${base}/es/${lastTopicSlug}/` : `${base}/e
     color: var(--sl-color-text);
     margin: 0.5rem 0;
     line-height: 1.25;
+    text-wrap: balance;
   }
 
   .quiz-desc {
@@ -778,6 +779,29 @@ const unitBackHref = lastTopicSlug ? `${base}/es/${lastTopicSlug}/` : `${base}/e
     background: rgba(127, 127, 127, 0.05);
   }
 
+  .ar-tips::details-content {
+    interpolate-size: allow-keywords;
+    overflow: clip;
+    contain: layout;
+  }
+
+  .ar-tips:not([open])::details-content {
+    block-size: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .ar-tips::details-content {
+      transition-property: block-size, content-visibility, display;
+      transition-duration: 0.26s;
+      transition-timing-function: ease-in-out;
+    }
+
+    /* Regla separada para evitar que LightningCSS reordene transition-behavior antes del shorthand transition */
+    details.ar-tips::details-content {
+      transition-behavior: allow-discrete;
+    }
+  }
+
   .ar-tips summary {
     cursor: pointer;
     font-weight: 700;
@@ -930,9 +954,9 @@ const unitBackHref = lastTopicSlug ? `${base}/es/${lastTopicSlug}/` : `${base}/e
     margin: 0 0 1.2rem 0;
   }
 
-  .q2d-question:focus,
-  .q2d-feedback-title:focus,
-  .q2d-results-heading:focus {
+  .q2d-question:focus:not(:focus-visible),
+  .q2d-feedback-title:focus:not(:focus-visible),
+  .q2d-results-heading:focus:not(:focus-visible) {
     outline: none;
   }
 
@@ -1277,6 +1301,7 @@ const unitBackHref = lastTopicSlug ? `${base}/es/${lastTopicSlug}/` : `${base}/e
     left: 0;
     width: 100vw;
     height: 100vh;
+    height: 100dvh;
     z-index: 999999;
     pointer-events: none;
     display: flex;

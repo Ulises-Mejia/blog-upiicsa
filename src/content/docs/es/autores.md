@@ -26,7 +26,7 @@ next: false
       <p class="author-program">🎓 Ingeniería / Licenciatura en Informática</p>
     </div>
   </div>
-  <div class="author-contacts" aria-label="Medios de contacto de Ulises Mejía Ortega">
+  <div class="author-contacts" role="group" aria-label="Medios de contacto de Ulises Mejía Ortega">
     <a class="author-contact-link" href="mailto:umeji2500@alumno.ipn.mx">
       <span aria-hidden="true">✉️</span>
       <span>umeji2500@alumno.ipn.mx</span>
@@ -98,7 +98,7 @@ next: false
       <p class="author-program">🎓 Ingeniería / Licenciatura en Informática</p>
     </div>
   </div>
-  <div class="author-contacts" aria-label="Medios de contacto de Marco Antonio Linares Zurita">
+  <div class="author-contacts" role="group" aria-label="Medios de contacto de Marco Antonio Linares Zurita">
     <a class="author-contact-link" href="mailto:mlinaresz2500@alumno.ipn.mx">
       <span aria-hidden="true">✉️</span>
       <span>mlinaresz2500@alumno.ipn.mx</span>

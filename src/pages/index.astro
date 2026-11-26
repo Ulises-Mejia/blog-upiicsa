@@ -6,13 +6,31 @@ const targetUrl = `${base}/es/`;
 <html lang="es">
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta http-equiv="refresh" content={`0;url=${targetUrl}`} />
     <title>Multimedia UPIICSA</title>
     <script is:inline define:vars={{ targetUrl }}>
       window.location.replace(targetUrl);
     </script>
+    <style>
+      body {
+        margin: 0;
+        background: #00643A;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        min-height: 100dvh;
+        color: #FFFFFF;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+    </style>
   </head>
-  <body style="margin:0;background:#00643A;display:flex;align-items:center;justify-content:center;height:100vh;color:white;font-family:sans-serif;">
-    <p>Redirigiendo a Repositorio Multimedia UPIICSA...</p>
+  <body>
+    <main>
+      <p>Redirigiendo a Repositorio Multimedia UPIICSA...</p>
+    </main>
   </body>
 </html>
