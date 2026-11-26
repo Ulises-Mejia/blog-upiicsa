@@ -94,9 +94,21 @@ font {
   display: none !important;
 }
 
-@media (max-width: 71.99rem) and (min-width: 769px) {
+@media (max-width: 71.99rem) and (min-width: 64.01rem) {
   .header-search-slot button[data-open-modal] {
     padding: 0 10px !important;
+  }
+}
+
+@media (max-width: 64rem) {
+  .header-search-slot button[data-open-modal] {
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+  }
+
+  .header-search-slot button[data-open-modal] > span {
+    display: none !important;
   }
 }
 
@@ -106,16 +118,19 @@ font {
     height: 34px !important;
     padding: 0 !important;
   }
-
-  .header-search-slot button[data-open-modal] > span {
-    display: none !important;
-  }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 540px) {
   .header-search-slot button[data-open-modal] {
     width: 32px !important;
     height: 32px !important;
+  }
+}
+
+@media (max-width: 359px) {
+  .header-search-slot button[data-open-modal] {
+    width: 30px !important;
+    height: 30px !important;
   }
 }
 

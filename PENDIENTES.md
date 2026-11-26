@@ -1,7 +1,7 @@
 # 📋 Registro de Pendientes y Seguimiento — `blog-upiicsa`
 
 > Documento vivo de seguimiento técnico y editorial del **Repositorio Digital de Herramientas Multimedia (UPIICSA — IPN)**.  
-> **Última actualización:** 2026-11-24  
+> **Última actualización:** 2026-11-25  
 > **Rama base:** `main` (commit de referencia: `7837689`)  
 > **Relacionado:** Ver también `CONTEXTO_RV.md` para detalles históricos y decisiones específicas de la Sala RV.
 
@@ -15,8 +15,8 @@
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
-| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 1 |
-| **Total** | — | **1** | **0** | **22** |
+| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 2 |
+| **Total** | — | **1** | **0** | **23** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -161,6 +161,10 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   - **Ubicación:** `src/content/docs/es/autores.md`, `src/styles/authors.css`, `README.md`
   - **Resuelto:** Desactivado TOC vacío (`tableOfContents: false`), centrado vertical sin scroll en escritorio (`min-height: 100dvh`), tarjetas compactas mostrando a primera vista solo foto/avatar pendiente, nombre, escuela/carrera y contacto clickeable (`mailto:` + slot web listo para descomentar), y acordeón `<details>` desplegable con rol, contexto académico, perfil y bloques comentados reservados para datos futuros.
 
+- [x] **UX-02 — Ajuste responsive de la cabecera superior en móvil y tablet (sin encimamientos)**
+  - **Ubicación:** `src/components/Header.astro`, `src/styles/integrations.css`, `src/styles/tokens.css`
+  - **Resuelto:** Corregido el truncado flex (`brand-title-text` + `min-width: 0`) y alto vertical en móvil (`brand-swap-slot` de `46px` → `40px`), ocultado el botón redundante `🏠` en `≤ 540px` (escudos y `MULTIMEDIA` ya llevan al Inicio), escalonados los breakpoints de `badge`/`Índice`/`Search` (`1024px`, `900px`, `768px`, `620px`, `540px`, `359px`) para evitar cualquier colisión desde `320px` hasta escritorio.
+
 ---
 
 ## ❓ Decisiones Abiertas por Confirmar
@@ -202,4 +206,5 @@ Sin decisiones bloqueantes pendientes. Solo queda **`RV-06`** (prueba física en
 - **Bloque 5 (`UX-01` — commit `67cf0fa`):** rediseñada `src/content/docs/es/autores.md` y `src/styles/authors.css` con vista compacta sin scroll en escritorio (`tableOfContents: false`), información clave a primera vista (foto pendiente, nombre, escuela/carrera, contacto `mailto:` + slot web) y acordeón `<details>` con rol, perfil y bloques comentados para datos futuros.
 
 ### 2026-11-25
-- **Hotfix `UX-01` (`autores.md`):** eliminadas líneas en blanco dentro del bloque HTML de las tarjetas para evitar que CommonMark convirtiera líneas con sangría de 4+ espacios en bloques de código (`expressive-code`) exponiendo HTML crudo en la página en vivo. Verificado `0` bloques `expressive-code` en todo `dist/`.
+- **Hotfix `UX-01` (`autores.md` — commit `030d3da`):** eliminadas líneas en blanco dentro del bloque HTML de las tarjetas para evitar que CommonMark convirtiera líneas con sangría de 4+ espacios en bloques de código (`expressive-code`) exponiendo HTML crudo en la página en vivo. Verificado `0` bloques `expressive-code` en todo `dist/`.
+- **Bloque 5 (`UX-02` — cabecera responsive):** corregidos los encimamientos en móvil (`320–540px`), móvil ancho (`541–620px`) y tablet (`769–1024px`) en `Header.astro`, `integrations.css` y `tokens.css`: truncado seguro en `brand-title-text`, alto ajustado de `brand-swap-slot` (`40px`), ocultado botón `🏠` redundante en `≤ 540px` y botones solo-icono en tablet `≤ 1024px`.

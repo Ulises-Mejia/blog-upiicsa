@@ -61,7 +61,7 @@ if (topicMatch) {
         <a href={homeHref} class="header-brand" title="Ir al Inicio">
           <div class="brand-text">
             <div class="brand-title">
-              {siteBrand.title}
+              <span class="brand-title-text">{siteBrand.title}</span>
               <span class="brand-badge">{siteBrand.badge}</span>
             </div>
             <span class="brand-subtitle">{subtitle}</span>
@@ -164,8 +164,8 @@ if (topicMatch) {
       <Search />
     </div>
 
-    <!-- Botón Inicio -->
-    <a href={homeHref} class="header-link-btn" title={homeLabel} aria-label={homeLabel}>
+    <!-- Botón Inicio (oculto en móvil ≤ 540px: los escudos y MULTIMEDIA ya llevan al Inicio) -->
+    <a href={homeHref} class="header-link-btn header-home-btn" title={homeLabel} aria-label={homeLabel}>
       <span class="btn-icon home-icon">🏠</span>
       <span class="nav-btn-text">{homeLabel}</span>
     </a>
@@ -653,6 +653,7 @@ if (topicMatch) {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
     transition: transform 0.34s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.26s ease;
   }
 
@@ -675,6 +676,8 @@ if (topicMatch) {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .brand-title {
@@ -685,6 +688,14 @@ if (topicMatch) {
     display: flex;
     align-items: center;
     gap: 6px;
+    min-width: 0;
+  }
+
+  .brand-title-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .brand-badge {
@@ -989,6 +1000,10 @@ if (topicMatch) {
       gap: 0.65rem;
     }
 
+    .header-actions {
+      gap: 6px;
+    }
+
     .header-link-btn {
       padding: 0 10px;
     }
@@ -1009,6 +1024,8 @@ if (topicMatch) {
       font-family: inherit;
       font-size: 0.84rem;
       font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
       cursor: pointer;
       outline: none;
       opacity: 1;
@@ -1028,9 +1045,12 @@ if (topicMatch) {
 
     .header-tablet-toc-btn__sep {
       color: #D4AF37;
+      flex-shrink: 0;
     }
 
     .header-tablet-toc-btn__current {
+      flex: 0 1 auto;
+      min-width: 0;
       max-width: 18ch;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1047,7 +1067,7 @@ if (topicMatch) {
 
     /* En tablet al bajar: 2 líneas (Título + ▸ Sección activa) y botón ▾ */
     .header-scroll-pill {
-      height: 46px;
+      height: 44px;
       gap: 10px;
       padding: 4px 10px;
       font-size: clamp(0.92rem, 1.35vw, 1.05rem);
@@ -1094,6 +1114,44 @@ if (topicMatch) {
     }
   }
 
+  /* Tablet compacta (769px - 1024px): botones solo icono para dar ancho holgado al centro */
+  @media (max-width: 64rem) and (min-width: 769px) {
+    .header-brand-group {
+      gap: 8px;
+    }
+    .header-logos {
+      gap: 6px;
+    }
+    .header-logos img {
+      width: 38px;
+      height: 38px;
+    }
+    .header-actions {
+      gap: 6px;
+    }
+    .nav-btn-text {
+      display: none;
+    }
+    .header-link-btn {
+      width: 36px;
+      height: 36px;
+      padding: 0;
+    }
+    .menu-toggle {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  @media (max-width: 900px) and (min-width: 769px) {
+    .brand-badge {
+      display: none;
+    }
+    .brand-title {
+      font-size: 1rem;
+    }
+  }
+
   /* ==========================================================================
      MÓVIL (≤ 768px): OPCIÓN B INTEGRADA EN LA CABECERA (RECUPERA 48 PX)
      ========================================================================== */
@@ -1105,15 +1163,15 @@ if (topicMatch) {
       display: none;
     }
     .header-brand-group {
-      gap: 8px;
+      gap: 7px;
       min-width: 0;
       flex: 1 1 auto;
       overflow: hidden;
     }
     .header-logos {
-      gap: 5px;
+      gap: 4px;
       flex-shrink: 0;
-      max-width: 78px;
+      max-width: 74px;
       overflow: hidden;
     }
     .header-logos img {
@@ -1127,21 +1185,30 @@ if (topicMatch) {
       opacity: 0;
       transform: scale(0.8);
       pointer-events: none;
-      margin-inline-end: -8px;
+      margin-inline-end: -7px;
     }
     .brand-swap-slot {
       flex: 1 1 auto;
       min-width: 0;
-      height: 46px;
+      height: 40px;
       overflow: hidden;
     }
     .brand-default-layer {
       width: 100%;
       justify-content: space-between;
+      gap: 6px;
+      min-width: 0;
+      overflow: hidden;
+    }
+    .header-brand {
+      flex: 1 1 auto;
+      min-width: 0;
+      overflow: hidden;
     }
     .mobile-top-toc-trigger {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 4px;
       flex-shrink: 0;
       height: 28px;
@@ -1161,11 +1228,11 @@ if (topicMatch) {
       inset: 0;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       width: 100%;
-      padding: 4px 8px;
+      padding: 2px 7px;
       box-sizing: border-box;
-      border-radius: 10px;
+      border-radius: 9px;
       border: 1.5px solid rgba(212, 175, 55, 0.52);
       background: rgba(255, 255, 255, 0.14);
       color: #FFFFFF;
@@ -1189,13 +1256,13 @@ if (topicMatch) {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: 2px;
+      gap: 1px;
     }
     .brand-mobile-title-text {
       min-width: 0;
-      font-size: 0.9rem;
+      font-size: 0.84rem;
       font-weight: 800;
-      line-height: 1.15;
+      line-height: 1.12;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -1205,9 +1272,9 @@ if (topicMatch) {
       align-items: center;
       gap: 4px;
       min-width: 0;
-      font-size: 0.74rem;
+      font-size: 0.7rem;
       font-weight: 650;
-      line-height: 1.15;
+      line-height: 1.12;
       color: #F4E8C1;
       opacity: 0.92;
     }
@@ -1222,13 +1289,13 @@ if (topicMatch) {
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       border-radius: 6px;
       background: rgba(212, 175, 55, 0.2);
       border: 1px solid rgba(212, 175, 55, 0.38);
       color: #F4E8C1;
-      font-size: 0.84rem;
+      font-size: 0.8rem;
       font-weight: 900;
     }
     :global(html[data-header-title='visible']) .brand-default-layer {
@@ -1242,9 +1309,8 @@ if (topicMatch) {
       pointer-events: auto;
     }
     .brand-title {
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       letter-spacing: 0.2px;
-      white-space: nowrap;
     }
     .brand-subtitle,
     .nav-btn-text {
@@ -1271,66 +1337,107 @@ if (topicMatch) {
     }
   }
 
-  @media (max-width: 480px) {
+  /* Evitar colisión de badge UPIICSA con Índice entre 541px y 620px */
+  @media (max-width: 620px) {
+    .brand-badge {
+      display: none;
+    }
+  }
+
+  /* Móvil estándar (≤ 540px): ocultar 🏠 redundante (escudos/título van a Inicio) para dar aire real */
+  @media (max-width: 540px) {
     .header-custom {
       gap: 5px;
     }
     .header-brand-group {
-      gap: 6px;
+      gap: 5px;
     }
     .header-logos {
-      gap: 4px;
-      max-width: 68px;
+      gap: 3px;
+      max-width: 60px;
     }
     .header-logos img {
-      width: 30px;
-      height: 30px;
+      width: 28px;
+      height: 28px;
     }
     :global(html[data-header-title='visible']) .header-logos {
-      margin-inline-end: -6px;
+      margin-inline-end: -5px;
     }
     .brand-title {
-      font-size: 0.88rem;
-    }
-    .brand-badge {
-      display: none;
+      font-size: 0.86rem;
     }
     .mobile-top-toc-trigger {
-      padding: 0 7px;
-      height: 26px;
+      width: 28px;
+      height: 28px;
+      padding: 0;
     }
     .mobile-top-toc-trigger__label {
       display: none;
     }
     .brand-mobile-title-btn {
-      padding: 3px 7px;
-      gap: 6px;
+      padding: 2px 6px;
+      gap: 5px;
     }
     .context-pill-badge--sm {
-      font-size: 0.68rem;
+      font-size: 0.66rem;
       padding: 2px 5px;
     }
     .brand-mobile-title-text {
-      font-size: 0.86rem;
+      font-size: 0.82rem;
     }
     .brand-mobile-section-line {
-      font-size: 0.71rem;
+      font-size: 0.68rem;
     }
-    .brand-mobile-title-action {
-      width: 22px;
-      height: 22px;
+    .header-home-btn {
+      display: none;
     }
     .header-actions {
       gap: 4px;
     }
-    .header-link-btn {
+    .header-link-btn,
+    .menu-toggle {
       width: 32px;
       height: 32px;
     }
     .menu-toggle {
-      width: 32px;
-      height: 32px;
       padding: 5px;
+    }
+  }
+
+  /* Móvil ultra compacto (≤ 359px, p. ej. 320px): ajuste fino para cero encimamiento */
+  @media (max-width: 359px) {
+    .header-custom,
+    .header-brand-group {
+      gap: 4px;
+    }
+    .header-logos {
+      gap: 2px;
+      max-width: 50px;
+    }
+    .header-logos img {
+      width: 24px;
+      height: 24px;
+    }
+    :global(html[data-header-title='visible']) .header-logos {
+      margin-inline-end: -4px;
+    }
+    .brand-title {
+      font-size: 0.78rem;
+    }
+    .context-pill-badge--sm {
+      display: none;
+    }
+    .mobile-top-toc-trigger {
+      width: 26px;
+      height: 26px;
+    }
+    .header-actions {
+      gap: 3px;
+    }
+    .header-link-btn,
+    .menu-toggle {
+      width: 30px;
+      height: 30px;
     }
   }
 
