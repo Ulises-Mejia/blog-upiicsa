@@ -1,6 +1,6 @@
 /**
- * Configuración de Marca e Identidad del Repositorio
- * 
+ * Configuración de Marca e Identidad de UPII
+ *
  * Modifica este archivo para cambiar el logo o títulos en todo el sitio:
  * - El Header y la Cortina de Bienvenida se actualizarán automáticamente.
  */
@@ -16,25 +16,25 @@ export const siteBrand = {
   // Compatibilidad con referencias previas
   logoUrl: `${base}/upiicsa_logo.svg`,
   logoAlt: 'Escudos Oficiales IPN y UPIICSA',
-  
+
   // Títulos y subtítulos principales
-  title: 'MULTIMEDIA',
+  title: 'UPII',
   badge: 'UPIICSA',
   institution: 'INSTITUTO POLITÉCNICO NACIONAL',
   campus: 'UPIICSA',
-  
+
   subtitle: {
-    es: 'REPOSITORIO DIGITAL DE CONOCIMIENTOS',
-    en: 'DIGITAL KNOWLEDGE REPOSITORY',
+    es: 'HERRAMIENTAS MULTIMEDIA',
+    en: 'MULTIMEDIA TOOLS',
   },
-  
-  welcomeDescription: {
-    es: 'Repositorio Digital de Conocimientos y Recursos Multimedia para la Unidad de Aprendizaje de Herramientas Multimedia.',
-    en: 'Digital Knowledge and Multimedia Resources Repository for the Multimedia Tools Academic Unit.',
+
+  welcomeTitle: {
+    es: 'Bienvenido a UPII',
+    en: 'Welcome to UPII',
   },
-  
+
   welcomeButton: {
-    es: 'Ingresar al Repositorio',
-    en: 'Enter Repository',
+    es: 'Ingresar',
+    en: 'Enter',
   },
 };

@@ -2,7 +2,7 @@
 
 > Documento vivo de seguimiento técnico y editorial del **Repositorio Digital de Herramientas Multimedia (UPIICSA — IPN)**.  
 > **Última actualización:** 2026-11-26  
-> **Rama base:** `main` (commit de referencia: `b81714c`)  
+> **Rama base:** `main` (commit de referencia: `d114ad8`)  
 > **Relacionado:** Ver también `CONTEXTO_RV.md` para detalles históricos y decisiones específicas de la Sala RV.
 
 ---
@@ -15,10 +15,10 @@
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
-| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 2 |
+| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 3 |
 | **6. Modernización Web (`modern-web-guidance`)** | 🌐 Estándares | 0 | 0 | 7 |
 | **7. Enriquecimiento visual en temas** | 🖼️ Visual | 2 | 0 | 1 |
-| **Total** | — | **3** | **0** | **31** |
+| **Total** | — | **3** | **0** | **32** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -165,7 +165,11 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
 
 - [x] **UX-02 — Ajuste responsive de la cabecera superior en móvil y tablet (sin encimamientos)**
   - **Ubicación:** `src/components/Header.astro`, `src/styles/integrations.css`, `src/styles/tokens.css`
-  - **Resuelto:** Corregido el truncado flex (`brand-title-text` + `min-width: 0`) y alto vertical en móvil (`brand-swap-slot` de `46px` → `40px`), ocultado el botón redundante `🏠` en `≤ 540px` (escudos y `MULTIMEDIA` ya llevan al Inicio), escalonados los breakpoints de `badge`/`Índice`/`Search` (`1024px`, `900px`, `768px`, `620px`, `540px`, `359px`) para evitar cualquier colisión desde `320px` hasta escritorio.
+  - **Resuelto:** Corregido el truncado flex (`brand-title-text` + `min-width: 0`) y alto vertical en móvil (`brand-swap-slot` de `46px` → `40px`), ocultado el botón redundante `🏠` en `≤ 540px` (escudos y `UPII` ya llevan al Inicio), escalonados los breakpoints de `badge`/`Índice`/`Search` (`1024px`, `900px`, `768px`, `620px`, `540px`, `359px`) para evitar cualquier colisión desde `320px` hasta escritorio.
+
+- [x] **UX-03 — Identidad `UPII`, cortina/portada de bienvenida simplificadas y unidades colapsadas en menú lateral**
+  - **Ubicación:** `astro.config.mjs`, `src/config/site.ts`, `src/components/WelcomeCurtain.astro`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/content/docs/es/{index,autores}.md`, `src/pages/{index,404}.astro`, `src/styles/custom.css`
+  - **Resuelto:** Configurado `collapsed: true` en las 3 unidades del sidebar y colapso automático en apertura de menú (escritorio y móvil) para mostrar siempre U-I, U-II y U-III cerradas de entrada; simplificada la cortina inicial a escudos IPN/UPIICSA + `"Bienvenido a UPII"` + botón `"Ingresar"`; unificada toda la identidad de marca (`title`, cabecera, pie inferior, portada `/es/`, autores y 404) a **`UPII`**.
 
 ---
 
@@ -268,6 +272,10 @@ Sin decisiones bloqueantes pendientes. Avance incremental unidad por unidad en *
   - `MOD-05`: barras de lectura con `animation-timeline: scroll(root block)` (en regla separada para preservar el CSS minificado) + fallback JS y `preload="metadata"` en el audio del Himno.
   - `MOD-06`: acordeones `<details>` animados con `::details-content` + `interpolate-size`, `aspect-ratio: 16/9`, `100dvh`, `text-wrap: balance/pretty`, `@view-transition` MPA y estilos inline extraídos de `identidad-ipn.md`.
   - `MOD-07`: `favicon: '/upiicsa_logo.svg'` en `astro.config.mjs` corrigiendo 39 peticiones 404 a `/blog-upiicsa/favicon.svg` detectadas en la auditoría final de `dist/`.
-- **Bloque 7 (`VIS-01` — Unidad I completada, commit base `33b47ec` + refinamiento 100 % imágenes reales y adaptación claro/oscuro):**
+- **Bloque 7 (`VIS-01` — Unidad I completada, commits `33b47ec` y `d114ad8`, 100 % imágenes reales y adaptación claro/oscuro):**
   - Sustituidos los 7 diagramas SVG iniciales por fotografías/capturas reales con licencia libre verificada (`13/13` temas de Unidad I con `<picture>` AVIF + WebP responsivos en `public/images/temas/u1/`, 52 archivos).
   - Armonizados `.topic-figure` (incluyendo `.topic-figure--bright-bg` para fondos claros en modo oscuro) y añadido componente `.editorial-timeline` sobrio y mínimamente interactivo (`<ol>` + `<details>` nativo adaptable a modo claro, oscuro y `forced-colors`) en los 2 temas cronológicos (`1-1-2-evolucion.md` y `1-1-3-web.md`). Verificado con `npm run check`, `npm run clean && npm run build` y auditoría de `dist/`.
+- **Bloque 5 (`UX-03` — identidad `UPII`, bienvenida simplificada y unidades colapsadas en sidebar):**
+  - Configurado `collapsed: true` + colapso al abrir menú lateral en escritorio (`Header.astro`) y móvil (`PageFrame.astro`) para mostrar las 3 unidades cerradas al desplegar el menú.
+  - Simplificada la cortina de bienvenida (`WelcomeCurtain.astro`) a escudos IPN/UPIICSA, título `"Bienvenido a UPII"` y botón `"Ingresar"`, y actualizada la portada (`/es/`) con `"Bienvenido a UPII"` conservando el índice de unidades.
+  - Migrados los textos de identidad de marca en todo el sitio (`astro.config.mjs`, `site.ts`, `PageFrame.astro`, `autores.md`, `index.astro`, `404.astro`) a **`UPII`**.

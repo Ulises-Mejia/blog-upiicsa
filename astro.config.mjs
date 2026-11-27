@@ -14,7 +14,7 @@ export default defineConfig({
   },
   integrations: [
     starlight({
-      title: 'Multimedia UPIICSA',
+      title: 'UPII',
       favicon: '/upiicsa_logo.svg',
       pagefind: true,
       disable404Route: true,
@@ -65,6 +65,7 @@ export default defineConfig({
       sidebar: [
         ...UNITS.map((unit) => ({
           label: unit.sidebarLabel,
+          collapsed: true,
           items: [
             { autogenerate: { directory: unit.directory } },
           ],

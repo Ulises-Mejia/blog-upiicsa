@@ -1,13 +1,13 @@
 ---
 title: "Autores y Créditos"
-description: "Perfil de los autores y desarrolladores del Repositorio Multimedia UPIICSA - IPN."
+description: "Perfil de los autores y desarrolladores de UPII (UPIICSA — IPN)."
 tableOfContents: false
 prev: false
 next: false
 ---
 
 <p class="authors-intro">
-  Equipo responsable del diseño, desarrollo tecnológico y curaduría académica del <strong>Repositorio Digital de Multimedia UPIICSA</strong>.
+  Equipo responsable del diseño, desarrollo tecnológico y curaduría académica de <strong>UPII — Herramientas Multimedia (UPIICSA)</strong>.
 </p>
 
 <!-- Nota: evita líneas en blanco dentro del bloque HTML de cada tarjeta para que Markdown no interprete la sangría como código. -->
@@ -64,7 +64,7 @@ next: false
           <ul>
             <li><strong>Especialidad:</strong> Arquitectura de software, desarrollo frontend con Astro, diseño de sistemas responsivos y optimización web.</li>
             <li><strong>Tecnologías:</strong> Astro, TypeScript, HTML5 Multimedia, CSS3, Git.</li>
-            <li><strong>Rol:</strong> Arquitectura del repositorio, componentes interactivos, internacionalización (ES/EN) y experiencia de usuario.</li>
+            <li><strong>Rol:</strong> Arquitectura de UPII, componentes interactivos, internacionalización (ES/EN) y experiencia de usuario.</li>
           </ul>
         </div>
       </div>
@@ -136,7 +136,7 @@ next: false
           <ul>
             <li><strong>Especialidad:</strong> Arquitectura de software, desarrollo frontend con Astro, diseño de sistemas responsivos y optimización web.</li>
             <li><strong>Tecnologías:</strong> Astro, TypeScript, HTML5 Multimedia, CSS3, Git.</li>
-            <li><strong>Rol:</strong> Arquitectura del repositorio, componentes interactivos, internacionalización (ES/EN) y experiencia de usuario.</li>
+            <li><strong>Rol:</strong> Arquitectura de UPII, componentes interactivos, internacionalización (ES/EN) y experiencia de usuario.</li>
           </ul>
         </div>
       </div>

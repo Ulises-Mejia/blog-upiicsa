@@ -8,8 +8,7 @@ interface Props {
 const { isEn = false } = Astro.props;
 const currentYear = new Date().getFullYear();
 
-const institutionLabel = `${siteBrand.institution} • ${siteBrand.campus}`;
-const description = isEn ? siteBrand.welcomeDescription.en : siteBrand.welcomeDescription.es;
+const welcomeTitle = isEn ? siteBrand.welcomeTitle.en : siteBrand.welcomeTitle.es;
 const buttonLabel = isEn ? siteBrand.welcomeButton.en : siteBrand.welcomeButton.es;
 const dismissHint = isEn ? 'Press Escape or click to enter' : 'Presiona Esc o haz clic para ingresar';
 const copyrightText = isEn
@@ -54,22 +53,10 @@ const copyrightText = isEn
         </div>
       </div>
 
-      <!-- Insignia Institucional -->
-      <div class="curtain-badge-tag">
-        <span class="badge-dot" aria-hidden="true"></span>
-        <span>{institutionLabel}</span>
-      </div>
-
-      <!-- Título Principal -->
+      <!-- Título Principal Simplificado -->
       <h1 id="curtainTitle" class="curtain-title">
-        {siteBrand.title}
-        <span class="title-highlight">{siteBrand.badge}</span>
+        {welcomeTitle}
       </h1>
-
-      <!-- Subtítulo / Descripción Breve -->
-      <p class="curtain-description">
-        {description}
-      </p>
 
       <!-- Botón de Acción Principal -->
       <div class="curtain-actions">
@@ -79,7 +66,6 @@ const copyrightText = isEn
           type="button"
           autofocus
         >
-          <span class="enter-btn-icon" aria-hidden="true">🚀</span>
           <span>{buttonLabel}</span>
         </button>
       </div>
@@ -438,70 +424,20 @@ const copyrightText = isEn
     border-radius: 50%;
   }
 
-  /* Insignia */
-  .curtain-badge-tag {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(212, 175, 55, 0.12);
-    border: 1px solid rgba(212, 175, 55, 0.35);
-    color: #D4AF37;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 1.2px;
-    text-transform: uppercase;
-    padding: 4px 14px;
-    border-radius: 999px;
-    margin-bottom: 1rem;
-  }
-
-  .badge-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #D4AF37;
-    box-shadow: 0 0 8px #D4AF37;
-  }
-
   /* Título */
   .curtain-title {
-    font-size: 2.2rem;
+    font-size: clamp(1.75rem, 4vw, 2.35rem);
     font-weight: 800;
-    letter-spacing: 1px;
+    letter-spacing: 0.4px;
     color: #FFFFFF;
-    margin: 0 0 0.75rem 0;
-    line-height: 1.15;
+    margin: 0.25rem 0 1.6rem 0;
+    line-height: 1.2;
     text-wrap: balance;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-
-  .title-highlight {
-    background: #D4AF37;
-    color: #00361F;
-    font-size: 1.1rem;
-    font-weight: 900;
-    padding: 3px 10px;
-    border-radius: 6px;
-    letter-spacing: 0.5px;
-  }
-
-  /* Descripción */
-  .curtain-description {
-    font-size: 0.96rem;
-    line-height: 1.6;
-    color: rgba(255, 255, 255, 0.85);
-    margin: 0 0 1.75rem 0;
-    max-width: 480px;
-    text-wrap: pretty;
   }
 
   /* Botón de Entrada */
   .curtain-actions {
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.85rem;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -511,18 +447,17 @@ const copyrightText = isEn
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
     background: #D4AF37;
     color: #00361F;
     font-family: inherit;
     font-size: 1rem;
     font-weight: 800;
     letter-spacing: 0.3px;
-    padding: 13px 32px;
+    padding: 13px 38px;
     border-radius: 10px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.32);
     transition: transform 0.25s cubic-bezier(0.2, 0, 0, 1), background-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
   }
 
@@ -530,7 +465,7 @@ const copyrightText = isEn
     background: #FFFFFF;
     color: #00643A;
     transform: translateY(-2px) scale(1.02);
-    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 255, 255, 0.28);
   }
 
   .enter-btn:active {
@@ -540,15 +475,6 @@ const copyrightText = isEn
   .enter-btn:focus-visible {
     outline: 3px solid #FFFFFF;
     outline-offset: 3px;
-  }
-
-  .enter-btn-icon {
-    font-size: 1.15rem;
-    transition: transform 0.2s ease;
-  }
-
-  .enter-btn:hover .enter-btn-icon {
-    transform: translateX(3px) translateY(-1px);
   }
 
   /* Pista accesible */
@@ -570,8 +496,7 @@ const copyrightText = isEn
 
   @media (prefers-reduced-motion: reduce) {
     .curtain-logo-wrapper,
-    .enter-btn,
-    .enter-btn-icon {
+    .enter-btn {
       transition: background-color 0.2s ease, color 0.2s ease !important;
       transform: none !important;
     }
@@ -595,15 +520,6 @@ const copyrightText = isEn
     }
     .curtain-card {
       padding: 1.75rem 1.25rem;
-    }
-    .curtain-title {
-      font-size: 1.7rem;
-    }
-    .title-highlight {
-      font-size: 0.95rem;
-    }
-    .curtain-description {
-      font-size: 0.88rem;
     }
     .enter-btn {
       width: 100%;

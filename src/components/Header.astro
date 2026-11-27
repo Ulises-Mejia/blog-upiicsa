@@ -164,7 +164,7 @@ if (topicMatch) {
       <Search />
     </div>
 
-    <!-- Botón Inicio (oculto en móvil ≤ 540px: los escudos y MULTIMEDIA ya llevan al Inicio) -->
+    <!-- Botón Inicio (oculto en móvil ≤ 540px: los escudos y UPII ya llevan al Inicio) -->
     <a href={homeHref} class="header-link-btn header-home-btn" title={homeLabel} aria-label={homeLabel}>
       <span class="btn-icon home-icon">🏠</span>
       <span class="nav-btn-text">{homeLabel}</span>
@@ -215,6 +215,14 @@ if (topicMatch) {
     const menuToggle = document.getElementById('menuToggle');
     if (!menuToggle) return;
 
+    const collapseSidebarUnits = () => {
+      const sidebarPane = document.getElementById('starlight__sidebar');
+      if (!sidebarPane) return;
+      sidebarPane.querySelectorAll<HTMLDetailsElement>('.top-level > li > details[open]').forEach((d) => {
+        d.open = false;
+      });
+    };
+
     const closeDesktopSidebar = () => {
       document.documentElement.removeAttribute('data-sidebar-open');
       menuToggle.setAttribute('aria-expanded', 'false');
@@ -222,8 +230,10 @@ if (topicMatch) {
       menuToggle.setAttribute('title', 'Abrir menú lateral');
     };
 
-    // Asegurar que cada carga de página comience con el menú cerrado
+    // Asegurar que cada carga de página comience con el menú y sus unidades cerrados
     closeDesktopSidebar();
+    collapseSidebarUnits();
+    window.requestAnimationFrame(collapseSidebarUnits);
 
     const onToggleClick = (e: MouseEvent) => {
       const isDesktop = window.innerWidth >= 800;
@@ -233,6 +243,7 @@ if (topicMatch) {
         const isOpen = document.documentElement.getAttribute('data-sidebar-open') === 'true';
 
         if (!isOpen) {
+          collapseSidebarUnits();
           document.documentElement.setAttribute('data-sidebar-open', 'true');
           menuToggle.setAttribute('aria-expanded', 'true');
           menuToggle.setAttribute('aria-label', 'Cerrar menú lateral');
@@ -242,6 +253,7 @@ if (topicMatch) {
         }
       } else {
         const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        if (!isExpanded) collapseSidebarUnits();
         menuToggle.setAttribute('aria-expanded', isExpanded ? 'false' : 'true');
       }
     };

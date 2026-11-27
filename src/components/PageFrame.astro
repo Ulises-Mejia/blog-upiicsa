@@ -22,7 +22,7 @@ const authorsShort = '👥 Autores';
 
 const copyrightDesktop = `© ${year} Instituto Politécnico Nacional — UPIICSA. Todos los derechos reservados.`;
 const copyrightMobile = `© ${year} IPN — UPIICSA`;
-const courseLabel = 'Repositorio Multimedia';
+const courseLabel = 'UPII';
 ---
 
 <div class="page sl-flex">
@@ -37,7 +37,14 @@ const courseLabel = 'Repositorio Multimedia';
 						constructor() {
 							super();
 							matchMedia('(min-width: 50em)').addEventListener('change', () => this.hidePopover());
-							this.addEventListener('toggle', ({ newState }) => this.trapFocus(newState === 'open'));
+							this.addEventListener('toggle', ({ newState }) => {
+								if (newState === 'open') {
+									this.querySelectorAll<HTMLDetailsElement>('.top-level > li > details[open]').forEach((d) => {
+										d.open = false;
+									});
+								}
+								this.trapFocus(newState === 'open');
+							});
 						}
 						trapFocus(shouldTrap: boolean) {
 							document.querySelectorAll<HTMLElement>('.main-frame, .sl-skip-link').forEach((el) => {

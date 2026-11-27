@@ -1,9 +1,9 @@
 ---
-title: Repositorio Web Multimedia UPIICSA
-description: Plataforma digital de conocimientos académicos para la materia de Herramientas Multimedia.
+title: Bienvenido a UPII
+description: UPII — Plataforma académica digital de la UPIICSA (IPN) para la unidad de aprendizaje Herramientas Multimedia.
 ---
 
-Bienvenido al **Repositorio Digital de Herramientas Multimedia** de la **UPIICSA — Instituto Politécnico Nacional (IPN)**. Este espacio académico reúne los fundamentos teóricos, metodológicos y tecnológicos para el diseño, producción e integración de sistemas multimedia interactivos y entornos inmersivos (`WebXR` / `3D`).
+Bienvenido a **UPII**, espacio académico digital de la **UPIICSA — Instituto Politécnico Nacional (IPN)** dedicado a la unidad de aprendizaje **Herramientas Multimedia**. Aquí se reúnen los fundamentos teóricos, metodológicos y tecnológicos para el diseño, producción e integración de sistemas multimedia interactivos y entornos inmersivos (`WebXR` / `3D`).
 
 > **Propósito académico:** Brindar una guía estructurada y actualizada para estudiantes de Ingeniería y Licenciatura en Ciencias de la Informática, articulando desde la digitalización de medios clásicos hasta el desarrollo de aplicaciones en Realidad Virtual y Realidad Aumentada.
 
@@ -22,4 +22,4 @@ Bienvenido al **Repositorio Digital de Herramientas Multimedia** de la **UPIICSA
 ## Secciones Institucionales
 
 * **[Identidad Institucional IPN](./identidad-ipn/):** Escudo, lema, porra politécnica, Decálogo y reproducción del Himno Oficial del Instituto Politécnico Nacional.
-* **[Autores y Créditos](./autores/):** Perfil académico y técnico del equipo desarrollador del repositorio en la UPIICSA.
+* **[Autores y Créditos](./autores/):** Perfil académico y técnico del equipo desarrollador de UPII en la UPIICSA.
