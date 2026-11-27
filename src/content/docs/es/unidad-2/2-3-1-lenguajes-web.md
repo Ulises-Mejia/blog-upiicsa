@@ -15,6 +15,15 @@ En la arquitectura de las aplicaciones web modernas, el navegador del usuario ej
 * **CSS3 (*Cascading Style Sheets 3*):** Gobierna la presentación visual, el diseño adaptativo (*Responsive Design* mediante *Flexbox*, *CSS Grid* y *Media Queries*) y las **animaciones declarativas aceleradas por GPU** a través de las propiedades `transition`, `transform` (matrices de traslación, rotación, escala y perspectiva 3D) y `@keyframes`.  
 * **JavaScript (ES6+):** Es el lenguaje de programación imperativo, orientado a objetos y dirigido por eventos que dota de inteligencia a la página en el cliente. A través de JavaScript se controlan programáticamente los reproductores multimedia (`video.play()`, `currentTime`, eventos de progreso) y se accede a las **APIs Multimedia del Navegador**: **Canvas 2D API**, **WebGL / WebGPU** (con bibliotecas como *Three.js* o *Babylon.js* para gráficos 3D), **Web Audio API** (síntesis y análisis espectral de sonido con nodos de ganancia y FFT en vivo), **MediaStream / WebRTC** (acceso a cámara web y micrófono) y **WebXR**.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-3-1-codigo-html-css-480.avif 480w, ../../../images/temas/u2/2-3-1-codigo-html-css-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-3-1-codigo-html-css-480.webp 480w, ../../../images/temas/u2/2-3-1-codigo-html-css-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-3-1-codigo-html-css-960.webp" alt="Fotografía en primer plano de un monitor de desarrollo mostrando marcado semántico HTML5 con enlaces a hojas de estilo CSS3 y estructura de navegación junto a una vista previa responsiva en pantalla." width="960" height="640" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.9.</strong> Marcado semántico <code>HTML5</code>, vinculación de hojas de estilo <code>CSS3</code> y previsualización adaptativa en el flujo de desarrollo web del lado del cliente.<span class="topic-figure__credit">Fotografía: Sai Kiran Anagani / Wikimedia Commons (CC0).</span></figcaption>
+</figure>
+
 ## El Lado del Servidor (Backend Multimedia): PHP, APIs REST y Gestión de Activos
 
 Mientras que HTML5, CSS3 y JavaScript se ejecutan en el dispositivo del usuario, un sistema multimedia completo necesita un **servidor (*Backend*)** programado en lenguajes como **PHP** (o alternativas como Python, Node.js, Java/C#) conectado a un gestor de bases de datos (MySQL / PostgreSQL). En una aplicación multimedia, el backend en PHP se encarga de autenticar usuarios, recibir la subida segura de archivos pesados (`$_FILES` validando tipos MIME reales y límites de tamaño), invocar procesos de optimización o transcodificación en el servidor, consultar en la base de datos las rutas y metadatos de las imágenes, audios o modelos 3D, y entregarlos dinámicamente al frontend mediante páginas generadas o **APIs RESTful en formato JSON**.

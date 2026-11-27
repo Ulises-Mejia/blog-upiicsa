@@ -20,6 +20,15 @@ La literatura científica de nuestro acervo documenta con evidencia cuantitativa
 * **Medicina y Psicología Clínica:** Planificación preoperatoria sobre reconstrucciones 3D de tomografías, entrenamiento de cirugía laparoscópica con retroalimentación de fuerza háptica, rehabilitación motora post-infarto cerebral y **terapia de exposición en realidad virtual (VRET)** para tratar fobias (acrofobia, aracnofobia) y estrés postraumático bajo control gradual del terapeuta.  
 * **Industria 4.0, Arquitectura y Comercio Electrónico:** Mantenimiento aeronáutico y automotriz asistido por gafas de RA (donde el manual técnico se proyecta paso a paso sobre el motor real), preventa arquitectónica interactiva y prueba virtual de productos (*Virtual Try-On*) en tiendas en línea.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-2-4-simulador-rv-nasa-480.avif 480w, ../../../images/temas/u2/2-2-4-simulador-rv-nasa-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-2-4-simulador-rv-nasa-480.webp 480w, ../../../images/temas/u2/2-2-4-simulador-rv-nasa-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-2-4-simulador-rv-nasa-960.webp" alt="Ingeniero del Centro de Investigación de Vuelo Armstrong de la NASA ajustando un visor de realidad virtual a un piloto de pruebas sentado dentro de una cabina de simulación de confort de vuelo para taxis aéreos." width="960" height="640" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.7.</strong> Simulador inmersivo de movilidad aérea en el Centro de Investigación de Vuelo Armstrong (NASA, 2024): evaluación segura y reproducible de escenarios aeronáuticos antes de las pruebas físicas.<span class="topic-figure__credit">Fotografía: Steve Freeman / NASA Armstrong Flight Research Center / Wikimedia Commons (Dominio público).</span></figcaption>
+</figure>
+
 ## Conclusiones
 
 > El valor real de un entorno virtual se mide por el impacto humano, educativo o productivo que genera: cuando la tecnología se diseña con rigor pedagógico y ergonómico, se convierte en un multiplicador de capacidades para la educación, la inclusión, la ciencia y la industria.

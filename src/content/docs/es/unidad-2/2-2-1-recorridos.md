@@ -14,6 +14,15 @@ Como analizan Otero y Flores (2011) en su estudio de casos sobre paseos virtuale
 * **1. Recorridos Basados en Imagen Omnidireccional (Panoramas Esféricos o Cúbicos 360°):** Se capturan fotografías reales desde múltiples puntos estratégicos del recinto utilizando cámaras de doble lente ojo de pez (360°) o cabezales robóticos panorámicos. Las imágenes se unen matemáticamente mediante algoritmos de **cosido fotogramétrico (*Image Stitching*)** que detectan puntos característicos invariantes (como descriptores SIFT/ORB) en las zonas de traslape y las proyectan en un mapa **equirrectangular** (relación de aspecto 2:1, donde el eje horizontal abarca 360° de longitud y el vertical 180° de latitud) o en las seis caras de un cubo (***Cube Map / Skybox***). En el visor web, la cámara del usuario se sitúa en el centro de la esfera o cubo y salta de un nodo a otro mediante flechas de transición.  
 * **2. Recorridos Basados en Geometría Tridimensional en Tiempo Real (*3D Real-Time Walkthroughs*):** El edificio o espacio se modela por completo como una malla poligonal 3D con texturas PBR e iluminación precalculada (*Baked Lightmaps*), o bien se escanea con sensores láser **LiDAR / Fotogrametría** (como en cámaras Matterport) para generar el modelo tridimensional («vista de casa de muñecas» o *Dollhouse View*). Aquí el usuario no está limitado a saltar entre puntos fijos, sino que puede caminar libremente por cualquier coordenada (*X*, *Y*, *Z*) con detección de colisiones en paredes y pisos.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-2-1-panorama-equirrectangular-360-480.avif 480w, ../../../images/temas/u2/2-2-1-panorama-equirrectangular-360-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-2-1-panorama-equirrectangular-360-480.webp 480w, ../../../images/temas/u2/2-2-1-panorama-equirrectangular-360-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-2-1-panorama-equirrectangular-360-960.webp" alt="Fotografía panorámica esférica completa en proyección equirrectangular de relación 2 a 1 que abarca 360 por 180 grados del interior arquitectónico de la Catedral de Laon en Francia, mostrando la deformación polar característica en bóvedas y suelo." width="960" height="480" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.4.</strong> Fotografía panorámica esférica completa (<code>360° × 180°</code>) en proyección <strong>equirrectangular <code>2:1</code></strong> (interior de la Catedral de Laon): mapa fuente que se proyecta sobre la esfera interior de un recorrido virtual.<span class="topic-figure__credit">Fotografía panorámica: Diliff / Wikimedia Commons (CC BY-SA 3.0).</span></figcaption>
+</figure>
+
 ## Elementos de Interacción Hipermedia (Hotspots), Orientación Espacial (Wayfinding) y Optimización
 
 Para que un recorrido virtual sea una herramienta informática informativa y no solo una galería pasiva, incorpora tres capas de diseño (Otero & Flores, 2011):

@@ -16,6 +16,15 @@ Como se documenta en la metodología de desarrollo de García García et al. (20
 * **3. Plataformas Especializadas en Recorridos Panorámicos y Mundos Web:** Herramientas orientadas a ensamblar recorridos virtuales y espacios multiusuario directamente para el navegador web sin requerir programación compleja desde cero, tales como **Pano2VR**, **3DVista**, **Krpano**, **Marzipano** (código abierto de Google para panoramas 360°) y frameworks declarativos de WebXR como **A-Frame** y **Three.js**.  
 * **4. Motores de Simulación e Integración en Tiempo Real:** Entornos donde convergen todos los activos anteriores para dotarlos de iluminación, colisiones físicas, sonido espacial 3D y lógica interactiva (como **Unity**, **Unreal Engine** y **Godot**).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-2-2-fotogrametria-meshroom-480.avif 480w, ../../../images/temas/u2/2-2-2-fotogrametria-meshroom-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-2-2-fotogrametria-meshroom-480.webp 480w, ../../../images/temas/u2/2-2-2-fotogrametria-meshroom-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-2-2-fotogrametria-meshroom-960.webp" alt="Interfaz del software libre de fotogrametría Meshroom mostrando la galería de fotografías fuente a la izquierda, la malla tridimensional texturizada de 183 mil triángulos en el visor 3D y el grafo nodal de reconstrucción en la parte inferior." width="960" height="503" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.5.</strong> Flujo fotogramétrico en <em>Meshroom</em> (software abierto): a partir de fotografías reales se calculan posiciones de cámara (<em>StructureFromMotion</em>), malla poligonal y texturas listas para optimizar e importar a un motor 3D.<span class="topic-figure__credit">Captura: Colin Kranz / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## Interoperabilidad, Optimización de Mallas (Polígonos y Draw Calls) y Flujo de Trabajo
 
 El reto crítico al comunicar estas distintas piezas de software es el **presupuesto de rendimiento en tiempo real**: un modelo esculpido en un software DCC puede tener 5 millones de polígonos, pero para ejecutarse fluidamente en un entorno virtual web o móvil debe someterse a **decimación o retopología** (*Low-Poly*), transferencia de detalles a mapas de normales (*Normal Map Baking*), compresión de texturas en potencias de dos (1024 × 1024 o 2048 × 2048) y exportación en estándares de intercambio limpios como **glTF 2.0 / GLB** o **FBX** (Glover & Linowes, 2019; Marschner & Shirley, 2016).

@@ -30,6 +30,15 @@ En el ecosistema **Python + NumPy + OpenCV (`cv2`)**, toda imagen o cuadro de vi
 * **Umbralización y morfología:** Binarización adaptativa (`cv2.threshold`) y extracción de contornos y envolvente convexa (`cv2.findContours`, `cv2.convexHull`).
 * **Realidad Aumentada y Redes Profundas:** Detección de marcadores fiduciales **ArUco** para cálculo de pose 3D y ejecución de redes neuronales (`cv2.dnn`) para detección de rostros, manos y objetos en tiempo real.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-3-2-vision-artificial-deteccion-480.avif 480w, ../../../images/temas/u2/2-3-2-vision-artificial-deteccion-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-3-2-vision-artificial-deteccion-480.webp 480w, ../../../images/temas/u2/2-3-2-vision-artificial-deteccion-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-3-2-vision-artificial-deteccion-960.webp" alt="Resultado real de un algoritmo de detección de objetos por visión por computadora localizando mediante cajas delimitadoras etiquetadas un libro de texto de clasificación de patrones y un bolígrafo sobre un escritorio." width="960" height="631" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.10.</strong> Detección y localización de objetos mediante visión artificial (cajas delimitadoras y clasificación semántica sobre una imagen real de cámara).<span class="topic-figure__credit">Imagen técnica: Hughesperreault / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## Conclusiones
 
 > La combinación de **`OpenGL`** (síntesis gráfica acelerada por `GPU`) con **`OpenCV` y `Python`** (análisis de imagen y visión artificial) constituye la columna vertebral técnica de las aplicaciones interactivas más avanzadas, donde OpenCV detecta la pose del mundo real a partir de la cámara y OpenGL dibuja el objeto 3D virtual perfectamente alineado sobre ella.

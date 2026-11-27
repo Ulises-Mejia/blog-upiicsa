@@ -16,6 +16,15 @@ Como exponen Otero y Flores (2011) y Jerald (2016), la Realidad Virtual es una t
 * **Imaginación (*Imagination*, modelo de Burdea y Coiffet):** La capacidad de la mente humana para integrar las señales multisensoriales y dotar de significado y resolución de problemas a la simulación.  
 * **Sentido de Presencia y *Embodiment*:** Es la respuesta subjetiva y psicológica del usuario de sentir que «está físicamente dentro» del entorno virtual (*Place Illusion*), que los eventos que ocurren ahí son reales (*Plausibility Illusion*) y que el cuerpo o manos virtuales le pertenecen (*Sense of Embodiment*).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-1-1-cave-rv-480.avif 480w, ../../../images/temas/u2/2-1-1-cave-rv-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-1-1-cave-rv-480.webp 480w, ../../../images/temas/u2/2-1-1-cave-rv-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-1-1-cave-rv-960.webp" alt="Investigador de pie dentro de una sala de realidad virtual multiproyector CAVE del Idaho National Laboratory usando lentes estereoscópicas y controlador manual para inspeccionar un modelo molecular tridimensional proyectado sobre las paredes y el suelo." width="960" height="637" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.1.</strong> Entorno virtual semi-inmersivo tipo <code>CAVE</code> (<em>Cave Automatic Virtual Environment</em>): proyección estereoscópica envolvente e interacción en tiempo real con modelos científicos tridimensionales.<span class="topic-figure__credit">Fotografía: Idaho National Laboratory / Wikimedia Commons (CC BY 2.0).</span></figcaption>
+</figure>
+
 ## Grados de Libertad (3DoF vs. 6DoF) y Modalidades de Inmersión
 
 Técnicamente, los sistemas de RV se clasifican según su **nivel de inmersión**:

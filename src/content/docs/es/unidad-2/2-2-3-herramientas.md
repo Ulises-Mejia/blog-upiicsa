@@ -23,6 +23,15 @@ Los principales `SDKs` de desarrollo de RA en la industria informática son:
 * **Unity AR Foundation:** Capa de abstracción oficial dentro de Unity que permite al ingeniero programar la lógica de Realidad Aumentada una sola vez en C# y desplegarla de forma nativa tanto en dispositivos Android (vía ARCore) como en iOS (vía ARKit) y visores de Realidad Mixta (Glover & Linowes, 2019).  
 * **Herramientas de WebAR (AR.js, MindAR, 8thWall, `<model-viewer>`):** Permiten ejecutar experiencias de Realidad Aumentada directamente desde el navegador del teléfono al escanear un código QR, eliminando la fricción de obligar al usuario a descargar e instalar una aplicación `.apk` o `.ipa`.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-2-3-hololens-iss-nasa-480.avif 480w, ../../../images/temas/u2/2-2-3-hololens-iss-nasa-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-2-3-hololens-iss-nasa-480.webp 480w, ../../../images/temas/u2/2-2-3-hololens-iss-nasa-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-2-3-hololens-iss-nasa-960.webp" alt="Astronauta Scott Kelly utilizando un visor de realidad mixta Microsoft HoloLens equipado con sensores frontales ópticos y de profundidad dentro del laboratorio Destiny de la Estación Espacial Internacional." width="960" height="639" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.6.</strong> Visor óptico translúcido (<em>Microsoft HoloLens</em>) en pruebas operativas de la NASA a bordo de la Estación Espacial Internacional: integra cámaras de seguimiento espacial, sensores inerciales (<code>IMU</code>) y proyección holográfica.<span class="topic-figure__credit">Fotografía: NASA / Wikimedia Commons (Dominio público).</span></figcaption>
+</figure>
+
 ## Estándares y Herramientas de Desarrollo para Realidad Virtual (OpenXR y XR Interaction Toolkit)
 
 En el desarrollo de Realidad Virtual, históricamente cada fabricante de visores (Meta/Oculus, HTC Vive, Valve, Sony, Microsoft) exigía su propio SDK incompatible con los demás. Para resolver esta fragmentación, el consorcio Khronos Group creó **OpenXR**, el estándar abierto y libre de regalías que unifica la comunicación entre los motores gráficos y cualquier casco o controlador de RV/RM. Sobre OpenXR operan frameworks de alto nivel como el **Unity XR Interaction Toolkit**, que provee componentes listos para usar de locomoción (teletransportación, giro gradual *snap-turn* y movimiento continuo), agarre físico de objetos (*XR Grab Interactable*), punteros láser para menús en espacio de mundo (*World Space UI*) y seguimiento de manos (Glover & Linowes, 2019).

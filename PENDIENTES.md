@@ -2,7 +2,7 @@
 
 > Documento vivo de seguimiento técnico y editorial del **Repositorio Digital de Herramientas Multimedia (UPIICSA — IPN)**.  
 > **Última actualización:** 2026-11-26  
-> **Rama base:** `main` (commit de referencia: `d114ad8`)  
+> **Rama base:** `main` (commit de referencia: `ee6326b`)  
 > **Relacionado:** Ver también `CONTEXTO_RV.md` para detalles históricos y decisiones específicas de la Sala RV.
 
 ---
@@ -17,8 +17,8 @@
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
 | **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 3 |
 | **6. Modernización Web (`modern-web-guidance`)** | 🌐 Estándares | 0 | 0 | 7 |
-| **7. Enriquecimiento visual en temas** | 🖼️ Visual | 2 | 0 | 1 |
-| **Total** | — | **3** | **0** | **32** |
+| **7. Enriquecimiento visual en temas** | 🖼️ Visual | 0 | 0 | 3 |
+| **Total** | — | **1** | **0** | **34** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -211,19 +211,19 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   - **Ubicación:** `src/styles/content.css`, `public/images/temas/u1/` (52 archivos: 13 fotografías/capturas reales libres en AVIF + WebP responsivos `480w`/`960w`), `src/content/docs/es/unidad-1/*.md` (13 temas)
   - **Resuelto:** Integradas 13 fotografías/capturas reales con licencia libre verificada (Wikimedia Commons / Blender Studio / Comisión Europea / archivo histórico) convertidas con `sharp` a `<picture>` AVIF + WebP responsivos, con armonización visual clara/oscura en `.topic-figure` (incluyendo atenuación suave en modo oscuro para fondos claros `.topic-figure--bright-bg`) y líneas del tiempo editoriales sobrias y mínimamente interactivas (`<ol class="editorial-timeline">` con `<details>` nativo adaptable a modo claro/oscuro y `forced-colors`) en los 2 temas cronológicos (`1-1-2-evolucion` y `1-1-3-web`).
 
-- [ ] **VIS-02 — Enriquecimiento visual Unidad II (13 temas)**
-  - **Ubicación:** `public/images/temas/u2/`, `src/content/docs/es/unidad-2/*.md`
-  - **Objetivo:** Integrar mínimo 1 fotografía/captura real con licencia libre verificada por tema (AVIF/WebP responsivos con adaptación claro/oscuro) y componentes editoriales sobrios solo cuando el tema lo requiera (p. ej. líneas del tiempo o comparativas estrictamente necesarias).
+- [x] **VIS-02 — Enriquecimiento visual Unidad II (13 temas)**
+  - **Ubicación:** `public/images/temas/u2/` (52 archivos: 13 fotografías/capturas reales libres en AVIF + WebP responsivos `480w`/`960w`), `src/content/docs/es/unidad-2/*.md` (13 temas)
+  - **Resuelto:** Integradas Figuras 2.1–2.13 con fotografías y capturas técnicas reales verificadas (CAVE Idaho National Lab, HoloLens malla espacial, nube LiDAR Ouster, panorama equirrectangular 360°, Meshroom, NASA ISS HoloLens, simulador RV NASA Armstrong, Godot 4.6, código HTML/CSS, detección de objetos, VS Code, Centro de Datos CERN y mesa interactiva multitáctil) + línea del tiempo sobria `.editorial-timeline` para los 4 niveles evolutivos de RA en `2-1-2-diferencias.md`.
 
-- [ ] **VIS-03 — Enriquecimiento visual Unidad III (6 temas)**
-  - **Ubicación:** `public/images/temas/u3/`, `src/content/docs/es/unidad-3/*.md`
-  - **Objetivo:** Integrar mínimo 1 fotografía/captura real con licencia libre verificada por tema (AVIF/WebP responsivos con adaptación claro/oscuro) manteniendo coherencia editorial y presupuesto mínimo de red con las Unidades I y II.
+- [x] **VIS-03 — Enriquecimiento visual Unidad III (6 temas)**
+  - **Ubicación:** `public/images/temas/u3/` (24 archivos: 6 fotografías/capturas reales libres en AVIF + WebP responsivos `480w`/`960w`), `src/content/docs/es/unidad-3/*.md` (6 temas)
+  - **Resuelto:** Integradas Figuras 3.1–3.6 con fotografías y capturas reales verificadas (DaVinci Resolve Mini Panel, Kdenlive NLE multipista, Blender Geometry Nodes, SonarQube con `.topic-figure--bright-bg`, Biblioteca Vasconcelos CDMX y equipo ágil Scrum) + líneas del tiempo editoriales sobrias `.editorial-timeline` para las 6 etapas integradas MEDESME + ISO + AESS en `3-2-bis-etapas-planeacion.md`.
 
 ---
 
 ## ❓ Decisiones Abiertas por Confirmar
 
-Sin decisiones bloqueantes pendientes. Avance incremental unidad por unidad en **Bloque 7** (`VIS-02` Unidad II → `VIS-03` Unidad III), además de **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
+Sin decisiones bloqueantes pendientes. **Bloque 7 (`VIS-01`..`VIS-03`) completado al 100 % (32/32 temas con imágenes reales optimizadas)**. Solo resta **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
 
 ---
 
@@ -275,7 +275,11 @@ Sin decisiones bloqueantes pendientes. Avance incremental unidad por unidad en *
 - **Bloque 7 (`VIS-01` — Unidad I completada, commits `33b47ec` y `d114ad8`, 100 % imágenes reales y adaptación claro/oscuro):**
   - Sustituidos los 7 diagramas SVG iniciales por fotografías/capturas reales con licencia libre verificada (`13/13` temas de Unidad I con `<picture>` AVIF + WebP responsivos en `public/images/temas/u1/`, 52 archivos).
   - Armonizados `.topic-figure` (incluyendo `.topic-figure--bright-bg` para fondos claros en modo oscuro) y añadido componente `.editorial-timeline` sobrio y mínimamente interactivo (`<ol>` + `<details>` nativo adaptable a modo claro, oscuro y `forced-colors`) en los 2 temas cronológicos (`1-1-2-evolucion.md` y `1-1-3-web.md`). Verificado con `npm run check`, `npm run clean && npm run build` y auditoría de `dist/`.
-- **Bloque 5 (`UX-03` — identidad `UPII`, bienvenida simplificada y unidades colapsadas en sidebar):**
+- **Bloque 5 (`UX-03` — commit `ee6326b`, identidad `UPII`, bienvenida simplificada y unidades colapsadas en sidebar):**
   - Configurado `collapsed: true` + colapso al abrir menú lateral en escritorio (`Header.astro`) y móvil (`PageFrame.astro`) para mostrar las 3 unidades cerradas al desplegar el menú.
   - Simplificada la cortina de bienvenida (`WelcomeCurtain.astro`) a escudos IPN/UPIICSA, título `"Bienvenido a UPII"` y botón `"Ingresar"`, y actualizada la portada (`/es/`) con `"Bienvenido a UPII"` conservando el índice de unidades.
   - Migrados los textos de identidad de marca en todo el sitio (`astro.config.mjs`, `site.ts`, `PageFrame.astro`, `autores.md`, `index.astro`, `404.astro`) a **`UPII`**.
+- **Bloque 7 completado (`VIS-02` Unidad II + `VIS-03` Unidad III — 32/32 temas con imágenes reales optimizadas):**
+  - `VIS-02`: generados 52 activos en `public/images/temas/u2/` e integradas Figuras 2.1–2.13 en los 13 temas de Unidad II + `.editorial-timeline` en `2-1-2-diferencias.md`.
+  - `VIS-03`: generados 24 activos en `public/images/temas/u3/` e integradas Figuras 3.1–3.6 en los 6 temas de Unidad III + `.editorial-timeline` en `3-2-bis-etapas-planeacion.md`.
+  - Auditoría completa de los 32 temas en `dist/`: 100 % `<picture>` AVIF+WebP con dimensiones verificadas vía `sharp`, `0` errores en `astro check`, `0` bloques `expressive-code`.

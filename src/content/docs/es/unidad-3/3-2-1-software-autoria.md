@@ -24,6 +24,15 @@ En la literatura clásica y contemporánea de ingeniería multimedia (Ojeda Lina
 * **4. Sistemas de Autoría *E-Learning* y Estándares Educativos (`SCORM` / `xAPI`):** Herramientas especializadas en crear Objetos Virtuales de Aprendizaje (`OVA`), simulaciones de software y evaluaciones interactivas que se comunican automáticamente con el libro de calificaciones de plataformas `LMS` (como **Moodle**, **Canvas** o **Blackboard**) mediante los estándares **`SCORM`** o **`xAPI` (*Tin Can API*)**. Destacan **Adobe Captivate** (incluido en los recursos digitales del programa oficial), **Articulate Storyline**, **eXeLearning** y **H5P** (código abierto para `HTML5`).
 * **5. Motores de Autoría `3D` y Espaciales Basados en Escenas y Componentes:** Representados por **Unity**, **Unreal Engine** y **Godot**, que actúan como los sistemas de autoría estándar actuales para entornos tridimensionales, Realidad Virtual y Realidad Aumentada.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u3/3-2-1-autoria-nodal-3d-480.avif 480w, ../../../images/temas/u3/3-2-1-autoria-nodal-3d-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u3/3-2-1-autoria-nodal-3d-480.webp 480w, ../../../images/temas/u3/3-2-1-autoria-nodal-3d-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u3/3-2-1-autoria-nodal-3d-960.webp" alt="Entorno de autoría visual basado en nodos y escenas 3D en Blender Geometry Nodes mostrando el visor tridimensional en tiempo real en la parte superior, el grafo de flujo de nodos en la parte inferior y el inspector de parámetros a la derecha." width="960" height="539" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 3.3.</strong> Autoría visual por grafo de flujo de nodos acoplado en tiempo real a una escena tridimensional (<em>Blender Geometry Nodes</em>): combinación entre programación visual estructurada e inspección inmediata de resultados.<span class="topic-figure__credit">Captura: Simon Thommes / Blender Foundation / Wikimedia Commons (CC BY 4.0).</span></figcaption>
+</figure>
+
 ## Conclusiones
 
 > Como subraya la metodología `MEDESME` (García Sánchez et al., 2016), ninguna herramienta de autoría sustituye al diseño previo: elegir entre un sistema basado en páginas, flujo, línea de tiempo, *e-learning* (`SCORM`/`xAPI`) o motor `3D` debe responder directamente al **Mapa de Navegación** y a las **Fichas Técnicas** definidas en la fase de diseño del proyecto.

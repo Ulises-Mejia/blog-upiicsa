@@ -17,6 +17,15 @@ Conforme a la Fase 6 y la Fase 8 de la metodología MEDESME (García Sánchez et
 * **Accesibilidad y Diseño Inclusivo:** Soporte para distintos perfiles de edad, escolaridad o discapacidad (como se demuestra en el diseño visual y auditivo de *MiCTL* en García et al., 2023), controles claros, subtítulos, alto contraste y retroalimentación multimodal.  
 * **Empaquetado Autónomo y Manual de Usuario:** Distribución mediante instaladores limpios (`.apk`, tiendas de aplicaciones) o acceso instantáneo vía navegador web (PWA / WebXR), acompañado de un **Manual de Usuario** redactado en lenguaje no técnico que explique los requisitos del sistema, la instalación y el uso de los controles de interfaz.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-4-3-mesa-interactiva-ux-480.avif 480w, ../../../images/temas/u2/2-4-3-mesa-interactiva-ux-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-4-3-mesa-interactiva-ux-480.webp 480w, ../../../images/temas/u2/2-4-3-mesa-interactiva-ux-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-4-3-mesa-interactiva-ux-960.webp" alt="Visitante manipulando directamente con ambas manos una mesa multitáctil multimedia en una exposición interactiva con reproductores de video, tarjetas informativas y controles accesibles." width="960" height="640" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.13.</strong> Interacción directa del usuario final sobre una mesa multimedia multitáctil: ejemplo de transparencia tecnológica y usabilidad inmediata (<code>ISO 9241-11</code>) sin exponer la complejidad interna del sistema.<span class="topic-figure__credit">Fotografía: Daniel Mietchen / Wikimedia Commons (CC BY-SA 3.0).</span></figcaption>
+</figure>
+
 ## La Perspectiva del Desarrollador: Modularidad, APIs/SDKs, Seguridad y Manual Técnico
 
 Por el contrario, cuando el producto de software o componente multimedia está dirigido a otros **Desarrolladores** (por ejemplo, una biblioteca de procesamiento de imágenes, un paquete reutilizable para Unity, un componente web `<model-viewer>` o el código fuente de un proyecto institucional que recibirá mantenimiento en semestres futuros), los requerimientos se rigen por la ingeniería de software formal (ISO/IEC/IEEE 12207:2017, ISO/IEC/IEEE 29148:2018 y Mihelič et al., 2023):

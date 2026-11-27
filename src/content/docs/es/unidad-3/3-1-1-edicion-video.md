@@ -22,6 +22,15 @@ Todo flujo de video digital está gobernado por cinco parámetros técnicos fund
 * **Estructura `GOP` (*Group of Pictures*: Cuadros `I`, `P` y `B`):** La compresión inter-cuadro agrupa los fotogramas en bloques encabezados por un **Cuadro `I` (*Intra-coded* / *Keyframe*)** que contiene una imagen completa independiente, seguido de **Cuadros `P` (*Predicted*)** que solo guardan los vectores de movimiento y diferencias respecto al cuadro anterior, y **Cuadros `B` (*Bi-predictive*)** que interpolan diferencias tanto hacia atrás como hacia adelante.
 * **Tasa de Bits (*Bitrate*: `CBR` vs. `VBR`):** Cantidad de datos transmitidos o almacenados por segundo (medida habitualmente en `Mbps`) que define el equilibrio entre fidelidad visual y peso del archivo. En **Bitrate Constante (`CBR`)** se mantiene una tasa fija durante toda la duración —útil en transmisiones en vivo con ancho de banda acotado—, mientras que en **Bitrate Variable (`VBR`)** el codificador asigna más bits a escenas complejas con abundante movimiento y menos bits a escenas estáticas, logrando mayor eficiencia de compresión (Stanković et al., 2016; Ojeda Linares, 2012).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u3/3-1-1-panel-etalonaje-davinci-480.avif 480w, ../../../images/temas/u3/3-1-1-panel-etalonaje-davinci-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u3/3-1-1-panel-etalonaje-davinci-480.webp 480w, ../../../images/temas/u3/3-1-1-panel-etalonaje-davinci-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u3/3-1-1-panel-etalonaje-davinci-960.webp" alt="Superficie de control física Blackmagic Design DaVinci Resolve Mini Panel con tres bolas de seguimiento cromático, pantallas LCD de ganancia RGB y temperatura de color, y controles dedicados de posproducción de video." width="960" height="598" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 3.1.</strong> Panel físico de corrección primaria y etalonaje (<em>DaVinci Resolve Mini Panel</em>): control de luminancia, balance <code>RGB</code>, temperatura y nodos durante la posproducción no destructiva de video.<span class="topic-figure__credit">Fotografía: TaurusEmerald / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## Fases del Montaje Audiovisual y Protocolos de Streaming Adaptativo (HLS y MPEG-DASH)
 
 El flujo de trabajo profesional de edición comprende cinco fases secuenciales:

@@ -12,18 +12,58 @@ Construir un proyecto final integrador que combine herramientas multimedia disru
 
 Como demuestran García Sánchez et al. (2016) en la metodología `MEDESME` y Mihelič et al. (2023) al analizar los estándares internacionales **`ISO/IEC/IEEE 12207:2017`** (Procesos del Ciclo de Vida del Software), **`ISO/IEC/IEEE 24748-1:2018`** e **`ISO/IEC/IEEE 29148:2018`** (Ingeniería de Requisitos), la planeación y construcción de un proyecto informático con herramientas multimedia disruptivas se estructura en seis etapas integradas con criterios formales de entrada y salida:
 
-* **Etapa 1 — Concepción, Alcance y Estudio de Viabilidad (Concepto `ISO 24748` / Fase 1 `MEDESME`):** Identificación del problema real u oportunidad de innovación, definición de la propuesta de valor de la tecnología disruptiva (justificando por qué se requiere `RV`, `RA`, visión artificial o animación `3D` en lugar de una interfaz convencional), integración de roles del equipo multidisciplinario y evaluación de factibilidad técnica, operativa, económica y de tiempos.
-* **Etapa 2 — Ingeniería de Requisitos y Análisis Multimodal (`ISO/IEC/IEEE 29148` / Fase 2 `MEDESME`):** Especificación de requerimientos de usuario, requerimientos funcionales y **requerimientos no funcionales críticos en multimedia** (tasa mínima de fotogramas de `60–90 FPS`, latencia máxima *motion-to-photon* `< 20 ms`, peso máximo de activos en red, compatibilidad de navegadores/dispositivos y seguridad; Glover & Linowes, 2019), junto con la caracterización del perfil del usuario y el catálogo de medios a producir.
-* **Etapa 3 — Diseño Arquitectónico, Estructural, Comunicacional y de Seguridad (Fase 3 `MEDESME` / `AESS`):** Elaboración de las Fichas General, Psicopedagógica y Educativa-Técnica; modelado del **Diseño Estructural** (Mapa de navegación, *Storyboards* de escenas `2D`/`3D`, Diagramas de Casos de Uso `UML`, Diagrama Entidad-Relación de datos y arquitectura de integración cliente-servidor/`CDN`) y diseño de la interfaz de usuario y controles de interacción.
+<ol class="editorial-timeline" aria-label="Etapas iniciales de planeación MEDESME e ISO/IEC/IEEE 12207 y 29148 (Etapas 1 a 3)">
+  <li>
+    <details class="editorial-timeline__item" open>
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 1</span><span class="editorial-timeline__title">Concepción, alcance y estudio de viabilidad (ISO 24748 / MEDESME Fase 1)</span></summary>
+      <div class="editorial-timeline__body"><p>Identificación del problema real u oportunidad de innovación, definición de la propuesta de valor de la tecnología disruptiva (justificando por qué se requiere <code>RV</code>, <code>RA</code>, visión artificial o animación <code>3D</code> en lugar de una interfaz convencional), integración de roles del equipo multidisciplinario y evaluación de factibilidad técnica, operativa, económica y de tiempos.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 2</span><span class="editorial-timeline__title">Ingeniería de requisitos y análisis multimodal (ISO/IEC/IEEE 29148 / MEDESME Fase 2)</span></summary>
+      <div class="editorial-timeline__body"><p>Especificación de requerimientos de usuario, requerimientos funcionales y <strong>requerimientos no funcionales críticos en multimedia</strong> (tasa mínima de fotogramas de <code>60–90 FPS</code>, latencia máxima <em>motion-to-photon</em> <code>&lt; 20 ms</code>, peso máximo de activos en red, compatibilidad de navegadores/dispositivos y seguridad; Glover &amp; Linowes, 2019), junto con la caracterización del perfil del usuario y el catálogo de medios a producir.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 3</span><span class="editorial-timeline__title">Diseño arquitectónico, estructural, comunicacional y de seguridad (MEDESME Fase 3 / AESS)</span></summary>
+      <div class="editorial-timeline__body"><p>Elaboración de las Fichas General, Psicopedagógica y Educativa-Técnica; modelado del <strong>Diseño Estructural</strong> (Mapa de navegación, <em>Storyboards</em> de escenas <code>2D</code>/<code>3D</code>, Diagramas de Casos de Uso <code>UML</code>, Diagrama Entidad-Relación de datos y arquitectura de integración cliente-servidor/<code>CDN</code>) y diseño de la interfaz de usuario y controles de interacción.</p></div>
+    </details>
+  </li>
+</ol>
+
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u3/3-2-bis-planeacion-agil-scrum-480.avif 480w, ../../../images/temas/u3/3-2-bis-planeacion-agil-scrum-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u3/3-2-bis-planeacion-agil-scrum-480.webp 480w, ../../../images/temas/u3/3-2-bis-planeacion-agil-scrum-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u3/3-2-bis-planeacion-agil-scrum-960.webp" alt="Equipo multidisciplinario de ingeniería de software reunido frente a un tablero ágil Scrum con columnas de tareas, trabajo en progreso, pruebas y gráfica de avance iterativo." width="960" height="647" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 3.6.</strong> Seguimiento iterativo en un equipo multidisciplinario frente a un tablero ágil (<em>Scrum</em>) con trazabilidad de tareas, pruebas y gráfica de avance: práctica central en la articulación entre <code>MEDESME</code> e ingeniería ágil segura (<code>AESS</code>).<span class="topic-figure__credit">Fotografía: Nghungdo / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
 
 ## Desarrollo Ágil Seguro (AESS), Validación con Normas ISO y Despliegue en Infraestructura Escalable
 
-* **Etapa 4 — Desarrollo Iterativo, Integración y Gobernanza `AESS` (Fases 4 y 5 `MEDESME` / Mihelič et al., 2023):** Producción y optimización de activos multimedia (modelado `3D` *low-poly*, texturas `PBR`, audio limpio, video `HLS`/`MPEG-DASH`), codificación modular en el ambiente de desarrollo seleccionado (**Unity**, `OpenGL`, `OpenCV`/`Python`, `HTML5`/`WebGL`) y aplicación de los componentes de **Ingeniería Ágil de Software Seguro (`AESS`)** identificados mediante agrupamiento jerárquico de Ward por Mihelič et al. (2023), documentando toda la solución en el **Manual Técnico**:
-  * **7 Actividades Clave:** Auditoría de seguridad y código, análisis y pruebas de seguridad, capacitación del equipo, priorización y monitoreo, gestión de riesgos, planeación/modelado de amenazas e ingeniería de requisitos de seguridad.
-  * **5 Artefactos Clave:** Requisitos e historias de usuario de seguridad (casos de abuso), repositorios (*security backlogs*), reportes de pruebas, etiquetas de trazabilidad (*s-tags*) y políticas de codificación segura.
-  * **4 Roles Clave:** *Security Guru/Master*, *Security Developer/Architect*, *Penetration Tester* y *Security Team*.
-* **Etapa 5 — Evaluación, Pruebas Piloto y Certificación de Calidad (Fase 6 `MEDESME`):** Ejecución de pruebas piloto iterativas de rendimiento gráfico (*profiling* de `CPU`/`GPU`), pruebas de usabilidad e inclusión con usuarios reales bajo la norma **`ISO 9241-11`** (como se valida en entornos inclusivos de aprendizaje con `RA` en García García et al., 2023) y evaluación de calidad externa conforme a **`ISO/IEC 9126-2` / `ISO/IEC 25010`**.
-* **Etapa 6 — Producción, Registro Legal, Despliegue en la Nube/`CDN` y Material Complementario (Fases 7 y 8 `MEDESME`):** Generación de huellas criptográficas `SHA-256` y expediente de registro ante **`INDAUTOR`**, despliegue de activos pesados en almacenamiento de objetos y **Redes de Distribución de Contenido (`CDN`)** para garantizar baja latencia global, y entrega del **Manual de Usuario**.
+<ol class="editorial-timeline" aria-label="Etapas de desarrollo ágil seguro, validación ISO y despliegue (Etapas 4 a 6)">
+  <li>
+    <details class="editorial-timeline__item" open>
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 4</span><span class="editorial-timeline__title">Desarrollo iterativo, integración y gobernanza AESS (MEDESME Fases 4 y 5)</span></summary>
+      <div class="editorial-timeline__body"><p>Producción y optimización de activos multimedia (modelado <code>3D</code> <em>low-poly</em>, texturas <code>PBR</code>, audio limpio, video <code>HLS</code>/<code>MPEG-DASH</code>), codificación modular en el ambiente seleccionado (<strong>Unity</strong>, <code>OpenGL</code>, <code>OpenCV</code>/<code>Python</code>, <code>HTML5</code>/<code>WebGL</code>) y aplicación de los componentes de <strong>Ingeniería Ágil de Software Seguro (<code>AESS</code>)</strong> de Mihelič et al. (2023), documentando toda la solución en el <strong>Manual Técnico</strong>: <strong>7 actividades clave</strong> (auditoría de código, pruebas de seguridad, capacitación, monitoreo, gestión de riesgos, modelado de amenazas y requisitos de seguridad), <strong>5 artefactos</strong> (casos de abuso, <em>security backlogs</em>, reportes, <em>s-tags</em> y políticas) y <strong>4 roles</strong> (<em>Security Master</em>, <em>Security Architect</em>, <em>Penetration Tester</em> y <em>Security Team</em>).</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 5</span><span class="editorial-timeline__title">Evaluación, pruebas piloto y certificación de calidad (MEDESME Fase 6)</span></summary>
+      <div class="editorial-timeline__body"><p>Ejecución de pruebas piloto iterativas de rendimiento gráfico (<em>profiling</em> de <code>CPU</code>/<code>GPU</code>), pruebas de usabilidad e inclusión con usuarios reales bajo la norma <strong><code>ISO 9241-11</code></strong> (como se valida en entornos inclusivos de aprendizaje con <code>RA</code> en García García et al., 2023) y evaluación de calidad externa conforme a <strong><code>ISO/IEC 9126-2</code> / <code>ISO/IEC 25010</code></strong>.</p></div>
+    </details>
+  </li>
+  <li>
+    <details class="editorial-timeline__item">
+      <summary class="editorial-timeline__trigger"><span class="editorial-timeline__year">Etapa 6</span><span class="editorial-timeline__title">Producción, registro legal, despliegue en la nube/CDN y material complementario (MEDESME Fases 7 y 8)</span></summary>
+      <div class="editorial-timeline__body"><p>Generación de huellas criptográficas <code>SHA-256</code> y expediente de registro ante <strong><code>INDAUTOR</code></strong>, despliegue de activos pesados en almacenamiento de objetos y <strong>Redes de Distribución de Contenido (<code>CDN</code>)</strong> para garantizar baja latencia global, y entrega del <strong>Manual de Usuario</strong>.</p></div>
+    </details>
+  </li>
+</ol>
 
 ## Conclusiones
 

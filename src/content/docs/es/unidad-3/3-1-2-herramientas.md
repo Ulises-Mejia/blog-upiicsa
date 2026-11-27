@@ -18,6 +18,15 @@ En el trabajo interactivo de producción y posproducción audiovisual se disting
   * **Composición basada en capas (*Layer-based*):** Representada por **Adobe After Effects**, donde cada elemento es una pista apilada verticalmente con su propia línea de tiempo; resulta muy intuitiva para *Motion Graphics* y animación tipográfica.
   * **Composición basada en nodos o Grafos Acíclicos Dirigidos (*Node-based `DAG`*):** Representada por **Foundry Nuke**, **Blackmagic Fusion** (integrado en DaVinci Resolve), **Natron** (código abierto) y el **Compositor de Blender**. Aquí el flujo de procesamiento de la imagen se visualiza como un diagrama algorítmico donde cada nodo ejecuta una operación matemática sobre la matriz de píxeles (lector de imagen, máscara, corrección de color, desenfoque, mezcla *Merge*), permitiendo reutilizar ramas completas sin duplicar capas.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u3/3-1-2-editor-nle-kdenlive-480.avif 480w, ../../../images/temas/u3/3-1-2-editor-nle-kdenlive-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u3/3-1-2-editor-nle-kdenlive-480.webp 480w, ../../../images/temas/u3/3-1-2-editor-nle-kdenlive-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u3/3-1-2-editor-nle-kdenlive-960.webp" alt="Interfaz del editor de video no lineal de código abierto Kdenlive mostrando el contenedor de clips, ruedas de corrección de color Lift Gamma Gain, monitor de proyecto en alta definición y línea de tiempo multipista con pistas de video y formas de onda de audio." width="960" height="540" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 3.2.</strong> Editor de video no lineal (<code>NLE</code>) de código abierto <em>Kdenlive</em>: gestión de clips fuente, corrección de color (<em>Lift/Gamma/Gain</em>), monitor de previsualización y línea de tiempo multipista sincronizada con audio.<span class="topic-figure__credit">Captura: KDE y Wildfire Games / Wikimedia Commons (GPL).</span></figcaption>
+</figure>
+
 ## Herramientas de Procesamiento Automatizado y Línea de Comandos para Sistemas Informáticos (FFmpeg)
 
 Cuando un ingeniero en ciencias de la informática construye una plataforma web o empresarial que recibe videos subidos por los usuarios, no puede depender de una persona abriendo Premiere o DaVinci Resolve manualmente para comprimir cada archivo. Aquí entra la herramienta más importante de la ingeniería de video en el *backend*: **`FFmpeg`** (junto con sus bibliotecas en C subyacentes `libavcodec`, `libavformat` y `libavfilter`, y soluciones derivadas como **HandBrake** o **GStreamer**).

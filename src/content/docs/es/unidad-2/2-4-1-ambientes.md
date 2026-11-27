@@ -17,6 +17,15 @@ Como describen Glover y Linowes (2019) y la Fase 4 de la metodología MEDESME (G
 * **4. Simuladores de Dispositivos y Depuración en Vivo:** Herramientas como **XR Device Simulator** (que permite probar movimientos 6DoF de casco y manos con teclado y ratón sin ponerse el visor en cada cambio de código) o transmisión en vivo al visor por cable/Wi-Fi (*Quest Link / Air Link / AR Foundation Remote*).  
 * **5. Perfiladores de Rendimiento (*Profilers*) y Control de Versiones Binario (Git LFS):** El **CPU/GPU Profiler** y el **Frame Debugger** permiten inspeccionar cuántos milisegundos tarda cada función y cada llamada de dibujo (*Draw Call*) para evitar caídas de FPS, mientras que **Git con Git LFS (*Large File Storage*)** gestiona el control de versiones separando los scripts ligeros de los activos multimedia pesados (texturas, audios y mallas 3D).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-4-1-ide-vscode-terminal-480.avif 480w, ../../../images/temas/u2/2-4-1-ide-vscode-terminal-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-4-1-ide-vscode-terminal-480.webp 480w, ../../../images/temas/u2/2-4-1-ide-vscode-terminal-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-4-1-ide-vscode-terminal-960.webp" alt="Entorno de desarrollo Visual Studio Code mostrando el explorador de archivos multimedia, el editor de código JavaScript con resaltado sintáctico y la terminal integrada ejecutando un script de procesamiento de imágenes." width="960" height="540" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.11.</strong> Entorno de desarrollo integrado (<em>Visual Studio Code</em>): árbol de proyecto, edición de scripts, control de versiones integrado y terminal en vivo para compilar y depurar procesos multimedia.<span class="topic-figure__credit">Captura: Cycling2 / Wikimedia Commons (CC0).</span></figcaption>
+</figure>
+
 ## Criterios de Selección y Configuración del Ambiente según el Proyecto
 
 En la Fase 4 de `MEDESME` (García Sánchez et al., 2016), la selección del ambiente de desarrollo debe justificarse en función de cuatro variables de ingeniería:

@@ -14,6 +14,15 @@ Como documentan Guzmán et al. (2020) y la literatura reciente de computación g
 * **Visión Artificial y SLAM Profundo para Percepción Espacial:** Las redes neuronales convolucionales (CNN) y los modelos de visión permiten a los sistemas multimedia comprender semánticamente la escena física: detectar planos, estimar la iluminación real de una habitación para sombrear objetos virtuales de forma idéntica, rastrear los 21 puntos articulares de cada mano (*Hand Tracking*) y reconocer expresiones faciales y dirección de la mirada (*Eye Tracking* para *Foveated Rendering*).  
 * **Reconstrucción Neural 3D (*NeRF* y *3D Gaussian Splatting*) e IA Generativa:** Tradicionalmente, modelar un escenario 3D fotorrealista tomaba semanas de trabajo manual; hoy, técnicas híbridas como *Neural Radiance Fields (NeRF)* y *3D Gaussian Splatting* sintetizan entornos tridimensionales navegables en tiempo real a partir de unas cuantas fotografías convencionales, mientras que los modelos de lenguaje y voz dotan a los personajes no jugadores (NPCs) y tutores virtuales de diálogo natural adaptativo.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-1-3-nube-puntos-lidar-480.avif 480w, ../../../images/temas/u2/2-1-3-nube-puntos-lidar-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-1-3-nube-puntos-lidar-480.webp 480w, ../../../images/temas/u2/2-1-3-nube-puntos-lidar-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-1-3-nube-puntos-lidar-960.webp" alt="Nube de puntos tridimensional de alta densidad capturada mediante sensor LiDAR Ouster OS1-64 sobre una intersección urbana real en San Francisco, delineando edificios, vehículos, cruces peatonales y arbolado con codificación de intensidad." width="960" height="540" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.3.</strong> Nube de puntos tridimensional capturada con sensor <code>LiDAR</code> (<em>Ouster OS1-64</em>): base sensorial para la percepción espacial, reconstrucción urbana y alimentación de gemelos digitales en tiempo real.<span class="topic-figure__credit">Captura técnica: Daniel L. Lu / Wikimedia Commons (CC BY 4.0).</span></figcaption>
+</figure>
+
 ## Hibridación con IoT (Gemelos Digitales), Computación en el Borde (Edge/5G) y Entornos Multiusuario
 
 La segunda gran dimensión de hibridación conecta los gráficos 3D con los datos del mundo físico en tiempo real:

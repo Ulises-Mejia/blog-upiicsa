@@ -16,6 +16,15 @@ La legislación mexicana protege explícitamente en su **Artículo 13** tanto la
 * **1. Derechos Morales:** Vinculan de manera perpetua al creador humano con su obra. Son **inembargables, inalienables, imprescriptibles e irrenunciables** (Art. 19 `LFDA`). Otorgan al autor el derecho de determinar si su obra ha de ser divulgada o permanecer inédita, exigir el reconocimiento de su nombre y calidad de autor (**paternidad de la obra**) y oponerse a cualquier deformación o mutilación que atente contra su mérito o reputación.
 * **2. Derechos Patrimoniales:** Otorgan al titular la facultad exclusiva de **explotar económicamente la obra** o autorizar a terceros su reproducción, distribución, comunicación pública, transformación o licenciamiento. A diferencia de los derechos morales, los derechos patrimoniales sí pueden transmitirse o licenciarse (por ejemplo, en una obra realizada por encargo laboral o contrato de desarrollo de software) y en México tienen una vigencia general de **la vida del autor más 100 años** después de su fallecimiento.
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u3/3-2-3-biblioteca-vasconcelos-cdmx-480.avif 480w, ../../../images/temas/u3/3-2-3-biblioteca-vasconcelos-cdmx-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u3/3-2-3-biblioteca-vasconcelos-cdmx-480.webp 480w, ../../../images/temas/u3/3-2-3-biblioteca-vasconcelos-cdmx-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u3/3-2-3-biblioteca-vasconcelos-cdmx-960.webp" alt="Vista interior simétrica de la Biblioteca Vasconcelos en la Ciudad de México con sus estanterías suspendidas de acero y cristal que resguardan cientos de miles de obras intelectuales registradas." width="960" height="652" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 3.5.</strong> <em>Biblioteca Vasconcelos</em> (Ciudad de México): equilibrio entre la protección jurídica de la autoría (<code>LFDA</code> / <code>INDAUTOR</code>) y la preservación y difusión del conocimiento bajo esquemas de licenciamiento claros.<span class="topic-figure__credit">Fotografía: Diego Delso / Wikimedia Commons (CC BY-SA 4.0).</span></figcaption>
+</figure>
+
 ## Procedimiento de Registro ante INDAUTOR y Esquemas de Licenciamiento (Copyright, Creative Commons y Open Source)
 
 Aunque el derecho de autor nace desde el instante mismo en que la obra se fija en un soporte material o digital (principio del Convenio de Berna), inscribir la obra en el **Registro Público del Derecho de Autor de `INDAUTOR`** otorga **certeza y presunción legal de titularidad** ante cualquier controversia judicial. Para registrar un **Programa de Cómputo o Sistema Multimedia** ante `INDAUTOR` (de forma presencial o en línea mediante *Indautor en Línea*), el desarrollador integra un expediente técnico que comprende:

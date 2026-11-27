@@ -19,6 +19,15 @@ Independientemente de la marca comercial, todo motor de videojuegos moderno est�
 6. **Sistema de Interfaz de Usuario (UI) y Entrada (*Input System*):** Mapea teclados, pantallas táctiles, mandos y sensores XR hacia botones y paneles 2D o 3D.  
 7. **Pipeline de Gestión de Activos y Compilación Multiplataforma:** Empaqueta escenas, comprime texturas para cada arquitectura y exporta el ejecutable final (`.exe`, `.apk`, `.ipa`, WebAssembly/WebGL).
 
+<figure class="media-container topic-figure">
+  <picture>
+    <source type="image/avif" srcset="../../../images/temas/u2/2-2-5-motor-godot-3d-480.avif 480w, ../../../images/temas/u2/2-2-5-motor-godot-3d-960.avif 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <source type="image/webp" srcset="../../../images/temas/u2/2-2-5-motor-godot-3d-480.webp 480w, ../../../images/temas/u2/2-2-5-motor-godot-3d-960.webp 960w" sizes="(max-width: 640px) 100vw, 860px" />
+    <img src="../../../images/temas/u2/2-2-5-motor-godot-3d-960.webp" alt="Interfaz de desarrollo tridimensional del motor de videojuegos libre Godot 4.6 mostrando una escena iluminada con VoxelGI en el visor central, el árbol jerárquico de nodos y colisionadores a la izquierda y el inspector de transformaciones a la derecha." width="960" height="514" loading="lazy" decoding="async" />
+  </picture>
+  <figcaption><strong>Figura 2.8.</strong> Entorno integrado del motor de código abierto <em>Godot 4.6</em>: grafo jerárquico de nodos (escena, colisionadores, iluminación <code>VoxelGI</code> y audio espacial), visor 3D en tiempo real e inspector de propiedades.<span class="topic-figure__credit">Captura: Gflare / Godot Engine / Wikimedia Commons (CC0).</span></figcaption>
+</figure>
+
 ## Análisis Comparativo de los Motores Líderes: Unity, Unreal Engine y Godot
 
 * **Unity:** Es el motor más extendido en el desarrollo de aplicaciones móviles, Realidad Aumentada (Vuforia / AR Foundation) y Realidad Virtual (Meta Quest / OpenXR), como se observa en el desarrollo del sistema *MiCTL* de García García et al. (2023). Su arquitectura se basa en el patrón **Composición de Componentes (*GameObject + MonoBehaviour*)**: todo elemento en la escena es un contenedor `GameObject` al que se le agregan componentes modulares (`Transform`, `MeshRenderer`, `Rigidbody`, `BoxCollider` y scripts en **C#** con ciclo de vida `Awake()`, `Start()`, `Update()`, `FixedUpdate()`). Ofrece dos pipelines modernos de renderizado: **URP (*Universal Render Pipeline*)**, optimizado para móviles, web y visores VR autónomos, y **HDRP (*High Definition Render Pipeline*)**, orientado a gráficos de alta gama en PC y consolas (Glover & Linowes, 2019).  
