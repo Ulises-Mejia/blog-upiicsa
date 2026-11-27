@@ -1,8 +1,8 @@
 # 📋 Registro de Pendientes y Seguimiento — `blog-upiicsa`
 
-> Documento vivo de seguimiento técnico y editorial del **Repositorio Digital de Herramientas Multimedia (UPIICSA — IPN)**.  
+> Documento vivo de seguimiento técnico y editorial de **UPII — Herramientas Multimedia (UPIICSA — IPN)**.  
 > **Última actualización:** 2026-11-26  
-> **Rama base:** `main` (commit de referencia: `ee6326b`)  
+> **Rama base:** `main` (commit de referencia: `22c5054`)  
 > **Relacionado:** Ver también `CONTEXTO_RV.md` para detalles históricos y decisiones específicas de la Sala RV.
 
 ---
@@ -15,10 +15,12 @@
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
-| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 3 |
+| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 4 |
 | **6. Modernización Web (`modern-web-guidance`)** | 🌐 Estándares | 0 | 0 | 7 |
 | **7. Enriquecimiento visual en temas** | 🖼️ Visual | 0 | 0 | 3 |
-| **Total** | — | **1** | **0** | **34** |
+| **8. Identidad visual `UPII` y mascota** | 🐍 Marca | 4 | 0 | 0 |
+| **9. Carrusel acumulativo RA/RV (Unidad III)** | 🎠 Inmersivo | 4 | 0 | 0 |
+| **Total** | — | **9** | **0** | **35** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -171,6 +173,10 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   - **Ubicación:** `astro.config.mjs`, `src/config/site.ts`, `src/components/WelcomeCurtain.astro`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/content/docs/es/{index,autores}.md`, `src/pages/{index,404}.astro`, `src/styles/custom.css`
   - **Resuelto:** Configurado `collapsed: true` en las 3 unidades del sidebar y colapso automático en apertura de menú (escritorio y móvil) para mostrar siempre U-I, U-II y U-III cerradas de entrada; simplificada la cortina inicial a escudos IPN/UPIICSA + `"Bienvenido a UPII"` + botón `"Ingresar"`; unificada toda la identidad de marca (`title`, cabecera, pie inferior, portada `/es/`, autores y 404) a **`UPII`**.
 
+- [x] **UX-04 — Rediseño visual de barras superior e inferior (transparencias, degradados `oklab` e identidad IPN/UPIICSA)**
+  - **Ubicación:** `src/styles/tokens.css`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/styles/integrations.css`
+  - **Resuelto:** Aplicado efecto cristal esmerilado translúcido (`backdrop-filter: blur(18px) saturate(165%)` con respaldo `@supports not`), degradados institucionales interpolados en `oklab` (con fallback progresivo `--in-oklab`), microtrama geométrica CSS sutil, ribete tricolor institucional (`#6C1D45` guinda IPN · `#D4AF37` oro · `#008F53` verde UPIICSA), cápsula translúcida con separador dorado para los escudos en cabecera, insignia tricolor `UPII` + lema institucional en pie inferior y botones en cristal dorado coherentes en modo claro, oscuro y `forced-colors`.
+
 ---
 
 ## 🌐 Bloque 6 — Modernización Web (`modern-web-guidance`)
@@ -221,9 +227,59 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
 
 ---
 
+## 🐍 Bloque 8 — Identidad Visual Integral de `UPII` y Mascota (Serpiente Emplumada)
+
+- [ ] **ID-01 — Exploración e iteración de propuestas de logotipo `UPII` + serpiente emplumada**
+  - **Ubicación:** Mesa de exploración visual (borradores/prototipos antes de integrar al repositorio)
+  - **Objetivo:** Iterar múltiples direcciones de diseño de logotipo y mascota inspiradas en la **serpiente emplumada** (mascota de UPIICSA) para **UPII** —por ejemplo, emblema geométrico sobrio, monograma `UPII` con trazo emplumado, isotipo moderno minimalista y versión ilustrada de mascota— evaluando legibilidad en tamaños pequeños, modo claro y modo oscuro hasta consensuar la dirección definitiva.
+
+- [ ] **ID-02 — Sistema de identidad visual completo alrededor de `UPII` y su mascota**
+  - **Ubicación:** `src/styles/tokens.css`, `src/config/site.ts`, guía de identidad (`IDENTIDAD_UPII.md` o sección en `README.md`)
+  - **Objetivo:** Definir un sistema coherente más allá del logotipo aislado: variantes oficiales (isotipo, imagotipo horizontal, versión compacta/favicon y monocromática), paleta cromática extendida compatible con modo claro/oscuro y contraste WCAG, usos permitidos de la serpiente emplumada (pose principal, variantes contextuales y reglas de sobriedad) y coherencia con los escudos institucionales IPN/UPIICSA.
+
+- [ ] **ID-03 — Producción de activos optimizados de marca y mascota (SVG / AVIF / WebP / iconos)**
+  - **Ubicación:** `public/images/brand/`, `public/`, `astro.config.mjs`
+  - **Objetivo:** Generar y optimizar el paquete final de activos de **UPII**: logotipo vectorial SVG limpio (adaptable a claro/oscuro), favicon e iconos de pestaña, imagen social (Open Graph) y recursos ligeros de la mascota para puntos clave de interacción sin penalizar rendimiento.
+
+- [ ] **ID-04 — Integración de la nueva identidad visual y mascota en todo el sitio**
+  - **Ubicación:** `src/components/WelcomeCurtain.astro`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/content/docs/es/index.md`, `src/pages/404.astro`, `src/components/quiz/`
+  - **Objetivo:** Integrar el nuevo logotipo, favicon y apariciones sutiles y coherentes de la serpiente emplumada en la cortina de bienvenida, cabecera, portada `/es/`, página `404` y estados de retroalimentación de los cuestionarios, garantizando armonía en modo claro, modo oscuro, `forced-colors` y `prefers-reduced-motion`.
+
+---
+
+## 🎠 Bloque 9 — Experiencia Carrusel Acumulativa RA/RV (Unidad III)
+
+> **Concepto rector:** Al abrir el desplegable de temas de la **Unidad III** en la barra lateral, se guardan/ocultan las barras laterales y se despliega un carrusel con las secciones **`3.1`**, **`3.2`** y **`3.3`** anidadas. Cada sección suma una capa sensorial/tecnológica **sin retirar la anterior**, construyendo progresivamente una experiencia completa de **RA/RV**.
+
+- [ ] **U3X-01 — Modo foco (ocultar barras laterales) y estructura anidada `3.1`, `3.2` y `3.3` desde el menú de Unidad III**
+  - **Ubicación:** `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/components/PageSidebar.astro`, `src/config/units.ts`, `astro.config.mjs`
+  - **Objetivo:** Habilitar la transición desde el desplegable de la Unidad III hacia el modo foco (ocultando barra lateral izquierda e índice derecho con opción clara de salir/restaurar) y anidar los subtemas de la unidad en los tres bloques del carrusel (`3.1`, `3.2` y `3.3`).
+
+- [ ] **U3X-02 — Carrusel interactivo y Capa 1 (`3.1`: fondo con textura visual persistente)**
+  - **Ubicación:** Nuevo componente modular de carrusel Unidad III y hoja de estilos asociada en `src/styles/`
+  - **Objetivo:** Implementar el carrusel accesible (teclado, táctil, flechas e indicadores de capas activas, conforme a `modern-web-guidance`, modo claro/oscuro y `prefers-reduced-motion`) cuya primera sección (**`3.1`**) active como fondo una **textura visual optimizada** que permanece encendida al avanzar.
+
+- [ ] **U3X-03 — Capa acumulativa 2 (`3.2`: textura previa + capa de audio ambiental/espacial)**
+  - **Ubicación:** Componente del carrusel Unidad III y recurso optimizado en `public/audios/`
+  - **Objetivo:** Al ingresar a la sección **`3.2`**, conservar la textura de `3.1` y **sumar una capa de audio** (con fade suave vía Web Audio API, control visible de silenciar/volumen y cumplimiento de políticas de autoplay por interacción del usuario), deteniendo y liberando el audio limpiamente al salir.
+
+- [ ] **U3X-04 — Capa acumulativa 3 (`3.3`: textura + audio + añadido interactivo de RA/RV)**
+  - **Ubicación:** Componente del carrusel Unidad III e integración modular 3D/WebXR (`Three.js` / `WebXR`)
+  - **Objetivo:** Al ingresar a la sección **`3.3`**, conservar tanto la textura (`3.1`) como el audio (`3.2`) y **sumar un componente interactivo de Realidad Aumentada / Realidad Virtual (`RA/RV`)** —con carga diferida (*lazy*) para no afectar el rendimiento global, fallback interactivo 3D en dispositivos sin WebXR y liberación completa del contexto WebGL al salir—, culminando en una experiencia inmersiva completa.
+
+---
+
 ## ❓ Decisiones Abiertas por Confirmar
 
-Sin decisiones bloqueantes pendientes. **Bloque 7 (`VIS-01`..`VIS-03`) completado al 100 % (32/32 temas con imágenes reales optimizadas)**. Solo resta **`RV-06`** (prueba física en visor VR real cuando se disponga de hardware).
+- **Bloque 8 (`ID-01`..`ID-04`):** Antes de generar las primeras iteraciones de logotipo y sistema visual, definir:
+  1. **Estilo gráfico de la serpiente emplumada:** ¿geometría prehispánica minimalista/editorial, emblema universitario moderno o mascota ilustrada con variaciones de expresión?
+  2. **Convivencia con escudos oficiales:** ¿el nuevo logo de **UPII** acompañará a los escudos IPN y UPIICSA o sustituirá alguno en cabecera/favicon?
+  3. **Presencia de la mascota en el sitio:** ¿solo en identidad/portada/bienvenida/404 o también como guía discreta en resultados de cuestionarios y transiciones?
+- **Bloque 9 (`U3X-01`..`U3X-04`):** Antes de implementar el carrusel acumulativo de Unidad III, confirmar:
+  1. **Mapeo de `3.3`:** Hoy la Unidad III tiene `3.1` (`3-1-1`, `3-1-2`), `3.2` (`3-2-1`, `3-2-2`, `3-2-3`) y `3-2-bis-etapas-planeacion` (+ Cuestionario); definir si `3.3` agrupará *Etapas de Planeación* (y/o el acceso al cuestionario RA/RV).
+  2. **Comportamiento del desplegable en sidebar:** ¿al hacer clic en `Unidad III` en la barra lateral entra directo al carrusel ocultando barras laterales, o muestra también un acceso rápido para lista tradicional?
+  3. **Contenido concreto de cada capa:** tipo de textura para `3.1` (p. ej. retícula/material táctil sutil), atmósfera de audio para `3.2` (sintetizado procedimental en Web Audio API o pista ligera) y tipo de experiencia RA/RV en `3.3` (objeto 3D interactivo + botón activar cámara RA / modo VR).
+- **`RV-06`:** Prueba física en visor VR real cuando se disponga de hardware.
 
 ---
 
@@ -279,7 +335,11 @@ Sin decisiones bloqueantes pendientes. **Bloque 7 (`VIS-01`..`VIS-03`) completad
   - Configurado `collapsed: true` + colapso al abrir menú lateral en escritorio (`Header.astro`) y móvil (`PageFrame.astro`) para mostrar las 3 unidades cerradas al desplegar el menú.
   - Simplificada la cortina de bienvenida (`WelcomeCurtain.astro`) a escudos IPN/UPIICSA, título `"Bienvenido a UPII"` y botón `"Ingresar"`, y actualizada la portada (`/es/`) con `"Bienvenido a UPII"` conservando el índice de unidades.
   - Migrados los textos de identidad de marca en todo el sitio (`astro.config.mjs`, `site.ts`, `PageFrame.astro`, `autores.md`, `index.astro`, `404.astro`) a **`UPII`**.
-- **Bloque 7 completado (`VIS-02` Unidad II + `VIS-03` Unidad III — 32/32 temas con imágenes reales optimizadas):**
+- **Bloque 7 completado (`VIS-02` Unidad II + `VIS-03` Unidad III — commit `22c5054`, 32/32 temas con imágenes reales optimizadas):**
   - `VIS-02`: generados 52 activos en `public/images/temas/u2/` e integradas Figuras 2.1–2.13 en los 13 temas de Unidad II + `.editorial-timeline` en `2-1-2-diferencias.md`.
   - `VIS-03`: generados 24 activos en `public/images/temas/u3/` e integradas Figuras 3.1–3.6 en los 6 temas de Unidad III + `.editorial-timeline` en `3-2-bis-etapas-planeacion.md`.
   - Auditoría completa de los 32 temas en `dist/`: 100 % `<picture>` AVIF+WebP con dimensiones verificadas vía `sharp`, `0` errores en `astro check`, `0` bloques `expressive-code`.
+- **Planificación de Bloque 8 (`ID-01`..`ID-04`):** registrado nuevo frente de trabajo para iterar el logotipo de **UPII** y diseñar una identidad visual integral en torno a la mascota institucional (**serpiente emplumada**), incluyendo exploración de propuestas, sistema de marca claro/oscuro, paquete de activos optimizados e integración en el sitio.
+- **Planificación de Bloque 9 (`U3X-01`..`U3X-04`):** registrado el carrusel acumulativo de **Unidad III** (`3.1`, `3.2` y `3.3`) activable desde el menú lateral ocultando las barras laterales, sumando progresivamente capas sin desactivar las previas (**`3.1` textura → `3.2` + audio → `3.3` + añadido RA/RV**) para conformar una experiencia inmersiva completa.
+- **Bloque 5 (`UX-04` — rediseño de barras superior e inferior con transparencias, degradados e identidad visual):**
+  - Migradas `header.header` y `.shell-footer` a cristal esmerilado translúcido (`backdrop-filter: blur(18px) saturate(165%)` + fallback `@supports not`), degradados `in oklab` progresivos (`--in-oklab`), microtrama geométrica CSS, ribete tricolor IPN/UPIICSA (`#6C1D45` · `#D4AF37` · `#008F53`), cápsula de escudos con divisor dorado en cabecera, píldora tricolor `UPII` + lema politécnico en escritorio en el pie y botones translúcidos armonizados en modo claro, oscuro y `forced-colors`.
