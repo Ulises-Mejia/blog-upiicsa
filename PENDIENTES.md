@@ -15,12 +15,12 @@
 | **2. Deuda técnica y arquitectura** | 🟠 Media-Alta | 0 | 0 | 5 |
 | **3. Sala RV — Identidad IPN** | 🥽 Media | 1 | 0 | 5 |
 | **4. Contenido, rendimiento y calidad** | 🟡 Media-Baja | 0 | 0 | 6 |
-| **5. Mejoras de UX y secciones** | ✨ Iterativo | 0 | 0 | 4 |
+| **5. Mejoras de UX y secciones** | ✨ Iterativo | 1 | 0 | 3 |
 | **6. Modernización Web (`modern-web-guidance`)** | 🌐 Estándares | 0 | 0 | 7 |
 | **7. Enriquecimiento visual en temas** | 🖼️ Visual | 0 | 0 | 3 |
 | **8. Identidad visual `UPII` y mascota** | 🐍 Marca | 4 | 0 | 0 |
 | **9. Carrusel acumulativo RA/RV (Unidad III)** | 🎠 Inmersivo | 4 | 0 | 0 |
-| **Total** | — | **9** | **0** | **35** |
+| **Total** | — | **10** | **0** | **34** |
 
 **Leyenda de estados:** `[ ]` Pendiente · `[-]` En progreso · `[!]` Bloqueado / requiere decisión o hardware · `[x]` Completado
 
@@ -173,9 +173,9 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   - **Ubicación:** `astro.config.mjs`, `src/config/site.ts`, `src/components/WelcomeCurtain.astro`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/content/docs/es/{index,autores}.md`, `src/pages/{index,404}.astro`, `src/styles/custom.css`
   - **Resuelto:** Configurado `collapsed: true` en las 3 unidades del sidebar y colapso automático en apertura de menú (escritorio y móvil) para mostrar siempre U-I, U-II y U-III cerradas de entrada; simplificada la cortina inicial a escudos IPN/UPIICSA + `"Bienvenido a UPII"` + botón `"Ingresar"`; unificada toda la identidad de marca (`title`, cabecera, pie inferior, portada `/es/`, autores y 404) a **`UPII`**.
 
-- [x] **UX-04 — Rediseño visual de barras superior e inferior (transparencias, degradados `oklab` e identidad IPN/UPIICSA)**
+- [ ] **UX-04 — Rediseño visual de barras superior e inferior (transparencias, degradados y detalles de identidad visual)**
   - **Ubicación:** `src/styles/tokens.css`, `src/components/Header.astro`, `src/components/PageFrame.astro`, `src/styles/integrations.css`
-  - **Resuelto:** Aplicado efecto cristal esmerilado translúcido (`backdrop-filter: blur(18px) saturate(165%)` con respaldo `@supports not`), degradados institucionales interpolados en `oklab` (con fallback progresivo `--in-oklab`), microtrama geométrica CSS sutil, ribete tricolor institucional (`#6C1D45` guinda IPN · `#D4AF37` oro · `#008F53` verde UPIICSA), cápsula translúcida con separador dorado para los escudos en cabecera, insignia tricolor `UPII` + lema institucional en pie inferior y botones en cristal dorado coherentes en modo claro, oscuro y `forced-colors`.
+  - **Objetivo:** Renovar el estilo general de la cabecera superior (`header.header`) y de la barra inferior (`.shell-footer`) incorporando transparencias/cristal translúcido, degradados cuidados y añadidos alineados con la nueva identidad visual de **UPII** y su mascota (Bloque 8), manteniendo contraste WCAG AA en modo claro/oscuro, respaldos de accesibilidad y comportamiento responsive intacto.
 
 ---
 
@@ -279,6 +279,7 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   1. **Mapeo de `3.3`:** Hoy la Unidad III tiene `3.1` (`3-1-1`, `3-1-2`), `3.2` (`3-2-1`, `3-2-2`, `3-2-3`) y `3-2-bis-etapas-planeacion` (+ Cuestionario); definir si `3.3` agrupará *Etapas de Planeación* (y/o el acceso al cuestionario RA/RV).
   2. **Comportamiento del desplegable en sidebar:** ¿al hacer clic en `Unidad III` en la barra lateral entra directo al carrusel ocultando barras laterales, o muestra también un acceso rápido para lista tradicional?
   3. **Contenido concreto de cada capa:** tipo de textura para `3.1` (p. ej. retícula/material táctil sutil), atmósfera de audio para `3.2` (sintetizado procedimental en Web Audio API o pista ligera) y tipo de experiencia RA/RV en `3.3` (objeto 3D interactivo + botón activar cámara RA / modo VR).
+- **`UX-04` (barras superior e inferior):** Antes de implementar, confirmar el grado de transparencia/difuminado deseado, la dirección cromática de los degradados en modo claro y oscuro, y qué elementos de la nueva identidad visual de **UPII** (Bloque 8) se añadirán en ambas barras.
 - **`RV-06`:** Prueba física en visor VR real cuando se disponga de hardware.
 
 ---
@@ -341,5 +342,4 @@ Al retomar este proyecto en una nueva sesión o al abrir este archivo, seguir es
   - Auditoría completa de los 32 temas en `dist/`: 100 % `<picture>` AVIF+WebP con dimensiones verificadas vía `sharp`, `0` errores en `astro check`, `0` bloques `expressive-code`.
 - **Planificación de Bloque 8 (`ID-01`..`ID-04`):** registrado nuevo frente de trabajo para iterar el logotipo de **UPII** y diseñar una identidad visual integral en torno a la mascota institucional (**serpiente emplumada**), incluyendo exploración de propuestas, sistema de marca claro/oscuro, paquete de activos optimizados e integración en el sitio.
 - **Planificación de Bloque 9 (`U3X-01`..`U3X-04`):** registrado el carrusel acumulativo de **Unidad III** (`3.1`, `3.2` y `3.3`) activable desde el menú lateral ocultando las barras laterales, sumando progresivamente capas sin desactivar las previas (**`3.1` textura → `3.2` + audio → `3.3` + añadido RA/RV**) para conformar una experiencia inmersiva completa.
-- **Bloque 5 (`UX-04` — rediseño de barras superior e inferior con transparencias, degradados e identidad visual):**
-  - Migradas `header.header` y `.shell-footer` a cristal esmerilado translúcido (`backdrop-filter: blur(18px) saturate(165%)` + fallback `@supports not`), degradados `in oklab` progresivos (`--in-oklab`), microtrama geométrica CSS, ribete tricolor IPN/UPIICSA (`#6C1D45` · `#D4AF37` · `#008F53`), cápsula de escudos con divisor dorado en cabecera, píldora tricolor `UPII` + lema politécnico en escritorio en el pie y botones translúcidos armonizados en modo claro, oscuro y `forced-colors`.
+- **Planificación de `UX-04` (barras superior e inferior) y reversión de prototipo (`a89290f`):** revertidos los cambios de estilo de cabecera y barra inferior al estado previo (`22c5054`) y registrada la tarea **`UX-04`** como pendiente en el Bloque 5 para diseñarla e implementarla en conjunto con la nueva identidad visual (`Bloque 8`).

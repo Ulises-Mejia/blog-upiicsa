@@ -3,11 +3,6 @@
    ========================================================================== */
 :root {
   color-scheme: light dark;
-  --in-oklab: ;
-  --upii-ipn-guinda: #6C1D45;
-  --upii-emerald: #00643A;
-  --upii-gold: #D4AF37;
-  --upii-gold-soft: #F4E8C1;
   --sl-color-accent-low: #00361F;
   --sl-color-accent: #00643A;
   --sl-color-accent-high: #D4AF37;
@@ -23,12 +18,6 @@
   --sl-toc-width: 16rem;
   /* Opción B: índice integrado en la cabecera en móvil/tablet (recupera 100 % del alto vertical) */
   --sl-mobile-toc-height: 0rem !important;
-}
-
-@supports (background: linear-gradient(in oklab, white, black)) {
-  :root {
-    --in-oklab: in oklab;
-  }
 }
 
 /* Mantener color-scheme CSS sincronizado con <meta name="color-scheme"> */
@@ -87,145 +76,42 @@
   color: #E2E8F0;
 }
 
-/* Starlight header institucional: cristal translúcido, degradado oklab y detalles de identidad IPN/UPIICSA */
+/* Starlight header institucional (borde inferior sutil como carril de la barra dorada de progreso) */
 header.header {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(244, 232, 193, 0.04) 0 1px,
-      transparent 1px 14px
-    ),
-    radial-gradient(
-      ellipse 38% 125% at 10% 50%,
-      rgba(212, 175, 55, 0.12) 0%,
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 34% 130% at 92% 50%,
-      rgba(108, 29, 69, 0.34) 0%,
-      transparent 74%
-    ),
-    linear-gradient(
-      100deg var(--in-oklab),
-      rgba(0, 78, 45, 0.88) 0%,
-      rgba(0, 62, 36, 0.89) 52%,
-      rgba(20, 42, 37, 0.9) 100%
-    ) !important;
-  backdrop-filter: blur(18px) saturate(165%) !important;
-  -webkit-backdrop-filter: blur(18px) saturate(165%) !important;
-  border-bottom: 3px solid rgba(212, 175, 55, 0.32) !important;
-  box-shadow:
-    0 2px 6px rgba(0, 28, 16, 0.16),
-    0 10px 28px rgba(0, 24, 14, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.16) !important;
+  background-color: #00643A !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.28) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
   padding-block: 0.3rem !important;
   padding-inline-end: var(--sl-nav-pad-x) !important;
-  isolation: isolate;
-}
-
-/* Ribete superior tricolor institucional (Guinda IPN · Oro · Verde UPIICSA) */
-header.header::before {
-  content: "";
-  position: absolute;
-  inset-block-start: 0;
-  inset-inline: 0;
-  height: 2px;
-  pointer-events: none;
-  z-index: 3;
-  background: linear-gradient(
-    90deg var(--in-oklab),
-    #6C1D45 0%,
-    #D4AF37 22%,
-    #008F53 50%,
-    #D4AF37 78%,
-    #6C1D45 100%
-  );
-  opacity: 0.9;
 }
 
 :root[data-theme='dark'] header.header {
-  background:
-    repeating-linear-gradient(
-      135deg,
-      rgba(212, 175, 55, 0.045) 0 1px,
-      transparent 1px 14px
-    ),
-    radial-gradient(
-      ellipse 36% 125% at 10% 50%,
-      rgba(0, 100, 58, 0.32) 0%,
-      transparent 72%
-    ),
-    radial-gradient(
-      ellipse 32% 125% at 92% 50%,
-      rgba(108, 29, 69, 0.28) 0%,
-      transparent 74%
-    ),
-    linear-gradient(
-      100deg var(--in-oklab),
-      rgba(9, 32, 20, 0.78) 0%,
-      rgba(6, 21, 14, 0.82) 55%,
-      rgba(15, 19, 20, 0.84) 100%
-    ) !important;
-  border-bottom: 3px solid rgba(212, 175, 55, 0.26) !important;
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.32),
-    0 12px 32px rgba(0, 0, 0, 0.42),
-    inset 0 1px 0 rgba(244, 232, 193, 0.12) !important;
-}
-
-@supports not (backdrop-filter: blur(1px)) {
-  header.header {
-    background: linear-gradient(100deg, #004E2D 0%, #003E24 55%, #142A25 100%) !important;
-  }
-
-  :root[data-theme='dark'] header.header {
-    background: linear-gradient(100deg, #092014 0%, #06150E 60%, #111517 100%) !important;
-  }
+  background: linear-gradient(180deg, #092215 0%, #06170E 100%) !important;
+  border-bottom: 4px solid rgba(212, 175, 55, 0.25) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
 }
 
 :root[data-theme='dark'] .header-link-btn,
 :root[data-theme='dark'] .menu-toggle,
 :root[data-theme='dark'] .header-search-slot button[data-open-modal] {
-  background: linear-gradient(
-    180deg var(--in-oklab),
-    rgba(212, 175, 55, 0.14) 0%,
-    rgba(212, 175, 55, 0.06) 100%
-  ) !important;
-  border: 1px solid rgba(212, 175, 55, 0.34) !important;
+  background: rgba(212, 175, 55, 0.1) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
   color: #F4E8C1 !important;
-  box-shadow: inset 0 1px 0 rgba(244, 232, 193, 0.12);
 }
 
 :root[data-theme='dark'] .header-link-btn:hover,
 :root[data-theme='dark'] .menu-toggle:hover,
 :root[data-theme='dark'] .header-search-slot button[data-open-modal]:hover {
-  background: linear-gradient(135deg var(--in-oklab), #E4C45A 0%, #D4AF37 100%) !important;
+  background: #D4AF37 !important;
   color: #00361F !important;
-  border-color: #E4C45A !important;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.34) !important;
-}
-
-:root[data-theme='dark'] .header-logos {
-  background: rgba(212, 175, 55, 0.08);
-  border-color: rgba(212, 175, 55, 0.32);
+  border-color: #D4AF37 !important;
+  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.35) !important;
 }
 
 :root[data-theme='dark'] .header-logos img {
   background: rgba(255, 255, 255, 0.06);
-  border: 1.5px solid rgba(212, 175, 55, 0.42);
-  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
-}
-
-@media (forced-colors: active) {
-  header.header {
-    background: Canvas !important;
-    border-bottom: 2px solid CanvasText !important;
-    backdrop-filter: none !important;
-  }
-
-  header.header::before {
-    display: none;
-  }
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 12px rgba(212, 175, 55, 0.25);
 }
 
 /* Ocultar botón circular flotante de Starlight (reemplazado por nuestro menú sandwich en el header) */
